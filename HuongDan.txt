@@ -1,0 +1,13 @@
+/src
+├── /components   # Các thành phần UI tái sử dụng <Nút, tiêu đề ,vv>
+├── /pages        # Các màn hình chính <Home,Library,...>
+├── /services     # Gọi API từ backend <API axios call>
+├── /store        # Quản lý state (Redux, Zustand, Context API) <State toàn cục>
+├── /utils        # Các hàm tiện ích <Các hàm chung như validate, format date>
+├── /routes       # Định tuyến ứng dụng <React router,..>
+├── /assets       # Chứa hình ảnh, icon, font
+├── /hooks        # Các custom hooks
+
+!Không đụng file main.jsx, index.css, index.html, pakage.json, vite.config.js
+
+Ứng dụng chạy từ main.jsx -> App.jsx
