@@ -4,7 +4,7 @@ function ReviewList({reloadSignal}) {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:8080/api/review/1/reviews")
+        axios.get("http://localhost:8080/review/1/review-list")
             .then(response => setData(response.data))
             .catch(error => console.error('Error fetching reviews:', error));
     }, [reloadSignal]);
