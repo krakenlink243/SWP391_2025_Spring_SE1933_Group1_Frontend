@@ -4,11 +4,16 @@ import './ReviewForm.css'; // Assuming you have a CSS file for styling
 function ReviewForm({ onReload }) {
     const [reviewContent, setReviewContent] = useState('');
     const [recommended, setRecommended] = useState(null);
+
     const handleSubmit = async () => {
+        if (recommended === null || reviewContent.trim() === '') {
+            alert('Please fill in all fields before submitting.');
+            return;
+        }
         try {
             console.log('recommended:', recommended);
             // const newRecommended = recommended === null ? false : recommended; // Ensure it's a boolean
-            const response = await axios.post('http://localhost:8080/review/1/review', {
+            const response = await axios.post('http://localhost:8080/review/1/post-review', {
                 isRecommended: recommended,
                 userId: 1,
                 reviewContent: reviewContent,

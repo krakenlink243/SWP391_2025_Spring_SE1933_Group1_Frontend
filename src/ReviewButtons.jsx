@@ -19,10 +19,11 @@ function ReviewButtons({ gameId, userId, helpful, notHelpful }) {
         setIsClicked(true);
 
         try {
-            await axios.patch(`http://localhost:8080/review/${gameId}/vote`, {
-                authorId: userId,
-                helpful: helpfulCount,
-                notHelpful: notHelpfulCount
+            
+            await axios.put(`http://localhost:8080/review/${gameId}/put-review`, {
+                userId: userId,
+                helpful: newHelpful,
+                notHelpful: newNotHelpful
             });
         } catch (err) {
             console.error("Error Patching ", err);
