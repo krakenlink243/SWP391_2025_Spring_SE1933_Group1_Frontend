@@ -23,7 +23,7 @@ const RegisterEmail = () => {
     setLoading(true);
     try {
       const res = await axios.get('http://localhost:8080/api/auth/check-email', {
-        params: { email },
+        param : { email },
       });
 
       if (res.data.available) {
