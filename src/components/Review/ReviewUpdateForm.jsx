@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import axios from 'axios';
-import './ReviewList.css'; // Assuming you have a CSS file for styling
 
 function ReviewUpdateForm({ originalReview, onReload, onCancel, gameId, userId }) {
     const [updateReviewContent, setUpdateReviewContent] = useState(originalReview.reviewContent);
@@ -16,20 +15,23 @@ function ReviewUpdateForm({ originalReview, onReload, onCancel, gameId, userId }
     };
 
     const handleDelete = async () => {
+        if (!window.confirm('Are you sure you want to delete this review?')) {
+            return false;
+        }
         await axios.delete(`/api/review/${originalReview.id}`);
         onReload();
         onCancel();
     };
 
     return (
-        <div className="review-form">
+        <div>
             <button onClick={handleDelete}>Delete</button>
             <textarea
                 value={updateReviewContent}
                 onChange={(e) => setUpdateReviewContent(e.target.value)}
             />
             <p>Do you recommend this game?</p>
-            <div className="recommend-options">
+            <div>
                 <div onClick={() => setUpdateRecommended(true)} className={updateRecommended ? 'selected' : ''}>👍 Yes</div>
                 <div onClick={() => setUpdateRecommended(false)} className={!updateRecommended ? 'selected' : ''}>👎 No</div>
             </div>
