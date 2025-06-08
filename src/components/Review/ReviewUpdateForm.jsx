@@ -26,7 +26,7 @@ function ReviewUpdateForm({ originalReview, onReload, onCancel, gameId, userId }
         if (!window.confirm('Are you sure you want to delete this review?')) {
             return false;
         }
-
+        const resp = await axios.delete(`http://localhost:8080/review/${gameId}/delete-review/${userId}`);
         onReload();
         onCancel();
     };
