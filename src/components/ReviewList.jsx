@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import './ReviewList.css';
 import ReviewButtons from "./ReviewButtons";
+// import ReviewUpdateForm from "./ReviewUpdateForm";
 
-function ReviewList({ reloadSignal }) {
+function ReviewList({ reloadSignal, onReload, gameId, userId }) {
+    const [editingId, setEditingId] = useState(null);
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:8080/review/1/review-list")
+        axios.get(`http://localhost:8080/review/${gameId}/review-list`)
             .then(response => {
                 setData(response.data);
                 console.log(response.data);

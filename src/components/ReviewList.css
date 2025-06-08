@@ -45,6 +45,12 @@
   margin: 10px 0;
 }
 
+.review-footer {
+  display: flex;
+  justify-content: space-between;
+  color: #8f98a0;
+}
+
 .review-helpful {
   margin-top: 15px;
   font-size: 13px;

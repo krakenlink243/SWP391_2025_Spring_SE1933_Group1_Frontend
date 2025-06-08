@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import axios from 'axios';
-import './ReviewForm.css'; // Assuming you have a CSS file for styling
-function ReviewForm({ onReload }) {
+import './ReviewForm.css';
+function ReviewForm({ onReload, gameId, userId }) {
     const [reviewContent, setReviewContent] = useState('');
     const [recommended, setRecommended] = useState(null);
 
@@ -12,10 +12,9 @@ function ReviewForm({ onReload }) {
         }
         try {
             console.log('recommended:', recommended);
-            // const newRecommended = recommended === null ? false : recommended; // Ensure it's a boolean
-            const response = await axios.post('http://localhost:8080/review/1/post-review', {
-                isRecommended: recommended,
-                userId: 1,
+            const response = await axios.post(`http://localhost:8080/review/${gameId}/post-review`, {
+                isRecommended: true,
+                userId: userId,
                 reviewContent: reviewContent,
             });
             console.log('Review submitted:', response.data);
@@ -23,10 +22,10 @@ function ReviewForm({ onReload }) {
         } catch (error) {
             console.error('Error submitting review:', error);
         }
-    }
+    };
+
     return (
         <>
-            <h1>Reviews</h1>
             <div className="review-form">
                 <p>Make a Review for [Game Name]</p>
                 <div className="review-form-inputs">
@@ -41,15 +40,17 @@ function ReviewForm({ onReload }) {
                 <div className='review-form-buttons'>
                     <div>
                         <div className="recommend-options">
-                            <div onClick={() => setRecommended(true)} className={recommended && recommended !== null ? 'selected' : ''}>
+                            <div onClick={() => {
+                                setRecommended(true);
+                            }} className={recommended === true ? 'selected' : ''}>
                                 👍 Yes
                             </div>
-                            <div onClick={() => setRecommended(false)} className={!recommended && recommended !== null ? 'selected' : ''}>
+                            <div onClick={() => setRecommended(false)} className={recommended === false ? 'selected' : ''}>
                                 👎 No
                             </div>
                         </div>
                     </div>
-                    <button onClick={async () => { await handleSubmit(); onReload(); }}>
+                    <button onClick={() => { handleSubmit().then(onReload()) }}>
                         Post Review
                     </button>
                 </div>
