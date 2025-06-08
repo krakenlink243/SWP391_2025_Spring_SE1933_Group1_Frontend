@@ -1,4 +1,4 @@
-import {  useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import './ReviewForm.css';
 function ReviewForm({ onReload, gameId, userId }) {
@@ -8,19 +8,21 @@ function ReviewForm({ onReload, gameId, userId }) {
     const handleSubmit = async () => {
         if (recommended === null || reviewContent.trim() === '') {
             alert('Please fill in all fields before submitting.');
-            return;
+            return false;
         }
         try {
             console.log('recommended:', recommended);
             const response = await axios.post(`http://localhost:8080/review/${gameId}/post-review`, {
-                isRecommended: true,
+                recommended: recommended,
                 userId: userId,
                 reviewContent: reviewContent,
             });
             console.log('Review submitted:', response.data);
             setReviewContent('');
+            return true;
         } catch (error) {
             console.error('Error submitting review:', error);
+            return false;
         }
     };
 
@@ -50,7 +52,10 @@ function ReviewForm({ onReload, gameId, userId }) {
                             </div>
                         </div>
                     </div>
-                    <button onClick={() => { handleSubmit().then(onReload()) }}>
+                    <button onClick={async () => {
+                        const result = await handleSubmit();
+                        if (result) onReload();
+                    }}>
                         Post Review
                     </button>
                 </div>

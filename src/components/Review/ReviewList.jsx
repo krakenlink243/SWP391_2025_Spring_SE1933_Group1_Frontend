@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "./ReviewList.css";
 import ReviewButtons from "./ReviewButtons";
-// import ReviewUpdateForm from "./ReviewUpdateForm";
+import ReviewUpdateForm from "./ReviewUpdateForm";
 
 function ReviewList({ reloadSignal, onReload, gameId, userId }) {
   const [editingId, setEditingId] = useState(null);
@@ -21,25 +21,42 @@ function ReviewList({ reloadSignal, onReload, gameId, userId }) {
     <>
       <ul>
         {data.map((review) => (
-          <div key={review.id} className="review">
-            <div className="review-header">
-              <p>{review.userName}</p>
-              <p>Posted on {review.timeCreated}</p>
-            </div>
-            <div className="review-rating">
-              <i></i>
-              <p>{review.recommended ? "Recommended" : "Not Recommended"}</p>
-            </div>
-            <p>{review.reviewContent}</p>
-            <div className="review-helpful">
-              <p>Was this review helpful</p>
-            </div>
-            <ReviewButtons
-              gameId={1}
-              userId={review.userId}
-              helpful={review.helpful}
-              notHelpful={review.notHelpful}
-            />
+          <div key={review.userId} className="review">
+
+            {editingId === review.userId ? (
+              <ReviewUpdateForm
+                originalReview={review}
+                onCancel={() => setEditingId(null)}
+                onReload={onReload}
+                gameId={gameId}
+                userId={userId}
+              />
+            ) : (
+              <>
+                <div className="review-header">
+                  <p>{review.userName}</p>
+                  <p>Posted on {review.timeCreated}</p>
+                </div>
+                <div className="review-rating">
+                  <i></i>
+                  <p>{review.recommended ? "Recommended" : "Not Recommended"}</p>
+                </div>
+                <p>{review.reviewContent}</p>
+                <div className="review-helpful">
+                  <p>Was this review helpful</p>
+                </div>
+                <div className="review-footer">
+                  <ReviewButtons
+                    gameId={gameId}
+                    originalReview={review}
+                  />
+                  {review.userId == userId && (
+                    <div onClick={() => setEditingId(review.userId)} style={{cursor : "pointer"}}><u>Edit</u></div>
+                  )}
+
+                </div>
+              </>
+            )}
           </div>
         ))}
       </ul>

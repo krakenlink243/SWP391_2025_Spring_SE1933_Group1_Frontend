@@ -2,10 +2,11 @@ import { useState } from "react";
 import './ReviewList.css'
 
 import axios from "axios";
-function ReviewButtons({ gameId, userId, helpful, notHelpful }) {
+function ReviewButtons({ gameId, originalReview }) {
     
-    const [helpfulCount, setHelpfulCount] = useState(helpful)
-    const [notHelpfulCount, setNotHelpfulCount] = useState(notHelpful)
+    const [helpfulCount, setHelpfulCount] = useState(originalReview.helpful)
+    const [notHelpfulCount, setNotHelpfulCount] = useState(originalReview.notHelpful)
+    const userId = originalReview.userId;
     const [isClicked, setIsClicked] = useState(false)
 
     const handleClick = async (isHelpful) => {
@@ -20,10 +21,12 @@ function ReviewButtons({ gameId, userId, helpful, notHelpful }) {
 
         try {
             
-            await axios.put(`http://localhost:8080/review/${gameId}/put-review`, {
+            await axios.put(`http://localhost:8080/review/${gameId}/update-review`, {
                 userId: userId,
                 helpful: newHelpful,
-                notHelpful: newNotHelpful
+                notHelpful: newNotHelpful,
+                recommended: originalReview.recommended,
+                reviewContent: originalReview.reviewContent
             });
         } catch (err) {
             console.error("Error Patching ", err);
