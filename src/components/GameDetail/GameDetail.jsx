@@ -148,7 +148,7 @@ const GameDetail = () => {
             <span>{game.additionalNotes}</span>
           </div>
           <div>
-            <Review />
+            <Review gameId={gameId} />
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import ReviewForm from "./ReviewForm";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-function Review() {
+function Review({gameId}) {
   const [reloadSignal, setReloadSignal] = useState(0);
   const triggerReload = () => setReloadSignal(prev => prev + 1);
 
@@ -40,7 +40,7 @@ function Review() {
   }
 
   const userId = decodedToken.userId;
-  const gameId = 1;
+
 
   return (
     <>
