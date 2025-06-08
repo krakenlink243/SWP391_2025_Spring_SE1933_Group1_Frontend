@@ -22,15 +22,14 @@ body,
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 .page-content-constrained-wrapper {
-  width: 100%; /* Chiếm toàn bộ chiều rộng của parent trước */
-  max-width: 940px; /* Chiều rộng tối đa phổ biến của Steam, bạn có thể điều chỉnh */
-  margin: 0 auto; /* Căn giữa wrapper này */
-  padding: 0 10px; /* Optional: Thêm chút padding bên trái/phải nếu nội dung chạm sát viền ở màn hình nhỏ hơn max-width */
+  width: 100%; 
+  max-width: 940px; 
+  margin: 0 auto; 
+  padding: 0 10px; 
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   margin-top: 40px;
-  /* Không cần đặt background ở đây, vì Navbar và MainContent sẽ có background riêng */
 }
 
 @keyframes logo-spin {

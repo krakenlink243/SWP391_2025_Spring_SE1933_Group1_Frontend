@@ -14,8 +14,9 @@ const Header = () => {
         <a href="#">SUPPORT</a>
       </nav>
       <div className="user-actions">
-        <span>Login</span>
-        {/* Add more user actions here */}
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+        <a href="/sendgame">Request Add Game</a>
       </div>
     </header>
   );

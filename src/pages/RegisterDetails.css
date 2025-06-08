@@ -1,28 +1,7 @@
 /* General app container */
-.app-container {
-    background-color: #1b1e26;
-    color: #ffffff;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Roboto', sans-serif;
-  }
   
   /* Header styles */
-  .header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
-    background-color: #1b1e26;
-  }
-  
-  .logo {
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 50%;
-    background-color: #cfd2d6;
-  }
+
   
   .brand {
     font-weight: 800;
@@ -31,30 +10,9 @@
     user-select: none;
   }
   
-  .nav {
-    display: flex;
-    gap: 1.5rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-  }
+
   
-  .nav-link {
-    color: #cfd2d6;
-    text-decoration: none;
-  }
-  
-  .nav-link.active {
-    color: #0a7fff;
-  }
-  
-  /* Main content styles */
-  .main {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-  }
+
   
   .form {
     display: flex;

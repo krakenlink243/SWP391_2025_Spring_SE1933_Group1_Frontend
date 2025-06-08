@@ -1,13 +1,15 @@
 import React from "react";
-import { BrowserRouter, Router, Routes, Route, Outlet, Link } from "react-router-dom"; // Import các component của router
-import RegisterEmail from './pages/RegisterEmail';
-import RegisterDetails from './pages/RegisterDetails';
+import { BrowserRouter, Routes, Route, Outlet, Link } from "react-router-dom"; // Import các component của router
+
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import MainContent from "./components/MainContent/MainContent";
 import GameDetail from "./components/GameDetail/GameDetail";
 import HomePage from "./components/HomePage/HomePage";
+import SendGametoAdmin from "./pages/SendGametoAdmin";
 import Login from "./pages/Login";
+import RegisterEmail from "./pages/RegisterEmail";
+import RegisterDetails from "./pages/RegisterDetails";
 import "./App.css";
 import GameCard from "./components/GameCard/GameCard";
 function App() {
@@ -20,14 +22,31 @@ function App() {
       </div>
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<RegisterEmail />} />
-          <Route path="/register-details" element={<RegisterDetails />} />
           <Route path="/" element={<Home />}></Route>
           <Route path="/game/:gameId" element={<Detail />} />
           <Route path="/game" element={<List />}></Route>
+          <Route path="/sendgame" element={<RequestAddGame />}></Route>
+          <Route path="/login" element={<LoginF />} />
+          <Route path="/register" element={<RegisterF />} />
+          <Route path="/register-details" element={<RegisterDetailsF />} />
         </Routes>
       </BrowserRouter>
+    </div>
+  );
+}
+function LoginF() {
+  return <Login />;
+}
+function RegisterF() {
+  return <RegisterEmail />;
+}
+function RegisterDetailsF() {
+  return <RegisterDetails />;
+}
+function RequestAddGame() {
+  return (
+    <div>
+      <SendGametoAdmin />
     </div>
   );
 }
@@ -71,7 +90,5 @@ function Home() {
     </div>
   );
 }
-
-
 
 export default App;
