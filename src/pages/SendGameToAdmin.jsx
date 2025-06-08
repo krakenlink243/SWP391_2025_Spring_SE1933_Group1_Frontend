@@ -1,13 +1,13 @@
 import React from 'react'
-import { useState } from'react'
+import { useState,useRef } from'react'
 import gameicon from '../assets/gameicon.png'
 import './SendGameToAdmin.css'
 import PartHeading from '../components/PartHeading/PartHeading'
 import Button from '../components/Button/Button'
 import axios from 'axios'
 import { validatePrice,validateEmty,validateMemory } from '../utils/validators'
-let arr = ["https://t4.ftcdn.net/jpg/01/43/42/83/360_F_143428338_gcxw3Jcd0tJpkvvb53pfEztwtU9sxsgT.jpg","https://www.investopedia.com/thmb/T2DdeU_VWQIq2kX-fqCZa8qTUFU=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Sample-Final-blue-6d294ab8024a4cdca8050cc58ab20c42.jpg","https://www.investopedia.com/thmb/T2DdeU_VWQIq2kX-fqCZa8qTUFU=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Sample-Final-blue-6d294ab8024a4cdca8050cc58ab20c42.jpg","https://www.investopedia.com/thmb/T2DdeU_VWQIq2kX-fqCZa8qTUFU=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Sample-Final-blue-6d294ab8024a4cdca8050cc58ab20c42.jpg","https://www.investopedia.com/thmb/T2DdeU_VWQIq2kX-fqCZa8qTUFU=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Sample-Final-blue-6d294ab8024a4cdca8050cc58ab20c42.jpg","https://www.investopedia.com/thmb/T2DdeU_VWQIq2kX-fqCZa8qTUFU=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Sample-Final-blue-6d294ab8024a4cdca8050cc58ab20c42.jpg"]
 function SendGameToAdmin() {
+  const [fileName,setFileName] = useState('UPLOAD');
   const [formData,setFormData] = useState({
     gameName: '',
     price: '',
@@ -18,10 +18,15 @@ function SendGameToAdmin() {
     storage: '',
     additionalNotes: '',
     shortDescription: '',
-    fullDescription: ''
-    // assets: [],
-    // files: [],
+    fullDescription: '',
+    mediaUrls: [],
+    gameUrl: '',
   })
+  const fileRef = useRef(null);
+  const mediaFileRef = useRef(null);
+  const inputRef = useRef(null);
+  const [files,setFiles] = useState([]);
+  const [arr,setArr] = useState([]);
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === 'price' && !validatePrice(value)) {
@@ -33,6 +38,13 @@ function SendGameToAdmin() {
       [name]: value,
     }));
   }
+
+  const handleFileSelect = (e) =>{
+    const selectFile = Array.from(e.target.files);
+    setFiles(prev => [...prev,...selectFile]);
+    const mediaPreview = selectFile.map(file => URL.createObjectURL(file));
+    setArr(prev => [...prev,...mediaPreview]);
+  }
   const handleSubmit = async() => {
     for (const key in formData) {
       if (!validateEmty(formData.memory)||!validateEmty(formData.processor)||!validateEmty(formData.storage)||!validateEmty(formData.graphics)||!validateEmty(formData.shortDescription)||!validateEmty(formData.fullDescription)||!validateEmty(formData.gameName)||!validateEmty(formData.price)||!validateEmty(formData.os)) {
@@ -42,7 +54,15 @@ function SendGameToAdmin() {
     }
     console.log(formData);
     try{
-      const response = await axios.post('http://localhost:8080/publisher/addGame',formData);
+      const uploadImage = new FormData();
+      files.forEach(file => uploadImage.append('files',file));
+      const responseMedia = await axios.post('http://localhost:8080/publisher/uploadImage',uploadImage,{
+        header:{"Content-Type": "multipart/form-data"},
+      });
+      console.log(files.length)
+      console.log(responseMedia.data.imageUrls);
+      setFormData(prev => ({...prev,mediaUrls: responseMedia.data.imageUrls}));
+      const response = await axios.post('http://localhost:8080/publisher/addGame',{...formData,mediaUrls: responseMedia.data.imageUrls});
       console.log(response);
       alert(response.data.message);
     }catch(error){
@@ -51,6 +71,12 @@ function SendGameToAdmin() {
   }
   const validMemory = (e) => {
     const { name, value } = e.target;
+    if (value === "") {
+      alert("Memory of games must not be empty.");
+      setFormData(prev => ({ ...prev, [name]: "" }));
+      return; // Allow unfocus
+    }
+  
     if(!validateMemory(value)) {
       alert('Memory of games must follow these rules:\n1. Only numbers\n2. No space\n3. No special characters\n4. No empty string\n5. No negative number\n6. 2 digits after decimal point');
       setFormData(prev => ({...prev,[name]: ''}));
@@ -59,6 +85,35 @@ function SendGameToAdmin() {
       setFormData(prev => ({...prev,[name]:value.toUpperCase() }));
     }
   };
+  const handleDelete = async() =>{
+    try {
+      if(formData.gameUrl === ""){
+        return;
+      }
+      const response = axios.delete(`http://localhost:8080/publisher/delete/${formData.gameUrl}`);
+      console.log(response.data.message);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const handleGameUpload = async(e) =>{
+    handleDelete();
+    const selectedFile = e.target.files[0];
+    const form = new FormData();
+    form.append('file',selectedFile);
+    try {
+      const response = await axios.post('http://localhost:8080/publisher/upload',form,{header:{"Content-Type": "multipart/form-data"},});
+      console.log(response.data.fileId);
+      setFormData(prev =>({...prev,gameUrl:response.data.fileId}));
+      setFileName(response.data.fileName);
+    } catch (error) {
+      console.log(error);
+    }
+    
+  }
+  const handleCancel = async() =>{
+      handleDelete();
+  }
   return (
     <>
     <div className='game-application'>
@@ -111,14 +166,17 @@ function SendGameToAdmin() {
             {arr.map((item,index) => (
                 <img src={item} alt="" key={index} />
             ))}
+            <input type="file"multiple style={{ display: "none" }} ref={mediaFileRef} onChange={handleFileSelect}/>
+            <Button className='upload-media' label='+' onClick={() => mediaFileRef.current.click()}/>
         </div>
       </div>
       <div className='game-file'>
-        <PartHeading content='FILES'/>    
-        <Button className='upload-button' label='UPLOAD'/>  
+        <PartHeading content='FILES'/>   
+        <input type="file" style={{display:"none"}} ref={fileRef} onChange={handleGameUpload}  /> 
+        <Button className='upload-button' label={fileName} onClick={() => fileRef.current.click()}/>  
       </div>
       <div className='send-request-cancel'>
-        <Button className='cancel-button' label='CANCEL'/>
+        <Button className='cancel-button' label='CANCEL' onClick={handleCancel}/>
         <Button className='send-button' label='SEND REQUEST' isApprove={'true'} onClick={handleSubmit}/>
       </div>
     </div>
