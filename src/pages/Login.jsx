@@ -1,74 +1,75 @@
+// Login.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
-import './Login.css'; // optional styling
-
+import './RegisterDetails.css';
 const Login = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-  });
-  const [message, setMessage] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
 
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+    const handleLogin = async (e) => {
+        e.preventDefault();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+        try {
+            const res = await axios.post('http://localhost:8080/api/auth/login', {
+                username : username,
+                password : password
+            });
 
-    try {
-      const response = await axios.post('http://localhost:8080/api/auth/login', formData);
-      console.log('Login successful:', response.data);
-      setMessage('Login successful!');
-      // handle storing token, redirecting, etc.
-    } catch (error) {
-      console.error('Login failed:', error);
-      setMessage('Invalid username or password.');
-    }
-  };
+            setMessage('Login successful!');
+            // navigate('/');
+            // Optionally redirect or store auth token here
+        } catch (err) {
+            console.error(err);
+            setMessage('Invalid username or password');
+        }
+    };
 
-  const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
-  };
+    return (
+        <div className="login-container">
+            <main>
+                <section class="form-section">
+                    <h1 class="form-title">Log in</h1>
+                    <form onSubmit={handleLogin} class="form">
+                        <label htmlFor="username" class="form-label">Log in with username</label>
+                        <input
+                            id="username"
+                            name="username"
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            class="form-input"
+                            required
+                        />
 
-  return (
-    <div className="login-container">
-      <h2>Login to Your Account</h2>
+                        <label htmlFor="password" class="form-label password">Password</label>
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            class="form-input"
+                            required
+                        />
 
-      <form onSubmit={handleSubmit}>
-        <label>Username:</label>
-        <input
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-          required
-        />
-
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-
-        <button type="submit">Login</button>
-      </form>
-
-      <p className="message">{message}</p>
-
-      <hr />
-
-      <button className="google-login-button" onClick={handleGoogleLogin}>
-        Continue with Google
-      </button>
-    </div>
-  );
+                        <div class="submit-container">
+                            <button type="submit" class="submit-button">Log in</button>
+                            
+                            <img
+                                src="/google-logo.jpg"
+                                alt="Google logo with red, yellow, green, and blue colors"
+                                class="google-logo"
+                                width="40"
+                                height="40"
+                            />
+                        </div>
+                        {message && <p>{message}</p>}
+                    </form>
+                </section>
+            </main>
+        </div>
+    );
 };
 
 export default Login;

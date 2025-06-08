@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar/Navbar";
 import MainContent from "./components/MainContent/MainContent";
 import GameDetail from "./components/GameDetail/GameDetail";
 import HomePage from "./components/HomePage/HomePage";
+import Login from "./pages/Login";
 import "./App.css";
 import GameCard from "./components/GameCard/GameCard";
 function App() {
@@ -19,6 +20,7 @@ function App() {
       </div>
       <BrowserRouter>
         <Routes>
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<RegisterEmail />} />
           <Route path="/register-details" element={<RegisterDetails />} />
           <Route path="/" element={<Home />}></Route>
