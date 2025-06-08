@@ -1,13 +1,14 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Outlet, Link } from "react-router-dom"; // Import các component của router
-
+import { BrowserRouter, Router, Routes, Route, Outlet, Link } from "react-router-dom"; // Import các component của router
+import RegisterEmail from './pages/RegisterEmail';
+import RegisterDetails from './pages/RegisterDetails';
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import MainContent from "./components/MainContent/MainContent";
 import GameDetail from "./components/GameDetail/GameDetail";
 import HomePage from "./components/HomePage/HomePage";
 import "./App.css";
-import GameCard from "./components/GameCard/GameCard"; 
+import GameCard from "./components/GameCard/GameCard";
 function App() {
   return (
     <div className="app-container">
@@ -18,6 +19,8 @@ function App() {
       </div>
       <BrowserRouter>
         <Routes>
+          <Route path="/register" element={<RegisterEmail />} />
+          <Route path="/register-details" element={<RegisterDetails />} />
           <Route path="/" element={<Home />}></Route>
           <Route path="/game/:gameId" element={<Detail />} />
           <Route path="/game" element={<List />}></Route>
@@ -66,5 +69,7 @@ function Home() {
     </div>
   );
 }
+
+
 
 export default App;
