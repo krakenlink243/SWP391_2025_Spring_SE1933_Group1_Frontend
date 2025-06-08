@@ -48,14 +48,12 @@ function ReviewList({ reloadSignal, onReload, gameId, userId }) {
                 <div className="review-footer">
                   <ReviewButtons
                     gameId={gameId}
-                    userId={review.userId}
-                    helpful={review.helpful}
-                    notHelpful={review.notHelpful}
+                    originalReview={review}
                   />
                   {review.userId == userId && (
-                    <button onClick={() => setEditingId(review.userId)}>Edit</button>
+                    <div onClick={() => setEditingId(review.userId)} style={{cursor : "pointer"}}><u>Edit</u></div>
                   )}
-                  
+
                 </div>
               </>
             )}
