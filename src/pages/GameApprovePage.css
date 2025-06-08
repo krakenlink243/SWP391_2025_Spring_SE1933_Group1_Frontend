@@ -21,7 +21,7 @@
 }
 
 /* Checkbox and action buttons */
-img {
+.game-approve-container img {
     width: 28px;
     height: 28px;
     cursor: pointer;

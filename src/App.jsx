@@ -10,8 +10,8 @@ import SendGametoAdmin from "./pages/SendGametoAdmin";
 import Login from "./pages/Login";
 import RegisterEmail from "./pages/RegisterEmail";
 import RegisterDetails from "./pages/RegisterDetails";
+import GameApprrovePage from "./pages/GameApprovePage";
 import "./App.css";
-import GameCard from "./components/GameCard/GameCard";
 function App() {
   return (
     <div className="app-container">
@@ -25,6 +25,7 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/game/:gameId" element={<Detail />} />
           <Route path="/game" element={<List />}></Route>
+          <Route path="/aprrovegame" element={<AprroveF />}></Route>
           <Route path="/sendgame" element={<RequestAddGame />}></Route>
           <Route path="/login" element={<LoginF />} />
           <Route path="/register" element={<RegisterF />} />
@@ -33,6 +34,9 @@ function App() {
       </BrowserRouter>
     </div>
   );
+}
+function AprroveF() {
+  return <GameApprrovePage />;
 }
 function LoginF() {
   return <Login />;

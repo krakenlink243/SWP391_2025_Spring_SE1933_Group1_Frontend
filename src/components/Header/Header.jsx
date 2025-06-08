@@ -5,8 +5,9 @@ const Header = () => {
   return (
     <header className="steam-header">
       {" "}
-      {/* Or styles.steamHeader */}
-      <img src="/steamlogo.png" alt="Steam Logo" className="logo" />
+      <a href="/">
+        <img src="/logo_steam.svg" alt="Steam Logo" className="logo" />
+      </a>
       <nav>
         <a href="/">STORE</a>
         <a href="#">COMMUNITY</a>
@@ -17,6 +18,7 @@ const Header = () => {
         <a href="/login">Login</a>
         <a href="/register">Register</a>
         <a href="/sendgame">Request Add Game</a>
+        <a href="/aprrovegame">Approve Game</a>
       </div>
     </header>
   );

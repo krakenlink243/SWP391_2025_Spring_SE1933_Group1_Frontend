@@ -1,39 +1,43 @@
-import './RegisterEmail.css'
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import "./RegisterEmail.css";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const RegisterEmail = () => {
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const validateEmailFormat = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const validateEmailFormat = (email) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage('');
+    setMessage("");
 
     if (!validateEmailFormat(email)) {
-      setMessage('Invalid email format.');
+      setMessage("Invalid email format.");
       return;
     }
 
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:8080/api/auth/check-email', {
-        params : { email },
-      });
+      const res = await axios.get(
+        "http://localhost:8080/api/auth/check-email",
+        {
+          params: { email },
+        }
+      );
 
       if (res.data.available) {
-        navigate('/register-details', { state: { email } });
+        navigate("/register-details", { state: { email } });
       } else {
-        setMessage('Email already in use.');
+        setMessage("Email already in use.");
       }
     } catch (err) {
       console.error(err);
-      setMessage('Error checking email.');
+      setMessage("Error checking email.");
     } finally {
       setLoading(false);
     }
@@ -55,7 +59,9 @@ const RegisterEmail = () => {
         <form className="form" onSubmit={handleSubmit}>
           <h1 className="form-title">CREATE YOUR ACCOUNT</h1>
           <div className="form-group">
-          <label htmlFor="email" className="form-label">Email address</label>
+            <label htmlFor="email" className="form-label">
+              Email address
+            </label>
             <input
               id="email"
               name="email"
@@ -68,24 +74,22 @@ const RegisterEmail = () => {
             />
           </div>
           <label htmlFor="age" className="checkbox-group">
-                <input
-                  id="age"
-                  type="checkbox"
-                  className="checkbox-input"
-                  required
-                />
-                <span>
-                  I'm 13 years old or older and agree with policies and SteamCL security policy
-                </span>
-              </label>
-              <button
-                type="submit"
-                className="submit-button"
-              >
-                Continue
-              </button>
+            <input
+              id="age"
+              type="checkbox"
+              className="checkbox-input"
+              required
+            />
+            <span>
+              I'm 13 years old or older and agree with policies and SteamCL
+              security policy
+            </span>
+          </label>
+          <button type="submit" className="submit-button" disabled={loading}>
+            {loading ? "Checking..." : "Continue"}
+          </button>
         </form>
-      </main>   
+      </main>
       {message && <p className="message">{message}</p>}
     </div>
   );
