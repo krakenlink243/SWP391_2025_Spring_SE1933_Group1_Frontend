@@ -1,0 +1,355 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #1b2838;
+  color: #c6d4df;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.top-nav-stretch {
+  background-color: #171a21;
+  border-bottom: 1px solid #2a475e;
+  width: 100%;
+}
+
+.top-nav {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 8px 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nav-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: auto; /* Push to the far left */
+}
+
+.logo-and-links {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px; /* Space between logo/links and home/search row */
+}
+
+.steam-logo {
+  height: 30px;
+  margin-right: 15px; /* Reduced space between logo and site name */
+}
+
+.site-name {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 15px; /* Space between site name and nav links */
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links a {
+  color: #b0aeac;
+  text-decoration: none;
+  margin-right: 20px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.nav-links a:hover {
+  color: #ffffff;
+}
+
+.home-and-search {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between Home button and search bar */
+}
+
+.home-btn {
+  background-color: #4a5b7a;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.home-btn:hover {
+  background-color: #5a6b8a;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #316282;
+  border-radius: 3px;
+  padding: 2px;
+  width: 300px;
+}
+
+.search-bar input {
+  background-color: transparent;
+  border: none;
+  color: #ffffff;
+  padding: 5px;
+  font-size: 14px;
+  outline: none;
+  flex: 1;
+}
+
+.search-btn {
+  background: none;
+  border: none;
+  color: #b0aeac;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.search-btn:hover {
+  color: #ffffff;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Push to the far right */
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-name {
+  color: #b0aeac;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.user-icons span {
+  color: #b0aeac;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.user-icons span:hover {
+  color: #ffffff;
+}
+
+.main-content {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0;
+  flex: 1;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: normal;
+  margin: 20px 0 10px 20px;
+  color: #ffffff;
+}
+
+.cart-items {
+  background-color: #2a3f5a;
+  border-radius: 5px;
+  margin: 0 20px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #3a4b6a;
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+.cart-item-image {
+  width: 64px;
+  height: 64px;
+  margin-right: 15px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.cart-item-details {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: #b0aeac;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px; /* Space between price and remove button */
+}
+
+.remove-btn:hover {
+  color: #ff4d4d; /* Red color on hover to indicate deletion */
+}
+
+.empty-cart {
+  padding: 20px;
+  text-align: center;
+  font-size: 16px;
+  color: #8f98a0;
+}
+
+.cart-total {
+  margin: 20px;
+  padding: 15px 20px;
+  border-top: 1px solid #3a4b6a;
+  text-align: right;
+  font-size: 16px;
+}
+
+.cart-buttons {
+  margin: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.continue-btn,
+.purchase-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.continue-btn {
+  background-color: #4a5b7a;
+  color: #ffffff;
+}
+
+.continue-btn:hover {
+  background-color: #5a6b8a;
+}
+
+.purchase-btn {
+  background-color: #1a9fff;
+  color: #ffffff;
+}
+
+.purchase-btn:hover {
+  background-color: #2aaaff;
+}
+
+.footer {
+  margin: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #8f98a0;
+}
+
+.footer-logo {
+  font-weight: bold;
+}
+
+.footer-links a {
+  color: #8f98a0;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.footer-links a:hover {
+  color: #c6d4df;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: #2a3f5a;
+  padding: 20px;
+  border-radius: 5px;
+  width: 300px;
+  text-align: center;
+}
+
+.modal h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.modal p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.modal-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cancel-btn {
+  background-color: #4a5b7a;
+  color: #ffffff;
+}
+
+.cancel-btn:hover {
+  background-color: #5a6b8a;
+}
+
+.confirm-btn {
+  background-color: #1a9fff;
+  color: #ffffff;
+}
+
+.confirm-btn:hover {
+  background-color: #2aaaff;
+}
+
+.ok-btn {
+  background-color: #1a9fff;
+  color: #ffffff;
+}
+
+.ok-btn:hover {
+  background-color: #2aaaff;
+}
