@@ -1,37 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import './Cart.css';
+import React, { useState, useEffect } from "react";
+import "./Cart.css"; // Import your CSS file for styling
+import axios from "axios";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [balance, setBalance] = useState(1000); // Khởi tạo tài khoản 1000$
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState("");
   const [loading, setLoading] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showResultModal, setShowResultModal] = useState(false);
-  const [resultMessage, setResultMessage] = useState('');
-  const [removeConfirm, setRemoveConfirm] = useState({ show: false, gameId: null, gameName: '' });
+  const [resultMessage, setResultMessage] = useState("");
+  const [removeConfirm, setRemoveConfirm] = useState({
+    show: false,
+    gameId: null,
+    gameName: "",
+  });
 
   // Lấy userName từ API /users (userId=1)
   useEffect(() => {
-    fetch('http://localhost:8080/users')
-      .then(res => res.json())
-      .then(data => {
+    fetch("http://localhost:8080/users")
+      .then((res) => res.json())
+      .then((data) => {
         let user = null;
         if (Array.isArray(data)) {
-          user = data.find(u => u.userId === 1 || u.userId === '1');
+          user = data.find((u) => u.userId === 1 || u.userId === "1");
         } else if (data && Array.isArray(data.data)) {
-          user = data.data.find(u => u.userId === 1 || u.userId === '1');
+          user = data.data.find((u) => u.userId === 1 || u.userId === "1");
         }
-        setUserName(user?.userName || '');
+        setUserName(user?.userName || "");
       })
-      .catch(() => setUserName(''));
+      .catch(() => setUserName(""));
   }, []);
 
   // Lấy cart từ BE
   const fetchCart = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8080/users/1/cart');
+      const res = await fetch("http://localhost:8080/users/1/cart");
       const data = await res.json();
       setCartItems(data.data?.cartItems || []);
       if (data.data?.balance) setBalance(data.data.balance);
@@ -61,14 +66,22 @@ const Cart = () => {
     setLoading(true);
     try {
       const total = cartItems.reduce((sum, item) => sum + (item.price || 0), 0);
-      if (balance < total) throw new Error('Insufficient balance');
-      const res = await fetch('http://localhost:8080/users/1/cart/checkout');
-      if (!res.ok) throw new Error('Checkout failed');
-      setResultMessage('Purchase successful!');
+      if (balance < total) throw new Error("Insufficient balance");
+      const res = await axios.post(
+        "http://localhost:8080/users/1/cart/checkout"
+      );
+      // console.log("Checkout response:", res.data);
+      // if (!res.ok) throw new Error("Checkout failed");
+      setResultMessage("Purchase successful!");
       setCartItems([]);
       fetchCart();
     } catch (e) {
-      setResultMessage(e.message === 'Insufficient balance' ? 'Insufficient balance!' : 'Purchase failed!');
+      console.error("Checkout error:", e);
+      setResultMessage(
+        e.message === "Insufficient balance"
+          ? "Insufficient balance!"
+          : "Purchase failed!"
+      );
     } finally {
       setShowResultModal(true);
       setLoading(false);
@@ -79,7 +92,7 @@ const Cart = () => {
     setRemoveConfirm({ show: true, gameId, gameName });
   };
   const closeRemoveConfirm = () => {
-    setRemoveConfirm({ show: false, gameId: null, gameName: '' });
+    setRemoveConfirm({ show: false, gameId: null, gameName: "" });
   };
   const confirmRemove = async () => {
     if (removeConfirm.gameId) {
@@ -88,7 +101,9 @@ const Cart = () => {
     closeRemoveConfirm();
   };
 
-  const total = cartItems.reduce((sum, item) => sum + (item.price || 0), 0).toFixed(2);
+  const total = cartItems
+    .reduce((sum, item) => sum + (item.price || 0), 0)
+    .toFixed(2);
 
   return (
     <div className="cart-steam-bg">
@@ -98,7 +113,9 @@ const Cart = () => {
         <span className="cart-balance">${balance.toFixed(2)}</span>
       </div>
       <div className="cart-main-steam">
-        <h2 className="cart-title-steam">{userName ? `${userName}'s Shopping Cart` : 'Shopping Cart'}</h2>
+        <h2 className="cart-title-steam">
+          {userName ? `${userName}'s Shopping Cart` : "Shopping Cart"}
+        </h2>
         <div className="cart-list-steam">
           {loading ? (
             <div className="cart-loading">Loading...</div>
@@ -108,31 +125,52 @@ const Cart = () => {
             <>
               <div className="cart-list-header-steam">
                 <div></div>
-                <div className="cart-item-price-steam" style={{ textAlign: 'right', paddingRight: '8px' }}>Price</div>
+                <div
+                  className="cart-item-price-steam"
+                  style={{ textAlign: "right", paddingRight: "8px" }}
+                >
+                  Price
+                </div>
                 <div></div>
               </div>
               {cartItems.map((item) => (
                 <div className="cart-item-steam" key={item.gameId}>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ display: "flex", alignItems: "center" }}>
                     {/* Ảnh game */}
                     <img
-                      src={item.imageUrl || 'https://via.placeholder.com/60x60?text=Game'}
+                      src={
+                        item.imageUrl ||
+                        "https://via.placeholder.com/60x60?text=Game"
+                      }
                       alt={item.gameName}
                       className="cart-item-img-steam"
-                      style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 8, marginRight: 16, background: '#222' }}
+                      style={{
+                        width: 60,
+                        height: 60,
+                        objectFit: "cover",
+                        borderRadius: 8,
+                        marginRight: 16,
+                        background: "#222",
+                      }}
                     />
                     {/* Tên game */}
                     <div className="cart-item-info-steam">
-                      <div className="cart-item-title-steam">{item.gameName}</div>
+                      <div className="cart-item-title-steam">
+                        {item.gameName}
+                      </div>
                     </div>
                   </div>
                   <div className="cart-item-price-steam">
-                    <span className="cart-item-sale-steam">${item.price.toFixed(2)}</span>
+                    <span className="cart-item-sale-steam">
+                      ${item.price.toFixed(2)}
+                    </span>
                   </div>
-                  <div style={{ textAlign: 'right' }}>
+                  <div style={{ textAlign: "right" }}>
                     <button
                       className="cart-item-remove-steam"
-                      onClick={() => openRemoveConfirm(item.gameId, item.gameName)}
+                      onClick={() =>
+                        openRemoveConfirm(item.gameId, item.gameName)
+                      }
                       title="Remove"
                       disabled={loading}
                     >
@@ -149,14 +187,16 @@ const Cart = () => {
               <div className="cart-btns-steam">
                 <button
                   className="cart-btn-steam"
-                  style={{ marginRight: 'auto' }}
+                  style={{ marginRight: "auto" }}
                 >
                   Continue Shopping
                 </button>
                 <button
                   className="cart-btn-steam cart-btn-blue-steam"
                   onClick={() => setShowConfirmModal(true)}
-                  disabled={cartItems.length === 0 || loading || total > balance}
+                  disabled={
+                    cartItems.length === 0 || loading || total > balance
+                  }
                 >
                   Purchase for Myself
                 </button>
@@ -171,8 +211,17 @@ const Cart = () => {
             <h3>Confirm Purchase</h3>
             <p>Are you sure you want to purchase all games in your cart?</p>
             <div className="cart-modal-btns-steam">
-              <button onClick={() => setShowConfirmModal(false)} className="cart-btn-steam">Cancel</button>
-              <button onClick={handleCheckout} className="cart-btn-steam cart-btn-blue-steam" disabled={loading}>
+              <button
+                onClick={() => setShowConfirmModal(false)}
+                className="cart-btn-steam"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleCheckout}
+                className="cart-btn-steam cart-btn-blue-steam"
+                disabled={loading}
+              >
                 Confirm
               </button>
             </div>
@@ -185,7 +234,12 @@ const Cart = () => {
             <h3>Purchase Result</h3>
             <p>{resultMessage}</p>
             <div className="cart-modal-btns-steam">
-              <button onClick={() => setShowResultModal(false)} className="cart-btn-steam">OK</button>
+              <button
+                onClick={() => setShowResultModal(false)}
+                className="cart-btn-steam"
+              >
+                OK
+              </button>
             </div>
           </div>
         </div>
@@ -194,10 +248,19 @@ const Cart = () => {
         <div className="cart-modal-steam">
           <div className="cart-modal-content-steam">
             <h3>Remove Game</h3>
-            <p>Are you sure you want to remove <b>{removeConfirm.gameName}</b> from your cart?</p>
+            <p>
+              Are you sure you want to remove <b>{removeConfirm.gameName}</b>{" "}
+              from your cart?
+            </p>
             <div className="cart-modal-btns-steam">
-              <button onClick={closeRemoveConfirm} className="cart-btn-steam">Cancel</button>
-              <button onClick={confirmRemove} className="cart-btn-steam cart-btn-blue-steam" disabled={loading}>
+              <button onClick={closeRemoveConfirm} className="cart-btn-steam">
+                Cancel
+              </button>
+              <button
+                onClick={confirmRemove}
+                className="cart-btn-steam cart-btn-blue-steam"
+                disabled={loading}
+              >
                 Remove
               </button>
             </div>

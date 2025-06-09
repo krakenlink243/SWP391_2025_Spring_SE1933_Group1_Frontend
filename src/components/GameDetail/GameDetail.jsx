@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"; // Hook để lấy params từ URL
 import "./GameDetail.css"; // Tạo file CSS này sau
 import Review from "../Review/Review"; // Import component Review
+import axios from "axios";
 
 const GameDetail = () => {
   const { gameId } = useParams();
@@ -53,6 +54,17 @@ const GameDetail = () => {
   if (!game) {
     return <div className="not-found-message">Game not found.</div>;
   }
+
+  const addCartHandler = async () => {
+    try {
+      const respo = await axios.get(
+        `http://localhost:8080/users/1/cart/add?gameId=${gameId}`
+      );
+      console.log("Add to cart response:", respo.data);
+    } catch (err) {
+      console.error("Error adding to cart:", err);
+    }
+  };
 
   return (
     <div className="game-detail-page">
@@ -108,7 +120,12 @@ const GameDetail = () => {
           </div>
           <div className="purchase-box">
             <span className="price">${game.price.toFixed(2)}</span>
-            <button className="add-to-cart-button">Add to Cart</button>
+            <button
+              onClick={() => addCartHandler()}
+              className="add-to-cart-button"
+            >
+              Add to Cart
+            </button>
           </div>
         </div>
       </div>

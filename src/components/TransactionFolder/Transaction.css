@@ -1,15 +1,16 @@
-@import './Cart.css';
+@import "../CartFolder/Cart.css";
 
 .transaction-table-steam {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  background: rgba(30,40,50,0.95);
+  background: rgba(30, 40, 50, 0.95);
   border-radius: 12px;
   overflow: hidden;
   margin-top: 12px;
 }
-.transaction-table-steam th, .transaction-table-steam td {
+.transaction-table-steam th,
+.transaction-table-steam td {
   padding: 12px 8px;
   border-bottom: 1px solid #222c37;
   text-align: center;

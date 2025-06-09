@@ -19,6 +19,8 @@ const Header = () => {
         <a href="/register">Register</a>
         <a href="/sendgame">Request Add Game</a>
         <a href="/aprrovegame">Approve Game</a>
+        <a href="/transaction">Transaction</a>
+        <a href="/cart">Cart</a>
       </div>
     </header>
   );

@@ -11,6 +11,8 @@ import Login from "./pages/Login";
 import RegisterEmail from "./pages/RegisterEmail";
 import RegisterDetails from "./pages/RegisterDetails";
 import GameApprrovePage from "./pages/GameApprovePage";
+import Transaction from "./components/TransactionFolder/Transaction";
+import Cart from "./components/CartFolder/Cart";
 import "./App.css";
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
           <Route path="/login" element={<LoginF />} />
           <Route path="/register" element={<RegisterF />} />
           <Route path="/register-details" element={<RegisterDetailsF />} />
+          <Route path="/transaction" element={<Transaction />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </BrowserRouter>
     </div>
