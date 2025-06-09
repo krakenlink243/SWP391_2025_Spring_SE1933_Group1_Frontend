@@ -1,0 +1,50 @@
+@import './Cart.css';
+
+.transaction-table-steam {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: rgba(30,40,50,0.95);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+.transaction-table-steam th, .transaction-table-steam td {
+  padding: 12px 8px;
+  border-bottom: 1px solid #222c37;
+  text-align: center;
+}
+.transaction-table-steam th {
+  background: #232b36;
+  font-weight: 600;
+}
+.transaction-row-steam:last-child td {
+  border-bottom: none;
+}
+.transaction-td-date {
+  text-align: center;
+  width: 20%;
+}
+.transaction-td-item {
+  text-align: center;
+  width: 40%;
+}
+.transaction-td-amount {
+  text-align: center;
+  width: 20%;
+}
+.transaction-td-changes {
+  text-align: center;
+  width: 20%;
+  color: #e74c3c;
+  font-weight: 600;
+}
+.transaction-row-steam {
+  background: transparent;
+  transition: background 0.2s;
+}
+.transaction-row-steam:hover {
+  background: #232b36;
+}
+
+/* Bạn có thể custom thêm cho transaction ở đây nếu muốn */
