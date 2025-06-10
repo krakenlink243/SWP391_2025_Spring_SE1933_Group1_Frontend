@@ -1,50 +1,88 @@
-@import './Cart.css';
+.transaction-steam-bg {
+  background-color: #1a222a;
+  min-height: 100vh;
+  padding: 20px;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+}
+
+.transaction-main-steam {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+.transaction-title-steam {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #c7d5e0;
+}
+
+.transaction-list-steam {
+  margin-top: 20px;
+}
+
+.transaction-items-container {
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #0f1419;
+}
+
+.transaction-loading,
+.transaction-empty-steam {
+  text-align: center;
+  padding: 20px;
+  color: #c7d5e0;
+}
 
 .transaction-table-steam {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  background: rgba(30,40,50,0.95);
-  border-radius: 12px;
-  overflow: hidden;
-  margin-top: 12px;
-}
-.transaction-table-steam th, .transaction-table-steam td {
-  padding: 12px 8px;
-  border-bottom: 1px solid #222c37;
-  text-align: center;
-}
-.transaction-table-steam th {
-  background: #232b36;
-  font-weight: 600;
-}
-.transaction-row-steam:last-child td {
-  border-bottom: none;
-}
-.transaction-td-date {
-  text-align: center;
-  width: 20%;
-}
-.transaction-td-item {
-  text-align: center;
-  width: 40%;
-}
-.transaction-td-amount {
-  text-align: center;
-  width: 20%;
-}
-.transaction-td-changes {
-  text-align: center;
-  width: 20%;
-  color: #e74c3c;
-  font-weight: 600;
-}
-.transaction-row-steam {
-  background: transparent;
-  transition: background 0.2s;
-}
-.transaction-row-steam:hover {
-  background: #232b36;
+  border-collapse: collapse;
 }
 
-/* Bạn có thể custom thêm cho transaction ở đây nếu muốn */
+.transaction-th-date,
+.transaction-th-item,
+.transaction-th-amount,
+.transaction-th-changes {
+  padding: 10px;
+  text-align: left;
+  color: #c7d5e0;
+  font-size: 16px;
+  border-bottom: 1px solid #1a252f;
+}
+
+.transaction-th-amount,
+.transaction-th-changes {
+  text-align: right;
+}
+
+.transaction-row-steam {
+  border-bottom: 1px solid #1a252f;
+}
+
+.transaction-row-steam:last-child {
+  border-bottom: none;
+}
+
+.transaction-td-date,
+.transaction-td-item {
+  padding: 10px;
+  font-size: 16px;
+  color: #c7d5e0;
+}
+
+.transaction-td-amount {
+  padding: 10px;
+  font-size: 16px;
+  color: #ffffff;
+  text-align: right;
+}
+
+.transaction-td-changes {
+  padding: 10px;
+  font-size: 16px;
+  color: #ff4444;
+  text-align: right;
+}

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './Cart.css';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [balance, setBalance] = useState(1000); // Khởi tạo tài khoản 1000$
+  const [balance, setBalance] = useState(0);
   const [userName, setUserName] = useState('');
   const [loading, setLoading] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -11,31 +12,40 @@ const Cart = () => {
   const [resultMessage, setResultMessage] = useState('');
   const [removeConfirm, setRemoveConfirm] = useState({ show: false, gameId: null, gameName: '' });
 
-  // Lấy userName từ API /users (userId=1)
+  // Fetch userName và balance từ API http://localhost:8080/users
   useEffect(() => {
-    fetch('http://localhost:8080/users')
-      .then(res => res.json())
-      .then(data => {
+    axios.get('http://localhost:8080/users')
+      .then(response => {
+        console.log('Users API response:', response.data);
+        const data = response.data;
         let user = null;
-        if (Array.isArray(data)) {
-          user = data.find(u => u.userId === 1 || u.userId === '1');
-        } else if (data && Array.isArray(data.data)) {
+        if (data.data && Array.isArray(data.data)) {
           user = data.data.find(u => u.userId === 1 || u.userId === '1');
         }
         setUserName(user?.userName || '');
+        setBalance(user?.walletBalance || 0);
       })
-      .catch(() => setUserName(''));
+      .catch(error => {
+        console.error('Error fetching users:', error.message, error.response?.status, error.response?.data);
+        setUserName('');
+        setBalance(0);
+      });
   }, []);
 
-  // Lấy cart từ BE
+  // Fetch cart từ backend
   const fetchCart = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8080/users/1/cart');
-      const data = await res.json();
-      setCartItems(data.data?.cartItems || []);
-      if (data.data?.balance) setBalance(data.data.balance);
-    } catch {
+      const response = await axios.get('http://localhost:8080/users/1/cart');
+      console.log('Cart API response:', response.data);
+      const data = response.data;
+      if (data.success && Array.isArray(data.data)) {
+        setCartItems(data.data);
+      } else {
+        setCartItems([]);
+      }
+    } catch (error) {
+      console.error('Error fetching cart:', error.message, error.response?.status, error.response?.data);
       setCartItems([]);
     } finally {
       setLoading(false);
@@ -49,8 +59,10 @@ const Cart = () => {
   const handleRemove = async (gameId) => {
     setLoading(true);
     try {
-      await fetch(`http://localhost:8080/users/1/cart/remove?gameId=${gameId}`);
+      await axios.delete(`http://localhost:8080/users/1/cart/remove?gameId=${gameId}`);
       await fetchCart();
+    } catch (error) {
+      console.error('Error removing game:', error.message, error.response?.status, error.response?.data);
     } finally {
       setLoading(false);
     }
@@ -62,13 +74,19 @@ const Cart = () => {
     try {
       const total = cartItems.reduce((sum, item) => sum + (item.price || 0), 0);
       if (balance < total) throw new Error('Insufficient balance');
-      const res = await fetch('http://localhost:8080/users/1/cart/checkout');
-      if (!res.ok) throw new Error('Checkout failed');
+      const response = await axios.post('http://localhost:8080/users/1/cart/checkout');
+      if (!response.data.success) throw new Error('Checkout failed');
       setResultMessage('Purchase successful!');
       setCartItems([]);
-      fetchCart();
-    } catch (e) {
-      setResultMessage(e.message === 'Insufficient balance' ? 'Insufficient balance!' : 'Purchase failed!');
+      await fetchCart();
+      const userRes = await axios.get('http://localhost:8080/users');
+      console.log('Updated users response:', userRes.data);
+      const userData = userRes.data;
+      const updatedUser = userData.data?.find(u => u.userId === 1);
+      setBalance(updatedUser?.walletBalance || 0);
+    } catch (error) {
+      setResultMessage(error.message === 'Insufficient balance' ? 'Insufficient balance!' : 'Purchase failed!');
+      console.error('Error during checkout:', error.message, error.response?.status, error.response?.data);
     } finally {
       setShowResultModal(true);
       setLoading(false);
@@ -92,11 +110,6 @@ const Cart = () => {
 
   return (
     <div className="cart-steam-bg">
-      <div className="cart-header-steam">
-        <span className="cart-steam-title">STEAM</span>
-        <span className="cart-user">{userName}</span>
-        <span className="cart-balance">${balance.toFixed(2)}</span>
-      </div>
       <div className="cart-main-steam">
         <h2 className="cart-title-steam">{userName ? `${userName}'s Shopping Cart` : 'Shopping Cart'}</h2>
         <div className="cart-list-steam">
@@ -105,34 +118,17 @@ const Cart = () => {
           ) : cartItems.length === 0 ? (
             <div className="cart-empty-steam">Your cart is empty.</div>
           ) : (
-            <>
-              <div className="cart-list-header-steam">
-                <div></div>
-                <div className="cart-item-price-steam" style={{ textAlign: 'right', paddingRight: '8px' }}>Price</div>
-                <div></div>
-              </div>
+            <div className="cart-items-container">
               {cartItems.map((item) => (
-                <div className="cart-item-steam" key={item.gameId}>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    {/* Ảnh game */}
-                    <img
-                      src={item.imageUrl || 'https://via.placeholder.com/60x60?text=Game'}
-                      alt={item.gameName}
-                      className="cart-item-img-steam"
-                      style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 8, marginRight: 16, background: '#222' }}
-                    />
-                    {/* Tên game */}
-                    <div className="cart-item-info-steam">
-                      <div className="cart-item-title-steam">{item.gameName}</div>
-                    </div>
+                <div className="cart-item-steam" key={item.id}>
+                  <div className="cart-item-title">{item.title || 'Unnamed Game'}</div>
+                  <div className="cart-item-price-container">
+                    <span className="cart-item-price">${item.discountPrice > 0 ? item.discountPrice.toFixed(2) : item.price?.toFixed(2) || '0.00'}</span>
                   </div>
-                  <div className="cart-item-price-steam">
-                    <span className="cart-item-sale-steam">${item.price.toFixed(2)}</span>
-                  </div>
-                  <div style={{ textAlign: 'right' }}>
+                  <div className="cart-item-remove">
                     <button
-                      className="cart-item-remove-steam"
-                      onClick={() => openRemoveConfirm(item.gameId, item.gameName)}
+                      className="cart-item-remove-btn"
+                      onClick={() => openRemoveConfirm(item.id, item.title || 'Unnamed Game')}
                       title="Remove"
                       disabled={loading}
                     >
@@ -141,27 +137,26 @@ const Cart = () => {
                   </div>
                 </div>
               ))}
-              <div className="cart-total-steam">
-                <div>Estimated total:</div>
-                <div className="cart-total-price-steam">${total}</div>
-                <div></div>
+              <div className="cart-item-steam">
+                <div className="cart-item-title">Estimated total:</div>
+                <div className="cart-item-price-container">
+                  <span className="cart-item-price">${total}</span>
+                </div>
+                <div className="cart-item-empty"></div>
               </div>
-              <div className="cart-btns-steam">
-                <button
-                  className="cart-btn-steam"
-                  style={{ marginRight: 'auto' }}
-                >
-                  Continue Shopping
-                </button>
-                <button
-                  className="cart-btn-steam cart-btn-blue-steam"
-                  onClick={() => setShowConfirmModal(true)}
-                  disabled={cartItems.length === 0 || loading || total > balance}
-                >
-                  Purchase for Myself
-                </button>
-              </div>
-            </>
+            </div>
+          )}
+          {cartItems.length > 0 && (
+            <div className="cart-btns-steam">
+              <button className="cart-btn-steam">Continue Shopping</button>
+              <button
+                className="cart-btn-steam cart-btn-blue-steam"
+                onClick={() => setShowConfirmModal(true)}
+                disabled={cartItems.length === 0 || loading || total > balance}
+              >
+                Purchase for Myself
+              </button>
+            </div>
           )}
         </div>
       </div>
@@ -194,7 +189,7 @@ const Cart = () => {
         <div className="cart-modal-steam">
           <div className="cart-modal-content-steam">
             <h3>Remove Game</h3>
-            <p>Are you sure you want to remove <b>{removeConfirm.gameName}</b> from your cart?</p>
+            <p>Are you sure you want to remove <b>{removeConfirm.gameName || 'Unnamed Game'}</b> from your cart?</p>
             <div className="cart-modal-btns-steam">
               <button onClick={closeRemoveConfirm} className="cart-btn-steam">Cancel</button>
               <button onClick={confirmRemove} className="cart-btn-steam cart-btn-blue-steam" disabled={loading}>
