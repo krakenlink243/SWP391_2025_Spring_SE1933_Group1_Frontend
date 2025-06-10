@@ -67,7 +67,7 @@ const Cart = () => {
     try {
       const total = cartItems.reduce((sum, item) => sum + (item.price || 0), 0);
       if (balance < total) throw new Error("Insufficient balance");
-      const res = await axios.post(
+      const res = await axios.get(
         "http://localhost:8080/users/1/cart/checkout"
       );
       // console.log("Checkout response:", res.data);
