@@ -57,10 +57,19 @@ const GameDetail = () => {
 
   const addCartHandler = async () => {
     try {
-      const response = await axios.post(
+      const response = await axios.get(
         `http://localhost:8080/users/1/cart/add?gameId=${gameId}`
       );
-      alert(response.data);
+      console.log("Add to cart response:", response.data);
+
+      // @author Phan NT Son
+      // Tạo thông báo khi người dùng thêm game vào giỏ hàng
+      if (response.data.success) {
+        createNotification(`Game ${game.name} has been added to your cart.`);
+        alert("Game added to cart successfully!");
+      } else {
+        alert("Failed to add game to cart.");
+      }
     } catch (err) {
       console.error("Error adding to cart:", err);
       alert("Failed to add game to cart.");
@@ -72,6 +81,26 @@ const GameDetail = () => {
     game.media?.find((m) => m.type.toLowerCase().includes("header"))?.url ||
     game.media?.[0]?.url ||
     "";
+  /**
+   * @author Phan NT Son
+   * @description Tạo thông báo khi người dùng thêm game vào giỏ hàng
+   * @param {*} message
+   */
+  const createNotification = async (message) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/notification/create",
+        {
+          userId: 1, // Giả sử userId là 1, bạn có thể thay đổi theo nhu cầu
+          notificationType: "Cart",
+          notificationContent: message,
+        }
+      );
+      console.log("Notification created:", response.data);
+    } catch (error) {
+      console.error("Error creating notification:", error);
+    }
+  };
 
   return (
     <div className="game-detail-page">

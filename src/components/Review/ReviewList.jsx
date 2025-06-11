@@ -49,6 +49,7 @@ function ReviewList({ reloadSignal, onReload, gameId, userId }) {
                   <ReviewButtons
                     gameId={gameId}
                     originalReview={review}
+                    userId={userId}
                   />
                   {review.userId == userId && (
                     <div onClick={() => setEditingId(review.userId)} style={{cursor : "pointer"}}><u>Edit</u></div>

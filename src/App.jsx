@@ -13,6 +13,8 @@ import GameApprrovePage from "./pages/GameApprovePage";
 import Transaction from "./components/TransactionFolder/Transaction";
 import Cart from "./components/CartFolder/Cart";
 import SplashScreen from "./components/SplashScreen/SplashScreen"; // Import SplashScreen component
+// import NotificationBox from "./components/NotificationBox";
+import NotificationList from "./components/NotificationList";
 import "./App.css";
 import GamesPage from "./components/GamesPage/GamesPage";
 function App() {
@@ -77,7 +79,7 @@ function App() {
       >
         <BrowserRouter>
           <Header hideLogo={hideHeaderLogo} />
-          <Navbar />  
+          <Navbar />
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/game/:gameId" element={<Detail />} />
@@ -89,6 +91,7 @@ function App() {
             <Route path="/register-details" element={<RegisterDetailsF />} />
             <Route path="/transaction" element={<Transaction />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/notifications" element={<NotificationList />} />
           </Routes>
         </BrowserRouter>
       </div>

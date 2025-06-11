@@ -21,6 +21,7 @@ const Header = () => {
         <a href="/aprrovegame">Approve Game</a>
         <a href="/transaction">Transaction</a>
         <a href="/cart">Cart</a>
+        <a href="/notifications">Notifications</a>
       </div>
     </header>
   );

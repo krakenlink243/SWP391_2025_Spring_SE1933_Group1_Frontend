@@ -4,7 +4,7 @@ import ReviewForm from "./ReviewForm";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-function Review({gameId}) {
+function Review({ gameId }) {
   const [reloadSignal, setReloadSignal] = useState(0);
   const triggerReload = () => setReloadSignal(prev => prev + 1);
 
@@ -12,6 +12,10 @@ function Review({gameId}) {
   Mock token for testing purposes.
   https://jwt.io/
   UserID = 1
+  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIiwiaWF0IjoxNTE2MjM5MDIyfQ.sBcipOL7MvfpA9ytpCJ_ktqBGD65fuYuXssptIv6Gy8
+  
+  UserID = 2
+  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyIiwiaWF0IjoxNTE2MjM5MDIyfQ.obu1y19W7zLqfS5iTC5IYvuIKSfjqgoSNIgFwl0ZMJ8
   */
   useEffect(() => {
     const mockToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIiwiaWF0IjoxNTE2MjM5MDIyfQ.sBcipOL7MvfpA9ytpCJ_ktqBGD65fuYuXssptIv6Gy8"
@@ -32,8 +36,6 @@ function Review({gameId}) {
   const token = localStorage.getItem("token");
   if (token) {
     decodedToken = jwtDecode(token);
-    console.log("Decoded Token:", decodedToken);
-    console.log("UserID:", decodedToken.userId);
   } else {
     console.error("No token found in localStorage.");
     return <div>Error: No token found.</div>;
