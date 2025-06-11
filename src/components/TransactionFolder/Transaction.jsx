@@ -2,6 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Transaction.css';
 
+/**
+ * @author BaThanh
+ * @description Component for showing transaction
+ * @param {*} param0 
+ * @returns 
+ */
+  const userid = localStorage.getItem("userId");
+
 const Transaction = () => {
   const [transactions, setTransactions] = useState([]);
   const [userName, setUserName] = useState('');
@@ -15,7 +23,7 @@ const Transaction = () => {
         const data = response.data;
         let user = null;
         if (data.data && Array.isArray(data.data)) {
-          user = data.data.find(u => u.userId === 1 || u.userId === '1');
+          user = data.data.find(u => u.userId === Number(userid));
         }
         setUserName(user?.userName || '');
       })
@@ -29,7 +37,7 @@ const Transaction = () => {
   const fetchTransactions = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:8080/users/1/transactions');
+      const response = await axios.get(`http://localhost:8080/users/${userid}/transactions`);
       console.log('Transactions API response:', response.data);
       let transactions = response.data.data || [];
       

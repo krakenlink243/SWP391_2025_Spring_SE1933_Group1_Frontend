@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Cart.css';
+import { jwtDecode } from "jwt-decode";
+
+/**
+ * @author BaThanh
+ * @description Component for showing cart, removing games from cart, and checkout cart.
+ * @param {*} param0 
+ * @returns 
+ */
+  const userid = localStorage.getItem("userId");
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -24,7 +33,7 @@ const Cart = () => {
         const data = response.data;
         let user = null;
         if (data.data && Array.isArray(data.data)) {
-          user = data.data.find(u => u.userId === 1 || u.userId === '1');
+          user = data.data.find(u => u.userId === Number(userid));
         }
         setUserName(user?.userName || '');
         setBalance(user?.walletBalance || 0);
@@ -40,7 +49,7 @@ const Cart = () => {
   const fetchCart = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:8080/users/1/cart');
+      const response = await axios.get(`http://localhost:8080/users/${userid}/cart`);
       console.log('Cart API response:', response.data);
       const data = response.data;
       if (data.success && Array.isArray(data.data)) {
@@ -63,7 +72,7 @@ const Cart = () => {
   const handleRemove = async (gameId) => {
     setLoading(true);
     try {
-      await axios.delete(`http://localhost:8080/users/1/cart/remove?gameId=${gameId}`);
+      await await axios.delete(`http://localhost:8080/users/${userid}/cart/remove?gameId=${gameId}`);
       await fetchCart();
     } catch (error) {
       console.error('Error removing game:', error.message, error.response?.status, error.response?.data);
@@ -78,7 +87,7 @@ const Cart = () => {
     try {
       const total = cartItems.reduce((sum, item) => sum + (item.price || 0), 0);
       if (balance < total) throw new Error('Insufficient balance');
-      const response = await axios.post('http://localhost:8080/users/1/cart/checkout');
+      const response = await axios.post(`http://localhost:8080/users/${userid}/cart/checkout`);
       if (!response.data.success) throw new Error('Checkout failed');
       setResultMessage('Purchase successful!');
       setCartItems([]);
@@ -86,7 +95,7 @@ const Cart = () => {
       const userRes = await axios.get('http://localhost:8080/users');
       console.log('Updated users response:', userRes.data);
       const userData = userRes.data;
-      const updatedUser = userData.data?.find(u => u.userId === 1);
+      const updatedUser = userData.data?.find(u => u.userId === Number(userid));
       setBalance(updatedUser?.walletBalance || 0);
     } catch (error) {
       setResultMessage(error.message === 'Insufficient balance' ? 'Insufficient balance!' : 'Purchase failed!');
