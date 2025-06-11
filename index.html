@@ -7,11 +7,34 @@
       type="image/svg+xml"
       href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/500px-Steam_icon_logo.svg.png"
     />
+    <link rel="stylesheet" href="/src/styles.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SteamCL</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div id="loader-wrapper" class="loader-wrapper">
+        <div class="loader"></div>
+      </div>
+    </div>
+
     <script type="module" src="/src/main.jsx"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const loaderWrapper = document.getElementById("loader-wrapper");
+        const startupAudio = new Audio("/sounds/startup-sound.mp3");
+        startupAudio.load();
+        const startApp = () => {
+          if (!loaderWrapper.classList.contains("hidden")) {
+            startupAudio.play().catch((error) => {
+              console.error("Lỗi phát âm thanh:", error);
+            });
+            loaderWrapper.classList.add("hidden");
+          }
+        };
+        loaderWrapper.addEventListener("click", startApp, { once: true });
+      });
+    </script>
   </body>
 </html>

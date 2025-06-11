@@ -1,0 +1,239 @@
+/* ---- TỔNG THỂ TRANG ---- */
+.game-detail-page {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 20px;
+  color: #c6d4df;
+  font-family: 'Motiva Sans', Sans-serif;
+  background-color: #1b2838; /* Màu nền tối giống Steam */
+}
+
+.breadcrumb {
+  font-size: 12px;
+  color: #8f98a0;
+  margin-bottom: 10px;
+}
+
+.breadcrumb a {
+  color: #c6d4df;
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: #ffffff;
+}
+
+.game-title-header {
+  font-size: 26px;
+  font-weight: 300;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+/* ---- LAYOUT 2 CỘT CHÍNH ---- */
+.detail-main-content {
+  display: flex;
+  gap: 16px;
+}
+
+/* CỘT TRÁI - MEDIA */
+.media-column {
+  flex: 616; /* Tỉ lệ ~616px */
+  min-width: 0;
+}
+
+.main-media-banner {
+  width: 100%;
+  margin-bottom: 8px;
+  background-color: #000;
+}
+
+.main-media-banner img,
+.main-media-banner video {
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+}
+
+.media-thumbnail-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.thumbnail-container {
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.thumbnail-container:hover {
+  border-color: #66c0f4;
+}
+
+.thumbnail-container.active {
+  border-color: #ffffff;
+}
+
+.thumbnail {
+  width: 116px;
+  height: 65px;
+  object-fit: cover;
+  display: block;
+}
+
+/* CỘT PHẢI - THÔNG TIN */
+.info-column {
+  flex: 308; /* Tỉ lệ ~308px */
+  min-width: 0;
+}
+
+.info-cover-image {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.short-description {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #acb2b8;
+  margin-bottom: 15px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 8px;
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+.info-label {
+  color: #556772;
+  text-transform: uppercase;
+}
+
+.info-value {
+  color: #66c0f4;
+  text-decoration: none;
+}
+
+.tag-list-detail {
+  margin-bottom: 20px;
+}
+
+.tag-list-detail .tag {
+  display: inline-block;
+  background-color: #202d39;
+  padding: 4px 7px;
+  border-radius: 3px;
+  font-size: 11px;
+  margin: 0 4px 4px 0;
+  color: #acb2b8;
+  cursor: pointer;
+}
+
+.tag-list-detail .tag:hover {
+  background-color: #2c4155;
+  color: #ffffff;
+}
+
+/* KHU VỰC MUA GAME */
+.purchase-area {
+  margin-top: auto; /* Đẩy xuống cuối nếu cột info cao hơn */
+}
+
+.purchase-box {
+  background: linear-gradient(to right, rgba(42, 71, 94, 1), rgba(42, 71, 94, 0));
+  padding: 16px;
+  border-radius: 3px;
+}
+
+.price-label {
+  font-size: 14px;
+  color: #ffffff;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.price-action {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+}
+
+.price {
+  font-size: 14px;
+  color: #c7d5e0;
+}
+
+.add-to-cart-button {
+  background: linear-gradient( to bottom, #799905 5%, #536904 95%);
+  border: none;
+  border-radius: 2px;
+  padding: 8px 15px;
+  color: #d2ff40;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.add-to-cart-button:hover {
+  background: linear-gradient( to bottom, #89ac06 5%, #637f04 95%);
+}
+
+
+/* ---- PHẦN DƯỚI ---- */
+.bottom-content-container {
+  margin-top: 25px;
+  display: flex;
+  gap: 20px;
+}
+
+.full-description-section {
+  flex: 3;
+}
+
+.system-requirements-section {
+  flex: 2;
+}
+
+.bottom-content-container h2 {
+  font-size: 14px;
+  color: #556772;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  font-weight: normal;
+}
+
+.description-body {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #acb2b8;
+}
+
+.requirements-grid {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 15px;
+  font-size: 12px;
+  color: #acb2b8;
+}
+
+.requirements-grid strong {
+  color: #8f98a0;
+}
+
+.review-section-container {
+  margin-top: 30px;
+}
+
+.review-section-container h2 {
+  font-size: 14px;
+  color: #556772;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  font-weight: normal;
+}

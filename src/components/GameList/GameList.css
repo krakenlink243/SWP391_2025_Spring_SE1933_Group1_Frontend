@@ -1,11 +1,8 @@
 /* src/components/GameList/GameList.css */
 .game-list-container {
-  flex-grow: 1; /* Cho phép danh sách game chiếm phần lớn không gian */
-  /* Nếu muốn giới hạn chiều rộng tối đa cho khu vực này:
-       max-width: 700px; (ví dụ)
-    */
+  flex-grow: 1;
+  /* max-width: 700px; */
 }
-/* src/components/GameList/GameList.css hoặc App.css */
 .loading-message,
 .error-message,
 .no-games-message {

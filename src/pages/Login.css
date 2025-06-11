@@ -1,0 +1,129 @@
+/* Header styles */
+
+.brand {
+  font-family: "Roboto", sans-serif;
+  font-weight: 800;
+  color: #b0b0b0;
+  font-size: 1.25rem;
+  user-select: none;
+}
+
+.header-right {
+  color: #d0d0d0;
+  font-size: 0.875rem;
+  user-select: none;
+}
+
+/* Main content styles */
+main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.form-section {
+  padding-top: 5rem ;
+  max-width: 32rem;
+  width: 100%;
+}
+
+.form-title {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  user-select: none;
+}
+
+.form {
+  background-color: #12151d;
+  padding: 50px;
+  border-radius: 0.375rem;
+  padding-left: 30px;
+}
+
+.form-label {
+  display: block;
+  color: #1e90ff;
+  font-weight: 600;
+  font-size: 0.75rem;
+  margin-bottom: 0.25rem;
+  user-select: none;
+}
+
+.form-label.password {
+  color: #7a7a7a;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  color: #000000;
+  font-size: 0.875rem;
+}
+
+.form-input:focus {
+  outline: none;
+}
+
+.checkbox-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #9a9a9a;
+  font-size: 0.75rem;
+  user-select: none;
+}
+
+.checkbox-input {
+  width: 1rem;
+  height: 1rem;
+  background-color: #4a4a4a;
+  border: none;
+  border-radius: 0.125rem;
+  cursor: pointer;
+}
+
+.help-link {
+  color: #7a7a7a;
+  font-size: 0.75rem;
+  text-decoration: underline;
+  text-underline-offset: 0.125rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.submit-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.submit-button {
+  background: linear-gradient(to right, #00b0ff, #3a5fff);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1.125rem;
+  padding: 0.75rem 2.5rem;
+  border-radius: 0.125rem;
+  border: none;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  filter: brightness(1.1);
+}
+
+.google-logo {
+  width: 2.5rem;
+  height: 2.5rem;
+}

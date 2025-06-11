@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Motiva Sans';
+    src: url('/src/assets/fonts/MotivaSansRegular.woff.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'Motiva Sans Light';
+    src: url('/src/assets/fonts/MotivaSansLight.woff.ttf') format('truetype');
+  }
