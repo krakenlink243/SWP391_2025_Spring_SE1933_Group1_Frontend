@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Outlet, Link } from "react-router-dom"; // Import các component của router
 import { useState, useEffect } from "react"; // Import useState và useEffect từ React
+import axios from "axios"; // Import axios để thực hiện các yêu cầu HTTP
+
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import GameDetail from "./components/GameDetail/GameDetail";
@@ -64,6 +66,16 @@ function App() {
     loadingState.isFirstVisit && !loadingState.isFinished;
   const hideHeaderLogo = loadingState.isFirstVisit && !loadingState.isFinished;
   // --- KẾT THÚC LOGIC SPLASH SCREEN ---
+
+  // Added by Phan NT Son
+  // Set up axios interceptor to include token in headers
+  axios.interceptors.request.use(config => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  });
 
   return (
     <div className="app-container">

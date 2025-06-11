@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./Login.css";
+import { jwtDecode } from "jwt-decode";
+
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -17,6 +19,18 @@ const Login = () => {
       });
 
       setMessage("Login successful!");
+
+      // Added by Phan NT Son
+      localStorage.setItem("token", res.data.token);
+      let decodedToken = null;
+      const token = localStorage.getItem("token");
+      decodedToken = jwtDecode(token);
+      const userId = decodedToken.userId;
+      const role = decodedToken.role;
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("role", role);
+      
+
       // navigate('/');
       // Optionally redirect or store auth token here
     } catch (err) {
