@@ -1,60 +1,63 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import GameCard from "../GameCard/GameCard";
 import "./GameList.css";
-import axios from "axios";
-import { Link, Routes } from "react-router";
+import { Link } from "react-router-dom"; // Sửa lại import cho đúng
 
-const GameList = () => {
-  const [games, setGames] = useState([]); // State để lưu danh sách game
-  const [loading, setLoading] = useState(true); // State cho trạng thái tải
-  const [error, setError] = useState(null); // State cho lỗi (nếu có)
-
-  useEffect(() => {
-    const fetchGames = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const response = await axios.get("http://localhost:8080/game");
-        setGames(response.data);
-      } catch (e) {
-        console.error("Failed to fetch games:", e);
-        setError(e.message);
-      } finally {
-        // Dù thành công hay thất bại, kết thúc trạng thái tải
-        setLoading(false);
-      }
-    };
-
-    fetchGames();
-  }, []);
-
-  // Hiển thị thông báo đang tải
+const GameList = ({
+  games,
+  loading,
+  error,
+  currentPage,
+  totalPages,
+  onPrevPage,
+  onNextPage,
+}) => {
   if (loading) {
-    return <div className="loading-message">Loading games...</div>;
+    return <div className="message-info">Loading games...</div>;
   }
 
-  // Hiển thị thông báo lỗi
   if (error) {
     return (
-      <div className="error-message">
-        Error fetching games: {error}. Please make sure your backend is running
-        and accessible.
+      <div className="message-error">
+        Error: {error}. Please make sure your backend is running.
       </div>
     );
   }
 
-  if (games.length === 0) {
-    return <div className="no-games-message">No games found.</div>;
+  if (!games || games.length === 0) {
+    return (
+      <div className="message-info">No games found matching your criteria.</div>
+    );
   }
 
-  // Hiển thị danh sách game
+  // Nếu có dữ liệu, hiển thị danh sách game và phân trang
   return (
     <div className="game-list-container">
-      {games.map((game) => (
-        <Link to={`/game/${game.id || game._id}`} key={game.id || game._id}>
-          <GameCard key={game.id || game._id} game={game} />
-        </Link>
-      ))}
+      <div className="games-grid">
+        {games.map((game) => (
+          <Link
+            to={`/game/${game.id}`}
+            key={game.id}
+            className="game-link"
+          >
+            <GameCard game={game} />
+          </Link>
+        ))}
+      </div>
+
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button onClick={onPrevPage} disabled={currentPage === 1}>
+            Previous
+          </button>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <button onClick={onNextPage} disabled={currentPage === totalPages}>
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };

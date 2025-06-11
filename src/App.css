@@ -1,12 +1,9 @@
 html,
 body,
 #root {
-  /* #root là ID của div trong public/index.html */
-  height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
-  box-sizing: border-box; /* Giúp việc quản lý padding và border dễ dàng hơn */
 }
 
 .logo {

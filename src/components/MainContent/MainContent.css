@@ -1,8 +1,0 @@
-/* src/components/MainContent/MainContent.css */
-.main-content-area-wrapper {
-  display: flex; /* Sắp xếp GameList và FilterSidebar nằm ngang */
-  padding: 20px;
-  gap: 20px; /* Khoảng cách giữa GameList và FilterSidebar */
-  background-color: #1b2838; /* Màu nền chung của khu vực nội dung Steam */
-  flex-grow: 1; /* Cho phép khu vực này mở rộng để lấp đầy không gian còn lại trong .app-container */
-}

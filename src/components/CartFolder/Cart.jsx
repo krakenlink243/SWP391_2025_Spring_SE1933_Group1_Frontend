@@ -174,7 +174,7 @@ const Cart = () => {
                       title="Remove"
                       disabled={loading}
                     >
-                      🗑️
+                      X
                     </button>
                   </div>
                 </div>
@@ -187,6 +187,7 @@ const Cart = () => {
               <div className="cart-btns-steam">
                 <button
                   className="cart-btn-steam"
+                  onClick={() => (window.location.href = "/game")}
                   style={{ marginRight: "auto" }}
                 >
                   Continue Shopping
