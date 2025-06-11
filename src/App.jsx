@@ -13,6 +13,8 @@ import RegisterDetails from "./pages/RegisterDetails";
 import GameApprrovePage from "./pages/GameApprovePage";
 import Transaction from "./components/TransactionFolder/Transaction";
 import Cart from "./components/CartFolder/Cart";
+// import NotificationBox from "./components/NotificationBox";
+import NotificationList from "./components/NotificationList";
 import "./App.css";
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
       <Header />
       <div className="page-content-constrained-wrapper">
         <Navbar />
+        {/* <NotificationBox userId={2} /> */}
+        <NotificationList />
       </div>
       <BrowserRouter>
         <Routes>

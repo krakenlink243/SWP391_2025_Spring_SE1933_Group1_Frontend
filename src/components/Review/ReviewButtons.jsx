@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import './ReviewList.css'
 
 import axios from "axios";
+/**
+ * @author Phan NT Sons
+ * @param {*} param0 
+ * @returns 
+ */
 function ReviewButtons({ originalReview, gameId, userId }) {
 
     const [helpfulCount, setHelpfulCount] = useState(originalReview.helpful);
@@ -37,6 +42,9 @@ function ReviewButtons({ originalReview, gameId, userId }) {
                 const response = await axios.patch(`http://localhost:8080/review/${gameId}/${authorId}/helpful`, {
                     userId: userId
                 });
+                if (response.data === "Done helpful") {
+                    createNotification(`${userId} have vote your review helpful`);
+                }
                 console.log("Response from server:", response.data);
             } catch (error) {
                 console.error("Error updating helpful count:", error);
@@ -48,6 +56,9 @@ function ReviewButtons({ originalReview, gameId, userId }) {
                 const response = await axios.patch(`http://localhost:8080/review/${gameId}/${authorId}/clean-reaction`, {
                     userId: userId
                 });
+                if (response.data === "Done clean") {
+                    createNotification(`${userId} have unvote your review`);
+                }
                 console.log("Response from server:", response.data);
             } catch (error) {
                 console.error("Error updating unhelpful count:", error);
@@ -59,6 +70,9 @@ function ReviewButtons({ originalReview, gameId, userId }) {
                 await axios.patch(`http://localhost:8080/review/${gameId}/${authorId}/not-helpful`, {
                     userId: userId
                 });
+                if (response.data === "Done helpful") {
+                    createNotification(`${userId} have vote your review not helpful`);
+                }
             } catch (error) {
                 console.error("Error updating not helpful count:", error);
             }
@@ -69,9 +83,25 @@ function ReviewButtons({ originalReview, gameId, userId }) {
                 await axios.patch(`http://localhost:8080/review/${gameId}/${authorId}/clean-reaction`, {
                     userId: userId
                 });
+                if (response.data === "Done clean") {
+                    createNotification(`${userId} have unvote your review`);
+                }
             } catch (error) {
                 console.error("Error updating unhelpful count:", error);
             }
+        }
+    }
+
+    const createNotification = async (message) => {
+        try {
+            const response = await axios.post("http://localhost:8080/notification/create", {
+                userId: authorId,
+                notificationType: "Community",
+                notificationContent: message,
+            });
+            console.log("Notification created:", response.data);
+        } catch (error) {
+            console.error("Error creating notification:", error);
         }
     }
 

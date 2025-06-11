@@ -1,0 +1,130 @@
+.notif-container {
+  background-color: #1e2a38;
+  border-radius: 8px;
+  width: 360px;
+  padding: 16px;
+  color: #c7d5e0;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  position: relative;
+  display: inline-block;
+}
+
+.notif-bell {
+  cursor: pointer;
+  font-size: 24px;
+  position: relative;
+}
+
+.notif-bell .notif-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #ff4444;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+.notif-box {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #1e2a38;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  z-index: 1000;
+  margin-top: 5px;
+  display: block;
+}
+
+.notif-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.notif-title {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.notif-icons {
+  display: flex;
+  gap: 8px;
+}
+
+.notif-icon {
+  color: #8f98a0;
+  cursor: pointer;
+  font-size: 18px;
+  transition: color 0.2s;
+}
+
+.notif-icon:hover {
+  color: #c7d5e0;
+}
+
+.notif-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notif-item {
+  background-color: #101820;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.notif-item.unread {
+  background-color: #16202c;
+}
+
+.notif-type {
+  font-size: 12px;
+  color: #8f98a0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.notif-content {
+  font-size: 14px;
+  color: #66c0f4;
+  margin-top: 4px;
+}
+
+.notif-dot {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 10px;
+  height: 10px;
+  background-color: #28a745;
+  border-radius: 50%;
+}
+
+.notif-delete-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: #ff6b6b;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.notif-delete-btn:hover {
+  color: #ff3b3b;
+}
