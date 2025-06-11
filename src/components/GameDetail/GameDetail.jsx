@@ -57,7 +57,7 @@ const GameDetail = () => {
 
   const addCartHandler = async () => {
     try {
-      const response = await axios.get(
+      const response = await axios.post(
         `http://localhost:8080/users/1/cart/add?gameId=${gameId}`
       );
       console.log("Add to cart response:", response.data);

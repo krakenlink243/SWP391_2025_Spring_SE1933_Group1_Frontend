@@ -1,329 +1,156 @@
-/* Steam-like Cart Page CSS */
-
 .cart-steam-bg {
+  background-color: #1a222a;
   min-height: 100vh;
-  background: radial-gradient(ellipse at top left, #22304a 0%, #0f2027 100%);
-  font-family: 'Segoe UI', Arial, sans-serif;
-  color: #e6e6e6;
-}
-
-.cart-header-steam {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #171a21;
-  padding: 18px 40px 18px 32px;
-  border-bottom: 2px solid #23262e;
-}
-.cart-header-left {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-.cart-steam-logo {
-  width: 38px;
-  height: 38px;
-  margin-right: 8px;
-}
-.cart-steam-title {
-  font-size: 1.7rem;
-  font-weight: bold;
-  color: #67c1f5;
-  margin-right: 24px;
-  letter-spacing: 2px;
-}
-.cart-nav-link {
-  color: #c7d5e0;
-  text-decoration: none;
-  margin-right: 18px;
-  font-size: 1.1rem;
-  padding: 4px 10px;
-  border-radius: 3px;
-  transition: background 0.2s, color 0.2s;
-}
-.cart-nav-link.active, .cart-nav-link:hover {
-  background: #67c1f5;
-  color: #171a21;
-}
-.cart-header-right {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-.cart-user {
-  font-weight: 500;
-  color: #fff;
-  margin-right: 8px;
-}
-.cart-balance {
-  color: #a4d007;
-  font-weight: bold;
-  margin-right: 8px;
-}
-.cart-btn-cart {
-  background: #23262e;
-  color: #67c1f5;
-  border: none;
-  padding: 7px 18px;
-  border-radius: 3px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.cart-btn-cart:hover {
-  background: #67c1f5;
-  color: #23262e;
+  padding: 20px;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
 }
 
 .cart-main-steam {
-  max-width: 700px;
-  margin: 40px auto 0 auto;
-  background: rgba(22, 27, 34, 0.98);
-  border-radius: 10px;
-  box-shadow: 0 4px 32px 0 #000a;
-  padding: 32px 32px 24px 32px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: transparent;
 }
+
 .cart-title-steam {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 28px;
-  color: #fff;
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #c7d5e0;
 }
+
 .cart-list-steam {
-  min-height: 120px;
+  margin-top: 20px;
 }
-.cart-list-header-steam {
-  display: grid;
-  grid-template-columns: 1fr 120px 60px;
-  align-items: center;
-  padding: 0 18px 8px 18px;
-  color: #a0b3c6;
-  font-size: 1.05rem;
-  font-weight: 500;
-  background: transparent;
+
+.cart-items-container {
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #0f1419;
 }
-.cart-loading {
-  color: #67c1f5;
-  text-align: center;
-  font-size: 1.2rem;
-  padding: 32px 0;
-}
-.cart-empty-steam {
-  color: #c7d5e0;
-  text-align: center;
-  font-size: 1.2rem;
-  padding: 32px 0;
-}
+
 .cart-item-steam {
-  display: grid;
-  grid-template-columns: 1fr 120px 60px;
-  align-items: center;
-  background: #23262e;
-  border-radius: 6px;
-  margin-bottom: 18px;
-  padding: 12px 18px;
-  box-shadow: 0 2px 8px 0 #0004;
-  transition: background 0.2s;
-}
-.cart-item-steam:hover {
-  background: #2a323d;
-}
-.cart-item-img-steam {
-  width: 80px;
-  height: 48px;
-  object-fit: cover;
-  border-radius: 4px;
-  margin-right: 18px;
-  background: #111;
-}
-.cart-item-info-steam {
-  flex: 1;
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom: 1px solid #1a252f;
 }
-.cart-item-title-steam {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #fff;
+
+.cart-item-steam:last-child {
+  border-bottom: none;
 }
-.cart-item-platform-steam {
-  font-size: 1rem;
-  color: #67c1f5;
-}
-.cart-item-price-steam {
-  min-width: 120px;
-  text-align: right;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #fff;
-}
-.cart-item-sale-steam {
-  color: #a4d007;
-  font-weight: bold;
-  margin-right: 8px;
-}
-.cart-item-original-steam {
+
+.cart-item-title {
+  font-size: 16px;
   color: #c7d5e0;
-  text-decoration: line-through;
-  font-size: 0.98rem;
+  flex: 1;
+  padding-left: 10px;
 }
-.cart-item-remove-steam {
+
+.cart-item-price-container {
+  display: flex;
+  align-items: center;
+  min-width: 80px; /* Ensure space for price */
+}
+
+.cart-item-price {
+  font-size: 16px;
+  color: #b0c679;
+  min-width: 60px;
+  text-align: right;
+}
+
+.cart-item-remove {
+  min-width: 20px; /* Match the width of the remove button */
+}
+
+.cart-item-remove-btn {
   background: none;
   border: none;
-  color: #e35c5c;
-  font-size: 1.3rem;
+  color: #c7d5e0;
+  font-size: 16px;
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 3px;
-  transition: background 0.2s;
-}
-.cart-item-remove-steam:hover {
-  background: #e35c5c;
-  color: #fff;
+  padding: 0;
 }
 
-.cart-total-steam {
-  display: grid;
-  grid-template-columns: 1fr 120px 60px;
-  align-items: center;
-  background: #23262e;
-  border-radius: 6px;
-  padding: 16px 18px;
-  font-size: 1.15rem;
-  font-weight: 500;
-  color: #fff;
-  margin-bottom: 18px;
-  box-shadow: 0 2px 8px 0 #0004;
+.cart-item-remove-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
-.cart-total-steam > div:first-child {
-  text-align: left;
-  font-weight: bold;
+
+.cart-item-empty {
+  width: 20px; /* Match the width of the remove button area */
+  height: 16px; /* Match the height of the remove button icon */
+  visibility: hidden; /* Hide but reserve space */
 }
-.cart-total-steam > div:nth-child(2) {
-  text-align: right;
-  font-weight: bold;
+
+.cart-loading,
+.cart-empty-steam {
+  text-align: center;
+  padding: 20px;
+  color: #c7d5e0;
 }
-.cart-total-price-steam {
-  color: #a4d007;
-  font-size: 1.2rem;
-  font-weight: bold;
-  text-align: right;
-}
+
 .cart-btns-steam {
   display: flex;
-  gap: 18px;
-  justify-content: flex-end;
+  justify-content: space-between;
+  margin-top: 10px;
 }
+
 .cart-btn-steam {
-  background: #23262e;
-  color: #c7d5e0;
+  padding: 10px 20px;
   border: none;
-  padding: 10px 22px;
   border-radius: 4px;
-  font-size: 1rem;
-  font-weight: 500;
+  background-color: #4b6980;
+  color: #ffffff;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-  margin-bottom: 0;
+  font-size: 14px;
 }
-.cart-btn-steam:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+
+.cart-btn-steam:hover {
+  background-color: #5e829c;
 }
-.cart-btn-steam:hover:not(:disabled) {
-  background: #67c1f5;
-  color: #23262e;
-}
+
 .cart-btn-blue-steam {
-  background: #67c1f5;
-  color: #23262e;
-  font-weight: bold;
-}
-.cart-btn-blue-steam:hover:not(:disabled) {
-  background: #4399d6;
-  color: #fff;
+  background-color: #66c0f4;
 }
 
-.cart-footer-steam {
-  background: #171a21;
-  color: #c7d5e0;
-  padding: 32px 0 18px 0;
-  margin-top: 60px;
-  border-top: 2px solid #23262e;
-  text-align: center;
-}
-.cart-footer-logo-steam {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #67c1f5;
-  letter-spacing: 2px;
-  margin-bottom: 8px;
-}
-.cart-footer-steam-logo {
-  color: #fff;
-  margin-left: 4px;
-}
-.cart-footer-links-steam {
-  color: #c7d5e0;
-  font-size: 0.98rem;
-  margin-top: 8px;
-}
-.cart-footer-links-steam a {
-  color: #67c1f5;
-  text-decoration: none;
-  margin: 0 6px;
-  transition: text-decoration 0.2s;
-}
-.cart-footer-links-steam a:hover {
-  text-decoration: underline;
+.cart-btn-blue-steam:hover {
+  background-color: #80c9f6;
 }
 
-/* Modal styles */
+.cart-btn-steam:disabled {
+  background-color: #4b6980;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .cart-modal-steam {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.65);
-  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: center;
-}
-.cart-modal-content-steam {
-  background: #23262e;
-  border-radius: 8px;
-  padding: 32px 38px 28px 38px;
-  box-shadow: 0 8px 32px 0 #000a;
-  min-width: 340px;
-  color: #fff;
-  text-align: center;
-}
-.cart-modal-content-steam h3 {
-  margin-bottom: 18px;
-  color: #67c1f5;
-}
-.cart-modal-btns-steam {
-  display: flex;
-  gap: 18px;
-  justify-content: center;
-  margin-top: 18px;
 }
 
-@media (max-width: 900px) {
-  .cart-main-steam {
-    max-width: 98vw;
-    padding: 18px 4vw 18px 4vw;
-  }
+.cart-modal-content-steam {
+  background-color: #2a475e;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  color: #c7d5e0;
 }
-@media (max-width: 600px) {
-  .cart-header-steam, .cart-footer-steam {
-    padding: 12px 6px;
-  }
-  .cart-main-steam {
-    padding: 8px 2vw 8px 2vw;
-  }
-  .cart-modal-content-steam {
-    min-width: 90vw;
-    padding: 18px 8px;
-  }
+
+.cart-modal-btns-steam {
+  margin-top: 20px;
+}
+
+.cart-modal-btns-steam button {
+  margin: 0 10px;
 }
