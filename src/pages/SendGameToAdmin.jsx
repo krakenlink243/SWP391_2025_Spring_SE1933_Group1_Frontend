@@ -47,7 +47,7 @@ function SendGameToAdmin() {
   }
   const handleSubmit = async() => {
     for (const key in formData) {
-      if (!validateEmty(formData.memory)||!validateEmty(formData.processor)||!validateEmty(formData.storage)||!validateEmty(formData.graphics)||!validateEmty(formData.shortDescription)||!validateEmty(formData.fullDescription)||!validateEmty(formData.gameName)||!validateEmty(formData.price)||!validateEmty(formData.os)) {
+      if (!validateEmty(formData.memory)||!validateEmty(formData.processor)||!validateEmty(formData.storage)||!validateEmty(formData.graphics)||!validateEmty(formData.shortDescription)||!validateEmty(formData.fullDescription)||!validateEmty(formData.gameName)||!validateEmty(formData.price)||!validateEmty(formData.os)||!validateEmty(formData.gameUrl)) {
         alert(`Please fill in the required field.`);
         return;
       }
@@ -90,7 +90,7 @@ function SendGameToAdmin() {
       if(formData.gameUrl === ""){
         return;
       }
-      const response = axios.delete(`http://localhost:8080/publisher/delete/${formData.gameUrl}`);
+      const response = await axios.delete(`http://localhost:8080/publisher/delete/${formData.gameUrl}`);
       console.log(response.data.message);
     } catch (error) {
       console.log(error);
@@ -112,7 +112,8 @@ function SendGameToAdmin() {
     
   }
   const handleCancel = async() =>{
-      handleDelete();
+      await handleDelete();
+      window.location.href="/"
   }
   return (
     <>
@@ -171,7 +172,7 @@ function SendGameToAdmin() {
         </div>
       </div>
       <div className='game-file'>
-        <PartHeading content='FILES'/>   
+        <PartHeading content='FILES(*)'/>   
         <input type="file" style={{display:"none"}} ref={fileRef} onChange={handleGameUpload}  /> 
         <Button className='upload-button' label={fileName} onClick={() => fileRef.current.click()}/>  
       </div>
