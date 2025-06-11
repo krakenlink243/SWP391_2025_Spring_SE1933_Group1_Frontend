@@ -95,16 +95,18 @@ function GameApprovePage() {
             console.error(`Error during approve:`, err);
         }
       };
-  
+      const handleRedirect = (requestId) =>{
+        window.location.href=`/aprrovegame/${requestId}`
+      }
   
 
   return (
     <div className='game-approve-container'>
       <div>
         <div style={{cursor:"pointer"}}>Game Request</div>
-        <div>Apply Request</div>
-        <div>Report</div>
-        <div>Other Request</div>
+        <div style={{cursor:"pointer"}}>Apply Request</div>
+        <div style={{cursor:"pointer"}}>Report</div>
+        <div style={{cursor:"pointer"}}>Other Request</div>
       </div>
       <div className='request-item' style={{backgroundColor:"#1B2438"}}>
       <img
@@ -112,8 +114,10 @@ function GameApprovePage() {
         alt="Checkbox"
         onClick={handleTick}
       />
-      <img src="/icons/Decline.png" alt="" onClick={handleDeclineSelected}  />
-      <img src="/icons/Approve.png" alt="" onClick={handleApproveSelected}/>
+      <div>
+        <img src="/icons/Decline.png" alt="" onClick={handleDeclineSelected}  />
+        <img src="/icons/Approve.png" alt="" onClick={handleApproveSelected}/>
+      </div>
       </div>
       {loadedRequest.map((request) => (
       <RequestItem 
@@ -124,6 +128,7 @@ function GameApprovePage() {
         onDecline={() => handleDecline(request.requestId)} 
         onCheckChange={handleCheckChange} 
         isTicked={selectedRequests.includes(request.requestId)}
+        onClicked={() => handleRedirect(request.requestId)}
       />
     ))}
     <div className="pagination-controls">
