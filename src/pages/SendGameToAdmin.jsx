@@ -5,7 +5,7 @@ import './SendGameToAdmin.css'
 import PartHeading from '../components/PartHeading/PartHeading'
 import Button from '../components/Button/Button'
 import axios from 'axios'
-import { validatePrice,validateEmty,validateMemory } from '../utils/validators'
+import { validatePrice,validateEmty,validateMemory,trimValue } from '../utils/validators'
 function SendGameToAdmin() {
   const [fileName,setFileName] = useState('UPLOAD');
   const [formData,setFormData] = useState({
@@ -32,6 +32,40 @@ function SendGameToAdmin() {
     if (name === 'price' && !validatePrice(value)) {
       alert('Price of games must follow these rules:\n1. Only numbers\n2. No space\n3. No special characters\n4. No empty string\n5. No negative number\n6. 2 digits after decimal point');
       return;
+    }
+    if(value.length > 32 && (name ==='gameName'|| name ==='os'||name ==='processor'||name==='graphics'||name==='storage')){
+      alert("32 characters limit exceeded!")
+      setFormData(prev => ({
+        ...prev,
+        [name]: value.slice(0, 32), // Truncate without trimming spaces
+      }));
+      return;  
+    }
+    if(value.length > 1024 &&(name ==='additionalNotes'|| name ==='shortDescription')){
+      alert("1024 characters limit exceeded!")
+      setFormData(prev => ({
+        ...prev,
+        [name]: value.slice(0, 1024), // Truncate without trimming spaces
+      }));
+      return;  
+    }
+    if(value.length > 10000 && name ==='fullDescription'){
+      alert("10000 characters limit exceeded!");
+      setFormData(prev => ({
+        ...prev,
+        [name]: value.slice(0, 10000), // Truncate without trimming spaces
+      }));
+      return;  
+    }
+    if(value.length > 4 && name ==='price'){
+      alert("Game price must under $10000!")
+      setFormData(prev => ({
+        ...prev,
+        [name]: value.slice(0, 1000), // Truncate without trimming spaces
+      }));
+      return;
+  
+  
     }
     setFormData(prev => ({
       ...prev,
@@ -71,14 +105,8 @@ function SendGameToAdmin() {
   }
   const validMemory = (e) => {
     const { name, value } = e.target;
-    if (value === "") {
-      alert("Memory of games must not be empty.");
-      setFormData(prev => ({ ...prev, [name]: "" }));
-      return; // Allow unfocus
-    }
-  
     if(!validateMemory(value)) {
-      alert('Memory of games must follow these rules:\n1. Only numbers\n2. No space\n3. No special characters\n4. No empty string\n5. No negative number\n6. 2 digits after decimal point');
+      alert('Memory of games must follow this rule: Number + (GB/MB)');
       setFormData(prev => ({...prev,[name]: ''}));
       return;
     }else{
@@ -115,6 +143,10 @@ function SendGameToAdmin() {
       await handleDelete();
       window.location.href="/"
   }
+  const normalizeValue = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({...prev,[name]: trimValue(value)}));
+  }
   return (
     <>
     <div className='game-application'>
@@ -125,7 +157,7 @@ function SendGameToAdmin() {
         <img className='game-avatar' src={gameicon} alt="" />
         <div className='name-price'>
             NAME(*)
-            <input type="text" name="gameName" id="" value={formData.gameName}  onChange={handleChange} />
+            <input type="text" name="gameName" id="" value={formData.gameName}  onChange={handleChange} onBlur={normalizeValue} />
             PRICE(*)
             <div>
               <input type="text" name="price" id="" value={formData.price} onChange={handleChange} /> $
@@ -137,25 +169,25 @@ function SendGameToAdmin() {
         <div className='sys-req-col-container'>
             <div className='sys-req-col1'>
                 OS(*)
-                <input type="text" name="os" id="" value={formData.os} onChange={handleChange} />
+                <input type="text" name="os" id="" value={formData.os} onChange={handleChange} onBlur={normalizeValue} />
                 PROCESSOR(*)
-                <input type="text" name="processor" id="" value={formData.processor} onChange={handleChange} />
+                <input type="text" name="processor" id="" value={formData.processor} onChange={handleChange} onBlur={normalizeValue} />
                 MEMORY(*)
                 <input type="text" name="memory" id="" value={formData.memory} onChange={handleChange} onBlur={validMemory} />
             </div>
             <div className='sys-req-col2'>
                 GRAPHICS(*)
-                <input type="text" name="graphics" id="" value={formData.graphics} onChange={handleChange} />
+                <input type="text" name="graphics" id="" value={formData.graphics} onChange={handleChange} onBlur={normalizeValue} />
                 STORAGE(*)
                 <input type="text" name="storage" id="" value={formData.storage} onChange={handleChange} onBlur={validMemory} />
                 ADDITIONAL NOTES
-                <textarea name="additionalNotes" id="" value={formData.additionalNotes} onChange={handleChange}></textarea>
+                <textarea name="additionalNotes" id="" value={formData.additionalNotes} onChange={handleChange} onBlur={normalizeValue}></textarea>
             </div>
         </div>
       </div>
       <div className='summary'>
         <PartHeading content='SUMMARY'/>
-        <textarea name="shortDescription" id="" cols="30" rows="10" value={formData.shortDescription} onChange={handleChange}></textarea>
+        <textarea name="shortDescription" id="" cols="30" rows="10" value={formData.shortDescription} onChange={handleChange} onBlur={normalizeValue}></textarea>
       </div>
       <div className='summary'>
         <PartHeading content='Description'/>
