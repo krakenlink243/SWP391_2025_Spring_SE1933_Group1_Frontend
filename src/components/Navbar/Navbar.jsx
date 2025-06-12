@@ -1,7 +1,7 @@
 import React from "react";
 import { FiSearch } from "react-icons/fi"; // Import icon search từ react-icons
 import "./Navbar.css"; // Hoặc Navbar.module.css nếu dùng CSS Modules
-
+import SearchBar from "../SearchBar/SearchBar"; // Import component SearchBar
 const Navbar = () => {
   return (
     <nav className="steam-navbar-secondary">
@@ -25,15 +25,8 @@ const Navbar = () => {
           Labs
         </a>
       </div>
-      <div className="navbar-search-container">
-        <input
-          type="text"
-          placeholder="search"
-          className="search-input-field"
-        />
-        <button className="search-action-button">
-          <FiSearch size={18} />
-        </button>
+      <div className="search-bar-container">
+        <SearchBar />
       </div>
     </nav>
   );
