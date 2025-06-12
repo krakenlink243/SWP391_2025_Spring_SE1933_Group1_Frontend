@@ -12,7 +12,6 @@ const GameCard = ({ game }) => {
       />
       <div className="game-card-info">
         <h3 className="game-card-title">{game.title}</h3>
-        {/* Hiển thị giá gốc và giá khuyến mãi nếu có */}
         {game.discountPrice && game.originalPrice ? (
           <div className="game-card-prices">
             <span className="game-card-original-price">
@@ -37,6 +36,5 @@ const GameCard = ({ game }) => {
     </div>
   );
 };
-
 
 export default GameCard;

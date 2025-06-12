@@ -3,13 +3,18 @@ import React, { useState } from "react";
 import axios from "axios";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import "./Login.css";
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
+  // Added by Phan NT Son
+  if (localStorage.getItem("token")) {
+    window.location.href = "/";
+  }
+  
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -20,6 +25,19 @@ const Login = () => {
       });
 
       setMessage("Login successful!");
+
+      // Added by Phan NT Son
+      localStorage.setItem("token", res.data.token);
+      let decodedToken = null;
+      const token = localStorage.getItem("token");
+      decodedToken = jwtDecode(token);
+      const userId = decodedToken.userId;
+      const role = decodedToken.role;
+      localStorage.setItem("username", username);
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("role", role);
+      window.location.href = "/";
+
       // navigate('/');
       // Optionally redirect or store auth token here
     } catch (err) {
@@ -50,23 +68,48 @@ const Login = () => {
   };
 
   return (
-    <GoogleOAuthProvider clientId="439938595818-5hsn4krnatjq8p26372l98jekoh9ov0i.apps.googleusercontent.com">
-      <div className="login-container">
-        <main>
-          <section class="form-section">
-            <h1 class="form-title">Log in</h1>
-            <form onSubmit={handleLogin} class="form">
-              <label htmlFor="username" class="form-label">
-                Log in with username
-              </label>
-              <input
-                id="username"
-                name="username"
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                class="form-input"
-                required
+    <div className="login-container">
+      <main>
+        <section class="form-section">
+          <h1 class="form-title">Log in</h1>
+          <form onSubmit={handleLogin} class="form">
+            <label htmlFor="username" class="form-label">
+              Log in with username
+            </label>
+            <input
+              id="username"
+              name="username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              class="form-input"
+              required
+            />
+
+            <label htmlFor="password" class="form-label password">
+              Password
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              class="form-input"
+              required
+            />
+
+            <div class="submit-container">
+              <button type="submit" class="submit-button" >
+                Log in
+              </button>
+
+              <img
+                src="/google-logo.jpg"
+                alt="Google logo with red, yellow, green, and blue colors"
+                class="google-logo"
+                width="40"
+                height="40"
               />
 
               <label htmlFor="password" class="form-label password">
@@ -106,11 +149,12 @@ const Login = () => {
                 /> */}
               </div>
               {message && <p>{message}</p>}
+              </div>
             </form>
           </section>
         </main>
       </div>
-    </GoogleOAuthProvider>
+    
   );
 };
 

@@ -1,7 +1,18 @@
 import React from "react";
+import { useState } from "react";
 import "./Header.css"; // Or use CSS Modules: import styles from './Header.module.css';
+import Button from "../Button/Button";
+// Added by Phan NT Son
+import Logout from "../Logout";
 
 const Header = () => {
+  // Added by Phan NT Son
+  const token = localStorage.getItem("token");
+  const username = localStorage.getItem("username");
+  const userId = localStorage.getItem("userId");
+  const role = localStorage.getItem("role");
+  const [showLogout, setShowLogout] = useState(false);
+
   return (
     <header className="steam-header">
       {" "}
@@ -10,17 +21,35 @@ const Header = () => {
       </a>
       <nav>
         <a href="/">STORE</a>
-        <a href="#">COMMUNITY</a>
+        {/* Adjustment by Phan NT Son*/}
+        {/* <a href="#">COMMUNITY</a>
         <a href="#">ABOUT</a>
-        <a href="#">SUPPORT</a>
+        <a href="#">SUPPORT</a> */}
       </nav>
       <div className="user-actions">
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
-        <a href="/sendgame">Request Add Game</a>
-        <a href="/aprrovegame">Approve Game</a>
-        <a href="/transaction">Transaction</a>
-        <a href="/cart">Cart</a>
+
+        {/* Adjustment by Phan NT Son*/}
+        {!token ?
+          (
+            <>
+              <a href="/login">Login</a>
+              <p>|</p>
+              <a href="/register">Register</a>
+            </>
+          ) : (<>
+            <a>{username}</a>
+            <p>|</p>
+            {role == 2 ? (<a href="/sendgame">Request Add Game</a>) : (<></>)}
+            {role == 3 ? (<a href="/aprrovegame">Approve Game</a>) : (<></>)}
+            <a href="/transaction">Transaction</a>
+            <a href="/cart">Cart</a>
+            <a href="/notifications">Notifications</a>
+            <Button label={"Logout"} color={'blue-button'} onClick={() => setShowLogout(true)} />
+            {showLogout && <Logout onClose={() => setShowLogout(false)} />}
+          </>)
+        }
+
+
       </div>
     </header>
   );

@@ -1,0 +1,57 @@
+html,
+body,
+#root {
+  /* #root là ID của div trong public/index.html */
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Giúp việc quản lý padding và border dễ dàng hơn */
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+.page-content-constrained-wrapper {
+  width: 100%; /* Chiếm toàn bộ chiều rộng của parent trước */
+  max-width: 940px; /* Chiều rộng tối đa phổ biến của Steam, bạn có thể điều chỉnh */
+  margin: 0 auto; /* Căn giữa wrapper này */
+  padding: 0 10px; /* Optional: Thêm chút padding bên trái/phải nếu nội dung chạm sát viền ở màn hình nhỏ hơn max-width */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  /* Không cần đặt background ở đây, vì Navbar và MainContent sẽ có background riêng */
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}

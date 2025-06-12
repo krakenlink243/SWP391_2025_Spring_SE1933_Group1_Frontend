@@ -5,19 +5,13 @@
   user-select: none;
 }
 
-/* Main content styles */
-.main {
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-}
 
 .form {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  padding-top: 5;
+  margin-top: 5rem;
   max-width: 28rem;
   width: 100%;
 }
