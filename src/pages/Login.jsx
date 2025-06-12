@@ -14,7 +14,7 @@ const Login = () => {
   if (localStorage.getItem("token")) {
     window.location.href = "/";
   }
-  
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -100,61 +100,34 @@ const Login = () => {
             />
 
             <div class="submit-container">
-              <button type="submit" class="submit-button" >
+              <button type="submit" class="submit-button">
                 Log in
               </button>
 
-              <img
-                src="/google-logo.jpg"
-                alt="Google logo with red, yellow, green, and blue colors"
-                class="google-logo"
-                width="40"
-                height="40"
-              />
+              <a href="http://localhost:8080/oauth2/authorization/google">
+                <img src="/google-logo.jpg" alt="Google login" className="google-logo" />
+              </a>
 
-              <label htmlFor="password" class="form-label password">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                class="form-input"
-                required
-              />
-
-              <div class="submit-container">
-                <button type="submit" class="submit-button">
-                  Log in
-                </button>
-
-                <a href="http://localhost:8080/oauth2/authorization/google">
-                  <img src="/google-logo.jpg" alt="Google login" className="google-logo" />
-                </a>
-
-                {/* <div className="google-login">
+              {/* <div className="google-login">
                   <GoogleLogin
                     onSuccess={handleGoogleSuccess}
                     onError={() => setMessage("Google login failed")}
                   />
                 </div> */}
-                {/* <img
+              {/* <img
                   src="/google-logo.jpg"
                   alt="Google logo with red, yellow, green, and blue colors"
                   class="google-logo"
                   width="40"
                   height="40"
                 /> */}
-              </div>
-              {message && <p>{message}</p>}
-              </div>
-            </form>
-          </section>
-        </main>
-      </div>
-    
+            </div>
+            {message && <p>{message}</p>}
+          </form>
+        </section>
+      </main>
+    </div>
+
   );
 };
 
