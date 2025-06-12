@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom"; // Thêm Link cho breadcrumb
 import "./GameDetail.css";
-import { createNotification } from "../../services/notification"; // Import hàm tạo thông báo
 import Review from "../Review/Review";
 import axios from "axios";
+
+// Added by Phan NT Son
+import { createNotification } from "../../services/notification";
 
 const GameDetail = () => {
   const { gameId } = useParams();
@@ -71,6 +73,8 @@ const GameDetail = () => {
       } else {
         alert("Failed to add game to cart.");
       }
+      // ---
+
     } catch (err) {
       console.error("Error adding to cart:", err);
       alert("Failed to add game to cart.");

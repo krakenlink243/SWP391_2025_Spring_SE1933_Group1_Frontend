@@ -1,11 +1,18 @@
 import React from 'react'
 import './Button.css'
-function Button({ label, onClick, disabled, isApprove }) {
+/**
+ * This commet is created by @author Phan NT Son
+ * @author Function created by HoangVuBe
+ * 
+ * @param {{color: 'red-button'|'grey-button'|'blue-button'|'green-button'}} this.props.color
+ * @returns a button component with customizable label, click handler, disabled state, and color
+ */
+function Button({ label, onClick, disabled, color }) {
   return (
     <button 
       onClick={onClick}
       disabled={disabled}
-      className={isApprove ? 'approve-button' : 'button'}
+      className={color} // Adjusted by Phan NT Son
     >
       {label}
     </button>
