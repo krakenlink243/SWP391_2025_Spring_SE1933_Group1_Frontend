@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./Logout.css";
+import Button from "./Button/Button";
 /**
  * @author Phan NT Son
  * @returns 
@@ -14,14 +15,10 @@ function Logout({onClose}) {
     return (
         <div className="logout-overlay">
             <div className="logout-modal">
-                <h1>Do you want to logout?</h1>
+                <h2>Do you want to logout?</h2>
                 <div className="logout-buttons">
-                    <button onClick={onClose}>
-                        <p><u>Cancel</u></p>
-                    </button>
-                    <button onClick={handleLogout}>
-                        <p>Logout</p>
-                    </button>
+                    <Button label="Cancel" color={'grey-button'} onClick={onClose}/>
+                    <Button label="Logout" color={'red-button'} onClick={handleLogout}/>
                 </div>
             </div>
         </div>
