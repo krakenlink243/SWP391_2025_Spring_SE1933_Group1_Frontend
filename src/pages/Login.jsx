@@ -1,6 +1,7 @@
 // Login.jsx
 import React, { useState } from "react";
 import axios from "axios";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import "./Login.css";
 import { jwtDecode } from "jwt-decode";
 
@@ -13,7 +14,7 @@ const Login = () => {
   if (localStorage.getItem("token")) {
     window.location.href = "/";
   }
-  
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -42,6 +43,27 @@ const Login = () => {
     } catch (err) {
       console.error(err);
       setMessage("Invalid username or password");
+    }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    const decoded = jwt_decode(credentialResponse.credential);
+    const email = decoded.email;
+    const name = decoded.name;
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/public/oauth2/login",
+        { email, name }
+      );
+
+      const token = response.data.token;
+      localStorage.setItem("token", token);
+      setMessage("Google login successful!");
+      // navigate('/')
+    } catch (err) {
+      console.error(err);
+      setMessage("Google login failed");
     }
   };
 
@@ -78,23 +100,34 @@ const Login = () => {
             />
 
             <div class="submit-container">
-              <button type="submit" class="submit-button" >
+              <button type="submit" class="submit-button">
                 Log in
               </button>
 
-              <img
-                src="/google-logo.jpg"
-                alt="Google logo with red, yellow, green, and blue colors"
-                class="google-logo"
-                width="40"
-                height="40"
-              />
+              <a href="http://localhost:8080/oauth2/authorization/google">
+                <img src="/google-logo.jpg" alt="Google login" className="google-logo" />
+              </a>
+
+              {/* <div className="google-login">
+                  <GoogleLogin
+                    onSuccess={handleGoogleSuccess}
+                    onError={() => setMessage("Google login failed")}
+                  />
+                </div> */}
+              {/* <img
+                  src="/google-logo.jpg"
+                  alt="Google logo with red, yellow, green, and blue colors"
+                  class="google-logo"
+                  width="40"
+                  height="40"
+                /> */}
             </div>
             {message && <p>{message}</p>}
           </form>
         </section>
       </main>
     </div>
+
   );
 };
 

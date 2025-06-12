@@ -34,6 +34,11 @@ const RegisterDetails = () => {
     e.preventDefault();
     setMessage('');
 
+    if (/\s/.test(formData.username)) {
+      setMessage('Username must not contain spaces.');
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       setMessage('Passwords do not match.');
       return;
