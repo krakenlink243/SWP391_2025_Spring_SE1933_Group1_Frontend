@@ -1,3 +1,4 @@
+//@author: Vu Hoang
 import React from 'react'
 import './PartHeading.css'
 function PartHeading({content}) {

@@ -31,7 +31,7 @@
 
 
 /* Bulk action button styles */
-button {
+/* button {
     background-color: #3E71E7;
     border: none;
     padding: 10px 16px;
@@ -49,7 +49,7 @@ button:hover {
 
 button:active {
     background-color: #1D3D8F;
-}
+} */
 .pagination-controls {
     display: flex;
     justify-content: center;

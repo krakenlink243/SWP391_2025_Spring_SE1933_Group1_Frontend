@@ -1,3 +1,4 @@
+//@author: Vu Hoang
 import React from 'react'
 import './RequestItem.css'
 function RequestItem({requestName,onApprove,onDecline,onCheckChange,requestId,isTicked,onClicked}) {

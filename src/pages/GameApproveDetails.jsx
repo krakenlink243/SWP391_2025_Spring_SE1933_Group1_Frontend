@@ -1,3 +1,4 @@
+//@author: Vu Hoang
 import React, { useEffect } from 'react'
 import { useState,useRef } from'react'
 import gameicon from '../assets/gameicon.png'
@@ -144,8 +145,8 @@ function GameApproveDetails() {
         </a>
       </div>
       <div className='send-request-cancel'>
-        <Button className='cancel-button' label='DECLINE' onClick={handleDecline} />
-        <Button className='send-button' label='APPROVE' isApprove={'true'} onClick={handleApprove}/>
+        <Button className='cancel-button' label='DECLINE' onClick={handleDecline} color={'grey-button'} />
+        <Button className='send-button' label='APPROVE' isApprove={'true'} onClick={handleApprove} color='blue-button'/>
       </div>
     </div>
     </>

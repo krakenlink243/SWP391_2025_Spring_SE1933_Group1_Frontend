@@ -1,3 +1,4 @@
+//@author: Vu Hoang
 import React from 'react'
 import { useState,useRef } from'react'
 import gameicon from '../assets/gameicon.png'
@@ -205,20 +206,18 @@ function SendGameToAdmin() {
             </PhotoView>
           ))}
         </PhotoProvider>
-
-
             <input type="file" multiple style={{ display: "none" }} accept=".jpg,.png" ref={mediaFileRef} onChange={handleFileSelect}/>
-            <Button className='upload-media' label='+' onClick={() => mediaFileRef.current.click()}/>
+            <Button className='upload-media' label='+' onClick={() => mediaFileRef.current.click()} color='blue-button'/>
         </div>
       </div>
       <div className='game-file'>
         <PartHeading content='FILES(*)'/>   
         <input type="file" accept='.zip' style={{display:"none"}} ref={fileRef} onChange={handleGameUpload}  /> 
-        <Button className='upload-button' label={fileName} onClick={() => fileRef.current.click()}/>  
+        <Button className='upload-button' label={fileName} onClick={() => fileRef.current.click()} color='blue-button'/>  
       </div>
       <div className='send-request-cancel'>
-        <Button className='cancel-button' label='CANCEL' onClick={handleCancel}/>
-        <Button className='send-button' label='SEND REQUEST' isApprove={'true'} onClick={handleSubmit}/>
+        <Button className='cancel-button' label='CANCEL' onClick={handleCancel} color='grey-button'/>
+        <Button className='send-button' label='SEND REQUEST' isApprove={'true'} onClick={handleSubmit} color='blue-button'/>
       </div>
     </div>
     </>

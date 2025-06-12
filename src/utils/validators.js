@@ -1,3 +1,4 @@
+//@author: Vu Hoang
 export const validatePrice = (value) => {
   // Must be a valid number format
   if (!/^\d*\.?\d*$/.test(value)) return false;
