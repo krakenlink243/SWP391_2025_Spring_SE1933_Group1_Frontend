@@ -9,6 +9,11 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
+  // Added by Phan NT Son
+  if (localStorage.getItem("token")) {
+    window.location.href = "/";
+  }
+  
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -27,9 +32,10 @@ const Login = () => {
       decodedToken = jwtDecode(token);
       const userId = decodedToken.userId;
       const role = decodedToken.role;
+      localStorage.setItem("username", username);
       localStorage.setItem("userId", userId);
       localStorage.setItem("role", role);
-      
+      window.location.href = "/";
 
       // navigate('/');
       // Optionally redirect or store auth token here
@@ -72,7 +78,7 @@ const Login = () => {
             />
 
             <div class="submit-container">
-              <button type="submit" class="submit-button">
+              <button type="submit" class="submit-button" >
                 Log in
               </button>
 

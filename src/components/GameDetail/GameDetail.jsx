@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom"; // Thêm Link cho breadcrumb
 import "./GameDetail.css";
+import { createNotification } from "../../services/notification"; // Import hàm tạo thông báo
 import Review from "../Review/Review";
 import axios from "axios";
 
@@ -81,26 +82,6 @@ const GameDetail = () => {
     game.media?.find((m) => m.type.toLowerCase().includes("header"))?.url ||
     game.media?.[0]?.url ||
     "";
-  /**
-   * @author Phan NT Son
-   * @description Tạo thông báo khi người dùng thêm game vào giỏ hàng
-   * @param {*} message
-   */
-  const createNotification = async (message) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/notification/create",
-        {
-          userId: 1, // Giả sử userId là 1, bạn có thể thay đổi theo nhu cầu
-          notificationType: "Cart",
-          notificationContent: message,
-        }
-      );
-      console.log("Notification created:", response.data);
-    } catch (error) {
-      console.error("Error creating notification:", error);
-    }
-  };
 
   return (
     <div className="game-detail-page">

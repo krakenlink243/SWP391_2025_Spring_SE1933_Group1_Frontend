@@ -32,14 +32,14 @@ const Transaction = () => {
       const response = await axios.get('http://localhost:8080/users/1/transactions');
       console.log('Transactions API response:', response.data);
       let transactions = response.data.data || [];
-      
+
       // Sort transactions by transactionId in descending order (highest ID first)
       transactions = transactions.sort((a, b) => {
         const idA = a.transactionId || 0;
         const idB = b.transactionId || 0;
         return idB - idA; // Descending order: higher transactionId first
       });
-      
+
       setTransactions(transactions);
     } catch (error) {
       console.error('Error fetching transactions:', error.message, error.response?.status, error.response?.data);

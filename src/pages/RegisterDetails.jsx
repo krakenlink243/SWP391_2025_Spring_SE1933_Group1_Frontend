@@ -50,6 +50,10 @@ const RegisterDetails = () => {
       const response = await axios.post('http://localhost:8080/api/auth/register', fullData);
       setMessage('Registration successful!');
       console.log(response.data);
+
+      // Added by Phan NT Son
+      window.location.href = "/login";
+
     } catch (error) {
       console.error(error);
       setMessage('Registration failed.');
