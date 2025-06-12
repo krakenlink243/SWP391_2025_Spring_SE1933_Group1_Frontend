@@ -40,13 +40,13 @@ function App() {
       const transitionTimer = setTimeout(() => {
         console.log("5s timer finished. Starting transition.");
         setLoadingState((prevState) => ({ ...prevState, isExiting: true }));
-      }, 5000); // 5 giây
+      }, 2000); // 5 giây
 
       const finishTimer = setTimeout(() => {
         console.log("Transition finished. Hiding splash screen.");
         setLoadingState((prevState) => ({ ...prevState, isFinished: true }));
         localStorage.setItem("hasVisited", "true");
-      }, 6500); // 5s + 1.5s
+      }, 3000);
 
       return () => {
         clearTimeout(transitionTimer);
@@ -69,7 +69,7 @@ function App() {
 
   // Added by Phan NT Son
   // Set up axios interceptor to include token in headers
-  axios.interceptors.request.use(config => {
+  axios.interceptors.request.use((config) => {
     const token = localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -79,7 +79,6 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* 1. Render SplashScreen nếu cần */}
       {shouldRenderSplash && (
         <SplashScreen isExiting={loadingState.isExiting} />
       )}

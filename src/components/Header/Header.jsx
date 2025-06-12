@@ -1,7 +1,7 @@
 import React from "react";
-import {useState} from "react";
+import { useState } from "react";
 import "./Header.css"; // Or use CSS Modules: import styles from './Header.module.css';
-
+import Button from "../Button/Button";
 // Added by Phan NT Son
 import Logout from "../Logout";
 
@@ -33,17 +33,18 @@ const Header = () => {
           (
             <>
               <a href="/login">Login</a>
+              <p>|</p>
               <a href="/register">Register</a>
             </>
           ) : (<>
             <a>{username}</a>
+            <p>|</p>
             {role == 2 ? (<a href="/sendgame">Request Add Game</a>) : (<></>)}
             {role == 3 ? (<a href="/aprrovegame">Approve Game</a>) : (<></>)}
             <a href="/transaction">Transaction</a>
             <a href="/cart">Cart</a>
             <a href="/notifications">Notifications</a>
-            <button onClick={() => setShowLogout(true)}>Logout</button>
-
+            <Button label={"Logout"} color={'blue-button'} onClick={() => setShowLogout(true)} />
             {showLogout && <Logout onClose={() => setShowLogout(false)} />}
           </>)
         }

@@ -14,7 +14,6 @@ const SplashScreen = ({ isExiting }) => {
           alt="Logo"
           className="splash-logo"
         />
-        {/* Hiệu ứng loading spinner */}
         <div className="spinner"></div>
       </div>
     </div>

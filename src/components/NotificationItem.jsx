@@ -8,7 +8,7 @@ import './NotificationBox.css';
  * @param {*} param0 
  * @returns 
  */
-function NotificationItem({ notification }) {
+function NotificationItem({ notification, onReload }) {
   const [read, setRead] = useState(notification.read);
 
   const handleClick = () => {
@@ -26,6 +26,7 @@ function NotificationItem({ notification }) {
       .then(() => {
         // Optionally, you can refresh the notification list or remove the item from the UI
         console.log("Notification deleted successfully");
+        onReload();
       })
       .catch((error) => console.error("Error deleting notification:", error));
   };

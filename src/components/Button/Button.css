@@ -6,7 +6,7 @@
     font-family: 'Motiva Sans';
     font-size: 14px;
   }
-  .approve-button {
+  .blue-button {
     background: linear-gradient(90deg, #007bff, #0056b3); /* Gradient from light to dark blue */
     color: white;
     padding: 10px 50px;
@@ -16,11 +16,11 @@
     transition: background 0.3s ease;
   }
   
-  .approve-button:hover {
+  .blue-button:hover {
     background: linear-gradient(90deg, #0056b3, #003f7f); /* Darker gradient on hover */
   }
 
-  .button {
+  .grey-button {
     background: #3D4450; /* Gradient from light to dark blue */
     color: white;
     padding: 10px 50px;
@@ -30,7 +30,39 @@
     transition: background 0.3s ease;
   }
 
- .button:hover {
+ .grey-button:hover {
     background: #2c313a; /* Darker gradient on hover */
  }
+
+/*
+Added by Phan NT Son
+*/
+ .red-button {
+  background: linear-gradient(90deg, #dc3545, #b52a37); /* đỏ tươi -> đỏ đậm */
+  color: white;
+  padding: 10px 50px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.red-button:hover {
+  background: linear-gradient(90deg, #b52a37, #8e1f2a); /* hover đỏ đậm hơn */
+}
+
+.green-button {
+  background: linear-gradient(90deg, #28a745, #218838); /* xanh lá tươi -> đậm */
+  color: white;
+  padding: 10px 50px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.green-button:hover {
+  background: linear-gradient(90deg, #218838, #1e7e34); /* hover xanh đậm hơn */
+}
+
   

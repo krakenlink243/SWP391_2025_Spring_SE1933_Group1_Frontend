@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import './ReviewForm.css';
+import Button from '../Button/Button';
 function ReviewForm({ onReload, gameId, userId }) {
     const [reviewContent, setReviewContent] = useState('');
     const [recommended, setRecommended] = useState(null);
@@ -52,12 +53,16 @@ function ReviewForm({ onReload, gameId, userId }) {
                             </div>
                         </div>
                     </div>
-                    <button onClick={async () => {
+                    {/* <button onClick={async () => {
                         const result = await handleSubmit();
                         if (result) onReload();
                     }}>
                         Post Review
-                    </button>
+                    </button> */}
+                    <Button label="Post Review" color="blue-button" onClick={async () => {
+                        const result = await handleSubmit();
+                        if (result) onReload();
+                    }} />
                 </div>
 
             </div>

@@ -1,0 +1,37 @@
+/* Sửa lại CSS để chứa form và button */
+.search-bar-form {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 350px; /* Hoặc kích thước bạn muốn */
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 40px 10px 20px; /* Thêm padding bên phải cho nút kính lúp */
+    font-size: 1em;
+    border-radius: 2px;
+    border: 1px solid #555;
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    box-sizing: border-box;
+}
+
+.search-button {
+    position: absolute;
+    right: 5px; /* Đặt nút ở bên phải của form */
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    border-bottom: 50px;
+    cursor: pointer;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-button:hover {
+    color: #fff;
+}

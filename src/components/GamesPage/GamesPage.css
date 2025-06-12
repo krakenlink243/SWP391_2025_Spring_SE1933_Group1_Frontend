@@ -1,54 +1,38 @@
-
+/* ---- BỐ CỤC TỔNG THỂ ---- */
 .games-page-container {
-  display: flex; /* Sắp xếp GameList và FilterSidebar nằm ngang */
-  padding: 40px;
-  gap: 10px; /* Khoảng cách giữa GameList và FilterSidebar */
-  background-color: #1b2838; /* Màu nền chung của khu vực nội dung Steam */
-  flex-grow: 1;
-  margin-bottom: 50px;
+  max-width: 1280px; /* Hoặc 90% tùy bạn muốn */
+  margin: 20px auto;
+  padding: 0 20px;
 }
-.games-page-container {
+
+.page-main-content {
+  display: flex; /* Kích hoạt Flexbox */
+  gap: 20px;     /* Khoảng cách giữa 2 cột */
+  align-items: flex-start; /* Căn các mục theo đỉnh */
+}
+
+/* === CỘT TRÁI - SIDEBAR === */
+.filter-sidebar-wrapper {
+  width: 280px;       /* Đặt chiều rộng cố định cho sidebar */
+  flex-shrink: 0;     /* Ngăn sidebar bị co lại */
+}
+
+/* === CỘT PHẢI - NỘI DUNG CHÍNH === */
+.game-content-wrapper {
+  flex-grow: 1;       /* QUAN TRỌNG: Cho phép cột này co giãn chiếm hết không gian còn lại */
+  min-width: 0;       /* Cần thiết để flexbox hoạt động đúng với các phần tử con */
   display: flex;
   flex-direction: column;
+  gap: 20px;          /* Khoảng cách giữa các phần tử bên trong (Search, Header, List) */
 }
 
-.content-wrapper {
-  display: flex;
-  flex-direction: row;
+.top-search-bar {
+  width: 100%;
 }
 
-/* Layout chính */
-.game-list-content {
-  flex: 1;
-  padding: 16px;
-}
-
-.filter-sidebar {
-  padding: 16px;
-}
-
-/* Thanh phân trang ở dưới */
-.pagination {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin: 20px 0;
-}
-
-.pagination button {
-  padding: 6px 12px;
-  border: none;
-  background-color: #000000;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.pagination button.active {
-  background-color: #007bff;
-  color: white;
-}
-
-.pagination button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+/* Ghi đè lại style cho SearchBar để nó chiếm toàn bộ chiều rộng của cột phải */
+.top-search-bar .search-bar-form {
+  width: 100%;
+  max-width: 600px; /* Giới hạn chiều rộng tối đa nếu muốn */
+  margin: 0; /* Bỏ margin auto */
 }
