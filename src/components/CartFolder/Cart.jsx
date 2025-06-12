@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from "react-router-dom";
 import './Cart.css';
 
 const Cart = () => {
@@ -156,7 +157,7 @@ const Cart = () => {
           )}
           {cartItems.length > 0 && (
             <div className="cart-btns-steam">
-              <button className="cart-btn-steam">Continue Shopping</button>
+              <Link className="cart-btn-steam" to="/game">Continue Shopping</Link>
               <button
                 className="cart-btn-steam cart-btn-blue-steam"
                 onClick={() => setShowConfirmModal(true)}
