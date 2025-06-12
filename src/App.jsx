@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import RegisterEmail from "./pages/RegisterEmail";
 import RegisterDetails from "./pages/RegisterDetails";
 import GameApprrovePage from "./pages/GameApprovePage";
+import GameApproveDetails from "./pages/GameApproveDetails";
 import Transaction from "./components/TransactionFolder/Transaction";
 import Cart from "./components/CartFolder/Cart";
 import SplashScreen from "./components/SplashScreen/SplashScreen"; // Import SplashScreen component
@@ -96,6 +97,7 @@ function App() {
             <Route path="/game/:gameId" element={<Detail />} />
             <Route path="/game" element={<List />}></Route>
             <Route path="/aprrovegame" element={<AprroveF />}></Route>
+            <Route path="/aprrovegame/:gameId" element={<ApproveDetailsF />}></Route>
             <Route path="/sendgame" element={<RequestAddGame />}></Route>
             <Route path="/login" element={<LoginF />} />
             <Route path="/register" element={<RegisterF />} />
@@ -111,6 +113,9 @@ function App() {
 }
 function AprroveF() {
   return <GameApprrovePage />;
+}
+function ApproveDetailsF(){
+  return <GameApproveDetails/>
 }
 function LoginF() {
   return <Login />;
