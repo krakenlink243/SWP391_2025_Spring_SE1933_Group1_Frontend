@@ -8,9 +8,13 @@ import './Transaction.css';
  * @param {*} param0 
  * @returns 
  */
-  const userid = localStorage.getItem("userId");
+const userid = localStorage.getItem("userId");
 
 const Transaction = () => {
+  if (!localStorage.getItem("userId")) {
+    window.location.href = "/";
+  }
+
   const [transactions, setTransactions] = useState([]);
   const [userName, setUserName] = useState('');
   const [loading, setLoading] = useState(false);
