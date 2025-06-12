@@ -5,6 +5,9 @@ import { createNotification } from "../../services/notification"; // Import hàm
 import Review from "../Review/Review";
 import axios from "axios";
 
+// add by Bathanh
+  const userId = localStorage.getItem("userId");
+
 const GameDetail = () => {
   const { gameId } = useParams();
   const [game, setGame] = useState(null);
@@ -59,7 +62,8 @@ const GameDetail = () => {
   const addCartHandler = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:8080/users/1/cart/add?gameId=${gameId}`
+        //adjust add by Bathanh
+        `http://localhost:8080/users/${userId}/cart/add?gameId=${gameId}`
       );
       console.log("Add to cart response:", response.data);
 
