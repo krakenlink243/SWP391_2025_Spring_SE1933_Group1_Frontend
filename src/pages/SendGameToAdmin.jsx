@@ -5,7 +5,9 @@ import './SendGameToAdmin.css'
 import PartHeading from '../components/PartHeading/PartHeading'
 import Button from '../components/Button/Button'
 import axios from 'axios'
-import { validatePrice,validateEmty,validateMemory,trimValue } from '../utils/validators'
+import { validatePrice,validateEmty,validateMemory,trimValue,validateMedia } from '../utils/validators'
+import { PhotoProvider,PhotoView } from 'react-photo-view'
+import "react-photo-view/dist/react-photo-view.css";
 function SendGameToAdmin() {
   const [fileName,setFileName] = useState('UPLOAD');
   const [formData,setFormData] = useState({
@@ -81,7 +83,7 @@ function SendGameToAdmin() {
   }
   const handleSubmit = async() => {
     for (const key in formData) {
-      if (!validateEmty(formData.memory)||!validateEmty(formData.processor)||!validateEmty(formData.storage)||!validateEmty(formData.graphics)||!validateEmty(formData.shortDescription)||!validateEmty(formData.fullDescription)||!validateEmty(formData.gameName)||!validateEmty(formData.price)||!validateEmty(formData.os)||!validateEmty(formData.gameUrl)) {
+      if (!validateEmty(formData.memory)||!validateEmty(formData.processor)||!validateEmty(formData.storage)||!validateEmty(formData.graphics)||!validateEmty(formData.shortDescription)||!validateEmty(formData.fullDescription)||!validateEmty(formData.gameName)||!validateEmty(formData.price)||!validateEmty(formData.os)||!validateEmty(formData.gameUrl)||!validateEmty(arr)) {
         alert(`Please fill in the required field.`);
         return;
       }
@@ -125,7 +127,7 @@ function SendGameToAdmin() {
     }
   }
   const handleGameUpload = async(e) =>{
-    handleDelete();
+    await handleDelete();
     const selectedFile = e.target.files[0];
     const form = new FormData();
     form.append('file',selectedFile);
@@ -194,18 +196,24 @@ function SendGameToAdmin() {
         <textarea name="fullDescription" id="" cols="30" rows="10" value={formData.fullDescription} onChange={handleChange}></textarea>
       </div>
       <div className='game-assets'>
-        <PartHeading content='ASSETS'/>
+        <PartHeading content='ASSETS(*)'/>
         <div className='inner-image'>
-            {arr.map((item,index) => (
-                <img src={item} alt="" key={index} />
-            ))}
-            <input type="file"multiple style={{ display: "none" }} ref={mediaFileRef} onChange={handleFileSelect}/>
+        <PhotoProvider>
+          {arr.map((item, index) => (
+            <PhotoView key={index} src={item}>
+              <img src={item} alt="" style={{ cursor: "pointer", width: "150px" }} />
+            </PhotoView>
+          ))}
+        </PhotoProvider>
+
+
+            <input type="file" multiple style={{ display: "none" }} accept=".jpg,.png" ref={mediaFileRef} onChange={handleFileSelect}/>
             <Button className='upload-media' label='+' onClick={() => mediaFileRef.current.click()}/>
         </div>
       </div>
       <div className='game-file'>
         <PartHeading content='FILES(*)'/>   
-        <input type="file" style={{display:"none"}} ref={fileRef} onChange={handleGameUpload}  /> 
+        <input type="file" accept='.zip' style={{display:"none"}} ref={fileRef} onChange={handleGameUpload}  /> 
         <Button className='upload-button' label={fileName} onClick={() => fileRef.current.click()}/>  
       </div>
       <div className='send-request-cancel'>

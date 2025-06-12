@@ -21,3 +21,7 @@ export const validateEmty = (value) => {
 export const trimValue = (value) => {
   return value.trim().replace(/\s+/g, ' ');
 }
+export const validateMedia = ([]) =>{
+  console.log([].length)
+  return [].length
+}

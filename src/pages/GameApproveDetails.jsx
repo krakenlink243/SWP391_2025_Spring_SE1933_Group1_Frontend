@@ -6,6 +6,8 @@ import PartHeading from '../components/PartHeading/PartHeading'
 import Button from '../components/Button/Button'
 import axios from 'axios'
 import { useParams } from 'react-router'
+import { PhotoProvider,PhotoView } from 'react-photo-view'
+import "react-photo-view/dist/react-photo-view.css";
 function GameApproveDetails() {
   const gameId = useParams().gameId;
   const [downloadLink,setDownloadLink] = useState('');
@@ -30,7 +32,6 @@ function GameApproveDetails() {
         const response = await axios.get(`http://localhost:8080/admin/gameRequest/details/${gameId}`);
         console.log(response.data);
         setFormData(response.data);
-        
         // Get download link after formData is updated
         if(response.data.gameUrl) {
           try {
@@ -127,9 +128,13 @@ function GameApproveDetails() {
       <div className='game-assets'>
         <PartHeading content='ASSETS'/>
         <div className='inner-image'>
+          <PhotoProvider>
             {formData.mediaUrls.map((item,index) => (
+              <PhotoView key={index} src={item}>
                 <img src={item} alt="" key={index} />
+              </PhotoView>
             ))}
+          </PhotoProvider>
         </div>
       </div>
       <div className='game-file'>
