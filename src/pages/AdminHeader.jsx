@@ -30,7 +30,7 @@ const AdminHeader = ({ currentTab, changeToTab }) => {
             <a href="/">
                 <img src="/logo_steam.svg" alt="Steam Logo" className="logo" />
             </a>
-            <nav>
+            <nav className="user-actions">
                 <a className={currentTab === "Request Management" ? "active" : ""} onClick={() => changeToTab("Request Management")}>REQUEST MANAGEMENT</a>
                 <a className={currentTab === "User Management" ? "active" : ""} onClick={() => changeToTab("User Management")}>USER</a>
             </nav>

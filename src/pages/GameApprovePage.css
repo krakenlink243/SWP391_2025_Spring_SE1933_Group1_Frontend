@@ -8,6 +8,8 @@
     max-width: 800px;
     margin: auto;
     border-radius: 10px;
+    /*Fixed by Phan NT Son - Make it fit to screen, no more blank under*/
+    /* min-height: 100vh;  */
 }
 
 /* Navigation bar */

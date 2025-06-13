@@ -119,7 +119,7 @@ function AppRoutes() { // Renamed by Phan NT Son
           <Route path="/game/:gameId" element={<Detail />} />
           <Route path="/game" element={<List />}></Route>
           {/* <Route path="/aprrovegame" element={<AprroveF />}></Route> */}
-          <Route path="/aprrovegame/:gameId" element={<ApproveDetailsF />}></Route>
+          <Route path="/admin/approvegame/:gameId" element={<ApproveDetailsF />}></Route> {/* Adjust by Phan NT Son */}
           <Route path="/sendgame" element={<RequestAddGame />}></Route>
           <Route path="/login" element={<LoginF />} />
           <Route path="/register" element={<RegisterF />} />
@@ -127,7 +127,7 @@ function AppRoutes() { // Renamed by Phan NT Son
           <Route path="/transaction" element={<Transaction />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/notifications" element={<NotificationList />} />
-          <Route path="/admin" element={<AdminDashboard tab={adminTab}/>} /> {/* Added by Phan NT Son */}
+          <Route path="/admin" element={<AdminDashboard tab={adminTab} />} /> {/* Added by Phan NT Son */}
         </Routes>
       </div>
     </div>
@@ -188,11 +188,7 @@ function NotFound() {
 }
 function Home() {
   return (
-    <div className="app-container">
-      <div className="page-content-constrained-wrapper">
-        <HomePage />
-      </div>
-    </div>
+    <HomePage />
   );
 }
 

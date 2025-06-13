@@ -33,11 +33,7 @@
   gap: 20px;
   min-width: 0; /* Quan trọng để flexbox không bị tràn */
 }
-video {
-  object-fit: contain;
-  overflow-clip-margin: content-box;
-  overflow: clip;
-}
+
 
 .fullscreen-video {
   margin-left: 50%;

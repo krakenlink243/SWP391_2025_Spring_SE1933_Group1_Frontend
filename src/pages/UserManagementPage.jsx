@@ -35,25 +35,11 @@ function UserManagementPage() {
     }, [page]);
 
     const handleApprove = async (requestId) => {
-        try {
-            const response = await axios.patch(`http://localhost:8080/admin/approve/${requestId}`);
-            console.log("Approved request:", response.data);
-            alert("Game Approved")
-            fetchData();
-        } catch (err) {
-            console.error("Error approving request:", err);
-        }
+
     };
 
     const handleDecline = async (requestId) => {
-        try {
-            const response = await axios.patch(`http://localhost:8080/admin/reject/${requestId}`);
-            console.log("Approved request:", response.data);
-            alert("Game Declined")
-            fetchData();
-        } catch (err) {
-            console.error("Error approving request:", err);
-        }
+
     }
 
     const handleCheckChange = (requestId) => {
@@ -76,37 +62,15 @@ function UserManagementPage() {
     };
 
     const handleApproveSelected = async () => {
-        console.log("ook")
-        try {
-            for (let i = 0; i < selectedRequests.length; i++) {
-                const requestId = selectedRequests[i];
-                const response = await axios.patch(`http://localhost:8080/admin/approve/${requestId}`);
-                console.log(`Processed approve for request ID:`, requestId);
-            }
-            alert(`All selected requests have been approved`);
-            setSelectedRequests([]); // Clear selection after processing
-            fetchData(); // Refresh data
-        } catch (err) {
-            console.error(`Error during approve:`, err);
-        }
+
     };
+
     const handleDeclineSelected = async () => {
-        console.log("ook")
-        try {
-            for (let i = 0; i < selectedRequests.length; i++) {
-                const requestId = selectedRequests[i];
-                const response = await axios.patch(`http://localhost:8080/admin/reject/${requestId}`);
-                console.log(`Processed approve for request ID:`, requestId);
-            }
-            alert(`All selected requests have been declined`);
-            setSelectedRequests([]);
-            fetchData();
-        } catch (err) {
-            console.error(`Error during approve:`, err);
-        }
+
     };
+
     const handleRedirect = (requestId) => {
-        window.location.href = `/aprrovegame/${requestId}`
+        // window.location.href = `/admin/approvegame/${requestId}`
     }
 
 
@@ -121,18 +85,18 @@ function UserManagementPage() {
                     alt="Checkbox"
                     onClick={handleTick}
                 />
-                
+
             </div>
             {loadedRequest.map((request) => (
                 <RequestItem
-                    key={request.UserID}
-                    requestId={request.UserID}
+                    key={request.userID}
+                    requestId={request.userID}
                     requestName={request.username}
-                    onApprove={() => handleApprove(request.UserID)}
-                    onDecline={() => handleDecline(request.UserID)}
+                    onApprove={() => handleApprove(request.userID)}
+                    onDecline={() => handleDecline(request.userID)}
                     onCheckChange={handleCheckChange}
-                    isTicked={selectedRequests.includes(request.UserID)}
-                    onClicked={() => handleRedirect(request.UserID)}
+                    isTicked={selectedRequests.includes(request.userID)}
+                    onClicked={() => handleRedirect(request.userID)}
                 />
             ))}
             <div className="pagination-controls">
