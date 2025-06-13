@@ -93,7 +93,7 @@ function GameApproveDetails() {
             <input type="text" name="gameName" id="" value={formData.gameName} readOnly  />
             PRICE(*)
             <div>
-              <input type="text" name="price" id="" value={formData.price} readOnly  /> $
+              <input type="text" name="price" id="" value={formData.price} readOnly  />
             </div>
         </div>
       </div>

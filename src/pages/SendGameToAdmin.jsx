@@ -60,11 +60,11 @@ function SendGameToAdmin() {
       }));
       return;  
     }
-    if(value.length > 4 && name ==='price'){
-      alert("Game price must under $10000!")
+    if(value > 1000 && name ==='price'){
+      alert("Game price must be under or equals $1000!")
       setFormData(prev => ({
         ...prev,
-        [name]: value.slice(0, 1000), // Truncate without trimming spaces
+        [name]: "", // Truncate without trimming spaces
       }));
       return;
   
@@ -163,7 +163,7 @@ function SendGameToAdmin() {
             <input type="text" name="gameName" id="" value={formData.gameName}  onChange={handleChange} onBlur={normalizeValue} />
             PRICE(*)
             <div>
-              <input type="text" name="price" id="" value={formData.price} onChange={handleChange} /> $
+              $ <input className='price-input' type="text" name="price" id="" value={formData.price} onChange={handleChange} />
             </div>
         </div>
       </div>
