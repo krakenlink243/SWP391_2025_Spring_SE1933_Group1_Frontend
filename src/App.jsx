@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Outlet, Link } from "react-router-dom"; // Import các component của router
+// Son Added useLocation
+import { BrowserRouter, Routes, Route, Outlet, Link, useLocation } from "react-router-dom"; // Import các component của router
 import { useState, useEffect } from "react"; // Import useState và useEffect từ React
 import axios from "axios"; // Import axios để thực hiện các yêu cầu HTTP
 
@@ -20,7 +21,11 @@ import SplashScreen from "./components/SplashScreen/SplashScreen"; // Import Spl
 import NotificationList from "./components/NotificationList";
 import "./App.css";
 import GamesPage from "./components/GamesPage/GamesPage";
-function App() {
+import AdminDashboard from "./pages/AdminDashboard"; // Added by Phan NT Son
+import AdminHeader from "./pages/AdminHeader";
+
+
+function AppRoutes() { // Renamed by Phan NT Son
   console.log("App component is rendering..."); // DEBUG: Kiểm tra xem component có render không
 
   // --- LOGIC CHO SPLASH SCREEN ---
@@ -78,6 +83,17 @@ function App() {
     return config;
   });
 
+  /**
+   * @author Phan NT Son
+   */
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
+  const [adminTab, setAdminTab] = useState("Request Management");
+  const handleAdminTabChange = (tab) => {
+    setAdminTab(tab);
+  };
+  //--!!
+
   return (
     <div className="app-container">
       {shouldRenderSplash && (
@@ -85,28 +101,34 @@ function App() {
       )}
 
       <div
-        className={`main-app-content ${
-          !loadingState.isFinished ? "hidden" : ""
-        }`}
+        className={`main-app-content ${!loadingState.isFinished ? "hidden" : ""
+          }`}
       >
-        <BrowserRouter>
-          <Header hideLogo={hideHeaderLogo} />
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/game/:gameId" element={<Detail />} />
-            <Route path="/game" element={<List />}></Route>
-            <Route path="/aprrovegame" element={<AprroveF />}></Route>
-            <Route path="/aprrovegame/:gameId" element={<ApproveDetailsF />}></Route>
-            <Route path="/sendgame" element={<RequestAddGame />}></Route>
-            <Route path="/login" element={<LoginF />} />
-            <Route path="/register" element={<RegisterF />} />
-            <Route path="/register-details" element={<RegisterDetailsF />} />
-            <Route path="/transaction" element={<Transaction />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/notifications" element={<NotificationList />} />
-          </Routes>
-        </BrowserRouter>
+        {/* Adjusted by Phan NT Son */}
+        {isAdminRoute ?
+          (<AdminHeader
+            currentTab={adminTab}
+            changeToTab={handleAdminTabChange}
+          />) : (<Header hideLogo={hideHeaderLogo} />)}
+        {!isAdminRoute && <Navbar />}
+        {/* --!! */}
+
+        {/* Remove BrowserRouter by Phan NT Son */}
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/game/:gameId" element={<Detail />} />
+          <Route path="/game" element={<List />}></Route>
+          {/* <Route path="/aprrovegame" element={<AprroveF />}></Route> */}
+          <Route path="/aprrovegame/:gameId" element={<ApproveDetailsF />}></Route>
+          <Route path="/sendgame" element={<RequestAddGame />}></Route>
+          <Route path="/login" element={<LoginF />} />
+          <Route path="/register" element={<RegisterF />} />
+          <Route path="/register-details" element={<RegisterDetailsF />} />
+          <Route path="/transaction" element={<Transaction />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/notifications" element={<NotificationList />} />
+          <Route path="/admin" element={<AdminDashboard tab={adminTab}/>} /> {/* Added by Phan NT Son */}
+        </Routes>
       </div>
     </div>
   );
@@ -114,8 +136,8 @@ function App() {
 function AprroveF() {
   return <GameApprrovePage />;
 }
-function ApproveDetailsF(){
-  return <GameApproveDetails/>
+function ApproveDetailsF() {
+  return <GameApproveDetails />
 }
 function LoginF() {
   return <Login />;
@@ -174,4 +196,10 @@ function Home() {
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
+  );
+};
