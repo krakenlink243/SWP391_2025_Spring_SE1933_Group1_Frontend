@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import './NotificationBox.css';
 
 /**
  * @author Phan NT Son

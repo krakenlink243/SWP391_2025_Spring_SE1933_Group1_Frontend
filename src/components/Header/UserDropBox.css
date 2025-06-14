@@ -1,0 +1,86 @@
+.user-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.user-avatar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 8px;
+  color: white;
+}
+
+.user-avatar img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 6px solid white;
+  margin-left: 4px;
+}
+
+@keyframes dropdownFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dropdownFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: #2a475e;
+  min-width: 220px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+  padding: 8px 0;
+  z-index: 10;
+  text-align: start;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.dropdown.show {
+  animation: dropdownFadeIn 0.3s forwards ease;
+  pointer-events: auto;
+}
+
+.dropdown.hide {
+  animation: dropdownFadeOut 0.3s forwards ease;
+  pointer-events: none;
+}
+
+.dropdown a {
+  display: block;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.dropdown a:hover {
+  background-color: #1b2838;
+}
+

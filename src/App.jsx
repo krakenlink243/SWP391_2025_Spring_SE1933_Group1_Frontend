@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Outlet, Link, useLocation } from "react-router-dom"; // Import các component của router
 import { useState, useEffect } from "react"; // Import useState và useEffect từ React
 import axios from "axios"; // Import axios để thực hiện các yêu cầu HTTP
+import "./App.css";
 
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
@@ -17,9 +18,7 @@ import GameApproveDetails from "./pages/GameApproveDetails";
 import Transaction from "./components/TransactionFolder/Transaction";
 import Cart from "./components/CartFolder/Cart";
 import SplashScreen from "./components/SplashScreen/SplashScreen"; // Import SplashScreen component
-// import NotificationBox from "./components/NotificationBox";
-import NotificationList from "./components/NotificationList";
-import "./App.css";
+import NotificationList from "./pages/NotificationList";
 import GamesPage from "./components/GamesPage/GamesPage";
 import AdminDashboard from "./pages/AdminDashboard"; // Added by Phan NT Son
 import AdminHeader from "./pages/AdminHeader";

@@ -1,6 +1,6 @@
 .logo {
   /*Remove height by Phan NT Son*/
-  padding: 1.5em;
+  /*Remove padding by Phan NT Son*/
   will-change: filter;
   transition: filter 300ms;
 }

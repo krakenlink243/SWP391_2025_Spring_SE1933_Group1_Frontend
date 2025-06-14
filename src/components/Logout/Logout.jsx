@@ -1,6 +1,5 @@
-import { useState } from "react";
 import "./Logout.css";
-import Button from "./Button/Button";
+import Button from "../Button/Button";
 /**
  * @author Phan NT Son
  * @returns 
