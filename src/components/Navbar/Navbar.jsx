@@ -2,33 +2,34 @@ import React from "react";
 import { FiSearch } from "react-icons/fi"; // Import icon search từ react-icons
 import "./Navbar.css"; // Hoặc Navbar.module.css nếu dùng CSS Modules
 import SearchBar from "../SearchBar/SearchBar"; // Import component SearchBar
+/**
+ * Origin @author: TS Huy
+ * Refactor and re-design @author: Phan NT Son
+ * @returns 
+ */
 const Navbar = () => {
   return (
-    <nav className="steam-navbar-secondary">
-      <div className="navbar-links-container">
-        <a href="/game" className="nav-item">
-          Your Store
-        </a>
-        <a href="/" className="nav-item">
-          New & Noteworthy
-        </a>
-        <a href="/" className="nav-item">
-          Categories
-        </a>
-        <a href="/" className="nav-item">
-          Points Shop
-        </a>
-        <a href="/" className="nav-item">
-          News
-        </a>
-        <a href="/" className="nav-item">
-          Labs
-        </a>
+    <div className="store-header" role="navigation">
+      <div className="content">
+        <div className="store-nav-area">
+          <div className="store-nav-bg">
+            <div className="store-nav">
+              <div className="tab"><span className="pulldown"><a href="/game">Your Store</a></span></div>
+              <div className="tab"><span className="pulldown"><a>New & Noteworthy</a></span></div>
+              <div className="tab"><span className="pulldown"><a>Categories</a></span></div>
+              <div className="tab"><span className="pulldown"><a>Points Shop</a></span></div>
+              <div className="tab"><span className="pulldown"><a>News</a></span></div>
+              <div className="tab"><span className="pulldown"><a>Labs</a></span></div>
+              <div className="search-flex-spacer"></div>
+              <div className="search-area">
+                <SearchBar />
+              </div>
+
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="search-bar-container">
-        <SearchBar />
-      </div>
-    </nav>
+    </div>
   );
 };
 

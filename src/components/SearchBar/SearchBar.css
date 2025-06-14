@@ -1,21 +1,24 @@
-
 .search-bar-form {
     position: relative;
     display: flex;
     align-items: center;
-    max-width: 500px;
+    max-width: 210px;
     max-height: 35px;
-    background-color: #316282; /* Màu nền xanh đậm cho cả form */
+    background-color: #316282;
+    /* Màu nền xanh đậm cho cả form */
     border-radius: 3px;
 }
 
 .search-input {
-    flex-grow: 1; /* Cho phép input co giãn */
-    padding: 6px 10px;
+    flex-grow: 1;
+    /* Cho phép input co giãn */
     font-size: 14px;
+    padding: 10px;
     border: none;
-    background-color: transparent; /* Nền trong suốt để thấy màu của form */
+    background-color: transparent;
+    /* Nền trong suốt để thấy màu của form */
     color: #e0e0e0;
+    max-width: calc(100% - 35px);
 }
 
 .search-input::placeholder {
@@ -28,14 +31,17 @@
 }
 
 .search-button {
-    background: #5b9ace; /* Màu xanh sáng cho nút */
-    border: none;
-    padding: 8px;
-    cursor: pointer;
+    background: #5b9ace;
+    /* Màu xanh sáng cho nút */
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 0 3px 3px 0; /* Bo góc phải */
+    border-radius: 0 3px 3px 0;
+    /* Bo góc phải */
+    width: 35px;
+    height: 35px;
+    
 }
 
 .search-button svg {
@@ -55,11 +61,12 @@
     max-height: 400px;
     overflow-y: auto;
     z-index: 1000;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .suggestion-item {
-    display: flex; /* Dùng flexbox để xếp ảnh và text cạnh nhau */
+    display: flex;
+    /* Dùng flexbox để xếp ảnh và text cạnh nhau */
     align-items: center;
     padding: 5px;
     cursor: pointer;
@@ -72,19 +79,23 @@
 }
 
 .suggestion-item:hover {
-    background-color: #5b9ace; /* Màu highlight khi hover */
+    background-color: #5b9ace;
+    /* Màu highlight khi hover */
 }
 
 .suggestion-image {
-    width: 120px; /* Chiều rộng cố định cho ảnh */
-    height: 45px;  /* Chiều cao cố định */
+    width: 120px;
+    /* Chiều rộng cố định cho ảnh */
+    height: 45px;
+    /* Chiều cao cố định */
     object-fit: cover;
     margin-right: 10px;
 }
 
 .suggestion-text-content {
     display: flex;
-    flex-direction: column; /* Xếp title và price theo chiều dọc */
+    flex-direction: column;
+    /* Xếp title và price theo chiều dọc */
     justify-content: center;
 }
 
