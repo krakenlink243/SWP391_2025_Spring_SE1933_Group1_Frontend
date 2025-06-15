@@ -9,6 +9,7 @@ import { createNotification } from "../../services/notification";
 // add by Bathanh
   const userId = localStorage.getItem("userId");
 
+  
 const GameDetail = () => {
   const { gameId } = useParams();
   const [game, setGame] = useState(null);
@@ -74,9 +75,8 @@ const GameDetail = () => {
         createNotification(`Game ${game.name} has been added to your cart.`);
         alert("Game added to cart successfully!");
       } else {
-        alert("Failed to add game to cart.");
+        alert("Game already bought or not available.");
       }
-      // ---
 
     } catch (err) {
       console.error("Error adding to cart:", err);
@@ -167,7 +167,7 @@ const GameDetail = () => {
             {game.tags.map((tag) => (
               // Mỗi tag giờ là một Link trỏ đến trang game với query parameter
               <Link
-                to={`/games?tags=${tag.tagId}`} // URL sẽ có dạng /games?tags=17
+                to={`/game?tags=${tag.tagId}`} // URL sẽ có dạng /games?tags=17
                 key={tag.tagId}
                 className="tag"
               >
@@ -185,6 +185,9 @@ const GameDetail = () => {
                 ) : (
                   <span className="price">Free to Play</span>
                 )}
+                if (condition) {
+                  
+                }
                 <button onClick={addCartHandler} className="add-to-cart-button">
                   Add to Cart
                 </button>

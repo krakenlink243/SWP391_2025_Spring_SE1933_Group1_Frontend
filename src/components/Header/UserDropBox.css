@@ -1,0 +1,42 @@
+.user-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.user-avatar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 8px;
+  color: white;
+}
+
+.user-avatar img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+
+.dropdown-menu {
+  background-color: #2a475e;
+  min-width: 220px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+  padding: 8px 0;
+  z-index: 1000;
+  text-align: start;
+  inset: 0px 0px auto auto !important;
+}
+
+
+.dropdown-menu a {
+  display: block;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+  background-color: #1b2838;
+}

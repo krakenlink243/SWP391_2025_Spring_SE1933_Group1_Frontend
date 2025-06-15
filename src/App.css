@@ -1,28 +1,27 @@
-html,
-body,
-#root {
-  width: 100%;
-  margin: 0;
-  padding: 0;
+.app-container{
+  background: #1b2838;
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
+  /*Remove height by Phan NT Son*/
+  /*Remove padding by Phan NT Son*/
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
-.logo.react:hover {
+
+.logo .react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
+
 .page-content-constrained-wrapper {
-  width: 100%; 
-  max-width: 940px; 
-  margin: 0 auto; 
-  padding: 0 10px; 
+  width: 100%;
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 0 10px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -33,6 +32,7 @@ body,
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

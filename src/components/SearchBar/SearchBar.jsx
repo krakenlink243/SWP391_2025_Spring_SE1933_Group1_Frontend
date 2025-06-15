@@ -113,7 +113,7 @@ const SearchBar = ({ onSearchSubmit }) => {
                 />
                 <div className="suggestion-text-content">
                   <div className="suggestion-title">{game.title}</div>
-                  <div className="suggestion-price">{game.originalPrice}</div>
+                  <div className="suggestion-price">${game.originalPrice}</div>
                 </div>
               </Link>
             ))}

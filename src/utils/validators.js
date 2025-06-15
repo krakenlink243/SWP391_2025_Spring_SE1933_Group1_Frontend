@@ -1,3 +1,4 @@
+//@author: Vu Hoang
 export const validatePrice = (value) => {
   // Must be a valid number format
   if (!/^\d*\.?\d*$/.test(value)) return false;
@@ -11,7 +12,6 @@ export const validateMemory = (value) => {
     const pattern = /^\d+(\.\d{1,2})?(GB|MB)$/i;
     return pattern.test(value);
 }
-// Other validation functions can be added here
 export const validateEmail = (value) => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 };
@@ -19,3 +19,10 @@ export const validateEmail = (value) => {
 export const validateEmty = (value) => {
   return value.length > 0;
 };
+export const trimValue = (value) => {
+  return value.trim().replace(/\s+/g, ' ');
+}
+export const validateMedia = ([]) =>{
+  console.log([].length)
+  return [].length
+}
