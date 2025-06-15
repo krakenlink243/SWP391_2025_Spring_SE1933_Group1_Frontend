@@ -16,9 +16,9 @@ function UserDropBox() {
 
 
     return (
-        <div className="user-menu dropdown">
-            <div className="user-avatar dropdown-toggle" data-bs-toggle="dropdown">
-                <span className="username">{username}</span>
+        <div className="user-drop-box-menu dropdown">
+            <div className="user-drop-box-avatar dropdown-toggle" data-bs-toggle="dropdown">
+                <span className="user-drop-box-name">{username}</span>
             </div>
             <div className="dropdown-menu">
                 <a className="dropdown-item" href="/profile">View my profile</a>

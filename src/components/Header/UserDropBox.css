@@ -1,9 +1,9 @@
-.user-menu {
+.user-drop-box-menu {
   position: relative;
   display: inline-block;
 }
 
-.user-avatar {
+.user-drop-box-avatar {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -12,7 +12,7 @@
   color: white;
 }
 
-.user-avatar img {
+.user-drop-box-avatar img {
   width: 32px;
   height: 32px;
   border-radius: 50%;
