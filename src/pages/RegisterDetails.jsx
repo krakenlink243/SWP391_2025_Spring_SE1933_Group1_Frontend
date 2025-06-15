@@ -57,7 +57,8 @@ const RegisterDetails = () => {
       console.log(response.data);
 
       // Added by Phan NT Son
-      window.location.href = "/login";
+      navigate('/login', { state: { fromRegister: true } }); //Added by Loc Phan: navigate to login page after successful registration
+
 
     } catch (error) {
       console.error(error);
@@ -81,7 +82,7 @@ const RegisterDetails = () => {
       <main className="main">
         <form className="form" onSubmit={handleSubmit}>
           <h1 className="form-title">CREATE YOUR ACCOUNT</h1>
-
+          {message && <p className="message">{message}</p>}
           <div className="form-group">
             <label className="form-label" htmlFor="username">Steam Account Name</label>
             <input
@@ -143,7 +144,7 @@ const RegisterDetails = () => {
         </form>
       </main>
 
-      {message && <p className="message">{message}</p>}
+      
     </div>
   );
 };

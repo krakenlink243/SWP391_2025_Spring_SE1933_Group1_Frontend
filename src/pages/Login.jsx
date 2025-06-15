@@ -4,11 +4,23 @@ import axios from "axios";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import "./Login.css";
 import { jwtDecode } from "jwt-decode";
+import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const location = useLocation();
+  
+  useEffect(() => {
+    if (location.state?.fromRegister) {
+      setMessage('Registration successful!');
+      // Clear the message after a few seconds
+      const timer = setTimeout(() => setMessage(''), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [location.state]);
 
   // Added by Phan NT Son
   if (localStorage.getItem("token")) {
@@ -72,6 +84,7 @@ const Login = () => {
       <main>
         <section class="form-section">
           <h1 class="form-title">Log in</h1>
+          {message && <p>{message}</p>}
           <form onSubmit={handleLogin} class="form">
             <label htmlFor="username" class="form-label">
               Log in with username
@@ -122,7 +135,7 @@ const Login = () => {
                   height="40"
                 /> */}
             </div>
-            {message && <p>{message}</p>}
+            
           </form>
         </section>
       </main>
