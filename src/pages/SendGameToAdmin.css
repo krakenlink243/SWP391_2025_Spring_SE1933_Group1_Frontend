@@ -2,11 +2,11 @@
     font-family: 'Motiva Sans Light';
     src: url('/src/assets/fonts/MotivaSansLight.woff.ttf') format('truetype');
   }
-  body {
+  /* body {
     margin: 0;
     padding: 0;
     background-color: #1B2438;
-  }
+  } */
   .game-application{
     /* margin-top: 100px; */
     color: white;

@@ -23,8 +23,8 @@ import "./App.css";
 import GamesPage from "./components/GamesPage/GamesPage";
 import AdminDashboard from "./pages/AdminDashboard"; // Added by Phan NT Son
 import AdminHeader from "./pages/AdminHeader";
-
-
+import ApplyToPublisher from "./pages/ApplyToPublisher";
+import PublisherApprovePage from "./pages/PublisherApprovePage";
 function AppRoutes() { // Renamed by Phan NT Son
   console.log("App component is rendering..."); // DEBUG: Kiểm tra xem component có render không
 
@@ -128,6 +128,8 @@ function AppRoutes() { // Renamed by Phan NT Son
           <Route path="/cart" element={<Cart />} />
           <Route path="/notifications" element={<NotificationList />} />
           <Route path="/admin" element={<AdminDashboard tab={adminTab}/>} /> {/* Added by Phan NT Son */}
+          <Route path="/sendpublisher" element={<SendPublisher/>}></Route>
+          <Route path="/approvepublisher" element={<ApprovePublisher/>}></Route>
         </Routes>
       </div>
     </div>
@@ -138,6 +140,12 @@ function AprroveF() {
 }
 function ApproveDetailsF() {
   return <GameApproveDetails />
+}
+function SendPublisher(){
+  return <ApplyToPublisher/>
+}
+function ApprovePublisher(){
+  return <PublisherApprovePage/>
 }
 function LoginF() {
   return <Login />;
