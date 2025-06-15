@@ -5,47 +5,45 @@ import SearchBar from "../SearchBar/SearchBar";
 import Pagination from "../Pagination/Pagination";
 import SearchResultsHeader from "../SearchResultHeader/SearchResultHeader";
 import "./GamesPage.css";
+import axios from "axios";
 
-const GAMES_PER_PAGE = 5;
+const GAMES_PER_PAGE = 5; // Bạn có thể thay đổi số lượng game mỗi trang
 
 const GamesPage = () => {
+  // === KHAI BÁO STATE ===
   const [games, setGames] = useState([]);
   const [allTags, setAllTags] = useState([]);
   const [allPublishers, setAllPublishers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalGames, setTotalGames] = useState(0);
 
-  // === State cho các bộ lọc, tìm kiếm, sắp xếp ===
   const [filters, setFilters] = useState({
     searchTerm: "",
     maxPrice: 60,
     selectedTagIds: new Set(),
     selectedPublisherIds: new Set(),
-    sort: "name,asc", // Giá trị mặc định: sắp xếp theo tên A-Z
+    sort: "name,asc",
   });
 
-  // === State cho phân trang và tổng số kết quả ===
-  const [currentPage, setCurrentPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
-  const [totalGames, setTotalGames] = useState(0); // <-- State mới để lưu tổng số game
+  // --- LOGIC GỌI API ---
 
-  // 1. Fetch dữ liệu cho Sidebar (chỉ chạy 1 lần)
   useEffect(() => {
     const fetchFilterData = async () => {
       try {
         const [tagsResponse, publishersResponse] = await Promise.all([
-          fetch("http://localhost:8080/tags"),
-          fetch("http://localhost:8080/publisher/list"),
+          axios.get("http://localhost:8080/tags"),
+          axios.get("http://localhost:8080/publisher/list"),
         ]);
-        const tagsData = await tagsResponse.json();
-        const publishersData = await publishersResponse.json();
-        if (tagsData)
+        if (tagsResponse.data)
           setAllTags(
-            tagsData.sort((a, b) => a.tagName.localeCompare(b.tagName))
+            tagsResponse.data.sort((a, b) => a.tagName.localeCompare(b.tagName))
           );
-        if (publishersData)
+        if (publishersResponse.data)
           setAllPublishers(
-            publishersData.sort((a, b) =>
+            publishersResponse.data.sort((a, b) =>
               a.publisherName.localeCompare(b.publisherName)
             )
           );
@@ -59,10 +57,11 @@ const GamesPage = () => {
   const fetchGames = useCallback(async () => {
     setLoading(true);
     setError(null);
-
     const params = new URLSearchParams();
+
     if (filters.searchTerm) params.append("searchTerm", filters.searchTerm);
     if (filters.maxPrice < 60) params.append("maxPrice", filters.maxPrice);
+    console.log("Gia", filters.maxPrice);
     if (filters.selectedTagIds.size > 0)
       params.append("tags", Array.from(filters.selectedTagIds).join(","));
     if (filters.selectedPublisherIds.size > 0)
@@ -71,11 +70,9 @@ const GamesPage = () => {
         Array.from(filters.selectedPublisherIds).join(",")
       );
 
-    // Thêm tham số sắp xếp
     const [sortField, sortDir] = filters.sort.split(",");
     params.append("sort", sortField);
     params.append("dir", sortDir);
-
     params.append("page", currentPage);
     params.append("size", GAMES_PER_PAGE);
 
@@ -83,14 +80,11 @@ const GamesPage = () => {
     console.log("Fetching games from:", apiUrl);
 
     try {
-      const response = await fetch(apiUrl);
-      if (!response.ok)
-        throw new Error(`HTTP error! status: ${response.status}`);
-
-      const pageData = await response.json();
+      const response = await axios.get(apiUrl);
+      const pageData = response.data;
       setGames(pageData.content || []);
       setTotalPages(pageData.totalPages || 0);
-      setTotalGames(pageData.totalElements || 0); // <-- Cập nhật tổng số game
+      setTotalGames(pageData.totalElements || 0);
     } catch (e) {
       console.error("Failed to fetch games:", e);
       setError(e.message);
@@ -98,14 +92,16 @@ const GamesPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [filters, currentPage]);
+  }, [filters, currentPage]); // Phụ thuộc vào `filters` và `currentPage`
 
+  // 3. useEffect để trigger việc gọi API
   useEffect(() => {
     fetchGames();
-  }, [fetchGames]);
+  }, [fetchGames]); // Chỉ phụ thuộc vào hàm fetchGames đã được useCallback tối ưu
 
-  // Hàm xử lý chung cho việc thay đổi bộ lọc và sắp xếp
-  const handleFilterChange = (filterType, value) => {
+  // --- CÁC HÀM XỬ LÝ SỰ KIỆN (Tối ưu với useCallback) ---
+
+  const handleFilterChange = useCallback((filterType, value) => {
     setFilters((prevFilters) => {
       const newFilters = { ...prevFilters };
       if (filterType === "price" || filterType === "sort") {
@@ -123,14 +119,15 @@ const GamesPage = () => {
       }
       return newFilters;
     });
-    setCurrentPage(0);
-  };
+    setCurrentPage(0); // Luôn reset về trang đầu khi có bộ lọc mới
+  }, []);
 
-  const handleSearchSubmit = (term) => {
+  const handleSearchSubmit = useCallback((term) => {
     setFilters((prevFilters) => ({ ...prevFilters, searchTerm: term }));
     setCurrentPage(0);
-  };
+  }, []);
 
+  // --- RENDER ---
   return (
     <div className="games-page-container">
       <div className="page-main-content">
@@ -144,9 +141,7 @@ const GamesPage = () => {
             currentSort={filters.sort}
             onSortChange={handleFilterChange}
           />
-
           <GameList games={games} loading={loading} error={error} />
-
           <Pagination
             currentPage={currentPage + 1}
             totalPages={totalPages}

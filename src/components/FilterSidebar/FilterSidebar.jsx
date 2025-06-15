@@ -1,63 +1,44 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import "./FilterSidebar.css";
 
 const FilterSidebar = ({ allTags, allPublishers, filters, onFilterChange }) => {
-  // State nội bộ cho các ô tìm kiếm
+  const [localPrice, setLocalPrice] = useState(filters.maxPrice);
   const [tagSearchTerm, setTagSearchTerm] = useState("");
   const [publisherSearchTerm, setPublisherSearchTerm] = useState("");
+  useEffect(() => {
+      onFilterChange("price", localPrice);
+  }, [localPrice, filters.maxPrice, onFilterChange]);
 
-  const handlePriceChange = (e) => {
-    onFilterChange("price", parseInt(e.target.value, 10));
-  };
-
-  const handleTagChange = (tagId) => {
-    onFilterChange("tag", tagId);
-  };
-
-  const handlePublisherChange = (publisherId) => {
-    onFilterChange("publisher", publisherId);
-  };
-
-  // Logic để quyết định hiển thị tag nào
   const displayedTags = useMemo(() => {
-    const selected = new Set(filters.selectedTagIds);
-
-    // Luôn hiển thị các tag đã được chọn
+    const selected = filters.selectedTagIds;
     const selectedItems = allTags.filter((tag) => selected.has(tag.tagId));
-
-    // Lọc các tag còn lại dựa trên ô tìm kiếm
-    const filteredItems = allTags.filter(
+    const remainingItems = allTags.filter(
       (tag) =>
         !selected.has(tag.tagId) &&
         tag.tagName.toLowerCase().includes(tagSearchTerm.toLowerCase())
     );
-
-    // Nếu không có tìm kiếm, chỉ lấy 10 tag đầu tiên trong danh sách đã lọc
-    const remainingItems = tagSearchTerm
-      ? filteredItems
-      : filteredItems.slice(0, 10);
-
-    return [...selectedItems, ...remainingItems];
+    return [
+      ...selectedItems,
+      ...(tagSearchTerm ? remainingItems : remainingItems.slice(0, 10)),
+    ];
   }, [allTags, filters.selectedTagIds, tagSearchTerm]);
 
-  // Logic tương tự để hiển thị publisher
   const displayedPublishers = useMemo(() => {
-    const selected = new Set(filters.selectedPublisherIds);
+    const selected = filters.selectedPublisherIds;
     const selectedItems = allPublishers.filter((p) =>
       selected.has(p.publisherId)
     );
-    const filteredItems = allPublishers.filter(
+    const remainingItems = allPublishers.filter(
       (p) =>
         !selected.has(p.publisherId) &&
         p.publisherName
           .toLowerCase()
           .includes(publisherSearchTerm.toLowerCase())
     );
-    const remainingItems = publisherSearchTerm
-      ? filteredItems
-      : filteredItems.slice(0, 10);
-
-    return [...selectedItems, ...remainingItems];
+    return [
+      ...selectedItems,
+      ...(publisherSearchTerm ? remainingItems : remainingItems.slice(0, 10)),
+    ];
   }, [allPublishers, filters.selectedPublisherIds, publisherSearchTerm]);
 
   return (
@@ -68,12 +49,14 @@ const FilterSidebar = ({ allTags, allPublishers, filters, onFilterChange }) => {
           type="range"
           id="price-range"
           min="0"
-          max="60" // 60 được coi là "Any Price"
-          value={filters.maxPrice}
-          onChange={handlePriceChange}
+          max="60"
+          value={localPrice}
+          onChange={(e) => {
+            setLocalPrice(parseInt(e.target.value));
+          }}
         />
         <span className="price-label">
-          {filters.maxPrice >= 60 ? "Any Price" : `Under $${filters.maxPrice}`}
+          {localPrice >= 60 ? "Any Price" : `Under $${localPrice}`}
         </span>
       </div>
 
@@ -82,7 +65,7 @@ const FilterSidebar = ({ allTags, allPublishers, filters, onFilterChange }) => {
         <input
           type="search"
           className="filter-search"
-          placeholder="search for more tags"
+          placeholder="Search for tags"
           value={tagSearchTerm}
           onChange={(e) => setTagSearchTerm(e.target.value)}
         />
@@ -92,7 +75,7 @@ const FilterSidebar = ({ allTags, allPublishers, filters, onFilterChange }) => {
               <input
                 type="checkbox"
                 checked={filters.selectedTagIds.has(tag.tagId)}
-                onChange={() => handleTagChange(tag.tagId)}
+                onChange={() => onFilterChange("tag", tag.tagId)}
               />
               {tag.tagName}
             </label>
@@ -105,7 +88,7 @@ const FilterSidebar = ({ allTags, allPublishers, filters, onFilterChange }) => {
         <input
           type="search"
           className="filter-search"
-          placeholder="search for more publishers"
+          placeholder="Search for publishers"
           value={publisherSearchTerm}
           onChange={(e) => setPublisherSearchTerm(e.target.value)}
         />
@@ -117,7 +100,9 @@ const FilterSidebar = ({ allTags, allPublishers, filters, onFilterChange }) => {
                 checked={filters.selectedPublisherIds.has(
                   publisher.publisherId
                 )}
-                onChange={() => handlePublisherChange(publisher.publisherId)}
+                onChange={() =>
+                  onFilterChange("publisher", publisher.publisherId)
+                }
               />
               {publisher.publisherName}
             </label>
