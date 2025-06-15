@@ -16,8 +16,8 @@
 .logo .react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
-
-.page-content-constrained-wrapper {
+/*Adjust by Phan NT Son 15-06-2025*/
+/* .page-content-constrained-wrapper {
   width: 100%;
   max-width: 940px;
   margin: 0 auto;
@@ -26,7 +26,7 @@
   display: flex;
   flex-direction: column;
   margin-top: 40px;
-}
+} */
 
 @keyframes logo-spin {
   from {

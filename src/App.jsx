@@ -14,7 +14,7 @@ import "./App.css";
 
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
-import GameDetail from "./components/GameDetail/GameDetail";
+import GameDetail from "./pages/GameDetail/GameDetail";
 import HomePage from "./pages/HomePage/HomePage";
 import SendGametoAdmin from "./pages/SendGametoAdmin";
 import Login from "./pages/Login";
@@ -182,14 +182,20 @@ function List() {
     </div>
   );
 }
+/**
+ * @author Phan NT Son
+ * @since 15-06-2025
+ * @returns 
+ */
 function Detail() {
   return (
-    <div className="app-container">
-      {" "}
-      <div className="page-content-constrained-wrapper">
-        <GameDetail />
-      </div>
-    </div>
+    // <div className="app-container">
+    //   {" "}
+    //   <div className="page-content-constrained-wrapper">
+    //     <GameDetail />
+    //   </div>
+    // </div>
+    <GameDetail />
   );
 }
 function NotFound() {
