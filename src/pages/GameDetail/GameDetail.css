@@ -1,0 +1,335 @@
+/* ---- TỔNG THỂ TRANG ---- */
+.game-detail-page {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 20px;
+  color: #c6d4df;
+  font-family: 'Motiva Sans', Sans-serif;
+  background-color: #1b2838;
+  /* Màu nền tối giống Steam */
+}
+
+.breadcrumb {
+  font-size: 12px;
+  color: #8f98a0;
+  margin-bottom: 10px;
+}
+
+.breadcrumb a {
+  color: #c6d4df;
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: #ffffff;
+}
+
+.game-title-header {
+  font-size: 26px;
+  font-weight: 300;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+/* ---- LAYOUT 2 CỘT CHÍNH ---- */
+.detail-main-content {
+  display: flex;
+  gap: 16px;
+}
+
+/* CỘT TRÁI - MEDIA */
+.media-column {
+  flex: 616;
+  /* Tỉ lệ ~616px */
+  min-width: 0;
+}
+
+.main-media-banner {
+  width: 100%;
+  margin-bottom: 8px;
+  background-color: #000;
+}
+
+.main-media-banner img,
+.main-media-banner video {
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+}
+
+.media-thumbnail-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.thumbnail-container {
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.thumbnail-container:hover {
+  border-color: #66c0f4;
+}
+
+.thumbnail-container.active {
+  border-color: #ffffff;
+}
+
+.thumbnail {
+  width: 116px;
+  height: 65px;
+  object-fit: cover;
+  display: block;
+}
+
+/* CỘT PHẢI - THÔNG TIN */
+.info-column {
+  flex: 308;
+  /* Tỉ lệ ~308px */
+  min-width: 0;
+}
+
+.info-cover-image {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.short-description {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #acb2b8;
+  margin-bottom: 15px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 8px;
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+
+
+.tag-list-detail {
+  margin-bottom: 20px;
+}
+
+.tag-list-detail .tag {
+  display: inline-block;
+  background-color: #202d39;
+  padding: 4px 7px;
+  border-radius: 3px;
+  font-size: 11px;
+  margin: 0 4px 4px 0;
+  color: #acb2b8;
+  cursor: pointer;
+}
+
+.tag-list-detail .tag:hover {
+  background-color: #2c4155;
+  color: #ffffff;
+}
+
+/* KHU VỰC MUA GAME */
+.purchase-area {
+  margin-top: auto;
+  /* Đẩy xuống cuối nếu cột info cao hơn */
+}
+
+
+
+/* ---- PHẦN DƯỚI ---- */
+.bottom-content-container {
+  margin-top: 25px;
+  display: flex;
+  gap: 20px;
+}
+
+.full-description-section {
+  flex: 3;
+}
+
+.system-requirements-section {
+  flex: 2;
+}
+
+.bottom-content-container h2 {
+  font-size: 14px;
+  color: #556772;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  font-weight: normal;
+}
+
+.description-body {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #acb2b8;
+}
+
+.requirements-grid {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 15px;
+  font-size: 12px;
+  color: #acb2b8;
+}
+
+.requirements-grid strong {
+  color: #8f98a0;
+}
+
+.review-section-container {
+  margin-top: 30px;
+}
+
+.review-section-container h2 {
+  font-size: 14px;
+  color: #556772;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  font-weight: normal;
+}
+
+.game-detail-header-container {}
+
+.game-detail-header-container .content {
+  height: 435px;
+}
+
+.content .left-col,
+.content .right-col {
+  height: 100%;
+}
+
+.content .left-col {
+  width: 63%;
+  margin: 0 2% 0 0;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.4) 100%);
+
+}
+
+.content .left-col .highlight-player-area {
+  height: calc(100% - 90px);
+}
+
+.left-col .highlight-strip {
+  margin-top: 6px;
+  position: relative;
+  height: 80px;
+  margin-bottom: 4px;
+  z-index: 40;
+  width: 100%;
+}
+
+.highlight-strip .swiper .swiper-scrollbar {
+  background-color: transparent;
+}
+
+.highlight-strip .swiper .swiper-scrollbar .swiper-scrollbar-drag {
+  height: 5px;
+  background: linear-gradient(90deg, rgba(62, 103, 150, 0.918) 11.38%, rgba(58, 120, 177, 0.8) 25.23%, rgb(15, 33, 110) 100%);
+}
+
+.content .right-col {
+  width: 35%;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.4) 100%);
+
+}
+
+.right-col .content-row {
+  margin: 3px 0;
+  width: 100%;
+  display: flex;
+}
+
+.info-label {
+  color: #556772;
+  text-transform: uppercase;
+  width: 50%;
+}
+
+.info-value {
+  color: #66c0f4;
+  text-decoration: none;
+  width: 50%;
+}
+
+.gameHeaderImgCtn img {
+  width: 100%;
+}
+
+.purchase-box {
+  background: linear-gradient(-60deg, rgba(226, 244, 255, 0.3) 5%, rgba(84, 107, 115, 0.3) 95%);
+  padding: 16px;
+  border-radius: 3px;
+}
+
+.purchase-box .game-purchase-action-bg {
+  text-align: right;
+}
+
+.purchase-box .game-purchase-action-bg * {
+  font-size: 12px;
+  display: inline-block;
+  margin-left: 2px;
+  vertical-align: middle;
+}
+
+.game-purchase-action-bg .price-action {
+  display: inline-block;
+  background-color: black;
+  height: 32px;
+  padding: 2px 2px 2px 0;
+  border-radius: 2px;
+  white-space: nowrap;
+  font-size: 0;
+}
+
+.game-purchase-action-bg .price {
+  background-color: #000000;
+  font-size: 13px;
+  padding-left: 12px;
+  padding-right: 12px;
+  position: relative;
+}
+
+.price-action .btn-add-to-cart {
+  position: relative;
+}
+
+.btn-add-to-cart .btn-green-ui {
+  border-radius: 2px;
+  border: none;
+  padding: 1px;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none !important;
+  color: #d2efa9;
+  background: transparent;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
+}
+
+.btn-add-to-cart .btn-green-ui:hover {
+  text-decoration: none !important;
+  color: #fff;
+  background: transparent;
+}
+
+.btn-green-ui span {
+  border-radius: 2px;
+  display: block;
+  background: linear-gradient(to right, #75b022 5%, #588a1b 95%);
+  padding: 0 15px;
+  font-size: 15px;
+  line-height: 25px;
+}
+
+.btn-green-ui:hover span {
+  background: linear-gradient(to right, #8ed629 5%, #6aa621 95%);
+}
