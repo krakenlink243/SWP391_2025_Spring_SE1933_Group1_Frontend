@@ -8,20 +8,20 @@ import "./App.css";
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import GameDetail from "./components/GameDetail/GameDetail";
-import HomePage from "./components/HomePage/HomePage";
+import HomePage from "./pages/HomePage/HomePage";
 import SendGametoAdmin from "./pages/SendGametoAdmin";
 import Login from "./pages/Login";
 import RegisterEmail from "./pages/RegisterEmail";
 import RegisterDetails from "./pages/RegisterDetails";
-import GameApprrovePage from "./pages/GameApprovePage";
+import GameApprrovePage from "./pages/AdminDashboard/GameApprovePage";
 import GameApproveDetails from "./pages/GameApproveDetails";
 import Transaction from "./components/TransactionFolder/Transaction";
 import Cart from "./components/CartFolder/Cart";
 import SplashScreen from "./components/SplashScreen/SplashScreen"; // Import SplashScreen component
 import NotificationList from "./pages/NotificationList";
 import GamesPage from "./components/GamesPage/GamesPage";
-import AdminDashboard from "./pages/AdminDashboard"; // Added by Phan NT Son
-import AdminHeader from "./pages/AdminHeader";
+import AdminDashboard from "./pages/AdminDashboard/AdminDashboard"; // Added by Phan NT Son
+import AdminHeader from "./pages/AdminDashboard/AdminHeader";
 
 
 function AppRoutes() { // Renamed by Phan NT Son

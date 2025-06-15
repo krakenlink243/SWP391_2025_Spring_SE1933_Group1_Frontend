@@ -2,7 +2,7 @@
 import React from 'react'
 import { useState,useRef,useEffect } from'react'
 import axios from 'axios';
-import RequestItem from '../components/RequestItem/RequestItem'
+import RequestItem from '../../components/RequestItem/RequestItem'
 import './GameApprovePage.css'
 function GameApprovePage() {
     const [totalPages, setTotalPages] = useState(1);

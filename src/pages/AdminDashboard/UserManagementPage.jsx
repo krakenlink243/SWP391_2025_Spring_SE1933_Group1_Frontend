@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
-import RequestItem from '../components/RequestItem/RequestItem'
+import RequestItem from '../../components/RequestItem/RequestItem'
 import './GameApprovePage.css'
 
 /**

@@ -1,9 +1,9 @@
 /* src/pages/HomePage.css */
-@media (max-width: 910px) {
+/* @media (max-width: 910px) {
   body.responsive_page .home_page_body_ctn.has_takeover .fullscreen-bg__video {
     height: 46vw;
   }
-}
+} */
 .homepage-content {
   width: 100%;
 }

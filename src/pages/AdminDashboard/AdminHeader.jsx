@@ -1,11 +1,11 @@
 import React from "react";
 import { useState } from "react";
-import "../components/Header/Header.css"; // Or use CSS Modules: import styles from './Header.module.css';
+import "../../components/Header/Header.css"; // Or use CSS Modules: import styles from './Header.module.css';
 import "./AdminHeader.css";
-import NotificationBox from "../components/Notifications/NotificationBox";
-import UserDropBox from "../components/Header/UserDropBox";
+import NotificationBox from "../../components/Notifications/NotificationBox";
+import UserDropBox from "../../components/Header/UserDropBox";
 import { useTranslation } from "react-i18next";
-import "../i18n";
+import "../../i18n";
 
 /**
  * @author Phan NT Son
