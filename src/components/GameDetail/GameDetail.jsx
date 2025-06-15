@@ -9,6 +9,7 @@ import { createNotification } from "../../services/notification";
 // add by Bathanh
   const userId = localStorage.getItem("userId");
 
+  
 const GameDetail = () => {
   const { gameId } = useParams();
   const [game, setGame] = useState(null);
