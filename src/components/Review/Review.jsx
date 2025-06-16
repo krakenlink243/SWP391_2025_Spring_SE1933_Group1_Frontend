@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import ReviewList from "./ReviewList";
 import ReviewForm from "./ReviewForm";
-import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 
 /**
  * @author Phan NT Son
@@ -17,7 +15,9 @@ function Review({ game }) {
   const userId = localStorage.getItem("userId");
 
   return (
-    <>
+    <div className="review-container w-100">
+      <h2>CUSTOMER REVIEWS FOR {game.name}</h2>
+      <div className="line-seperate w-100"></div>
       <ReviewForm
         onReload={triggerReload}
         userId={userId}
@@ -28,7 +28,7 @@ function Review({ game }) {
         onReload={triggerReload}
         userId={userId}
         game={game} />
-    </>
+    </div>
   );
 }
 

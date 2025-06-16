@@ -50,27 +50,6 @@
     box-shadow: inset 0px 0px 7px rgba(0, 0, 0, 0.5);
 }
 
-.review-form select,
-.review-form input[type="checkbox"] {
-    margin-right: 10px;
-}
-
-.review-form button {
-    margin-top: 15px;
-    background-color: #66c0f4;
-    border: none;
-    padding: 10px 20px;
-    color: #1b2838;
-    border-radius: 3px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.review-form button:hover {
-    background-color: #417a9b;
-}
-
 .review-form-buttons {
     display: flex;
     justify-content: space-between;
@@ -86,7 +65,7 @@
     cursor: pointer;
     background: rgba(103, 193, 245, 0.2);
     color: #67c1f5 !important;
-    transition: background-color 0.2s, border 0.2s;
+    transition: background-color 0.2s;
     width: 50%;
     border-radius: 0px;
 }
@@ -95,7 +74,6 @@
     text-decoration: none;
     color: #fff !important;
     background: linear-gradient(-60deg, #417a9b 5%, #67c1f5 95%);
-
 }
 
 /* Khi được chọn */

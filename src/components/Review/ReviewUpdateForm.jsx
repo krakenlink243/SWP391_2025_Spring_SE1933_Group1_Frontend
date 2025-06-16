@@ -45,11 +45,14 @@ function ReviewUpdateForm({ originalReview, onReload, onCancel, gameId, userId }
                     onChange={(e) => setUpdateReviewContent(e.target.value)}
                 />
             </div>
-
-            <p className='recommend-text'>Do you recommend this game?</p>
-            <div className='recommend-options'>
-                <div onClick={() => setUpdateRecommended(true)} className={updateRecommended ? 'selected' : ''}>👍 Yes</div>
-                <div onClick={() => setUpdateRecommended(false)} className={!updateRecommended ? 'selected' : ''}>👎 No</div>
+            <div className="recommend-buttons">
+                <div className='pb-1'>Do you recommend this game?</div>
+                <div onClick={() => setUpdateRecommended(true)} className={`btn button ${updateRecommended === true ? 'selected' : ''}`}>
+                    👍 Yes
+                </div>
+                <div onClick={() => setUpdateRecommended(false)} className={`btn button ${updateRecommended === false ? 'selected' : ''}`}>
+                    👎 No
+                </div>
             </div>
             <div className='review-edit-footer'>
                 <div onClick={onCancel} className='cancel-button'>

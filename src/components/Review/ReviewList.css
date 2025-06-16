@@ -1,105 +1,166 @@
 .review {
-  background-color: #1b2838;
-  border-radius: 10px;
-  padding: 20px;
-  margin: 20px auto;
-  color: #c7d5e0;
-  max-width: 700px;
-  font-family: Arial, sans-serif;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  margin-bottom: 26px;
+  background-image: url(https://store.fastly.steamstatic.com/public/images/v6/maincol_gradient_rule.png);
+  background-repeat: no-repeat;
+  background-position: top left;
 }
 
-.review-header {
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  color: #8f98a0;
-  margin-bottom: 10px;
-}
-
-.review-rating {
-  background-color: #101822;
-  border-radius: 5px;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.review-rating i {
-  background-image: url("https://cdn.cloudflare.steamstatic.com/store/review_recommend.png");
-  background-size: contain;
-  width: 24px;
-  height: 24px;
-  margin-right: 10px;
-}
-
-.review-rating p {
-  color: #66c0f4;
-  font-weight: bold;
-  font-size: 16px;
-}
-
-.review > p {
-  font-size: 15px;
-  margin: 10px 0;
-}
-
-.review-footer {
-  display: flex;
-  justify-content: space-between;
-  color: #8f98a0;
-}
-
-.review-helpful {
-  margin-top: 15px;
-  font-size: 13px;
-  color: #8f98a0;
-  border-top: 1px solid #2a475e;
-  padding-top: 10px;
-}
-
-.review-helpful-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.review-helpful-buttons div {
-  background-color: #2a475e;
-  border-radius: 5px;
-  padding: 5px 10px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-}
-
-.review-helpful-buttons div:hover {
-  background-color: #3b6e8c;
-}
-
-.review-helpful-buttons p {
+.review .review-content {
   margin: 0;
-  color: #c7d5e0;
+  padding: 0;
 }
 
-.review-helpful-buttons .active {
-  background-color: #66c0f4;
+.review-content .author-profile {
+  flex: 1;
+  padding: 8px;
+  opacity: 0.6;
 }
 
+.review-content:hover .author-profile {
+  opacity: 1;
+}
+
+.author-profile img {
+  width: 34px;
+  padding-right: 8px;
+}
+
+.author-profile strong {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 140px;
+  overflow: hidden;
+  margin-top: -2px;
+  margin-bottom: -1px;
+  color: #c1dbf4;
+  font-size: 13px;
+  font-family: "Motiva Sans", Sans-serif;
+  font-weight: bold;
+}
+
+.review-content .content-detail {
+  position: relative;
+  flex: 4;
+}
+
+.content-detail .judge-section {
+  margin: 8px 0 13px;
+  background: rgba(0, 0, 0, 0.2);
+  height: 40px;
+}
+
+.judge-section .thumbs-icon {
+  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  background-color: #3498db;
+}
+
+.judge-section .title {
+  font-size: 16px;
+  color: #d6d7d8;
+  font-family: "Motiva Sans", Sans-serif;
+  font-weight: normal;
+  padding: 3px 0px 0px 0px;
+  line-height: 19px;
+}
+
+.content-detail .time-posted-section {
+  margin: 0px 0px 8px;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-style: normal;
+  color: #8091a2;
+  display: inline-block;
+  opacity: 0.6;
+}
+
+.content-detail .content-section {
+  margin-right: 8px;
+  font-family: "Motiva Sans", Sans-serif;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 17px;
+  color: #acb2b8;
+  overflow-wrap: break-word;
+}
+
+.content-section .partical {
+  max-height: 225px;
+  overflow: hidden;
+  position: relative;
+}
+
+.content-detail .actions-section {
+  margin: 8px 0;
+}
+
+.actions-section .review-was-helpful {
+  display: inline-block;
+  margin-right: 9px;
+  color: #8091a2;
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.actions-section .vote-button {
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+.vote-button .cus-btn {
+  border-radius: 2px;
+  border: none;
+  padding: 1px;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none !important;
+  color: #66c0f4 !important;
+  background: #212c3d;
+}
+
+.vote-button .cus-btn span {
+  padding: 0 5px;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.vote-button .cus-btn:hover {
+  text-decoration: none !important;
+  color: #fff !important;
+  background: #66c0f4;
+}
+
+.vote-button .active {
+  text-decoration: none !important;
+  color: #fff !important;
+  background: rgba(103, 193, 245, 0.4);
+}
+
+.actions-section .edit-btn{
+  color: #f3f3f3;
+  cursor: pointer;
+  padding: 5px;
+}
 /* ReviewList.css */
-.spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #3498db;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-    margin: 20px auto;
+.btn-spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

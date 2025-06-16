@@ -9,6 +9,8 @@ function ReviewList({ reloadSignal, onReload, game, userId }) {
   const [data, setData] = useState([]);
   const [visibleCount, setVisibleCount] = useState(5);
 
+  const mediaUrl = "https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4";
+
   useEffect(() => {
     axios
       .get(`http://localhost:8080/review/${game.gameId}/review-list`)
@@ -31,13 +33,17 @@ function ReviewList({ reloadSignal, onReload, game, userId }) {
 
   return (
     <>
-      <div className="review-summary-bar" style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-        <span>👍 {recommendPct}%</span>
-        <progress value={recommendPct} max={100} style={{ flexGrow: 1 }} />
-        <span>👎 {notRecommendPct}%</span>
+      <div className="d-flex align-items-center flex-column text-white pt-5 pb-3 review-summary-bar" >
+        <div className="d-flex flex-row justify-content-between w-100">
+          <div>Recommended {recommendPct}%</div>
+          <div>Not recommended {notRecommendPct}%</div>
+        </div>
+        <div className="w-100">
+          <progress className="w-100" value={recommendPct} max={100} style={{ flexGrow: 1 }} />
+        </div>
       </div>
-      <div className="reviews">
-        {data.map((review) => (
+      <div className="reviews d-flex flex-column gap-2">
+        {shownReviews.map((review) => (
           <div key={review.userId} className="review">
 
             {editingId === review.userId ? (
@@ -49,44 +55,46 @@ function ReviewList({ reloadSignal, onReload, game, userId }) {
                 userId={userId}
               />
             ) : (
-              <>
-                <div className="review-header">
-                  <p>{review.userName}</p>
-                  <p>Posted on {review.timeCreated}</p>
+              <div className="review-content d-flex flex-row gap-1">
+                <div className="author-profile">
+                  <img src={mediaUrl} ></img>
+                  <strong>{review.userName}</strong>
                 </div>
-                <div className="review-rating">
-                  <i></i>
-                  <p>{review.recommended ? "Recommended" : "Not Recommended"}</p>
+                <div className="content-detail d-flex flex-column align-items-start">
+                  <div className="judge-section w-100 d-flex flex-row">
+                    <div className="thumbs-icon"></div>
+                    <div className="title">{review.recommended ? "Recommended" : "Not Recommended"}</div>
+                  </div>
+                  <div className="time-posted-section w-100">
+                    Posted on {review.timeCreated}
+                  </div>
+                  <div className="content-section w-100">
+                    {review.reviewContent}
+                  </div>
+                  <div className="actions-section w-100">
+                    <span className="review-was-helpful">Was this review helpful?</span>
+                    <div className={`${review.userId == userId ? "d-flex flex-row justify-content-between align-items-center" : ""}`}>
+                      <ReviewButtons
+                        gameId={game.gameId}
+                        originalReview={review}
+                        userId={userId}
+                      />
+                      {review.userId == userId && (
+                        <div onClick={() => setEditingId(review.userId)} className="edit-btn"><u>Edit</u></div>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <p>{review.reviewContent}</p>
-                <div className="review-helpful">
-                  <p>Was this review helpful</p>
-                </div>
-                <div className="review-footer">
-                  <ReviewButtons
-                    gameId={game.gameId}
-                    originalReview={review}
-                    userId={userId}
-                  />
-                  {review.userId == userId && (
-                    <div onClick={() => setEditingId(review.userId)} style={{ cursor: "pointer" }}><u>Edit</u></div>
-                  )}
-
-                </div>
-              </>
+              </div>
             )}
           </div>
         ))}
       </div>
       {visibleCount < data.length && (
-        <button onClick={() => setVisibleCount(v => v + 5)}>
-          Load more ({data.length - visibleCount} left)
-        </button>
+        <p className="text-white" ><u onClick={() => setVisibleCount(v => v + 5)} style={{ cursor: "pointer" }}>Show more</u></p>
       )}
       {visibleCount >= data.length && data.length > 5 && (
-        <button onClick={() => setVisibleCount(5)}>
-          Show less
-        </button>
+        <p className="text-white" ><u onClick={() => setVisibleCount(5)} style={{ cursor: "pointer" }}>Show less</u></p>
       )}
     </>
   );
