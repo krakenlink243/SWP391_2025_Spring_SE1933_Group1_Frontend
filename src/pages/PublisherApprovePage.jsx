@@ -31,9 +31,9 @@ function PublisherApprovePage() {
     
       const handleApprove = async (requestId) => {
         try {
-          const response = await axios.patch(`http://localhost:8080/admin/approve/${requestId}`);
+          const response = await axios.patch(`http://localhost:8080/admin/approvepublisher/${requestId}`);
           console.log("Approved request:", response.data);
-          alert("Game Approved")
+          alert("Publisher Approved")
           fetchData();
         } catch (err) {
           console.error("Error approving request:", err);
@@ -41,9 +41,9 @@ function PublisherApprovePage() {
       };
       const handleDecline = async (requestId) =>{
         try {
-          const response = await axios.patch(`http://localhost:8080/admin/reject/${requestId}`);
+          const response = await axios.patch(`http://localhost:8080/admin/rejectpublisher/${requestId}`);
           console.log("Approved request:", response.data);
-          alert("Game Declined")
+          alert("Publisher Declined")
           fetchData();
         } catch (err) {
           console.error("Error approving request:", err);
@@ -71,10 +71,10 @@ function PublisherApprovePage() {
         try {
             for (let i = 0; i < selectedRequests.length; i++) {
                 const requestId = selectedRequests[i];
-                const response = await axios.patch(`http://localhost:8080/admin/approve/${requestId}`);
+                const response = await axios.patch(`http://localhost:8080/admin/approvepublisher/${requestId}`);
                 console.log(`Processed approve for request ID:`, requestId);
             }
-            alert(`All selected requests have been approved`);
+            alert(`All selected publishers have been approved`);
             setSelectedRequests([]); // Clear selection after processing
             fetchData(); // Refresh data
         } catch (err) {
@@ -86,10 +86,10 @@ function PublisherApprovePage() {
         try {
             for (let i = 0; i < selectedRequests.length; i++) {
                 const requestId = selectedRequests[i];
-                const response = await axios.patch(`http://localhost:8080/admin/reject/${requestId}`);
+                const response = await axios.patch(`http://localhost:8080/admin/rejectpublisher/${requestId}`);
                 console.log(`Processed approve for request ID:`, requestId);
             }
-            alert(`All selected requests have been declined`);
+            alert(`All selected publishers have been declined`);
             setSelectedRequests([]);
             fetchData();
         } catch (err) {
@@ -97,7 +97,7 @@ function PublisherApprovePage() {
         }
       };
       const handleRedirect = (requestId) =>{
-        window.location.href=`/aprrovegame/${requestId}`
+        window.location.href=`/approvepublisher/${requestId}`
       }
   
 
@@ -105,7 +105,7 @@ function PublisherApprovePage() {
     <div className='game-approve-container'>
       <div>
         <div style={{cursor:"pointer"}}>Game Request</div>
-        <div style={{cursor:"pointer"}}>Apply Request</div>
+        <div style={{cursor:"pointer", textDecoration:"underline",textUnderlineOffset:"5px"}}>Apply Request</div>
         <div style={{cursor:"pointer"}}>Report</div>
         <div style={{cursor:"pointer"}}>Other Request</div>
       </div>

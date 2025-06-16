@@ -6,6 +6,7 @@ import { trimValue } from '../utils/validators'
 import ImageUploading from 'react-images-uploading'
 import './ApplyToPublisher.css'
 import axios from 'axios'
+import { validateEmty } from '../utils/validators'
 function ApplyToPublisher() {
   const [formData,setFormData] = useState(
     {
@@ -69,7 +70,10 @@ function ApplyToPublisher() {
       alert("Please select an image first!");
       return;
     }
-  
+    if(!validateEmty(formData.legalName) || !validateEmty(formData.publisherName) || !validateEmty(formData.address) || !validateEmty(formData.socialNumber) || !validateEmty(formData.country)){
+      alert("Please fill in all fields!");
+      return;
+    }
     const imgData = new FormData();
     imgData.append("files", image.file); // Use actual file object
   
@@ -81,11 +85,16 @@ function ApplyToPublisher() {
       setFormData(prev => ({...prev,imageUrl: res.data.imageUrls}));
       const response = await axios.post('http://localhost:8080/users/sendpublisher',{...formData,imageUrl:res.data.imageUrls[0]});
       console.log(response.data)
+      alert(response.data.message)
+      window.location.href = '/';
     } catch (err) {
       console.error("Upload failed:", err);
       alert("Upload failed");
     }
   };
+  const handleCancel = () =>{
+    window.location.href = '/';
+  }
   return (
     <>
     <div className='apply-publisher-title'><h1>Publisher Application</h1></div>
@@ -102,7 +111,7 @@ function ApplyToPublisher() {
         Country      
         <CountryDropdown value={formData.country} onChange={(e) => setFormData(prev => ({...prev,country:e}))}></CountryDropdown>
         <div className="publisher-button">
-          <Button label="Cancel" color="grey-button" />
+          <Button label="Cancel" color="grey-button" onClick={handleCancel} />
           <Button label="Apply" color="blue-button" onClick={handleUpload} />
         </div>
       </div>

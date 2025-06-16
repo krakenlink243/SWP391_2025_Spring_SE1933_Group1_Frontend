@@ -25,6 +25,7 @@ import AdminDashboard from "./pages/AdminDashboard"; // Added by Phan NT Son
 import AdminHeader from "./pages/AdminHeader";
 import ApplyToPublisher from "./pages/ApplyToPublisher";
 import PublisherApprovePage from "./pages/PublisherApprovePage";
+import PublisherApproveDetails from "./pages/PublisherApproveDetails";
 function AppRoutes() { // Renamed by Phan NT Son
   console.log("App component is rendering..."); // DEBUG: Kiểm tra xem component có render không
 
@@ -118,7 +119,7 @@ function AppRoutes() { // Renamed by Phan NT Son
           <Route path="/" element={<Home />}></Route>
           <Route path="/game/:gameId" element={<Detail />} />
           <Route path="/game" element={<List />}></Route>
-          {/* <Route path="/aprrovegame" element={<AprroveF />}></Route> */}
+          <Route path="/aprrovegame" element={<AprroveF />}></Route>
           <Route path="/aprrovegame/:gameId" element={<ApproveDetailsF />}></Route>
           <Route path="/sendgame" element={<RequestAddGame />}></Route>
           <Route path="/login" element={<LoginF />} />
@@ -130,6 +131,7 @@ function AppRoutes() { // Renamed by Phan NT Son
           <Route path="/admin" element={<AdminDashboard tab={adminTab}/>} /> {/* Added by Phan NT Son */}
           <Route path="/sendpublisher" element={<SendPublisher/>}></Route>
           <Route path="/approvepublisher" element={<ApprovePublisher/>}></Route>
+          <Route path="/approvepublisher/:publisherId" element={<ApprovePublisherDetails/>}></Route>
         </Routes>
       </div>
     </div>
@@ -146,6 +148,9 @@ function SendPublisher(){
 }
 function ApprovePublisher(){
   return <PublisherApprovePage/>
+}
+function ApprovePublisherDetails(){
+  return <PublisherApproveDetails/>
 }
 function LoginF() {
   return <Login />;

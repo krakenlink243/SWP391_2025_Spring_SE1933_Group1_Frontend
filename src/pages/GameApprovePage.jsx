@@ -104,7 +104,7 @@ function GameApprovePage() {
   return (
     <div className='game-approve-container'>
       <div>
-        <div style={{cursor:"pointer"}}>Game Request</div>
+        <div style={{cursor:"pointer", textDecoration:"underline",textUnderlineOffset:"5px"}}>Game Request</div>
         <div style={{cursor:"pointer"}}>Apply Request</div>
         <div style={{cursor:"pointer"}}>Report</div>
         <div style={{cursor:"pointer"}}>Other Request</div>
