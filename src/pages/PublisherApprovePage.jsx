@@ -3,7 +3,7 @@ import React from 'react'
 import { useState,useRef,useEffect } from'react'
 import axios from 'axios';
 import RequestItem from '../components/RequestItem/RequestItem'
-import './GameApprovePage.css'
+import './AdminDashboard/GameApprovePage.css'
 function PublisherApprovePage() {
     const [totalPages, setTotalPages] = useState(1);
     const [loadedRequest,setLoadedRequest] = useState([]);
