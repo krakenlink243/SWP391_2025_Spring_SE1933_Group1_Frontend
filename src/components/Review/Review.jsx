@@ -10,7 +10,7 @@ import { jwtDecode } from "jwt-decode";
  * @param {*} param0 
  * @returns 
  */
-function Review({ gameId }) {
+function Review({ game }) {
   const [reloadSignal, setReloadSignal] = useState(0);
   const triggerReload = () => setReloadSignal(prev => prev + 1);
 
@@ -21,13 +21,13 @@ function Review({ gameId }) {
       <ReviewForm
         onReload={triggerReload}
         userId={userId}
-        gameId={gameId} />
+        game={game} />
 
       <ReviewList
         reloadSignal={reloadSignal}
         onReload={triggerReload}
         userId={userId}
-        gameId={gameId} />
+        game={game} />
     </>
   );
 }

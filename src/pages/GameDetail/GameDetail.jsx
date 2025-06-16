@@ -73,6 +73,7 @@ const GameDetail = () => {
     "";
 
   return (
+
     // <div className="game-detail-page">
     //   <div className="breadcrumb">
     //     <Link to="/">All Games</Link> &gt; <span>{game.name}</span>
@@ -170,6 +171,7 @@ const GameDetail = () => {
      */
     <div className="container-fluid">
       <div className="row">
+
         <div className="spacer col-lg-2"></div>
         <div className=" col-lg-8 text-white">
           <DetailHeader
@@ -181,8 +183,13 @@ const GameDetail = () => {
           <DetailSystem
             game={game}
           />
+        </div>
+      </div>
+      <div className="row">
+        <div className="spacer col-lg-2"></div>
+        <div className="col-lg-8">
           <Review
-            gameId={gameId}
+            game={game}
           />
         </div>
       </div>

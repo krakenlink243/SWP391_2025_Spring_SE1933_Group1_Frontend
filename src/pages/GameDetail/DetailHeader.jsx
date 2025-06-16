@@ -16,18 +16,30 @@ import { Navigation, Thumbs, Scrollbar } from 'swiper/modules';
  * @since 15-06-2025
  */
 function DetailHeader({ game }) {
-    const divRef = useRef(null);
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
-    // const [mediaUrlArr, setMediaUrlArr] = useState(["https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4"]);
+    const [mediaUrlArr, setMediaUrlArr] = useState([]);
 
-    const mediaUrlArr = [
-        "https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4",
-        "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/ss_c2baf8aada6140beee79d701d14043899e91af47.600x338.jpg?t=1748630546",
-        "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/ss_fa6b881ef7c30522012ab2b2b83001e79baee093.116x65.jpg?t=1748630546",
-        "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/ss_510a02cf3045e841e180f2b77fb87545e0c8b59d.600x338.jpg?t=1748630546",
-        "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/ss_c494372930ca791bdc6221eca134f2270fb2cb9f.600x338.jpg?t=1748630546",
-        "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/ss_ef61b771ee6b269b1f0cb484233e07a0bfb5f81b.600x338.jpg?t=1748630546",
-    ]
+    // const mediaUrlArr = [
+    //     "https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4",
+    //     "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/ss_c2baf8aada6140beee79d701d14043899e91af47.600x338.jpg?t=1748630546",
+    //     "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/ss_fa6b881ef7c30522012ab2b2b83001e79baee093.116x65.jpg?t=1748630546",
+    //     "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/ss_510a02cf3045e841e180f2b77fb87545e0c8b59d.600x338.jpg?t=1748630546",
+    //     "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/ss_c494372930ca791bdc6221eca134f2270fb2cb9f.600x338.jpg?t=1748630546",
+    //     "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/ss_ef61b771ee6b269b1f0cb484233e07a0bfb5f81b.600x338.jpg?t=1748630546",
+    // ]
+
+    useEffect(() => {
+        const extractMediaUrl = () => {
+            game.media.map((m) => {
+                if (!mediaUrlArr.includes(m.url)) {
+                    mediaUrlArr.push(m.url);
+                }
+            })
+        }
+        if (game) {
+            extractMediaUrl();
+        }
+    }, [game])
 
     const addCartHandler = async () => {
         try {
@@ -100,12 +112,12 @@ function DetailHeader({ game }) {
                         </Swiper>
                     </div>
                 </div>
-                <div className="right-col d-flex flex-column align-items-start justify-content-between" ref={divRef}>
+                <div className="right-col d-flex flex-column align-items-start justify-content-between">
                     <div className="content-row mt-0">
-                        <div className="gameHeaderImgCtn">
+                        <div className="gameHeaderImgCtn w-100">
                             <img
                                 // src={coverImageUrl}
-                                src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg?t=1748630546"
+                                src={mediaUrlArr[0]}
                                 alt="Game cover"
                             />
                         </div>
