@@ -2,9 +2,9 @@
 import React from 'react'
 import { useState,useRef,useEffect } from'react'
 import axios from 'axios';
-import RequestItem from '../../components/RequestItem/RequestItem'
+import RequestItem from '../components/RequestItem/RequestItem'
 import './GameApprovePage.css'
-function GameApprovePage() {
+function PublisherApprovePage() {
     const [totalPages, setTotalPages] = useState(1);
     const [loadedRequest,setLoadedRequest] = useState([]);
     const [page, setPage] = useState(0);
@@ -12,7 +12,7 @@ function GameApprovePage() {
     const [isChecked,setIsChecked] = useState(false);
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/admin/gameRequest/${page}`);
+        const response = await axios.get(`http://localhost:8080/admin/publisherApplyRequest/${page}`);
         setLoadedRequest(response.data.content);
         setTotalPages(response.data.totalPages);
         console.log(response.data);
@@ -31,9 +31,9 @@ function GameApprovePage() {
     
       const handleApprove = async (requestId) => {
         try {
-          const response = await axios.patch(`http://localhost:8080/admin/approve/${requestId}`);
+          const response = await axios.patch(`http://localhost:8080/admin/approvepublisher/${requestId}`);
           console.log("Approved request:", response.data);
-          alert("Game Approved")
+          alert("Publisher Approved")
           fetchData();
         } catch (err) {
           console.error("Error approving request:", err);
@@ -41,9 +41,9 @@ function GameApprovePage() {
       };
       const handleDecline = async (requestId) =>{
         try {
-          const response = await axios.patch(`http://localhost:8080/admin/reject/${requestId}`);
+          const response = await axios.patch(`http://localhost:8080/admin/rejectpublisher/${requestId}`);
           console.log("Approved request:", response.data);
-          alert("Game Declined")
+          alert("Publisher Declined")
           fetchData();
         } catch (err) {
           console.error("Error approving request:", err);
@@ -71,10 +71,10 @@ function GameApprovePage() {
         try {
             for (let i = 0; i < selectedRequests.length; i++) {
                 const requestId = selectedRequests[i];
-                const response = await axios.patch(`http://localhost:8080/admin/approve/${requestId}`);
+                const response = await axios.patch(`http://localhost:8080/admin/approvepublisher/${requestId}`);
                 console.log(`Processed approve for request ID:`, requestId);
             }
-            alert(`All selected requests have been approved`);
+            alert(`All selected publishers have been approved`);
             setSelectedRequests([]); // Clear selection after processing
             fetchData(); // Refresh data
         } catch (err) {
@@ -86,10 +86,10 @@ function GameApprovePage() {
         try {
             for (let i = 0; i < selectedRequests.length; i++) {
                 const requestId = selectedRequests[i];
-                const response = await axios.patch(`http://localhost:8080/admin/reject/${requestId}`);
+                const response = await axios.patch(`http://localhost:8080/admin/rejectpublisher/${requestId}`);
                 console.log(`Processed approve for request ID:`, requestId);
             }
-            alert(`All selected requests have been declined`);
+            alert(`All selected publishers have been declined`);
             setSelectedRequests([]);
             fetchData();
         } catch (err) {
@@ -97,17 +97,15 @@ function GameApprovePage() {
         }
       };
       const handleRedirect = (requestId) =>{
-        
-        // Adjust by Phan NT Son - fix redirect URL
-        window.location.href=`/admin/approvegame/${requestId}` 
+        window.location.href=`/approvepublisher/${requestId}`
       }
   
 
   return (
     <div className='game-approve-container'>
       <div>
-        <div style={{cursor:"pointer", textDecoration:"underline",textUnderlineOffset:"5px"}}>Game Request</div>
-        <div style={{cursor:"pointer"}}>Apply Request</div>
+        <div style={{cursor:"pointer"}}>Game Request</div>
+        <div style={{cursor:"pointer", textDecoration:"underline",textUnderlineOffset:"5px"}}>Apply Request</div>
         <div style={{cursor:"pointer"}}>Report</div>
         <div style={{cursor:"pointer"}}>Other Request</div>
       </div>
@@ -126,7 +124,7 @@ function GameApprovePage() {
       <RequestItem 
         key={request.requestId} 
         requestId={request.requestId}
-        requestName={request.gameName} 
+        requestName={request.publisherName} 
         onApprove={() => handleApprove(request.requestId)} 
         onDecline={() => handleDecline(request.requestId)} 
         onCheckChange={handleCheckChange} 
@@ -149,4 +147,4 @@ function GameApprovePage() {
   )
 }
 
-export default GameApprovePage
+export default PublisherApprovePage

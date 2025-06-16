@@ -27,6 +27,11 @@ import Cart from "./components/CartFolder/Cart";
 import SplashScreen from "./components/SplashScreen/SplashScreen"; // Import SplashScreen component
 import NotificationList from "./pages/NotificationList";
 import GamesPage from "./components/GamesPage/GamesPage";
+import AdminDashboard from "./pages/AdminDashboard"; // Added by Phan NT Son
+import AdminHeader from "./pages/AdminHeader";
+import ApplyToPublisher from "./pages/ApplyToPublisher";
+import PublisherApprovePage from "./pages/PublisherApprovePage";
+import PublisherApproveDetails from "./pages/PublisherApproveDetails";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard"; // Added by Phan NT Son
 import AdminHeader from "./pages/AdminDashboard/AdminHeader";
 import Footer from "./components/Footer/Footer";
@@ -130,11 +135,8 @@ function AppRoutes() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/game/:gameId" element={<Detail />} />
           <Route path="/game" element={<List />}></Route>
-          {/* <Route path="/aprrovegame" element={<AprroveF />}></Route> */}
-          <Route
-            path="/aprrovegame/:gameId"
-            element={<ApproveDetailsF />}
-          ></Route>
+          <Route path="/aprrovegame" element={<AprroveF />}></Route>
+          <Route path="/aprrovegame/:gameId" element={<ApproveDetailsF />}></Route>
           <Route path="/sendgame" element={<RequestAddGame />}></Route>
           <Route path="/login" element={<LoginF />} />
           <Route path="/register" element={<RegisterF />} />
@@ -144,6 +146,9 @@ function AppRoutes() {
           <Route path="/library" element={<Library />} />{/*adjusted by Bathanh - 15/6/2025 2:03PM */}
           <Route path="/notifications" element={<NotificationList />} />
           <Route path="/admin" element={<AdminDashboard tab={adminTab} />} /> {/* Added by Phan NT Son */}
+          <Route path="/sendpublisher" element={<SendPublisher/>}></Route>
+          <Route path="/approvepublisher" element={<ApprovePublisher/>}></Route>
+          <Route path="/approvepublisher/:publisherId" element={<ApprovePublisherDetails/>}></Route>
           <Route path="/profile" element={<ProfilePage />} />
           {/* TSHUY */}
         </Routes>
@@ -156,7 +161,25 @@ function AprroveF() {
   return <GameApprrovePage />;
 }
 function ApproveDetailsF() {
-  return <GameApproveDetails />;
+  return <GameApproveDetails />
+}
+function SendPublisher(){
+  return <ApplyToPublisher/>
+}
+function ApprovePublisher(){
+  return <PublisherApprovePage/>
+}
+function ApprovePublisherDetails(){
+  return <PublisherApproveDetails/>
+}
+function SendPublisher(){
+  return <ApplyToPublisher/>
+}
+function ApprovePublisher(){
+  return <PublisherApprovePage/>
+}
+function ApprovePublisherDetails(){
+  return <PublisherApproveDetails/>
 }
 function LoginF() {
   return <Login />;

@@ -1,0 +1,63 @@
+.apply-publisher-title {
+    font-size: 22px; 
+    font-weight: bold;
+    text-align: left;
+    margin-left: 20%;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .apply-publisher-container {
+    display: flex;
+    flex-direction: row; /* Align form and image side by side */
+    justify-content: space-between;
+    gap: 10%;
+    width: 60%;
+    margin: 0 auto; /* Center it */
+  }
+  
+  .publisher-info {
+    flex: 1; /* More space for form fields */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .publisher-image {
+    flex: 0; /* Less space for image upload */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .publisher-image .grey-button {
+    width: 200px;
+    height: 200px;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #ccc;
+    cursor: pointer;
+  }
+  .publisher-info input, .publisher-info select {
+    color: white;
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 3px;
+    box-shadow: inset 1px 1px 0px #000a;
+    outline: none;
+    background-color: #1A1C1F;
+    height: 45px; /* Match input height */
+    box-sizing: border-box; /* Ensure padding doesn’t shrink the element */
+}
+.publisher-button{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 100px;
+}
+  
