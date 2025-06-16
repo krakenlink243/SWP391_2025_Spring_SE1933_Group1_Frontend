@@ -31,6 +31,7 @@ import AdminDashboard from "./pages/AdminDashboard/AdminDashboard"; // Added by 
 import AdminHeader from "./pages/AdminDashboard/AdminHeader";
 import Footer from "./components/Footer/Footer";
 import ProfilePage from "./components/Profile/ProfilePage";
+import Library from "./components/LibraryFolder/Library";
 
 function AppRoutes() {
   // Renamed by Phan NT Son
@@ -140,6 +141,7 @@ function AppRoutes() {
           <Route path="/register-details" element={<RegisterDetailsF />} />
           <Route path="/transaction" element={<Transaction />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/library" element={<Library />} />{/*adjusted by Bathanh - 15/6/2025 2:03PM */}
           <Route path="/notifications" element={<NotificationList />} />
           <Route path="/admin" element={<AdminDashboard tab={adminTab} />} /> {/* Added by Phan NT Son */}
           <Route path="/profile" element={<ProfilePage />} />

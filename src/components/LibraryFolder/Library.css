@@ -1,0 +1,91 @@
+.library-bg {
+  background: #1a222a;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.library-main {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #232b36;
+  border-radius: 10px;
+  padding: 30px;
+}
+
+.library-title {
+  color: #c7d5e0;
+  font-size: 28px;
+  margin-bottom: 24px;
+}
+
+.library-loading,
+.library-empty {
+  color: #c7d5e0;
+  text-align: center;
+  padding: 40px 0;
+  font-size: 18px;
+}
+
+.library-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.library-game-card {
+  background: #101820;
+  border-radius: 8px;
+  padding: 18px 20px;
+  width: 270px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.library-game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.library-game-title {
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.library-game-price {
+  color: #b0c679;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.library-game-info {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+  color: #8f98a0;
+  font-size: 13px;
+}
+
+.library-game-desc {
+  color: #c7d5e0;
+  font-size: 14px;
+  margin: 10px 0;
+  min-height: 40px;
+}
+
+.library-game-tags {
+  margin-top: 8px;
+}
+
+.library-game-tag {
+  background: #2a475e;
+  color: #66c0f4;
+  border-radius: 4px;
+  padding: 2px 8px;
+  margin-right: 6px;
+  font-size: 12px;
+  display: inline-block;
+}
