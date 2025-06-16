@@ -79,10 +79,6 @@ button:active {
     color: white;
     font-weight: bold;
 }
-.game-approve-container div:first-child div:nth-child(1) {
-    text-decoration: underline;
-    text-underline-offset: 5px;
-}
 
 .request-item{
     display: flex;
