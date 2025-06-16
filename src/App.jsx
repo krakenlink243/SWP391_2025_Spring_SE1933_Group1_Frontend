@@ -22,6 +22,7 @@ import NotificationList from "./pages/NotificationList";
 import GamesPage from "./components/GamesPage/GamesPage";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard"; // Added by Phan NT Son
 import AdminHeader from "./pages/AdminDashboard/AdminHeader";
+import Library from "./components/LibraryFolder/Library";
 
 
 function AppRoutes() { // Renamed by Phan NT Son
@@ -125,6 +126,7 @@ function AppRoutes() { // Renamed by Phan NT Son
           <Route path="/register-details" element={<RegisterDetailsF />} />
           <Route path="/transaction" element={<Transaction />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/library" element={<Library />} />{/*adjusted by Bathanh - 15/6/2025 2:03PM */}
           <Route path="/notifications" element={<NotificationList />} />
           <Route path="/admin" element={<AdminDashboard tab={adminTab} />} /> {/* Added by Phan NT Son */}
         </Routes>
