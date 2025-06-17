@@ -35,6 +35,7 @@ import AdminHeader from "./pages/AdminDashboard/AdminHeader";
 import Footer from "./components/Footer/Footer";
 import ProfilePage from "./components/Profile/ProfilePage";
 import Library from "./components/LibraryFolder/Library";
+import WalletPage from "./pages/WalletPage/WalletPage";
 
 function AppRoutes() {
   // Renamed by Phan NT Son
@@ -152,6 +153,7 @@ function AppRoutes() {
           {/* hoangvq */}
           <Route path="/profile" element={<ProfilePage />} />
           {/* TSHUY */}
+          <Route path="/wallet" element={<Wallet />} />
         </Routes>
       </div>
       <Footer /> {/* Added by TSHUY */}
@@ -231,6 +233,17 @@ function NotFound() {
 function Home() {
   return (
     <HomePage />
+  );
+}
+
+function Wallet() {
+  return (
+    <div className="container-fluid">
+      <div className="row">
+        <div className="spacer col-lg-2"></div>
+        <WalletPage />
+      </div>
+    </div>
   );
 }
 
