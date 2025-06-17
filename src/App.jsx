@@ -16,7 +16,7 @@ import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import GameDetail from "./pages/GameDetail/GameDetail";
 import HomePage from "./pages/HomePage/HomePage";
-import SendGametoAdmin from "./pages/SendGametoAdmin";
+import SendGameToAdmin from "./pages/SendGameToAdmin";
 import Login from "./pages/Login";
 import RegisterEmail from "./pages/RegisterEmail";
 import RegisterDetails from "./pages/RegisterDetails";
@@ -186,7 +186,7 @@ function RegisterDetailsF() {
 function RequestAddGame() {
   return (
     <div>
-      <SendGametoAdmin />
+      <SendGameToAdmin />
     </div>
   );
 }

@@ -99,7 +99,7 @@ function GameApprovePage() {
       const handleRedirect = (requestId) =>{
         
         // Adjust by Phan NT Son - fix redirect URL
-        window.location.href=`/admin/approvegame/${requestId}` 
+        window.location.href=`/aprrovegame/${requestId}` 
       }
   
 

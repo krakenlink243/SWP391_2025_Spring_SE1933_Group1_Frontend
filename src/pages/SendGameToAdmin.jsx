@@ -102,6 +102,8 @@ function SendGameToAdmin() {
       const response = await axios.post('http://localhost:8080/publisher/addGame',{...formData,mediaUrls: responseMedia.data.imageUrls});
       console.log(response);
       alert(response.data.message);
+      window.location.href="/";
+
     }catch(error){
       console.log(error);
     }
