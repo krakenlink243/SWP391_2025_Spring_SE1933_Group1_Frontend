@@ -91,7 +91,6 @@ const Cart = () => {
     setLoading(true);
     try {
       const total = cartItems.reduce((sum, item) => sum + (item.price || 0), 0);
-      if (balance < total) throw new Error('Insufficient balance');
       const response = await axios.post(`http://localhost:8080/users/${userId}/cart/checkout`);
       if (!response.data.success) throw new Error('Checkout failed');
       setResultMessage('Purchase successful!');
@@ -103,7 +102,7 @@ const Cart = () => {
       const updatedUser = userData.data?.find(u => u.userId === Number(userId));
       setBalance(updatedUser?.walletBalance || 0);
     } catch (error) {
-      setResultMessage(error.message === 'Insufficient balance' ? 'Insufficient balance!' : 'Purchase failed!');
+      setResultMessage(error.message === 'Purchase failed!');
       console.error('Error during checkout:', error.message, error.response?.status, error.response?.data);
     } finally {
       setShowResultModal(true);

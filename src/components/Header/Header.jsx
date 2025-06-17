@@ -1,7 +1,9 @@
+import React, { useState, useEffect } from 'react';
 import "./Header.css"; // Or use CSS Modules: import styles from './Header.module.css';
 // Added by Phan NT Son
 import NotificationBox from "../Notifications/NotificationBox"
 import UserDropBox from "./UserDropBox";
+import axios from 'axios';
 
 /**
  * @author Origin belongs to TS Huy
@@ -12,6 +14,26 @@ const Header = () => {
   const token = localStorage.getItem("token");
 
   const section = [2, 2, 4, 3, 1]
+  /**
+   * @author Bathanh
+   *add methods allows to get user balance from backend
+   *create a separate api for wallet balance
+   * @returns user balance
+   */
+  const [balance, setBalance] = useState(0);
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      axios.get("http://localhost:8080/users")
+        .then(res => {
+          const users = res.data.data || [];
+          const user = users.find(u => u.userId === Number(userId));
+          setBalance(user?.walletBalance || 0);
+        })
+        .catch(() => setBalance(0));
+    }
+  }, []);
+
   return (
     <div className="container-fluid">
       <div className="header row">
@@ -50,7 +72,7 @@ const Header = () => {
 
                   </div>
                   <div className="user-wallet w-50">
-                    <p>Money hehe</p>
+                    <p>${balance}</p>
                   </div>
                 </div>
                 <div className="header-user-action-icon w-25">
