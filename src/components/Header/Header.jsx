@@ -66,13 +66,13 @@ const Header = () => {
                     <div className="w-25 px-2">
                       <NotificationBox />
                     </div>
-                    <div className="w-50 px-2">
+                    <div className="w-50 px-2 d-flex flex-row-reverse">
                       <UserDropBox />
                     </div>
 
                   </div>
                   <div className="user-wallet w-50">
-                    <p>${balance}</p>
+                    ${balance}
                   </div>
                 </div>
                 <div className="header-user-action-icon w-25">

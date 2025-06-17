@@ -1,8 +1,5 @@
 /* ---- BỐ CỤC TỔNG THỂ ---- */
 .games-page-container {
-  max-width: 1280px; /* Hoặc 90% tùy bạn muốn */
-  margin: 20px auto;
-  padding: 0 20px;
 }
 
 .page-main-content {
@@ -13,26 +10,14 @@
 
 /* === CỘT TRÁI - SIDEBAR === */
 .filter-sidebar-wrapper {
-  width: 280px;       /* Đặt chiều rộng cố định cho sidebar */
   flex-shrink: 0;     /* Ngăn sidebar bị co lại */
 }
 
 /* === CỘT PHẢI - NỘI DUNG CHÍNH === */
 .game-content-wrapper {
   flex-grow: 1;       /* QUAN TRỌNG: Cho phép cột này co giãn chiếm hết không gian còn lại */
-  min-width: 0;       /* Cần thiết để flexbox hoạt động đúng với các phần tử con */
   display: flex;
   flex-direction: column;
-  gap: 20px;          /* Khoảng cách giữa các phần tử bên trong (Search, Header, List) */
+  gap: 5px;          /* Khoảng cách giữa các phần tử bên trong (Search, Header, List) */
 }
 
-.top-search-bar {
-  width: 100%;
-}
-
-/* Ghi đè lại style cho SearchBar để nó chiếm toàn bộ chiều rộng của cột phải */
-.top-search-bar .search-bar-form {
-  width: 100%;
-  max-width: 600px; /* Giới hạn chiều rộng tối đa nếu muốn */
-  margin: 0; /* Bỏ margin auto */
-}

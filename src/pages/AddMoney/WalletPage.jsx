@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
-import './AddMoneyPage.css';
-function AddMoneyPage() {
+import './WalletPage.css';
+function WalletPage() {
     const userId = localStorage.getItem("userId");
     // const userMoney = localStorage.getItem("money");
     const amountArr = [75, 150, 375, 750, 1500];
@@ -18,6 +18,19 @@ function AddMoneyPage() {
             console.log("Error: " + error);
         }
     }
+    const [balance, setBalance] = useState(0);
+    useEffect(() => {
+        const userId = localStorage.getItem("userId");
+        if (userId) {
+            axios.get("http://localhost:8080/users")
+                .then(res => {
+                    const users = res.data.data || [];
+                    const user = users.find(u => u.userId === Number(userId));
+                    setBalance(user?.walletBalance || 0);
+                })
+                .catch(() => setBalance(0));
+        }
+    }, []);
 
     return (
         <div className="container-fluid">
@@ -47,7 +60,7 @@ function AddMoneyPage() {
                             <div className="right-content">
                                 <h2>YOUR STEAMCL ACCOUNT</h2>
                                 <div className="content-detail">
-                                    <strong>Current Wallet balance:</strong><h2>User money</h2>
+                                    <strong>Current Wallet balance:</strong><h2>{balance}</h2>
                                 </div>
                             </div>
                         </div>
@@ -57,3 +70,5 @@ function AddMoneyPage() {
         </div>
     );
 }
+
+export default WalletPage;

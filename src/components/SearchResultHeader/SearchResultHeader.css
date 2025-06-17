@@ -1,25 +1,31 @@
 .search-results-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #16212d; /* Màu nền hơi khác một chút */
-    padding: 10px 15px;
+    background: transparent;
     border-radius: 3px;
-    margin-bottom: 20px;
     color: #c7d5e0;
+    gap: 10px;
+}
+
+.top-search-wrapper {
+    background: #00000060;
+    padding: 8px;
+}
+
+.top-search-bar {}
+
+.results-count {
+    background: #00000040;
+    padding: 8px;
 }
 
 .results-count h3 {
-    margin: 0;
-    font-size: 1.5em;
-    font-weight: 300;
+    font-size: medium;
     color: #fff;
 }
 
 .results-count p {
-    margin: 0;
     font-size: 0.9em;
-    color: #8f98a0;
+    color: #FAFAD2;
+    margin: 0;
 }
 
 .sort-options {

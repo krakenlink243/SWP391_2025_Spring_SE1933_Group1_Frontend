@@ -112,9 +112,8 @@ function AppRoutes() {
         <SplashScreen isExiting={loadingState.isExiting} />
       )}
       <div
-        className={`main-app-content ${
-          !loadingState.isFinished ? "hidden" : ""
-        }`}
+        className={`main-app-content ${!loadingState.isFinished ? "hidden" : ""
+          }`}
       >
         {/* Adjusted by Phan NT Son */}
         {isAdminRoute ? (
@@ -147,9 +146,9 @@ function AppRoutes() {
           <Route path="/notifications" element={<NotificationList />} />
           <Route path="/admin" element={<AdminDashboard tab={adminTab} />} /> {/* Added by Phan NT Son */}
           {/* hoangvq */}
-          <Route path="/sendpublisher" element={<SendPublisher/>}></Route>
-          <Route path="/approvepublisher" element={<ApprovePublisher/>}></Route>
-          <Route path="/approvepublisher/:publisherId" element={<ApprovePublisherDetails/>}></Route>
+          <Route path="/sendpublisher" element={<SendPublisher />}></Route>
+          <Route path="/approvepublisher" element={<ApprovePublisher />}></Route>
+          <Route path="/approvepublisher/:publisherId" element={<ApprovePublisherDetails />}></Route>
           {/* hoangvq */}
           <Route path="/profile" element={<ProfilePage />} />
           {/* TSHUY */}
@@ -165,14 +164,14 @@ function AprroveF() {
 function ApproveDetailsF() {
   return <GameApproveDetails />
 }
-function SendPublisher(){
-  return <ApplyToPublisher/>
+function SendPublisher() {
+  return <ApplyToPublisher />
 }
-function ApprovePublisher(){
-  return <PublisherApprovePage/>
+function ApprovePublisher() {
+  return <PublisherApprovePage />
 }
-function ApprovePublisherDetails(){
-  return <PublisherApproveDetails/>
+function ApprovePublisherDetails() {
+  return <PublisherApproveDetails />
 }
 function LoginF() {
   return <Login />;
@@ -190,12 +189,20 @@ function RequestAddGame() {
     </div>
   );
 }
+/**
+ * Adjust by @author Phan NT Son
+ * @since 17-06-2025
+ * @returns 
+ */
 function List() {
   return (
-    <div className="app-container">
-      {" "}
-      <div className="page-content-constrained-wrapper">
-        <GamesPage />
+    <div className="container-fluid">
+      <div className="row">
+        <div className="spacer col-lg-2"></div>
+        <div className="col-lg-8">
+          <GamesPage />
+
+        </div>
       </div>
     </div>
   );
@@ -207,12 +214,6 @@ function List() {
  */
 function Detail() {
   return (
-    // <div className="app-container">
-    //   {" "}
-    //   <div className="page-content-constrained-wrapper">
-    //     <GameDetail />
-    //   </div>
-    // </div>
     <GameDetail />
   );
 }
