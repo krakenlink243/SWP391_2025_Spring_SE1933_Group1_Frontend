@@ -24,6 +24,7 @@ function NotificationBox() {
     axios.get(`http://localhost:8080/notification/unread/notification-list?userId=${userId}`)
       .then((response) => {
         setData(response.data);
+        console.log(response.data);
       })
       .catch((error) => console.error("Error fetching notifications:", error));
   }

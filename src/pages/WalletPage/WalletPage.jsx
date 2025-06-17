@@ -7,30 +7,28 @@ function WalletPage() {
     const amountArr = [75, 150, 375, 750, 1500];
     const username = localStorage.getItem("username");
     const addMoney = (amount) => {
-
-        try {
-            axios.post('http://localhost:8080/user/wallet/add', {
-                userId: userId,
-                amount: amount
-            }).then(console.log("Success"));
-        } catch (error) {
-            alert("Added failed");
+        axios.post(`http://localhost:8080/users/${userId}/balance/add?amount=${amount}`)
+        .then((response) => {
+            setBalance(response.data.newBalance);
+            alert("Funds added successfully!");
+        })
+        .catch((error) => {
+            alert("Add failed");
             console.log("Error: " + error);
-        }
-    }
+        });
+    };
     const [balance, setBalance] = useState(0);
     useEffect(() => {
         const userId = localStorage.getItem("userId");
+        const getUserBalance = () => {
+            axios.get(`http://localhost:8080/users/${userId}/balance`)
+                .then((response) => setBalance(response.data))
+                .catch(error => alert(error));
+        };
         if (userId) {
-            axios.get("http://localhost:8080/users")
-                .then(res => {
-                    const users = res.data.data || [];
-                    const user = users.find(u => u.userId === Number(userId));
-                    setBalance(user?.walletBalance || 0);
-                })
-                .catch(() => setBalance(0));
+            getUserBalance();
         }
-    }, []);
+    }, [balance]);
 
     return (
 
@@ -42,11 +40,11 @@ function WalletPage() {
                 <div className="left-col w-75">
                     <div className="items d-flex flex-column gap-2 align-items-start w-100">
                         {amountArr.map((am, idx) => (
-                            <div className='item d-flex flex-row justify-content-between w-100 p-3'>
+                            <div className='item d-flex flex-row justify-content-between w-100 p-3' key={idx}>
                                 <h3> Add {(am * 1000).toLocaleString("en-US", { style: "currency", currency: "USD" })}</h3>
                                 <div className="price-action d-flex flex-row align-items-center gap-2">
                                     <div className="price">{(am * 1000).toLocaleString("en-US", { style: "currency", currency: "USD" })}</div>
-                                    <div className="btn-add-money" onClick={addMoney}>
+                                    <div className="btn-add-money" onClick={() => addMoney(am * 1000)}>
                                         <a className="btn-green-ui p-2">
                                             <span>Add funds</span>
                                         </a>
@@ -60,7 +58,7 @@ function WalletPage() {
                     <div className="right-content">
                         <h2>YOUR STEAMCL ACCOUNT</h2>
                         <div className="content-detail">
-                            <strong>Current Wallet balance:</strong><h2>{balance}</h2>
+                            <strong>Current Wallet balance:</strong><h2>{balance.toLocaleString("en-US", { style: "currency", currency: "USD" })}</h2>
                         </div>
                     </div>
                 </div>
