@@ -16,6 +16,7 @@ import { Navigation, Thumbs, Scrollbar } from 'swiper/modules';
  * @since 15-06-2025
  */
 function DetailHeader({ game }) {
+    const userId = localStorage.getItem("userId");
     const divRef = useRef(null);
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     // const [mediaUrlArr, setMediaUrlArr] = useState(["https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4"]);
@@ -33,7 +34,7 @@ function DetailHeader({ game }) {
         try {
             const response = await axios.post(
                 //adjust add by Bathanh
-                `http://localhost:8080/users/${userId}/cart/add?gameId=${gameId}`
+                `http://localhost:8080/users/${userId}/cart/add?gameId=${game.gameId}`
             );
             console.log("Add to cart response:", response.data);
 
