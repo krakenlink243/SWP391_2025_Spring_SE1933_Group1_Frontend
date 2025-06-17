@@ -41,7 +41,7 @@
   width: 100%;
   border-collapse: collapse;
 }
-
+.transaction-th-id,
 .transaction-th-date,
 .transaction-th-item,
 .transaction-th-amount,
@@ -65,7 +65,7 @@
 .transaction-row-steam:last-child {
   border-bottom: none;
 }
-
+.transaction-td-id,
 .transaction-td-date,
 .transaction-td-item {
   padding: 10px;

@@ -96,7 +96,7 @@ const Library = () => {
                     src={
                       game.media && game.media.length > 0
                         ? game.media[0].url
-                        : "https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4"
+                        : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcIgF8vDI5cJMjYmRzfS3rOUWA-M9kw0iWRQ&s" //"https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4"
                     }
                     alt={game.name}
                   />

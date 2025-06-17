@@ -79,8 +79,9 @@ const Transaction = () => {
               <table className="transaction-table-steam">
                 <thead>
                   <tr>
+                    <th className="transaction-th-id">Transaction ID</th>
                     <th className="transaction-th-date">Date</th>
-                    <th className="transaction-th-item">Item</th>
+                    <th className="transaction-th-item">Game</th>
                     <th className="transaction-th-amount">Amount</th>
                     <th className="transaction-th-changes">Changes</th>
                   </tr>
@@ -88,6 +89,7 @@ const Transaction = () => {
                 <tbody>
                   {transactions.map((tx, idx) => (
                     <tr key={idx} className="transaction-row-steam">
+                      <td className="transaction-td-id">{tx.transactionId || 'N/A'}</td>
                       <td className="transaction-td-date">{(tx.dateCreated || tx.createdAt || tx.date || '').toString().slice(0, 10)}</td>
                       <td className="transaction-td-item">{tx.gameName || tx.item || 'Unknown Item'}</td>
                       <td className="transaction-td-amount">${(tx.price ?? tx.amount ?? tx.totalAmount ?? 0).toFixed(2)}</td>
