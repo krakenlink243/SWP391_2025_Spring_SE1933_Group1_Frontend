@@ -18,11 +18,6 @@ const GameDetail = () => {
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeMedia, setActiveMedia] = useState(null);
-
-  const handleThumbnailClick = (mediaItem) => {
-    setActiveMedia(mediaItem);
-  };
 
   useEffect(() => {
     const fetchGameDetails = async () => {
@@ -64,110 +59,12 @@ const GameDetail = () => {
     );
   if (!game) return <div className="not-found-message">Game not found.</div>;
 
-  // Moved to Detail Header by Phan NT Son 15-06-2025
-
-  // Lấy ảnh bìa (capsule) cho cột thông tin bên phải
-  const coverImageUrl =
-    game.media?.find((m) => m.type.toLowerCase().includes("header"))?.url ||
-    game.media?.[0]?.url ||
-    "";
-
   return (
-
-    // <div className="game-detail-page">
-    //   <div className="breadcrumb">
-    //     <Link to="/">All Games</Link> &gt; <span>{game.name}</span>
-    //   </div>
-    //   <h1 className="game-title-header">{game.name}</h1>
-
-    //   <div className="detail-main-content">
-    //     {/* === CỘT TRÁI - MEDIA === */}
-    //     <div className="media-column">
-    //       {activeMedia && (
-    //         <div className="main-media-banner">
-    //           {activeMedia.type.toLowerCase().includes("video") ? (
-    //             <video
-    //               src={activeMedia.url}
-    //               controls
-    //               autoPlay
-    //               muted
-    //               loop
-    //               key={activeMedia.mediaId}
-    //             />
-    //           ) : (
-    //             <img
-    //               src={activeMedia.url}
-    //               alt="Game banner"
-    //               key={activeMedia.mediaId}
-    //             />
-    //           )}
-    //         </div>
-    //       )}
-    //       <div className="media-thumbnail-strip">
-    //         {game.media.map((mediaItem) => (
-    //           <div
-    //             key={mediaItem.mediaId}
-    //             className={`thumbnail-container ${
-    //               activeMedia?.mediaId === mediaItem.mediaId ? "active" : ""
-    //             }`}
-    //             onClick={() => handleThumbnailClick(mediaItem)}
-    //           >
-    //             <img
-    //               src={mediaItem.url}
-    //               alt="Game thumbnail"
-    //               className="thumbnail"
-    //             />
-    //           </div>
-    //         ))}
-    //       </div>
-    //     </div>
-
-    //     {/* === CỘT PHẢI - THÔNG TIN & MUA HÀNG === */}
-    //     <div className="info-column">
-
-    //       <p className="short-description">{game.shortDescription}</p>
-
-    //       <div className="info-grid">
-    //         <div className="info-row">
-    //           
-    //         </div>
-    //         <div className="info-row">
-
-    //         </div>
-    //       </div>
-
-    //       <div className="tag-list-detail">
-
-    //       </div>
-
-    //       <div className="purchase-area">
-
-    //       </div>
-    //     </div>
-    //   </div>
-
-    //   {/* === PHẦN DƯỚI: MÔ TẢ ĐẦY ĐỦ VÀ YÊU CẦU HỆ THỐNG === */}
-    //   <div className="bottom-content-container">
-    //     <div className="full-description-section">
-
-    //     </div>
-
-    //     <div className="system-requirements-section">
-
-    //     </div>
-    //   </div>
-
-    //   {/* === PHẦN REVIEW === */}
-    //   <div className="review-section-container">
-    //     <h2>CUSTOMER REVIEWS</h2>
-    //     <Review gameId={gameId} />
-    //   </div>
-    // </div>
 
     /**
      * @author Phan NT Son
      * @since 15-06-2025
-     * @status pending
+     * @status done
      */
     <div className="container-fluid">
       <div className="row">
