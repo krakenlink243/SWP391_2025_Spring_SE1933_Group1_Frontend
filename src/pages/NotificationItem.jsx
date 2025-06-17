@@ -31,7 +31,7 @@ function NotificationItem({ notification, onReload }) {
   };
 
   return (
-    <li
+    <div
       className={`notif-item ${read ? '' : 'unread'}`}
       onClick={handleClick}
     >
@@ -39,7 +39,7 @@ function NotificationItem({ notification, onReload }) {
       <span className="notif-content">{notification.notificationContent}</span>
       {!read && <span className="notif-dot" />}
       <button className="notif-delete-btn" onClick={handleDelete}>✕</button>
-    </li>
+    </div>
   );
 }
 export default NotificationItem;

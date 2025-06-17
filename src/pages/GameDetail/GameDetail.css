@@ -169,6 +169,39 @@
   background: linear-gradient(to right, #8ed629 5%, #6aa621 95%);
 }
 
+/* -- -- --*/
+.btn-add-to-cart .btn-blue-ui {
+  border-radius: 2px;
+  border: none;
+  padding: 1px;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none !important;
+  color: #b3e6ff;
+  background: transparent;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
+}
+
+.btn-add-to-cart .btn-blue-ui:hover {
+  text-decoration: none !important;
+  color: #fff;
+  background: transparent;
+}
+
+.btn-blue-ui span {
+  color: white;
+  border-radius: 2px;
+  display: block;
+  background: linear-gradient(to right, #3ea6ff 5%, #2563eb 95%);
+  padding: 0 15px;
+  font-size: 15px;
+  line-height: 25px;
+}
+
+.btn-blue-ui:hover span {
+  background: linear-gradient(to right, #60cfff 5%, #3b82f6 95%);
+}
+
 /* Detail Body .jsx*/
 .game-detail-body-container {}
 

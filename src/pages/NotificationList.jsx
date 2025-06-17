@@ -33,7 +33,7 @@ function NotificationList() {
     <>
       <div>
         <h1>Notifications</h1>
-        <ul>
+        <div>
           {data.map((notification) => (
             <NotificationItem
               key={notification.notifId}
@@ -41,7 +41,7 @@ function NotificationList() {
               onReload={reloadList}
             />
           ))}
-        </ul>
+        </div>
       </div>
     </>
   );

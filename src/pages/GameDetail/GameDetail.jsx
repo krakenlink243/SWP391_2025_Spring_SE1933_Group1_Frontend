@@ -30,14 +30,6 @@ const GameDetail = () => {
         const data = response.data;
         setGame(data);
 
-        if (data && data.media && data.media.length > 0) {
-          // Ưu tiên video hoặc ảnh header làm media chính
-          const headerMedia =
-            data.media.find(
-              (m) => m.type.includes("video") || m.type.includes("header")
-            ) || data.media[0];
-          setActiveMedia(headerMedia);
-        }
       } catch (e) {
         console.error("Failed to fetch game details:", e);
         setError(e.message);

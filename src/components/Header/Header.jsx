@@ -23,14 +23,13 @@ const Header = () => {
   const [balance, setBalance] = useState(0);
   useEffect(() => {
     const userId = localStorage.getItem("userId");
+    const getUserBalance = () => {
+      axios.get(`http://localhost:8080/users/${userId}/balance`)
+        .then((response) => setBalance(response.data))
+        .catch(error => alert(error));
+    };
     if (userId) {
-      axios.get("http://localhost:8080/users")
-        .then(res => {
-          const users = res.data.data || [];
-          const user = users.find(u => u.userId === Number(userId));
-          setBalance(user?.walletBalance || 0);
-        })
-        .catch(() => setBalance(0));
+      getUserBalance();
     }
   }, []);
 
@@ -72,7 +71,7 @@ const Header = () => {
 
                   </div>
                   <div className="user-wallet w-50">
-                    ${balance}
+                    {balance.toLocaleString("en-US", { style: "currency", currency: "USD" })}
                   </div>
                 </div>
                 <div className="header-user-action-icon w-25">

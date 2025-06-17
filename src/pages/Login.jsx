@@ -4,6 +4,8 @@ import axios from "axios";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import "./Login.css";
 import { jwtDecode } from "jwt-decode";
+import { Navigate } from 'react-router-dom';
+
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -36,7 +38,7 @@ const Login = () => {
       localStorage.setItem("username", username);
       localStorage.setItem("userId", userId);
       localStorage.setItem("role", role);
-      window.location.href = "/";
+      return <Navigate to="/" replace />;
 
       // navigate('/');
       // Optionally redirect or store auth token here
