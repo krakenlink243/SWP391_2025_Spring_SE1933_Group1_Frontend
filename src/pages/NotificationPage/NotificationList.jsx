@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import NotificationItem from "./NotificationItem";
+import "./NotificationList.css"
 
 /**
  *
@@ -9,6 +10,7 @@ import NotificationItem from "./NotificationItem";
 function NotificationList() {
   const [data, setData] = useState([]);
   const [reloadSignal, setReloadSignal] = useState(0);
+  const [countUnRead, setCountUnRead] = useState(0);
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
@@ -23,27 +25,34 @@ function NotificationList() {
     axios
       .get(`http://localhost:8080/notification/notification-list?userId=${userId}`)
       .then((response) => {
-        setData(response.data);
-        console.log(response.data);
+        if (response.data) {
+          setData(response.data);
+            setCountUnRead(0);
+            response.data.forEach(count);
+        }
       })
       .catch((error) => console.error("Error fetching notifications:", error));
   };
 
+  const count = (notif) => {
+    if (!notif.read) {
+      setCountUnRead((prev) => prev + 1);
+    }
+  }
+
   return (
-    <>
-      <div>
-        <h1>Notifications</h1>
-        <div>
-          {data.map((notification) => (
-            <NotificationItem
-              key={notification.notifId}
-              notification={notification}
-              onReload={reloadList}
-            />
-          ))}
-        </div>
+    <div className="notiflist-container col-lg-8 d-flex align-items-start flex-column py-5 text-white">
+      <h1>Notifications ({countUnRead} unread)</h1>
+      <div className="notiflist-list w-100 d-flex flex-column gap-2">
+        {data.map((notification) => (
+          <NotificationItem
+            key={notification.notifId}
+            notification={notification}
+            onReload={reloadList}
+          />
+        ))}
       </div>
-    </>
+    </div>
   );
 }
 

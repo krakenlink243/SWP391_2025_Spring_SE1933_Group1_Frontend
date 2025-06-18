@@ -8,7 +8,7 @@ import {
   Link,
   useLocation,
 } from "react-router-dom"; // Import các component của router
-import { useState, useEffect } from "react"; // Import useState và useEffect từ React
+import { useState, useEffect, useRef } from "react"; // Import useState và useEffect từ React
 import axios from "axios"; // Import axios để thực hiện các yêu cầu HTTP
 import "./App.css";
 
@@ -25,7 +25,7 @@ import GameApproveDetails from "./pages/GameApproveDetails";
 import Transaction from "./components/TransactionFolder/Transaction";
 import Cart from "./components/CartFolder/Cart";
 import SplashScreen from "./components/SplashScreen/SplashScreen"; // Import SplashScreen component
-import NotificationList from "./pages/NotificationList";
+import NotificationList from "./pages/NotificationPage/NotificationList";
 import GamesPage from "./components/GamesPage/GamesPage";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard"; // Added by Phan NT Son
 import ApplyToPublisher from "./pages/ApplyToPublisher";
@@ -37,7 +37,33 @@ import ProfilePage from "./components/Profile/ProfilePage";
 import Library from "./components/LibraryFolder/Library";
 import WalletPage from "./pages/WalletPage/WalletPage";
 
+
+
 function AppRoutes() {
+
+  // Added by Phan NT Son 18-06-2025
+  const headerHeight = useRef(null);
+  const navHeight = useRef(null);
+  const footerHeight = useRef(null);
+  const [calculatedHeight, setCalculatedHeight] = useState(0);
+
+  const calMinimumHeight = () => {
+    if (headerHeight.current && navHeight.current) {
+      const windowHeight = window.screen.availHeight;
+      const headerH = headerHeight.current.offsetHeight;
+      const navH = navHeight.current.offsetHeight;
+      const footH = footerHeight.current.offsetHeight;
+
+      console.log(windowHeight);
+      console.log(headerH);
+      console.log(navH);
+      console.log(footH);
+      setCalculatedHeight(windowHeight - headerH - navH - footH);
+    }
+  }
+  // --!!
+
+
   // Renamed by Phan NT Son
   console.log("App component is rendering..."); // DEBUG: Kiểm tra xem component có render không
 
@@ -49,6 +75,8 @@ function AppRoutes() {
   });
 
   useEffect(() => {
+    calMinimumHeight();
+
     console.log("useEffect is running..."); // DEBUG: Kiểm tra xem effect có chạy không
     const hasVisited = localStorage.getItem("hasVisited");
 
@@ -79,7 +107,8 @@ function AppRoutes() {
         isFinished: true,
       });
     }
-  }, []);
+
+  }, [loadingState.isFinished]);
 
   const shouldRenderSplash =
     loadingState.isFirstVisit && !loadingState.isFinished;
@@ -119,13 +148,14 @@ function AppRoutes() {
         {/* Adjusted by Phan NT Son */}
         {isAdminRoute ? (
           <AdminHeader
+            ref={headerHeight}
             currentTab={adminTab}
             changeToTab={handleAdminTabChange}
           />
         ) : (
-          <Header hideLogo={hideHeaderLogo} />
+          <Header hideLogo={hideHeaderLogo} ref={headerHeight} />
         )}
-        {!isAdminRoute && <Navbar />}
+        {!isAdminRoute && <Navbar ref={navHeight} />}
         {/* --!! */}
 
         {/* Remove BrowserRouter by Phan NT Son */}
@@ -142,9 +172,9 @@ function AppRoutes() {
           <Route path="/register" element={<RegisterF />} />
           <Route path="/register-details" element={<RegisterDetailsF />} />
           <Route path="/transaction" element={<Transaction />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route path="/cart" element={<Cart minHeight={calculatedHeight} />} /> {/*Adjusted by Phan NT Son  */}
           <Route path="/library" element={<Library />} />{/*adjusted by Bathanh - 15/6/2025 2:03PM */}
-          <Route path="/notifications" element={<NotificationList />} />
+          <Route path="/notifications" element={<NotifPage minimumHeight={calculatedHeight} />} />
           <Route path="/admin" element={<AdminDashboard tab={adminTab} />} /> {/* Added by Phan NT Son */}
           {/* hoangvq */}
           <Route path="/sendpublisher" element={<SendPublisher />}></Route>
@@ -155,8 +185,8 @@ function AppRoutes() {
           {/* TSHUY */}
           <Route path="/wallet" element={<Wallet />} />
         </Routes>
+        <Footer ref={footerHeight} /> {/* Added by TSHUY */}
       </div>
-      <Footer /> {/* Added by TSHUY */}
     </div>
   );
 }
@@ -246,6 +276,18 @@ function Wallet() {
     </div>
   );
 }
+
+function NotifPage({ minimumHeight }) {
+  return (
+    <div className="container-fluid" style={{ minHeight: `${minimumHeight}px` }}>
+      <div className="row">
+        <div className="spacer col-lg-2"></div>
+        <NotificationList />
+      </div>
+    </div>
+  );
+}
+
 
 export default function App() {
   return (

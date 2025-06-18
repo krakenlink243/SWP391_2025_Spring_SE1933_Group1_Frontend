@@ -1,11 +1,11 @@
-import React from "react";
+import React, {forwardRef} from "react"; // Added forwardRef by Phan NT Son 18-06-2025
 import "./Footer.css";
 import ValveLogo from "/footerLogo_valve_new.png"; // Đường dẫn đến logo Valve
 import SteamLogo from "/logo_steam.svg"; // Đường dẫn đến logo Steam
 
-const Footer = () => {
+const Footer = forwardRef((props, ref) => { //Added forwardRef by Phan NT Son 18-06-2025
   return (
-    <footer className="steam-footer">
+    <footer className="steam-footer" ref={ref}> {/* Added by Phan NT Son 18-06-2025*/}
       <div className="footer-top">
         <div className="footer-copyright">
           <img src={ValveLogo} alt="Valve Logo" className="valve-logo" />
@@ -49,6 +49,6 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
+});
 
 export default Footer;

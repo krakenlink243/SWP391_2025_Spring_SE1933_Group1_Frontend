@@ -11,7 +11,7 @@ import './Cart.css';
  */
 const userId = localStorage.getItem("userId");
 
-const Cart = () => {
+const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
 
   if (!localStorage.getItem("userId")) {
     window.location.href = "/";
@@ -128,7 +128,7 @@ const Cart = () => {
     .toFixed(2);
 
   return (
-    <div className="cart-steam-bg">
+    <div className="cart-steam-bg" style={{ minHeight: `${minHeight}px` }}>
       <div className="cart-main-steam">
         <h2 className="cart-title-steam">
           {userName ? `${userName}'s Shopping Cart` : "Shopping Cart"}

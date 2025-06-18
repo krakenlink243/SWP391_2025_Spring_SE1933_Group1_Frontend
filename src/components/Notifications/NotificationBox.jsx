@@ -35,27 +35,27 @@ function NotificationBox() {
   }
 
   return (
-    <div className="notif-container">
-      <div className="notif-bell" onClick={toggleOpenNotification}>
+    <div className="notifbox-container">
+      <div className="notifbox-bell" onClick={toggleOpenNotification}>
         <FaBell />
-        {data.length > 0 && <span className="notif-badge"></span>}
+        {data.length > 0 && <span className="notifbox-badge"></span>}
 
       </div>
 
       {isOpen && (
-        <div className="notif-box text-light p-3">
-          <div className="notif-header d-flex flex-row align-items-center justify-content-around pb-3">
-            <p className="notif-title">Notifications</p>
+        <div className="notifbox-box text-light p-3">
+          <div className="notifbox-header d-flex flex-row align-items-center justify-content-around pb-3">
+            <p className="notifbox-title">Notifications</p>
             <button className="notfif-button text-light" onClick={() => window.location.href = "/notifications"}>View All</button>
           </div>
 
-          <ul className="notif-list">
+          <ul className="notifbox-list">
             {data.length > 0 ? (
               data.map((n) => (
                 <NotificationBoxItem key={n.notifId} notification={n} />
               ))
             ) : (
-              <li className="notif-empty">You have no new notifications at this time.</li>
+              <li className="notifbox-empty">You have no new notifications at this time.</li>
             )}
           </ul>
         </div>

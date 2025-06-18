@@ -1,4 +1,4 @@
-.notif-container {
+.notifbox-container {
   position: relative;
   display: inline-block;
   z-index: 1000;
@@ -6,7 +6,7 @@
 
 }
 
-.notif-bell {
+.notifbox-bell {
   position: relative;
   cursor: pointer;
   font-size: 14px;
@@ -14,11 +14,11 @@
   background-color: #1b2838;
 }
 
-.notif-bell:hover {
+.notifbox-bell:hover {
   color: white;
 }
 
-.notif-badge {
+.notifbox-badge {
   position: absolute;
   top: -5px;
   right: -6px;
@@ -31,7 +31,7 @@
   height: 15px;
 }
 
-.notif-box {
+.notifbox-box {
   position: absolute;
   right: 0;
   top: 30px;
@@ -40,12 +40,12 @@
   overflow: hidden;
 }
 
-.notif-header {
+.notifbox-header {
   height: 30px;
   
 }
 
-.notif-title {
+.notifbox-title {
   font-weight: bold;
   margin: 0;
   font-size: 16px;
@@ -57,7 +57,7 @@
   font-size: smaller;
 }
 
-.notif-list {
+.notifbox-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -66,13 +66,13 @@
 }
 
 
-.notif-item {
+.notifbox-item {
   position: relative;
   background: linear-gradient(144deg, rgb(84 96 112), rgb(23 23 23));
   overflow: hidden;
 }
 
-.notif-item::before {
+.notifbox-item::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -82,13 +82,13 @@
   z-index: 1;
 }
 
-.notif-item:hover::before {
+.notifbox-item:hover::before {
   opacity: 1;
 }
 
 
 
-.notif-dot{
+.notifbox-dot{
   background-color: #66c0f4;
   width: 10px;
   height: 10px;
@@ -98,7 +98,7 @@
   position: absolute;
 }
 
-.notif-empty {
+.notifbox-empty {
   text-align: center;
   color: #8899aa;
   padding: 15px;
