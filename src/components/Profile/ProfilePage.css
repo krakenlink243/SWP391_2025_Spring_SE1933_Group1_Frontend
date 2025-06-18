@@ -1,38 +1,355 @@
-/* src/pages/ProfilePage.css */
+/* ---- CÀI ĐẶT TỔNG THỂ CHO TRANG ---- */
 .profile-page {
-  position: relative; /* Để định vị tuyệt đối cho nền động */
+  position: relative; /* Tạo một không gian gốc cho các phần tử con */
+  color: #e5e5e5;
+  font-family: Arial, Helvetica, sans-serif;
   min-height: 100vh;
-  overflow: hidden; /* Ẩn các phần tử nền động có thể tràn ra ngoài */
-  padding: 20px;
-  box-sizing: border-box;
-  color: #c6d4df; /* Màu chữ mặc định */
+}
+
+/* ---- VIDEO NỀN ĐỘNG (LỚP DƯỚI CÙNG) ---- */
+.dynamic-background {
+  position: absolute; 
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0; 
+  overflow: hidden;
+}
+
+.dynamic-background::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(27, 40, 56, 0.7); /* Lớp phủ tối mờ để chữ dễ đọc */
 }
 
 .dynamic-background video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
+  width: 100%;
   height: 100%;
-  transform: translate(-50%, -50%);
   object-fit: cover;
 }
 
+/* ---- KHUNG NỘI DUNG CHÍNH (LỚP BÊN TRÊN) ---- */
 .profile-content {
-  position: relative; /* Để tạo context xếp lớp cho các phần tử bên trong */
-  max-width: 980px; /* Chiều rộng tối đa của nội dung profile (tương tự Steam) */
-  margin: 20px auto;
-  padding: 30px;
-  background-color: rgba(23, 26, 33, 0.7); /* Nền mờ cho nội dung */
-  border-radius: 10px;
-  backdrop-filter: blur(
-    10px
-  ); /* Hiệu ứng mờ xuyên thấu (nếu trình duyệt hỗ trợ) */
+  position: relative; /* Đảm bảo nó có z-index riêng */
+  z-index: 1; /* Đặt nó ở lớp trên so với background */
+  max-width: 980px;
+  margin: 40px auto 0 auto;
+  padding: 0 20px 20px 20px;
+  /* NỀN GRADIENT TRONG SUỐT NHƯ BẠN YÊU CẦU */
+  background: linear-gradient(
+    to bottom,
+    rgba(23, 26, 33, 0.95),
+    rgba(27, 40, 56, 0.85)
+  );
 }
 
-.particles-canvas {
+/* ---- Profile Header Styles ---- */
+.profile-header {
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden; /* Cần thiết để gradient overlay hoạt động đúng */
+  margin: -20px -20px 24px -20px; /* Mở rộng header ra sát lề của .profile-content */
+}
+
+.profile-background-art {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.profile-background-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(1px); /* Làm mờ ảnh nền một chút */
+}
+
+.profile-gradient-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80%;
+  background: linear-gradient(
+    to top,
+    rgba(23, 26, 33, 1) 20%,
+    rgba(23, 26, 33, 0)
+  );
+}
+
+.profile-info-container {
+  position: relative; /* Đặt lên trên background art */
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 20px;
+  padding-top: 150px;
+}
+
+/* ... Các style khác cho ProfileHeader như .avatar-container, .main-avatar, .level-badge... giữ nguyên như trước ... */
+.profile-left-info {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+}
+.profile-avatar-section {
+  position: relative;
+  flex-shrink: 0;
+}
+.main-avatar {
+  width: 128px;
+  height: 128px;
+  border-radius: 4px;
+  border: 3px solid #171a21;
+}
+.status-indicator {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 3px solid #171a21;
+}
+.status-indicator.online {
+  background-color: #57cbde;
+}
+.status-indicator.offline {
+  background-color: #898989;
+}
+.profile-details-header {
+  flex-grow: 1;
+}
+.profile-details-header h1 {
+  margin: 0;
+  font-size: 2.2em;
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+.profile-details-header p {
+  margin: 5px 0 0;
+  color: #acb2b8;
+}
+/* ... */
+
+/* ---- BỐ CỤC 2 CỘT ---- */
+.profile-main {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.profile-left {
+  flex: 2;
+  min-width: 0;
+}
+
+.profile-right {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---- STYLE CHUNG CHO CÁC KHUNG (BOX) ---- */
+.section-box {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 1px; /* Dùng padding 1px để border-bottom của h3 không bị tràn */
+  margin-bottom: 24px;
+  border-radius: 3px;
+}
+
+.section-box h3 {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font-size: 14px;
+  font-weight: normal;
+  padding: 8px 12px;
+  margin: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.section-box > div,
+.section-box > ul,
+.section-box > p {
+  padding: 12px;
+}
+
+/* ... Các style còn lại cho .game-list, .details-list, .groups... giữ nguyên như trước ... */
+.game-showcase .game-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.game-item {
+  width: calc(20% - 7px);
+}
+.game-item img {
+  width: 100%;
+  height: auto;
+}
+.view-all-games {
+  display: block;
+  text-align: right;
+  color: #acb2b8;
+  font-size: 12px;
+  text-decoration: none;
+  padding-top: 10px;
+}
+.view-all-games:hover {
+  color: #fff;
+}
+.profile-bio p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #acb2b8;
+  margin: 0;
+}
+.details-list {
+  list-style: none;
+  padding: 0 12px 12px;
+}
+.details-list li {
+  padding: 8px 0;
+  border-top: 1px solid #363c44;
+  font-size: 13px;
+  color: #acb2b8;
+  display: flex;
+  justify-content: space-between;
+}
+.details-list li span {
+  color: #fff;
+  font-weight: bold;
+}
+/* ... */
+
+/* ---- CỘT TRÁI: GAME SHOWCASE & BIO ---- */
+.game-showcase .game-list {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(150px, 1fr)
+  ); /* Grid linh hoạt */
+  gap: 15px;
+}
+
+.game-item {
+  text-decoration: none;
+  color: #acb2b8;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.game-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.game-item img {
+  width: 100%;
+  height: 225px; /* Chiều cao cố định cho ảnh game */
+  object-fit: cover;
+}
+
+.game-item span {
+  display: block;
+  padding: 10px;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.view-all-games {
+  display: block;
+  text-align: right;
+  margin-top: 15px;
+  color: #acb2b8;
+  font-size: 12px;
+  text-decoration: none;
+}
+.view-all-games:hover {
+  color: #fff;
+}
+
+.profile-bio p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #acb2b8;
+  margin: 0;
+}
+
+/* ---- CỘT PHẢI: PROFILE DETAILS ---- */
+.profile-details h3,
+.status-online,
+.status-offline {
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  border-bottom: 1px solid #363c44;
+}
+
+.status-online {
+  color: #57cbde;
+}
+.status-offline {
+  color: #898989;
+}
+
+.details-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.details-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #363c44;
+  font-size: 14px;
+  color: #acb2b8;
+  display: flex;
+  justify-content: space-between;
+}
+.details-list li:last-child {
+  border-bottom: none;
+}
+.details-list li span {
+  color: #fff;
+  font-weight: bold;
+}
+
+/* ---- Trạng thái loading, error ---- */
+.profile-page-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  font-size: 1.5em;
+  color: #c7d5e0;
+}
+.profile-page-status.error {
+  color: #ff6b6b;
+}
+/* src/components/Profile/ProfileHeader.css */
+/* ProfileHeader.css */
+.profile-header {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.profile-background-art {
   position: absolute;
   top: 0;
   left: 0;
@@ -40,16 +357,170 @@
   height: 100%;
 }
 
-.profile-main {
+.profile-background-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(1px);
+}
+
+.profile-gradient-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(transparent, rgba(27, 40, 56, 0.9));
+}
+
+.profile-info-container {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
   display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.profile-left-info {
+  display: flex;
+  align-items: flex-end;
   gap: 20px;
-  margin-top: 20px;
 }
 
-.profile-left {
-  flex: 2;
+.profile-avatar-section {
+  position: relative;
 }
 
-.profile-right {
-  flex: 1;
+.main-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 4px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.status-indicator {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #1b2838;
+}
+
+.status-indicator.online {
+  background-color: #57cbde;
+}
+
+.status-indicator.offline {
+  background-color: #898989;
+}
+
+.profile-details {
+  margin-bottom: 10px;
+}
+
+.username {
+  font-size: 28px;
+  font-weight: 300;
+  margin: 0 0 5px 0;
+  color: #ffffff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.real-name {
+  font-size: 14px;
+  color: #8f98a0;
+  margin: 0 0 10px 0;
+}
+
+.level-badge {
+  background: linear-gradient(45deg, #3d4450, #2a475e);
+  border: 1px solid #495663;
+  border-radius: 4px;
+  padding: 4px 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+}
+
+.level-text {
+  color: #8f98a0;
+}
+
+.level-number {
+  color: #66c0f4;
+  font-weight: bold;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* --- Style cơ sở cho tất cả các nút hành động --- */
+.action-btn {
+  padding: 10px 20px;
+  border: 1px solid transparent; /* Bắt đầu với viền trong suốt */
+  border-radius: 3px;
+  font-size: 15px;
+  font-weight: normal;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none; /* Bỏ gạch chân nếu dùng thẻ <a> */
+  display: inline-block;
+  transition: all 0.2s ease-in-out; /* Hiệu ứng chuyển động mượt mà */
+}
+
+/* --- NÚT HÀNH ĐỘNG CHÍNH (PRIMARY) --- */
+/* Dùng cho các nút quan trọng như "Edit Profile", "Add to Cart" */
+.action-btn.primary {
+  /* Nền màu xanh dương trong suốt đặc trưng của Steam */
+  background-color: rgba(102, 192, 245, 0.2);
+
+  color: #c7d5e0;
+}
+
+.action-btn.primary:hover {
+  background-color: rgba(102, 192, 245, 0.4);
+  color: #ffffff;
+}
+
+.action-btn.secondary {
+  background-color: rgba(143, 152, 160, 0.1);
+
+  border-color: rgba(143, 152, 160, 0.4);
+
+  color: #c7d5e0;
+}
+
+.action-btn.secondary:hover {
+  background-color: rgba(143, 152, 160, 0.2);
+  color: #ffffff;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .profile-info-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .main-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .username {
+    font-size: 22px;
+  }
+
+  .profile-header {
+    height: 250px;
+  }
 }

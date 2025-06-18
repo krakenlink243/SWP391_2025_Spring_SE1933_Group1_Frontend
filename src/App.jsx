@@ -101,6 +101,7 @@ function AppRoutes() {
    */
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
+  const isProfilePage = location.pathname.startsWith("/profile");
   const [adminTab, setAdminTab] = useState("Request Management");
   const handleAdminTabChange = (tab) => {
     setAdminTab(tab);
@@ -108,55 +109,74 @@ function AppRoutes() {
   //--!!
 
   return (
-    <div className="app-container">
-      {shouldRenderSplash && (
-        <SplashScreen isExiting={loadingState.isExiting} />
-      )}
-      <div
-        className={`main-app-content ${!loadingState.isFinished ? "hidden" : ""
-          }`}
-      >
-        {/* Adjusted by Phan NT Son */}
-        {isAdminRoute ? (
-          <AdminHeader
-            currentTab={adminTab}
-            changeToTab={handleAdminTabChange}
-          />
-        ) : (
-          <Header hideLogo={hideHeaderLogo} />
+    <div className={`app-container${isProfilePage ? " transparent" : ""}`}>
+      {" "}
+      <div className="app-container">
+        {shouldRenderSplash && (
+          <SplashScreen isExiting={loadingState.isExiting} />
         )}
-        {!isAdminRoute && <Navbar />}
-        {/* --!! */}
+        <div
+          className={`main-app-content ${
+            !loadingState.isFinished ? "hidden" : ""
+          }`}
+        >
+          {/* Adjusted by Phan NT Son */}
+          {isAdminRoute ? (
+            <AdminHeader
+              currentTab={adminTab}
+              changeToTab={handleAdminTabChange}
+            />
+          ) : (
+            <Header hideLogo={hideHeaderLogo} />
+          )}
+          {!isAdminRoute && <Navbar />}
+          {/* --!! */}
 
-        {/* Remove BrowserRouter by Phan NT Son */}
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/game/:gameId" element={<Detail />} />
-          <Route path="/game" element={<List />}></Route>
-          {/* hoangvq */}
-          <Route path="/aprrovegame" element={<AprroveF />}></Route>
-          <Route path="/aprrovegame/:gameId" element={<ApproveDetailsF />}></Route>
-          <Route path="/sendgame" element={<RequestAddGame />}></Route>
-          {/* hoangvq */}
-          <Route path="/login" element={<LoginF />} />
-          <Route path="/register" element={<RegisterF />} />
-          <Route path="/register-details" element={<RegisterDetailsF />} />
-          <Route path="/transaction" element={<Transaction />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/library" element={<Library />} />{/*adjusted by Bathanh - 15/6/2025 2:03PM */}
-          <Route path="/notifications" element={<NotificationList />} />
-          <Route path="/admin" element={<AdminDashboard tab={adminTab} />} /> {/* Added by Phan NT Son */}
-          {/* hoangvq */}
-          <Route path="/sendpublisher" element={<SendPublisher />}></Route>
-          <Route path="/approvepublisher" element={<ApprovePublisher />}></Route>
-          <Route path="/approvepublisher/:publisherId" element={<ApprovePublisherDetails />}></Route>
-          {/* hoangvq */}
-          <Route path="/profile" element={<ProfilePage />} />
-          {/* TSHUY */}
-          <Route path="/wallet" element={<Wallet />} />
-        </Routes>
+          {/* Remove BrowserRouter by Phan NT Son */}
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/game/:gameId" element={<Detail />} />
+            <Route path="/game" element={<List />}></Route>
+            {/* hoangvq */}
+            <Route path="/aprrovegame" element={<AprroveF />}></Route>
+            <Route
+              path="/aprrovegame/:gameId"
+              element={<ApproveDetailsF />}
+            ></Route>
+            <Route path="/sendgame" element={<RequestAddGame />}></Route>
+            {/* hoangvq */}
+            <Route path="/login" element={<LoginF />} />
+            <Route path="/register" element={<RegisterF />} />
+            <Route path="/register-details" element={<RegisterDetailsF />} />
+            <Route path="/transaction" element={<Transaction />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/library" element={<Library />} />
+            {/*adjusted by Bathanh - 15/6/2025 2:03PM */}
+            <Route path="/notifications" element={<NotificationList />} />
+            <Route
+              path="/admin"
+              element={<AdminDashboard tab={adminTab} />}
+            />{" "}
+            {/* Added by Phan NT Son */}
+            {/* hoangvq */}
+            <Route path="/sendpublisher" element={<SendPublisher />}></Route>
+            <Route
+              path="/approvepublisher"
+              element={<ApprovePublisher />}
+            ></Route>
+            <Route
+              path="/approvepublisher/:publisherId"
+              element={<ApprovePublisherDetails />}
+            ></Route>
+            {/* hoangvq */}
+            <Route path="/profile" element={<ProfilePage />} />
+            {/* Added by TSHUY */}
+            {/* TSHUY */}
+            <Route path="/wallet" element={<Wallet />} />
+          </Routes>
+        </div>
+        <Footer /> {/* Added by TSHUY */}
       </div>
-      <Footer /> {/* Added by TSHUY */}
     </div>
   );
 }
@@ -164,16 +184,16 @@ function AprroveF() {
   return <GameApprrovePage />;
 }
 function ApproveDetailsF() {
-  return <GameApproveDetails />
+  return <GameApproveDetails />;
 }
 function SendPublisher() {
-  return <ApplyToPublisher />
+  return <ApplyToPublisher />;
 }
 function ApprovePublisher() {
-  return <PublisherApprovePage />
+  return <PublisherApprovePage />;
 }
 function ApprovePublisherDetails() {
-  return <PublisherApproveDetails />
+  return <PublisherApproveDetails />;
 }
 function LoginF() {
   return <Login />;
@@ -194,7 +214,7 @@ function RequestAddGame() {
 /**
  * Adjust by @author Phan NT Son
  * @since 17-06-2025
- * @returns 
+ * @returns
  */
 function List() {
   return (
@@ -203,7 +223,6 @@ function List() {
         <div className="spacer col-lg-2"></div>
         <div className="col-lg-8">
           <GamesPage />
-
         </div>
       </div>
     </div>
@@ -212,12 +231,10 @@ function List() {
 /**
  * @author Phan NT Son
  * @since 15-06-2025
- * @returns 
+ * @returns
  */
 function Detail() {
-  return (
-    <GameDetail />
-  );
+  return <GameDetail />;
 }
 function NotFound() {
   return (
@@ -231,9 +248,7 @@ function NotFound() {
   );
 }
 function Home() {
-  return (
-    <HomePage />
-  );
+  return <HomePage />;
 }
 
 function Wallet() {
