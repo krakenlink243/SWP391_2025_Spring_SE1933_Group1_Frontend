@@ -35,7 +35,7 @@ import AdminHeader from "./pages/AdminDashboard/AdminHeader";
 import Footer from "./components/Footer/Footer";
 import ProfilePage from "./components/Profile/ProfilePage";
 import Library from "./components/LibraryFolder/Library";
-
+import SendUserFeedback from "./pages/SendUserFeedback";
 function AppRoutes() {
   // Renamed by Phan NT Son
   console.log("App component is rendering..."); // DEBUG: Kiểm tra xem component có render không
@@ -150,6 +150,7 @@ function AppRoutes() {
           <Route path="/sendpublisher" element={<SendPublisher/>}></Route>
           <Route path="/approvepublisher" element={<ApprovePublisher/>}></Route>
           <Route path="/approvepublisher/:publisherId" element={<ApprovePublisherDetails/>}></Route>
+          <Route path="/sendfeedback" element={<SendFeedback/>}></Route>
           {/* hoangvq */}
           <Route path="/profile" element={<ProfilePage />} />
           {/* TSHUY */}
@@ -173,6 +174,9 @@ function ApprovePublisher(){
 }
 function ApprovePublisherDetails(){
   return <PublisherApproveDetails/>
+}
+function SendFeedback(){
+  return <SendUserFeedback/>
 }
 function LoginF() {
   return <Login />;
