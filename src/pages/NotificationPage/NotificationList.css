@@ -1,0 +1,27 @@
+.notiflist-list .notiflist-item {
+    background: rgba(0, 0, 0, .2);
+}
+
+.notiflist-list .notiflist-item:hover {
+    background: #474f5c;
+}
+
+.notiflist-list .unread {}
+
+.notiflist-item .notiflist-delete-btn path {
+    stroke: #8b929a;
+}
+
+.notiflist-item .notiflist-delete-btn:hover path {
+
+    stroke: #8a220f;
+}
+
+
+.notiflist-list .notiflist-item .notiflist-delete-btn {
+    display: none;
+}
+
+.notiflist-list .notiflist-item:hover .notiflist-delete-btn {
+    display: block;
+}

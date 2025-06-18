@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import './UserDropBox.css';
 import Logout from "../Logout/Logout";
-
 
 /**
  * @author Phan NT Son
@@ -9,11 +8,11 @@ import Logout from "../Logout/Logout";
  * @param {*} param0 
  * @returns 
  */
-function UserDropBox() {
-    const username = localStorage.getItem("username")
+function UserDropBox({ userBalance }) {
+    const username = localStorage.getItem("username");
+    const userId = localStorage.getItem("userId");
     const role = localStorage.getItem("role");
     const [showLogout, setShowLogout] = useState(false);
-
 
     return (
         <div className="user-drop-box-menu dropdown">
@@ -26,7 +25,7 @@ function UserDropBox() {
                 <a className="dropdown-item" href="/preferences">Store preferences</a>
                 {role == 2 ? (<a href="/sendgame">Request Add Game</a>) : (<></>)}
                 <a className="dropdown-item" href="/transaction">Transaction</a>
-                <a className="dropdown-item" href="/wallet">View my wallet: </a>
+                <a className="dropdown-item" href="/wallet">View my wallet: <span style={{ color: "#4cb4ff" }}>{userBalance.toLocaleString("en-US", { style: "currency", currency: "USD" })}</span></a>
                 <a className="dropdown-item" onClick={() => setShowLogout(true)}>Sign out of account…</a>
             </div>
             {showLogout && <Logout onClose={() => setShowLogout(false)} />}

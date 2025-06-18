@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import "./Header.css"; // Or use CSS Modules: import styles from './Header.module.css';
 // Added by Phan NT Son
 import NotificationBox from "../Notifications/NotificationBox"
@@ -10,7 +10,7 @@ import axios from 'axios';
  * @author Adjust and re-design by Phan NT Son
  * @returns header of website
  */
-const Header = () => {
+const Header = forwardRef((props, ref) => {
   const token = localStorage.getItem("token");
 
   const section = [2, 2, 4, 3, 1]
@@ -34,7 +34,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" ref={ref}>
       <div className="header row">
         <div className={`col-lg-${section[0]}`}></div>
         <div className={`header-logo col-lg-${section[1]} align-content-center`}>
@@ -66,7 +66,9 @@ const Header = () => {
                       <NotificationBox />
                     </div>
                     <div className="w-50 px-2 d-flex flex-row-reverse">
-                      <UserDropBox />
+                      <UserDropBox
+                        userBalance={balance}
+                      />
                     </div>
 
                   </div>
@@ -87,6 +89,6 @@ const Header = () => {
 
     </div>
   );
-};
+});
 
 export default Header;

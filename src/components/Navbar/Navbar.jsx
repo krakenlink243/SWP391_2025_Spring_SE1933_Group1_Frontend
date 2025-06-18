@@ -1,19 +1,19 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { FiSearch } from "react-icons/fi"; // Import icon search từ react-icons
 import "./Navbar.css"; // Hoặc Navbar.module.css nếu dùng CSS Modules
 import SearchBar from "../SearchBar/SearchBar"; // Import component SearchBar
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * Origin @author: TS Huy
  * Refactor and re-design @author: Phan NT Son
  * @returns 
  */
-const Navbar = () => {
+const Navbar = forwardRef((props, ref) => {
   const navigate = useNavigate();
 
   return (
-    <div className="container-fluid store-header" role="navigation">
+    <div className="container-fluid store-header" role="navigation" ref={ref}>
       <div className="row">
         <div className="spacer col-lg-2"></div>
         <div className="col-lg-8">
@@ -44,6 +44,6 @@ const Navbar = () => {
 
     </div>
   );
-};
+});
 
 export default Navbar;
