@@ -9,7 +9,7 @@ function WalletPage() {
     const addMoney = (amount) => {
 
         try {
-            axios.post('http://localhost:8080/user/wallet/add', {
+            axios.post(`http://localhost:8080/users/${userId}/balance/add?amount=${amount}`, {
                 userId: userId,
                 amount: amount
             }).then(console.log("Success"));
