@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import jwt_decode from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
 import './Transaction.css';
 
 /**
@@ -13,7 +13,7 @@ const token = localStorage.getItem("token");
 let userName = "";
 if (token) {
   try {
-    const decoded = jwt_decode(token);
+    const decoded = jwtDecode(token);
     userName = decoded.sub || decoded.username || "";
   } catch (e) {
     userName = "";
