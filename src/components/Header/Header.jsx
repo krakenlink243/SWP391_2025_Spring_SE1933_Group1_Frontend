@@ -1,19 +1,40 @@
+import React, { useState, useEffect, forwardRef } from 'react';
 import "./Header.css"; // Or use CSS Modules: import styles from './Header.module.css';
 // Added by Phan NT Son
 import NotificationBox from "../Notifications/NotificationBox"
 import UserDropBox from "./UserDropBox";
+import axios from 'axios';
 
 /**
  * @author Origin belongs to TS Huy
  * @author Adjust and re-design by Phan NT Son
  * @returns header of website
  */
-const Header = () => {
+const Header = forwardRef((props, ref) => {
   const token = localStorage.getItem("token");
 
   const section = [2, 2, 4, 3, 1]
+  /**
+   * @author Bathanh
+   *add methods allows to get user balance from backend
+   *create a separate api for wallet balance
+   * @returns user balance
+   */
+  const [balance, setBalance] = useState(0);
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    const getUserBalance = () => {
+      axios.get(`http://localhost:8080/users/${userId}/balance`)
+        .then((response) => setBalance(response.data))
+        .catch(error => alert(error));
+    };
+    if (userId) {
+      getUserBalance();
+    }
+  }, []);
+
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" ref={ref}>
       <div className="header row">
         <div className={`col-lg-${section[0]}`}></div>
         <div className={`header-logo col-lg-${section[1]} align-content-center`}>
@@ -44,13 +65,15 @@ const Header = () => {
                     <div className="w-25 px-2">
                       <NotificationBox />
                     </div>
-                    <div className="w-50 px-2">
-                      <UserDropBox />
+                    <div className="w-50 px-2 d-flex flex-row-reverse">
+                      <UserDropBox
+                        userBalance={balance}
+                      />
                     </div>
 
                   </div>
                   <div className="user-wallet w-50">
-                    <p>Money hehe</p>
+                    {balance.toLocaleString("en-US", { style: "currency", currency: "USD" })}
                   </div>
                 </div>
                 <div className="header-user-action-icon w-25">
@@ -66,6 +89,6 @@ const Header = () => {
 
     </div>
   );
-};
+});
 
 export default Header;

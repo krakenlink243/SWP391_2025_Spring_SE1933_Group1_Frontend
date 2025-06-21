@@ -11,7 +11,7 @@ import './Cart.css';
  */
 const userId = localStorage.getItem("userId");
 
-const Cart = () => {
+const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
 
   if (!localStorage.getItem("userId")) {
     window.location.href = "/";
@@ -91,7 +91,6 @@ const Cart = () => {
     setLoading(true);
     try {
       const total = cartItems.reduce((sum, item) => sum + (item.price || 0), 0);
-      if (balance < total) throw new Error('Insufficient balance');
       const response = await axios.post(`http://localhost:8080/users/${userId}/cart/checkout`);
       if (!response.data.success) throw new Error('Checkout failed');
       setResultMessage('Purchase successful!');
@@ -103,7 +102,7 @@ const Cart = () => {
       const updatedUser = userData.data?.find(u => u.userId === Number(userId));
       setBalance(updatedUser?.walletBalance || 0);
     } catch (error) {
-      setResultMessage(error.message === 'Insufficient balance' ? 'Insufficient balance!' : 'Purchase failed!');
+      setResultMessage(error.message === 'Purchase failed!');
       console.error('Error during checkout:', error.message, error.response?.status, error.response?.data);
     } finally {
       setShowResultModal(true);
@@ -129,7 +128,7 @@ const Cart = () => {
     .toFixed(2);
 
   return (
-    <div className="cart-steam-bg">
+    <div className="cart-steam-bg" style={{ minHeight: `${minHeight}px` }}>
       <div className="cart-main-steam">
         <h2 className="cart-title-steam">
           {userName ? `${userName}'s Shopping Cart` : "Shopping Cart"}

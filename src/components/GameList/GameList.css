@@ -1,8 +1,13 @@
 /* src/components/GameList/GameList.css */
-.game-list-container {
-  flex-grow: 1;
-  /* max-width: 700px; */
+.games-container{
+  gap: 5px;
 }
+
+.games-container .game-link{
+  height: 47px;
+  width: 100%;
+}
+
 .loading-message,
 .error-message,
 .no-games-message {
@@ -12,6 +17,6 @@
   color: #c7d5e0; /* Màu chữ sáng */
 }
 
-.error-message {
+.message-error {
   color: #ff6b6b; /* Màu đỏ cho lỗi */
 }

@@ -1,56 +1,60 @@
 /* src/components/GameCard/GameCard.css */
 .game-card {
-  background-color: #13233e; /* Màu nền tối hơn cho card */
-  border-radius: 4px;
-  overflow: hidden; /* Đảm bảo ảnh không tràn ra ngoài */
+  background: #00000040;
+  overflow: hidden;
   color: #c7d5e0;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   cursor: pointer;
-  display: flex; /* Để ảnh và thông tin nằm ngang */
-  margin-bottom: 15px; /* Khoảng cách giữa các card */
+  display: flex;
+  height: 100%;
 }
 
 .game-card:hover {
-  transform: scale(1.02);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .game-card-thumbnail {
-  width: 210px; /* Chiều rộng cố định cho thumbnail (tương tự Steam) */
-  height: 90px; /* Chiều cao cố định cho thumbnail */
-  object-fit: cover; /* Đảm bảo ảnh vừa vặn */
-}
-
-.game-card-info {
-  padding: 10px 15px;
-  flex-grow: 1; /* Cho phép phần info chiếm hết không gian còn lại */
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between; /* Căn chỉnh title và price */
+  width: 120px;
+  object-fit: cover;
 }
 
 .game-card-title {
   font-size: 16px;
-  color: #ffffff;
-  margin: 0 0 5px 0;
+  color: #C7D5E0;
   font-weight: 500;
+}
+
+.game-card-date{
+  color: #4C6C8C;
 }
 
 .game-card-prices {
   display: flex;
-  align-items: center;
-  gap: 8px; /* Khoảng cách giữa giá gốc và giá KM */
-  font-size: 14px;
+  flex-direction: column;
+  width: 25%;
+  text-align: end;
+  font-size: 12px;
+  color: #c6d4df;
 }
 
 .game-card-original-price {
-  text-decoration: line-through;
   color: #7a8b99;
   font-size: 12px;
 }
 
 .game-card-discount-price,
 .game-card-current-price {
-  color: #66c0f4; /* Màu giá đặc trưng của Steam */
+  color: #66c0f4;
+  /* Màu giá đặc trưng của Steam */
   font-weight: bold;
+}
+
+.game-card-info .have-discount .original-price {
+  text-decoration: line-through;
+  color: #888888;
+  font-size: small;
+}
+
+.game-card-info .have-discount .current-price{
+  color: #BEEE11;
+  font-size: medium;
 }

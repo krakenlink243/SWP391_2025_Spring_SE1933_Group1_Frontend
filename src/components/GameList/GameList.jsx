@@ -4,13 +4,13 @@ import "./GameList.css";
 import { Link } from "react-router-dom";
 
 const GameList = ({ games, loading, error }) => {
-  if (loading) return <div className="message-info">Loading games...</div>;
-  if (error) return <div className="message-error">Error: {error}.</div>;
+  if (loading) return <div className="loading-message">Loading games...</div>;
+  if (error) return <div className=".error-message">Error: {error}.</div>;
   if (!games || games.length === 0)
-    return <div className="message-info">No games found.</div>;
+    return <div className="no-games-message">No games found.</div>;
 
   return (
-    <div className="games-grid">
+    <div className="games-container d-flex flex-column">
       {games.map((game) => (
         <Link to={`/game/${game.id}`} key={game.id} className="game-link">
           <GameCard game={game} />

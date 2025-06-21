@@ -65,4 +65,9 @@
   color: #ffffff;
 }
 
+.user-wallet{
+  text-align: end;
+  padding-right: calc(.5rem + 14px);
+}
+
 /* Thêm CSS cho các phần tử khác như language selector nếu có */

@@ -1,7 +1,13 @@
-.app-container{
+.app-container {
+  min-height: 100vh;
+  height: 100%;
   background: #1b2838;
+  display: flex;
+  flex-direction: column;
 }
-
+.app-container.transparent {
+  background: transparent;
+}
 .logo {
   /*Remove height by Phan NT Son*/
   /*Remove padding by Phan NT Son*/

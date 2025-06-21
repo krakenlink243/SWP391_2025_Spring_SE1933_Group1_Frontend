@@ -10,26 +10,38 @@ const GameCard = ({ game }) => {
         alt={game.title}
         className="game-card-thumbnail"
       />
-      <div className="game-card-info">
-        <h3 className="game-card-title">{game.title}</h3>
-        {game.discountPrice && game.originalPrice ? (
-          <div className="game-card-prices">
-            <span className="game-card-original-price">
+      <div className="game-card-info d-flex flex-row w-100 mx-2">
+        <h3 className="game-card-title w-50">{game.title}</h3>
+        <div className="game-card-date w-25">
+          {new Date(game.releaseDate).toLocaleDateString()}
+        </div>
+
+        {game.price < game.originalPrice ? ( 
+        // {1 < game.originalPrice ? (
+          <div className="game-card-prices have-discount">
+            <div className="original-price">
               ${game.originalPrice.toFixed(2)}
-            </span>
-            <span className="game-card-discount-price">
-              ${game.discountPrice.toFixed(2)}
-            </span>
-          </div>
-        ) : game.price > 0 ? (
-          <div className="game-card-prices">
-            <span className="game-card-current-price">
+
+            </div>
+            <div className="current-price">
               ${game.price.toFixed(2)}
-            </span>
+            </div>
           </div>
         ) : (
           <div className="game-card-prices">
-            <span className="game-card-current-price">Free to Play</span>
+            {game.originalPrice == 0 ? (
+              <div>
+                <div className="current-price">
+                  Free
+                </div>
+              </div>
+            ) : (
+              <div>
+                <div className="current-price">
+                  ${game.originalPrice.toFixed(2)}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

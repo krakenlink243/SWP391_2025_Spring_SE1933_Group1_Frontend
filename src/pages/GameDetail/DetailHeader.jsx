@@ -19,15 +19,8 @@ function DetailHeader({ game }) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const [mediaUrlArr, setMediaUrlArr] = useState([]);
     const userId = localStorage.getItem("userId");
-
-    // const mediaUrlArr = [
-    //     "https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4",
-    //     "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/ss_c2baf8aada6140beee79d701d14043899e91af47.600x338.jpg?t=1748630546",
-    //     "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/ss_fa6b881ef7c30522012ab2b2b83001e79baee093.116x65.jpg?t=1748630546",
-    //     "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/ss_510a02cf3045e841e180f2b77fb87545e0c8b59d.600x338.jpg?t=1748630546",
-    //     "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/ss_c494372930ca791bdc6221eca134f2270fb2cb9f.600x338.jpg?t=1748630546",
-    //     "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/ss_ef61b771ee6b269b1f0cb484233e07a0bfb5f81b.600x338.jpg?t=1748630546",
-    // ]
+    const [gameInCart, setGameInCart] = useState(false);
+    const [gameInLib, setGameInLib] = useState(false);
 
     useEffect(() => {
         const extractMediaUrl = () => {
@@ -37,8 +30,14 @@ function DetailHeader({ game }) {
                 }
             })
         }
-        if (game) {
-            extractMediaUrl();
+        if (game?.gameId && Array.isArray(game.media)) {
+            setMediaUrlArr(() => {
+                const urls = game.media.map(m => m.url);
+                return Array.from(new Set(urls)); // Loại trùng
+            });
+
+            checkGameInCart();
+            checkGameInLib();
         }
     }, [game])
 
@@ -53,8 +52,10 @@ function DetailHeader({ game }) {
             // @author Phan NT Son
             // Tạo thông báo khi người dùng thêm game vào giỏ hàng
             if (response.data.success) {
-                createNotification(`Game ${game.name} has been added to your cart.`);
+                createNotification(userId, "Cart", `Game ${game.name} has been added to your cart.`);
                 alert("Game added to cart successfully!");
+                checkGameInCart();
+                checkGameInLib();
             } else {
                 alert("Failed to add game to cart.");
             }
@@ -65,6 +66,30 @@ function DetailHeader({ game }) {
             alert("Failed to add game to cart.");
         }
     };
+
+    const checkGameInCart = () => {
+        axios.get(`http://localhost:8080/users/${userId}/cart/contains/${game.gameId}`)
+            .then(response => {
+                if (response.data === true) setGameInCart(true);
+            })
+            .catch(error => {
+                console.error("Error checking cart:", error);
+                setGameInCart(false);
+            });
+    };
+
+    const checkGameInLib = () => {
+        axios.get(`http://localhost:8080/users/${userId}/library/contains/${game.gameId}`)
+            .then(response => {
+                if (response.data === true) setGameInLib(true);
+            })
+            .catch(error => {
+                console.error("Error checking cart:", error);
+                setGameInCart(false);
+            });
+    };
+
+
 
     return (
         <div className="game-detail-header-container my-3">
@@ -169,11 +194,24 @@ function DetailHeader({ game }) {
                             ) : (
                                 <div className="price">Free to Play</div>
                             )}
-                            <div className="btn-add-to-cart" onClick={addCartHandler}>
-                                <a className="btn-green-ui">
-                                    <span>Add to Cart</span>
-                                </a>
-                            </div>
+                            {!gameInCart && !gameInLib ? (
+                                <div className="btn-add-to-cart" onClick={addCartHandler}>
+                                    <a className="btn-green-ui">
+                                        <span>Add to Cart</span>
+                                    </a>
+                                </div>
+                            ) : (
+                                <div className={`btn-add-to-cart`} onClick={() => window.location.href = `${gameInCart ? "/cart" : "/library"}`}>
+                                    <a className="btn-blue-ui">
+                                        {gameInLib && (
+                                            <span>Already in Library</span>
+                                        )}
+                                        {gameInCart && !gameInLib && (
+                                            <span>Already in Cart</span>
+                                        )}
+                                    </a>
+                                </div>
+                            )}
                         </div>
                     </div>
 

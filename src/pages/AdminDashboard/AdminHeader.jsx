@@ -1,33 +1,43 @@
 import React from "react";
-import { useState } from "react";
+import { useState, forwardRef, useEffect } from "react";
 import "../../components/Header/Header.css"; // Or use CSS Modules: import styles from './Header.module.css';
 import "./AdminHeader.css";
 import NotificationBox from "../../components/Notifications/NotificationBox";
 import UserDropBox from "../../components/Header/UserDropBox";
 import { useTranslation } from "react-i18next";
 import "../../i18n";
+import axios from "axios";
 
 /**
  * @author Phan NT Son
  * @param {*} param0 
  * @returns 
  */
-const AdminHeader = ({ currentTab, changeToTab }) => {
+const AdminHeader = forwardRef(({ currentTab, changeToTab }, ref) => {
     const [showLogout, setShowLogout] = useState(false);
     const { t, i18n } = useTranslation();
     const section = [2, 2, 4, 3, 1]
-    const token = localStorage.getItem("token");
 
     const changeLanguage = (lng) => {
         i18n.changeLanguage(lng);
     };
 
-    const handleBackToStore = () => {
-        window.location.href = '/';
-    };
+    const [balance, setBalance] = useState(0);
+    useEffect(() => {
+        const userId = localStorage.getItem("userId");
+        const getUserBalance = () => {
+            axios.get(`http://localhost:8080/users/${userId}/balance`)
+                .then((response) => setBalance(response.data))
+                .catch(error => alert(error));
+        };
+        if (userId) {
+            getUserBalance();
+        }
+    }, []);
+
 
     return (
-        <div className="container-fluid">
+        <div className="container-fluid" ref={ref}>
             <div className="header row">
                 <div className={`col-lg-${section[0]}`}></div>
                 <div className={`header-logo col-lg-${section[1]} align-content-center`}>
@@ -45,7 +55,9 @@ const AdminHeader = ({ currentTab, changeToTab }) => {
                                 <NotificationBox />
                             </div>
                             <div className="w-50 px-2">
-                                <UserDropBox />
+                                <UserDropBox
+                                    userBalance={balance}
+                                />
                             </div>
 
                         </div>
@@ -64,6 +76,6 @@ const AdminHeader = ({ currentTab, changeToTab }) => {
 
         </div>
     );
-};
+});
 
 export default AdminHeader;
