@@ -16,7 +16,7 @@ import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import GameDetail from "./pages/GameDetail/GameDetail";
 import HomePage from "./pages/HomePage/HomePage";
-import SendGametoAdmin from "./pages/SendGametoAdmin";
+import SendGameToAdmin from "./pages/SendGameToAdmin";
 import Login from "./pages/Login";
 import RegisterEmail from "./pages/RegisterEmail";
 import RegisterDetails from "./pages/RegisterDetails";
@@ -36,6 +36,7 @@ import Footer from "./components/Footer/Footer";
 import ProfilePage from "./components/Profile/ProfilePage";
 import EditProfilePage from "./components/Profile/EditProfilePage";
 import Library from "./components/LibraryFolder/Library";
+import SendUserFeedback from "./pages/SendUserFeedback";
 import WalletPage from "./pages/WalletPage/WalletPage";
 
 function AppRoutes() {
@@ -207,6 +208,7 @@ function AppRoutes() {
               path="/approvepublisher/:publisherId"
               element={<ApprovePublisherDetails />}
             ></Route>
+            <Route path="/sendfeedback" element={<SendFeedback/>}></Route>
             {/* hoangvq */}
             <Route path="/profile" element={<ProfilePage />} />
             {/* Added by TSHUY */}
@@ -240,6 +242,9 @@ function ApprovePublisher() {
 function ApprovePublisherDetails() {
   return <PublisherApproveDetails />;
 }
+function SendFeedback(){
+  return <SendUserFeedback/>
+}
 function LoginF() {
   return <Login />;
 }
@@ -252,7 +257,7 @@ function RegisterDetailsF() {
 function RequestAddGame() {
   return (
     <div>
-      <SendGametoAdmin />
+      <SendGameToAdmin />
     </div>
   );
 }
