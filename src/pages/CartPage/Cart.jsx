@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import './Cart.css';
+import jwt_decode from "jwt-decode";
 
 /**
  * @author BaThanh
@@ -9,17 +10,25 @@ import './Cart.css';
  * @param {*} param0 
  * @returns 
  */
-const userId = localStorage.getItem("userId");
+const token = localStorage.getItem("token");
+let userName = '';
+if (token) {
+  try {
+    const decoded = jwt_decode(token);
+    userName = decoded.sub || decoded.username || '';
+  } catch (e) {
+    userName = '';
+  }
+}
 
 const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
 
-  if (!localStorage.getItem("userId")) {
+  if (!localStorage.getItem("token")) {
     window.location.href = "/";
   }
 
   const [cartItems, setCartItems] = useState([]);
   const [balance, setBalance] = useState(0);
-  const [userName, setUserName] = useState('');
   const [loading, setLoading] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showResultModal, setShowResultModal] = useState(false);
@@ -30,40 +39,34 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
     gameName: "",
   });
 
-  // Fetch userName và balance từ API http://localhost:8080/users
-  useEffect(() => {
-    axios.get('http://localhost:8080/users')
-      .then(response => {
-        console.log('Users API response:', response.data);
-        const data = response.data;
-        let user = null;
-        if (data.data && Array.isArray(data.data)) {
-          user = data.data.find(u => u.userId === Number(userId));
-        }
-        setUserName(user?.userName || '');
-        setBalance(user?.walletBalance || 0);
-      })
-      .catch(error => {
-        console.error('Error fetching users:', error.message, error.response?.status, error.response?.data);
-        setUserName('');
-        setBalance(0);
+  // Fetch balance từ API /user/wallet
+  const fetchBalance = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/user/wallet', {
+        headers: { Authorization: `Bearer ${token}` }
       });
-  }, []);
+      setBalance(response.data);
+    } catch {
+      setBalance(0);
+    }
+  };
 
   // Fetch cart từ backend
   const fetchCart = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:8080/users/${userId}/cart`);
-      console.log('Cart API response:', response.data);
+      const response = await axios.get(`http://localhost:8080/user/cart`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       const data = response.data;
-      if (data.success && Array.isArray(data.data)) {
+      if (Array.isArray(data.data)) {
         setCartItems(data.data);
+      } else if (Array.isArray(data.cartGames)) {
+        setCartItems(data.cartGames);
       } else {
         setCartItems([]);
       }
     } catch (error) {
-      console.error('Error fetching cart:', error.message, error.response?.status, error.response?.data);
       setCartItems([]);
     } finally {
       setLoading(false);
@@ -72,15 +75,19 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
 
   useEffect(() => {
     fetchCart();
+    fetchBalance();
+    // --!!
   }, []);
 
   const handleRemove = async (gameId) => {
     setLoading(true);
     try {
-      await await axios.delete(`http://localhost:8080/users/${userId}/cart/remove?gameId=${gameId}`);
+      await axios.delete(`http://localhost:8080/user/cart/remove?gameId=${gameId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       await fetchCart();
     } catch (error) {
-      console.error('Error removing game:', error.message, error.response?.status, error.response?.data);
+      // handle error
     } finally {
       setLoading(false);
     }
@@ -90,20 +97,15 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
     setShowConfirmModal(false);
     setLoading(true);
     try {
-      const total = cartItems.reduce((sum, item) => sum + (item.price || 0), 0);
-      const response = await axios.post(`http://localhost:8080/users/${userId}/cart/checkout`);
-      if (!response.data.success) throw new Error('Checkout failed');
+      await axios.post(`http://localhost:8080/user/cart/checkout`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       setResultMessage('Purchase successful!');
       setCartItems([]);
       await fetchCart();
-      const userRes = await axios.get('http://localhost:8080/users');
-      console.log('Updated users response:', userRes.data);
-      const userData = userRes.data;
-      const updatedUser = userData.data?.find(u => u.userId === Number(userId));
-      setBalance(updatedUser?.walletBalance || 0);
+      await fetchBalance();
     } catch (error) {
-      setResultMessage(error.message === 'Purchase failed!');
-      console.error('Error during checkout:', error.message, error.response?.status, error.response?.data);
+      setResultMessage('Purchase failed!');
     } finally {
       setShowResultModal(true);
       setLoading(false);
@@ -141,15 +143,15 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
           ) : (
             <div className="cart-items-container">
               {cartItems.map((item) => (
-                <div className="cart-item-steam" key={item.id}>
-                  <div className="cart-item-title">{item.title || 'Unnamed Game'}</div>
+                <div className="cart-item-steam" key={item.id || item.gameId}>
+                  <div className="cart-item-title">{item.title || item.name || 'Unnamed Game'}</div>
                   <div className="cart-item-price-container">
                     <span className="cart-item-price">${item.discountPrice > 0 ? item.discountPrice.toFixed(2) : item.price?.toFixed(2) || '0.00'}</span>
                   </div>
                   <div className="cart-item-remove">
                     <button
                       className="cart-item-remove-btn"
-                      onClick={() => openRemoveConfirm(item.id, item.title || 'Unnamed Game')}
+                      onClick={() => openRemoveConfirm(item.id || item.gameId, item.title || item.name || 'Unnamed Game')}
                       title="Remove"
                       disabled={loading}
                     >
