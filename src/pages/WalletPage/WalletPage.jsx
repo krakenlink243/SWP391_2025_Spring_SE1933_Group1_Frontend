@@ -1,39 +1,58 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './WalletPage.css';
+import { Navigate } from "react-router-dom";
+import "../../services/notification";
+import { createNotification } from '../../services/notification';
+
+/**
+ * @author Phan NT Son
+ * @returns 
+ */
 function WalletPage() {
-    const userId = localStorage.getItem("userId");
-    // const userMoney = localStorage.getItem("money");
     const amountArr = [75, 150, 375, 750, 1500];
+    const token = localStorage.getItem("token");
+    if (!token) {
+        return <Navigate to={"/"} replace />;
+    }
     const username = localStorage.getItem("username");
+    const userId = localStorage.getItem("userId");
+
+    /**
+     * 
+     * @param {*} amount of money to add to wallet
+     */
     const addMoney = (amount) => {
-        axios.post(`http://localhost:8080/users/${userId}/balance/add?amount=${amount}`)
-        .then((response) => {
-            setBalance(response.data.newBalance);
-            alert("Funds added successfully!");
-        })
-        .catch((error) => {
-            alert("Add failed");
-            console.log("Error: " + error);
-        });
+        axios.post(`http://localhost:8080/user/wallet/add?amount=${amount}`)
+            .then((response) => {
+                setBalance(response.data.newBalance);
+                createNotification(userId, "Cart", "Add funds successfully to wallet");
+            })
+            .catch((error) => {
+                alert("Add failed");
+                console.log("Error: " + error);
+            });
     };
+
     const [balance, setBalance] = useState(0);
     useEffect(() => {
-        const userId = localStorage.getItem("userId");
+
         const getUserBalance = () => {
-            axios.get(`http://localhost:8080/users/${userId}/balance`)
+            axios.get(`http://localhost:8080/user/wallet`)
                 .then((response) => setBalance(response.data))
                 .catch(error => alert(error));
         };
         if (userId) {
             getUserBalance();
         }
+
     }, [balance]);
+
+
 
     return (
 
         <div className="add-money-container col-lg-8 text-white">
-            {/* <h1>ADD FUNDS TO YOUR STEAMCL WALLET</h1> */}
             <h2>Add funds to {username} wallet</h2>
 
             <div className="main-content d-flex flex-row">

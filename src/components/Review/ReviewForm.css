@@ -2,7 +2,7 @@
     padding: 20px;
     color: white;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #61646500, #E2F4FF);
+    background: linear-gradient(135deg, rgba(97, 100, 101, 0.3) 0%, rgba(226, 244, 255, 0.3) 100%);
     margin: 20px auto;
 }
 
@@ -78,7 +78,7 @@
 
 /* Khi được chọn */
 .recommend-buttons .selected {
-    text-decoration: none ;
+    text-decoration: none;
     color: #fff !important;
     background: rgba(103, 193, 245, 0.6);
 }
