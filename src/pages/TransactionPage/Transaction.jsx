@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import jwt_decode from "jwt-decode";
 import './Transaction.css';
 
 /**
@@ -8,53 +9,44 @@ import './Transaction.css';
  * @param {*} param0 
  * @returns 
  */
-const userid = localStorage.getItem("userId");
+const token = localStorage.getItem("token");
+let userName = "";
+if (token) {
+  try {
+    const decoded = jwt_decode(token);
+    userName = decoded.sub || decoded.username || "";
+  } catch (e) {
+    userName = "";
+  }
+}
 
 const Transaction = () => {
-  if (!localStorage.getItem("userId")) {
+  if (!token) {
     window.location.href = "/";
   }
 
   const [transactions, setTransactions] = useState([]);
-  const [userName, setUserName] = useState('');
   const [loading, setLoading] = useState(false);
-
-  // Fetch userName from API
-  useEffect(() => {
-    axios.get('http://localhost:8080/users')
-      .then(response => {
-        console.log('Users API response:', response.data);
-        const data = response.data;
-        let user = null;
-        if (data.data && Array.isArray(data.data)) {
-          user = data.data.find(u => u.userId === Number(userid));
-        }
-        setUserName(user?.userName || '');
-      })
-      .catch(error => {
-        console.error('Error fetching users:', error.message, error.response?.status, error.response?.data);
-        setUserName('');
-      });
-  }, []);
 
   // Fetch and sort transaction history from backend
   const fetchTransactions = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:8080/users/${userid}/transactions`);
-      console.log('Transactions API response:', response.data);
-      let transactions = response.data.data || [];
-
+      const response = await axios.get(`http://localhost:8080/user/transaction`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      let transactions = response.data || [];
+      if (Array.isArray(response.data.data)) {
+        transactions = response.data.data;
+      }
       // Sort transactions by transactionId in descending order (highest ID first)
       transactions = transactions.sort((a, b) => {
         const idA = a.transactionId || 0;
         const idB = b.transactionId || 0;
-        return idB - idA; // Descending order: higher transactionId first
+        return idB - idA;
       });
-
       setTransactions(transactions);
     } catch (error) {
-      console.error('Error fetching transactions:', error.message, error.response?.status, error.response?.data);
       setTransactions([]);
     } finally {
       setLoading(false);

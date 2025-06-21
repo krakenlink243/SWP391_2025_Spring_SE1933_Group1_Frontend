@@ -22,8 +22,8 @@ import RegisterEmail from "./pages/RegisterEmail";
 import RegisterDetails from "./pages/RegisterDetails";
 import GameApprrovePage from "./pages/AdminDashboard/GameApprovePage";
 import GameApproveDetails from "./pages/GameApproveDetails";
-import Transaction from "./components/TransactionFolder/Transaction";
-import Cart from "./components/CartFolder/Cart";
+import Transaction from "./pages/TransactionPage/Transaction";
+import Cart from "./pages/CartPage/Cart";
 import SplashScreen from "./components/SplashScreen/SplashScreen"; // Import SplashScreen component
 import NotificationList from "./pages/NotificationPage/NotificationList";
 import GamesPage from "./components/GamesPage/GamesPage";
@@ -35,8 +35,8 @@ import AdminHeader from "./pages/AdminDashboard/AdminHeader";
 import Footer from "./components/Footer/Footer";
 import ProfilePage from "./components/Profile/ProfilePage";
 import EditProfilePage from "./components/Profile/EditProfilePage";
-import Library from "./components/LibraryFolder/Library";
 import SendUserFeedback from "./pages/SendUserFeedback";
+import Library from "./pages/LibraryPage/Library";
 import WalletPage from "./pages/WalletPage/WalletPage";
 
 function AppRoutes() {

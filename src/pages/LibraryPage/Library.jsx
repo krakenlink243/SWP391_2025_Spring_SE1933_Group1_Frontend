@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 import "./Library.css";
 
 const sortOptions = [
@@ -9,25 +10,39 @@ const sortOptions = [
   { value: "priceHighLow", label: "Price (High to Low)" }
 ];
 
+const token = localStorage.getItem("token");
+let userName = "";
+if (token) {
+  try {
+    const decoded = jwt_decode(token);
+    userName = decoded.sub || decoded.username || "";
+  } catch (e) {
+    userName = "";
+  }
+}
+
 const Library = () => {
-  const userId = localStorage.getItem("userId");
+  if (!token) {
+    window.location.href = "/";
+    return null;
+  }
+
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState("az");
 
   useEffect(() => {
-    if (!userId) {
-      window.location.href = "/";
-      return;
-    }
+    setLoading(true);
     axios
-      .get(`http://localhost:8080/users/${userId}/library`)
+      .get(`http://localhost:8080/user/library`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
       .then((res) => {
         setGames(res.data.library || []);
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  }, [userId]);
+  }, []);
 
   // Sorting logic
   const getSortedGames = () => {
@@ -64,7 +79,7 @@ const Library = () => {
         </ul>
       </div>
       <div className="library-content">
-        <h2 className="library-title">My Library</h2>
+        <h2 className="library-title">{userName ? `${userName}'s Library` : "My Library"}</h2>
         <div className="library-filter-row">
           <label htmlFor="library-sort" className="library-filter-label">
             Sort by:
@@ -90,13 +105,13 @@ const Library = () => {
           <div className="library-grid">
             {getSortedGames().map((game) => (
               <div className="library-game-card" key={game.gameId}>
-                <div className="librar  game-image-container">
+                <div className="library-game-image-container">
                   <img
                     className="library-game-image"
                     src={
                       game.media && game.media.length > 0
                         ? game.media[0].url
-                        : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcIgF8vDI5cJMjYmRzfS3rOUWA-M9kw0iWRQ&s" //"https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4"
+                        : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcIgF8vDI5cJMjYmRzfS3rOUWA-M9kw0iWRQ&s"
                     }
                     alt={game.name}
                   />
