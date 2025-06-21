@@ -79,12 +79,12 @@ function ApplyToPublisher() {
     imgData.append("files", image.file); // Use actual file object
   
     try {
-      const res = await axios.post("http://localhost:8080/publisher/uploadImage", imgData, {
+      const res = await axios.post("http://localhost:8080/request/image/upload", imgData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       console.log("Uploaded image URL:", res.data);
       setFormData(prev => ({...prev,imageUrl: res.data.imageUrls}));
-      const response = await axios.post('http://localhost:8080/users/sendpublisher',{...formData,imageUrl:res.data.imageUrls[0]});
+      const response = await axios.post('http://localhost:8080/request/publisher/send',{...formData,imageUrl:res.data.imageUrls[0]});
       console.log(response.data)
       alert(response.data.message)
       window.location.href = '/';
