@@ -1,5 +1,6 @@
 import React from "react";
 import "./ProfilePage.css";
+import { Link, useNavigate } from "react-router-dom";
 import GameShowcase from "./GameShowCase";
 import Particles from "react-tsparticles";
 // import { loadFull } from "tsparticles";
@@ -8,6 +9,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 const ProfilePage = () => {
   const [userId, setUserId] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const id = localStorage.getItem("userId");
@@ -31,7 +33,7 @@ const ProfilePage = () => {
       try {
         // API call không đổi, nó sẽ lấy về dữ liệu bạn đã cung cấp
         const response = await axios.get(
-          `http://localhost:8080/users/profile/${userId}`
+          `http://localhost:8080/user/profile/${userId}`
         ); // Giả sử đây là API lấy user detail
         setProfileData(response.data);
       } catch (err) {
@@ -72,17 +74,27 @@ const ProfilePage = () => {
                     profileData?.username ||
                     "Anonymous User"}
                 </h1>
-                <p className="real-name">
+                <p className="country">
                   {profileData?.country || "Location not set"}
                 </p>
-                <div className="profile-badges"></div>
               </div>
             </div>
 
             <div className="profile-actions">
-              <button className="action-btn primary">Edit Profile</button>
+              <button
+                className="action-btn primary"
+                onClick={() => navigate(`/profile/${userId}/edit/info`)}
+              >
+                Edit Profile
+              </button>
             </div>
           </div>
+        </div>
+        <div className="gender">
+          <p className="gender-label">Gender : {profileData?.gender}</p>
+        </div>
+        <div className="dob">
+          <p>DOB : {profileData?.dob}</p>
         </div>
         <div className="profile-main">
           {/* === CỘT TRÁI === */}

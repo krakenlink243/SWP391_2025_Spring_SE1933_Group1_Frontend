@@ -1,8 +1,8 @@
-.tag-list-detail {
+.game-tags {
   margin-bottom: 20px;
 }
 
-.tag-list-detail .tag {
+.game-tags .tag {
   display: inline-block;
   background-color: #202d39;
   padding: 4px 7px;
@@ -13,7 +13,7 @@
   cursor: pointer;
 }
 
-.tag-list-detail .tag:hover {
+.game-tags .tag:hover {
   background-color: #2c4155;
   color: #ffffff;
 }

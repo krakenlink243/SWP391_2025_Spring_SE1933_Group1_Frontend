@@ -25,7 +25,7 @@ const GameDetail = () => {
         setLoading(true);
         setError(null);
         const response = await axios.get(
-          `http://localhost:8080/game/${gameId}`
+          `http://localhost:8080/game/detail/${gameId}`
         ); // Giả sử API endpoint của bạn là đây
         const data = response.data;
         setGame(data);

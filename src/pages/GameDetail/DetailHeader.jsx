@@ -171,7 +171,6 @@ function DetailHeader({ game }) {
                     <div className="content-row mb-0">
                         <div className="game-tags">
                             {game.tags.map((tag) => (
-                                // Mỗi tag giờ là một Link trỏ đến trang game với query parameter
                                 <Link
                                     to={`/games?tags=${tag.tagId}`} // URL sẽ có dạng /games?tags=17
                                     key={tag.tagId}

@@ -34,13 +34,11 @@ import PublisherApproveDetails from "./pages/PublisherApproveDetails";
 import AdminHeader from "./pages/AdminDashboard/AdminHeader";
 import Footer from "./components/Footer/Footer";
 import ProfilePage from "./components/Profile/ProfilePage";
+import EditProfilePage from "./components/Profile/EditProfilePage";
 import Library from "./components/LibraryFolder/Library";
 import WalletPage from "./pages/WalletPage/WalletPage";
 
-
-
 function AppRoutes() {
-
   // Added by Phan NT Son 18-06-2025
   const headerHeight = useRef(null);
   const navHeight = useRef(null);
@@ -60,9 +58,8 @@ function AppRoutes() {
       console.log(footH);
       setCalculatedHeight(windowHeight - headerH - navH - footH);
     }
-  }
+  };
   // --!!
-
 
   // Renamed by Phan NT Son
   console.log("App component is rendering..."); // DEBUG: Kiểm tra xem component có render không
@@ -148,7 +145,7 @@ function AppRoutes() {
     if (expDate === null || expDate < currentTime) {
       localStorage.clear();
     }
-  }
+  };
 
   return (
     <div className={`app-container${isProfilePage ? " transparent" : ""}`}>
@@ -214,6 +211,12 @@ function AppRoutes() {
             <Route path="/profile" element={<ProfilePage />} />
             {/* Added by TSHUY */}
             {/* TSHUY */}
+            <Route
+              path="/profile/:userId/edit/info"
+              element={<EditProfilePage />}
+            />
+            {/* Added by TSHUY */}
+            {/* Notmebro */}
             <Route path="/wallet" element={<Wallet />} />
           </Routes>
         </div>
@@ -306,7 +309,10 @@ function Wallet() {
 
 function NotifPage({ minimumHeight }) {
   return (
-    <div className="container-fluid" style={{ minHeight: `${minimumHeight}px` }}>
+    <div
+      className="container-fluid"
+      style={{ minHeight: `${minimumHeight}px` }}
+    >
       <div className="row">
         <div className="spacer col-lg-2"></div>
         <NotificationList />
@@ -314,7 +320,6 @@ function NotifPage({ minimumHeight }) {
     </div>
   );
 }
-
 
 export default function App() {
   return (
