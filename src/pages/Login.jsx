@@ -14,7 +14,7 @@ const Login = () => {
 
   // Added by Phan NT Son
   if (localStorage.getItem("token")) {
-    window.location.href = "/";
+    return <Navigate to={"/"} replace />
   }
 
   const handleLogin = async (e) => {
@@ -33,11 +33,13 @@ const Login = () => {
       let decodedToken = null;
       const token = localStorage.getItem("token");
       decodedToken = jwtDecode(token);
+      const expireDate = decodedToken.exp;
       const userId = decodedToken.userId;
       const role = decodedToken.role;
       localStorage.setItem("username", username);
       localStorage.setItem("userId", userId);
       localStorage.setItem("role", role);
+      localStorage.setItem("expDate", expireDate);
       return <Navigate to="/" replace />;
 
       // navigate('/');

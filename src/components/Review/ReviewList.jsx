@@ -68,9 +68,16 @@ function ReviewList({ reloadSignal, onReload, game, userId }) {
                   <div className="time-posted-section w-100">
                     Posted on {review.timeCreated}
                   </div>
-                  <div className="content-section w-100">
+                  <div className={`content-section w-100 mb-2`}>
                     {review.reviewContent}
+                    <div className={`gradient w-100`}></div>
                   </div>
+                  <div className="posted w-100">
+                    <div className="view-more">
+                      Read more
+                    </div>
+                  </div>
+                  <div className="hr w-100"></div>
                   <div className="actions-section w-100">
                     <span className="review-was-helpful">Was this review helpful?</span>
                     <div className={`${review.userId == userId ? "d-flex flex-row justify-content-between align-items-center" : ""}`}>

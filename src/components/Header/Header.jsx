@@ -24,7 +24,7 @@ const Header = forwardRef((props, ref) => {
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     const getUserBalance = () => {
-      axios.get(`http://localhost:8080/users/${userId}/balance`)
+      axios.get(`http://localhost:8080/user/wallet`)
         .then((response) => setBalance(response.data))
         .catch(error => alert(error));
     };

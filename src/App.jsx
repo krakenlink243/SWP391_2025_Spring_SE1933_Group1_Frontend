@@ -109,6 +109,7 @@ function AppRoutes() {
       });
     }
 
+    checkToken();
   }, [loadingState.isFinished]);
 
   const shouldRenderSplash =
@@ -137,6 +138,18 @@ function AppRoutes() {
     setAdminTab(tab);
   };
   //--!!
+
+  /**
+   * @author Phan NT Son
+   * @since 18-06-2025
+   */
+  const expDate = localStorage.getItem("expDate");
+  const checkToken = () => {
+    const currentTime = Math.floor(Date.now() / 1000);
+    if (expDate === null || expDate < currentTime) {
+      localStorage.clear();
+    }
+  }
 
   return (
     <div className={`app-container${isProfilePage ? " transparent" : ""}`}>
