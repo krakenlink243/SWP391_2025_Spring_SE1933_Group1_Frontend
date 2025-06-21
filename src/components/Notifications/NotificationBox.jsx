@@ -14,14 +14,16 @@ import NotificationBoxItem from "./NotificationBoxItem";
 function NotificationBox() {
   const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    getUnreadNotificationList();
+    if (token) {
+      getUnreadNotificationList();
+    }
   }, [isOpen]);
 
   const getUnreadNotificationList = async () => {
-    axios.get(`http://localhost:8080/notification/unread/notification-list?userId=${userId}`)
+    axios.get(`http://localhost:8080/notification/list/unread`)
       .then((response) => {
         setData(response.data);
         console.log(response.data);

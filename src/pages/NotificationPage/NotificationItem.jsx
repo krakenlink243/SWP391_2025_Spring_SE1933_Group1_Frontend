@@ -13,7 +13,7 @@ function NotificationItem({ notification, onReload }) {
 
   const handleClick = () => {
     if (!read) {
-      axios.patch(`http://localhost:8080/notification/mark-as-read/${notification.notifId}`)
+      axios.patch(`http://localhost:8080/notification/markread/${notification.notifId}`)
         .then(() => {
           setRead(true);
         })
