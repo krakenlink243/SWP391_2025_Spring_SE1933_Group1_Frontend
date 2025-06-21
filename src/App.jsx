@@ -37,9 +37,8 @@ import ProfilePage from "./components/Profile/ProfilePage";
 import Library from "./components/LibraryFolder/Library";
 import SendUserFeedback from "./pages/SendUserFeedback";
 import WalletPage from "./pages/WalletPage/WalletPage";
-
-
-
+import FeedbackApprovePage from "./pages/FeedbackApprovePage";
+import FeedbackApproveDetails from "./pages/FeedbackApproveDetails";
 function AppRoutes() {
 
   // Added by Phan NT Son 18-06-2025
@@ -212,6 +211,8 @@ function AppRoutes() {
               element={<ApprovePublisherDetails />}
             ></Route>
             <Route path="/sendfeedback" element={<SendFeedback/>}></Route>
+            <Route path="/approvefeedback" element={<ApproveFeedback/>}></Route>
+            <Route path="/approvefeedback/:feedbackId" element={<ApproveFeedbackDetails/>}></Route>
             {/* hoangvq */}
             <Route path="/profile" element={<ProfilePage />} />
             {/* Added by TSHUY */}
@@ -242,6 +243,13 @@ function ApprovePublisherDetails() {
 function SendFeedback(){
   return <SendUserFeedback/>
 }
+function ApproveFeedback(){
+  return <FeedbackApprovePage />;
+}
+function ApproveFeedbackDetails(){
+  return <FeedbackApproveDetails />;
+}
+
 function LoginF() {
   return <Login />;
 }
