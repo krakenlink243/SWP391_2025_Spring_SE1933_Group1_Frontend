@@ -82,10 +82,8 @@ function AppRoutes() {
     calMinimumHeight(); // Tính toán chiều cao tối thiểu khi component mount
     // Effect này chỉ chạy một lần duy nhất khi component được mount
     // vì mảng phụ thuộc là rỗng [].
-    console.log("Splash effect is running for the first time...");
-
+    console.log("hasVisited check running..." ,localStorage.getItem("hasVisited"));
     const hasVisited = localStorage.getItem("hasVisited");
-
     if (!hasVisited) {
       console.log("Returning user. Skipping splash screen.");
       setSplashStage("finished");
