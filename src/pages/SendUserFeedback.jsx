@@ -63,15 +63,19 @@ function SendUserFeedback() {
             return;
         }
         try{
-            const uploadImage = new FormData();
-            files.forEach(file => uploadImage.append('files',file));
-            const responseMedia = await axios.post('http://localhost:8080/request/image/upload',uploadImage,{
-              header:{"Content-Type": "multipart/form-data"},
+            let responseMedia;
+            if(files.length > 0){
+                const uploadImage = new FormData();
+                files.forEach(file => uploadImage.append('files',file));
+                responseMedia = await axios.post('http://localhost:8080/request/image/upload',uploadImage,{
+                header:{"Content-Type": "multipart/form-data"},
+                });
+                console.log(files.length)
+                console.log(responseMedia.data.imageUrls);
+                setFormData(prev => ({...prev,mediaUrls: responseMedia.data.imageUrls}));
+            }
+            const response = await axios.post('http://localhost:8080/request/feedback/send',{...formData,mediaUrls: responseMedia?.data?.imageUrls || []
             });
-            console.log(files.length)
-            console.log(responseMedia.data.imageUrls);
-            setFormData(prev => ({...prev,mediaUrls: responseMedia.data.imageUrls}));
-            const response = await axios.post('http://localhost:8080/request/feedback/send',{...formData,mediaUrls: responseMedia.data.imageUrls});
             console.log(response);
             alert(response.data.message);
             window.location.href="/";
@@ -88,10 +92,10 @@ function SendUserFeedback() {
             <p style={{fontStyle: "italic"}}>If you have any thing to tell us to improve our products or any question, please tell us below. </p>
         </div>
         <div className='feedback-content'>
-            Subject
+            Subject(*)
             <input type="text" name="subject" id="" value={formData.subject} onChange={handleChange} onBlur={normalizeValue} />
             <br />
-            Your Feedback
+            Your Feedback(*)
             <textarea name="message" id="" onChange={handleChange} onBlur={normalizeValue} value={formData.message}></textarea>
         </div>
         <div className='inner-image'>

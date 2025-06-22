@@ -101,15 +101,15 @@ function ApplyToPublisher() {
     <div className='apply-publisher-title'><h1>Publisher Application</h1></div>
     <div className='apply-publisher-container'>
       <div className='publisher-info'>
-        Legal Name
+        Legal Name(*)
         <input type="text" name="legalName" id="" onChange={handleChange} value={formData.legalName} onBlur={normalizeValue}/>
-        Publisher Name
+        Publisher Name(*)
         <input type="text" name="publisherName" id="" onChange={handleChange} value={formData.publisherName} onBlur={normalizeValue} />
-        Address
+        Address(*)
         <input type="text" name='address' onChange={handleChange} value={formData.address} onBlur={normalizeValue} />
-        Social ID
+        Social ID(*)
         <input type="number" name="socialNumber" id="" onChange={handleChange} value={formData.socialNumber}/>
-        Country      
+        Country(*)   
         <CountryDropdown value={formData.country} onChange={(e) => setFormData(prev => ({...prev,country:e}))}></CountryDropdown>
         <div className="publisher-button">
           <Button label="Cancel" color="grey-button" onClick={handleCancel} />

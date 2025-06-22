@@ -4,6 +4,7 @@ import { useState,useRef,useEffect } from'react'
 import axios from 'axios';
 import RequestItem from '../components/RequestItem/RequestItem'
 import './AdminDashboard/GameApprovePage.css'
+import { createNotification } from '../services/notification';
 function FeedbackApprovePage() {
     const [totalPages, setTotalPages] = useState(1);
     const [loadedRequest,setLoadedRequest] = useState([]);
@@ -15,7 +16,7 @@ function FeedbackApprovePage() {
         const response = await axios.get(`http://localhost:8080/request/feedback/${page}`);
         setLoadedRequest(response.data.content);
         setTotalPages(response.data.totalPages);
-        console.log(response.data);
+        console.log(response.data.content);
       } catch (err) {
         console.error("Error fetching data:", err);
       }
@@ -29,21 +30,26 @@ function FeedbackApprovePage() {
         fetchData();
       }, [page]);
     
-      const handleApprove = async (requestId) => {
-        try {
-          const response = await axios.patch(`http://localhost:8080/request/feedback/approve/${requestId}`);
-          console.log("Approved request:", response.data);
-          alert("Publisher Approved")
-          fetchData();
-        } catch (err) {
-          console.error("Error approving request:", err);
+      const handleApprove = async(requestId,userName,subject,senderId) =>{
+        const answer = window.prompt("Send answer to" + " " + userName)
+        if(answer.trim() !== ""){
+          try {
+            createNotification(senderId,"Feedback Answer","Answer for your feedback "+subject+": " + answer)
+            const response = await axios.patch(`http://localhost:8080/request/feedback/approve/${requestId}`);
+            console.log("Approved request:", response.data)
+            fetchData();
+          } catch (err) {
+            console.error("Error approving request:", err);
+          }
+        }else{
+          alert('Please enter answer')
         }
-      };
+      }
       const handleDecline = async (requestId) =>{
         try {
           const response = await axios.patch(`http://localhost:8080/request/feedback/reject/${requestId}`);
           console.log("Approved request:", response.data);
-          alert("Publisher Declined")
+          alert("Feedback Dissmissed")
           fetchData();
         } catch (err) {
           console.error("Error approving request:", err);
@@ -66,30 +72,15 @@ function FeedbackApprovePage() {
       setSelectedRequests(newCheckedState ? loadedRequest.map(req => req.requestId) : []);
       console.log("Updated Tick Array:", selectedRequests);
       };
-      const handleApproveSelected = async () => {
-        console.log("ook")
-        try {
-            for (let i = 0; i < selectedRequests.length; i++) {
-                const requestId = selectedRequests[i];
-                const response = await axios.patch(`http://localhost:8080/request/feedback/approve/${requestId}`);
-                console.log(`Processed approve for request ID:`, requestId);
-            }
-            alert(`All selected publishers have been approved`);
-            setSelectedRequests([]); // Clear selection after processing
-            fetchData(); // Refresh data
-        } catch (err) {
-            console.error(`Error during approve:`, err);
-        }
-      };
       const handleDeclineSelected = async () => {
         console.log("ook")
         try {
             for (let i = 0; i < selectedRequests.length; i++) {
                 const requestId = selectedRequests[i];
-                const response = await axios.patch(`http://localhost:8080/request/publisher/feedback/${requestId}`);
+                const response = await axios.patch(`http://localhost:8080/request/feedback/reject/${requestId}`);
                 console.log(`Processed approve for request ID:`, requestId);
             }
-            alert(`All selected publishers have been declined`);
+            alert(`All selected feedback have been dissmiss`);
             setSelectedRequests([]);
             fetchData();
         } catch (err) {
@@ -104,28 +95,30 @@ function FeedbackApprovePage() {
   return (
     <div className='game-approve-container'>
       <div>
-        <div style={{cursor:"pointer"}}>Game Request</div>
-        <div style={{cursor:"pointer"}}>Apply Request</div>
-        <div style={{cursor:"pointer"}}>Report</div>
-        <div style={{cursor:"pointer",textDecoration:"underline",textUnderlineOffset:"5px"}}>Feedback</div>
+        <div style={{cursor:"pointer"}} onClick={()=>{window.location.href=`/aprrovegame`}}>Game Request</div>
+        <div style={{cursor:"pointer"}} onClick={()=>{window.location.href=`/approvepublisher`}}>Publisher Request</div>
+        <div style={{cursor:"pointer"}} onClick={()=>{window.location.href=``}}>Review Report</div>
+        <div style={{cursor:"pointer",textDecoration:"underline",textUnderlineOffset:"5px"}} onClick={()=>{window.location.href=`/approvefeedback`}}>Feedback</div>
       </div>
-      <div className='request-item' style={{backgroundColor:"#1B2438"}}>
-      <img
-        src={isChecked ? "/icons/Approve.png" : "/icons/Checkbox.png"}
-        alt="Checkbox"
-        onClick={handleTick}
-      />
-      <div>
-        <img src="/icons/Decline.png" alt="" onClick={handleDeclineSelected}  />
-        <img src="/icons/Approve.png" alt="" onClick={handleApproveSelected}/>
-      </div>
-      </div>
+      {loadedRequest.length > 0 ? (
+        <div className='request-item' style={{ backgroundColor: "#1B2838" }}>
+          <img
+            src={isChecked ? "/icons/Approve.png" : "/icons/Checkbox.png"}
+            alt="Checkbox"
+            onClick={handleTick}
+          />
+          <div>
+            <img src="/icons/Decline.png" alt="" onClick={handleDeclineSelected} />
+            {/* <img src="/icons/Approve.png" alt="" onClick={handleApproveSelected} /> */}
+          </div>
+        </div>
+      ) : (<p>There is no feedback at this time</p>)}
       {loadedRequest.map((request) => (
       <RequestItem 
         key={request.requestId} 
         requestId={request.requestId}
         requestName={request.subject} 
-        onApprove={() => handleApprove(request.requestId)} 
+        onApprove={() => handleApprove(request.requestId,request.userName,request.subject,request.userId)} 
         onDecline={() => handleDecline(request.requestId)} 
         onCheckChange={handleCheckChange} 
         isTicked={selectedRequests.includes(request.requestId)}
