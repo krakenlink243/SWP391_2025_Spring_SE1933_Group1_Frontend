@@ -34,8 +34,10 @@ function getCroppedImg(image, crop, fileName) {
 }
 
 const AvatarSettings = ({ currentUser }) => {
-  // === STATE QUẢN LÝ ===
-  // Chỉ cần một state để hiển thị avatar hiện tại
+  console.log(
+    "AvatarSettings component rendered with currentUser:",
+    currentUser
+  );
   const [currentAvatar, setCurrentAvatar] = useState(
     currentUser?.avatarUrl || ""
   );
@@ -55,12 +57,14 @@ const AvatarSettings = ({ currentUser }) => {
 
   // Fetch thư viện avatar của user khi component được tải
   useEffect(() => {
-    // Tạm thời giả lập dữ liệu, sau này bạn sẽ gọi API GET
-    const placeholderLibrary = [
-      currentUser?.avatarUrl,
-    ].filter(Boolean);
-    setAvatarLibrary([...new Set(placeholderLibrary)]);
-    setCurrentAvatar(currentUser?.avatarUrl || ""); // Cập nhật avatar khi prop thay đổi
+    async function fetchAvatars() {
+      const response = await axios.get(
+        `http://localhost:8080/user/profile/${currentUser}`
+      );
+      const placeholderLibrary = [...response.data.avatarUrl].filter(Boolean);
+      setCurrentAvatar(response.data.avatarUrl || ""); 
+    }
+    fetchAvatars();
   }, [currentUser]);
 
   // Xử lý khi người dùng chọn file
