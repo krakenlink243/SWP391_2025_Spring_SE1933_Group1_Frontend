@@ -47,7 +47,7 @@ function NotificationList() {
   } else {
     return (
       <div className="notiflist-container col-lg-8 d-flex align-items-start flex-column py-5 text-white">
-        <h1>Notifications ({countUnRead} unread)</h1>
+        <div className="notiflist-title">Notifications ({countUnRead} unread)</div>
         <div className="notiflist-list w-100 d-flex flex-column gap-2">
           {data.map((notification) => (
             <NotificationItem

@@ -38,6 +38,8 @@ import EditProfilePage from "./components/Profile/EditProfilePage";
 import Library from "./components/LibraryFolder/Library";
 import SendUserFeedback from "./pages/SendUserFeedback";
 import WalletPage from "./pages/WalletPage/WalletPage";
+import ChatPage from "./pages/Community/ChatPage"; // Added by Phan NT Son
+import ChatHeader from "./pages/Community/ChatHeader"; // Added by Phan NT Son
 
 function AppRoutes() {
   // Added by Phan NT Son 18-06-2025
@@ -53,10 +55,6 @@ function AppRoutes() {
       const navH = navHeight.current.offsetHeight;
       const footH = footerHeight.current.offsetHeight;
 
-      console.log(windowHeight);
-      console.log(headerH);
-      console.log(navH);
-      console.log(footH);
       setCalculatedHeight(windowHeight - headerH - navH - footH);
     }
   };
@@ -129,6 +127,7 @@ function AppRoutes() {
    */
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
+  const isChatRoute = location.pathname.startsWith("/chat");
   const isProfilePage = location.pathname.startsWith("/profile");
   const [adminTab, setAdminTab] = useState("Request Management");
   const handleAdminTabChange = (tab) => {
@@ -156,20 +155,19 @@ function AppRoutes() {
           <SplashScreen isExiting={loadingState.isExiting} />
         )}
         <div
-          className={`main-app-content ${
-            !loadingState.isFinished ? "hidden" : ""
-          }`}
+          className={`main-app-content ${!loadingState.isFinished ? "hidden" : ""
+            }`}
         >
+          {/* START FROM HERE */}
           {/* Adjusted by Phan NT Son */}
-          {isAdminRoute ? (
-            <AdminHeader
-              currentTab={adminTab}
-              changeToTab={handleAdminTabChange}
-            />
-          ) : (
-            <Header hideLogo={hideHeaderLogo} />
-          )}
-          {!isAdminRoute && <Navbar />}
+          {isAdminRoute && <AdminHeader
+            currentTab={adminTab}
+            changeToTab={handleAdminTabChange}
+          />}
+          {isChatRoute && <ChatHeader />}
+          {!isAdminRoute && !isChatRoute && <Header hideLogo={hideHeaderLogo} />}
+
+          {!isAdminRoute && !isChatRoute && <Navbar />}
           {/* --!! */}
 
           {/* Remove BrowserRouter by Phan NT Son */}
@@ -189,10 +187,10 @@ function AppRoutes() {
             <Route path="/register" element={<RegisterF />} />
             <Route path="/register-details" element={<RegisterDetailsF />} />
             <Route path="/transaction" element={<Transaction />} />
-            <Route path="/cart" element={<Cart />} />
+            <Route path="/cart" element={<Cart minHeight={calculatedHeight} />} />
             <Route path="/library" element={<Library />} />
             {/*adjusted by Bathanh - 15/6/2025 2:03PM */}
-            <Route path="/notifications" element={<NotificationList />} />
+            <Route path="/notifications" element={<NotifPage minimumHeight={calculatedHeight} />} />
             <Route
               path="/admin"
               element={<AdminDashboard tab={adminTab} />}
@@ -208,7 +206,7 @@ function AppRoutes() {
               path="/approvepublisher/:publisherId"
               element={<ApprovePublisherDetails />}
             ></Route>
-            <Route path="/sendfeedback" element={<SendFeedback/>}></Route>
+            <Route path="/sendfeedback" element={<SendFeedback />}></Route>
             {/* hoangvq */}
             <Route path="/profile" element={<ProfilePage />} />
             {/* Added by TSHUY */}
@@ -220,9 +218,10 @@ function AppRoutes() {
             {/* Added by TSHUY */}
             {/* Notmebro */}
             <Route path="/wallet" element={<Wallet />} />
+            <Route path="/chat" element={<Chat />} />
           </Routes>
         </div>
-        <Footer /> {/* Added by TSHUY */}
+        {!isAdminRoute && !isChatRoute && <Footer />}
       </div>
     </div>
   );
@@ -242,8 +241,8 @@ function ApprovePublisher() {
 function ApprovePublisherDetails() {
   return <PublisherApproveDetails />;
 }
-function SendFeedback(){
-  return <SendUserFeedback/>
+function SendFeedback() {
+  return <SendUserFeedback />
 }
 function LoginF() {
   return <Login />;
@@ -322,6 +321,19 @@ function NotifPage({ minimumHeight }) {
         <div className="spacer col-lg-2"></div>
         <NotificationList />
       </div>
+    </div>
+  );
+}
+
+/**
+ * @author Phan NT Son
+ * @since 22-06-2025
+ * @returns 
+ */
+function Chat() {
+  return (
+    <div>
+      <ChatPage />
     </div>
   );
 }

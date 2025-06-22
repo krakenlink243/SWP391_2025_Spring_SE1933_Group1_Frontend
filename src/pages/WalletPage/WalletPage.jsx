@@ -17,6 +17,8 @@ function WalletPage() {
     }
     const username = localStorage.getItem("username");
     const userId = localStorage.getItem("userId");
+    const [balance, setBalance] = useState(0);
+
 
     /**
      * 
@@ -25,7 +27,7 @@ function WalletPage() {
     const addMoney = (amount) => {
         axios.post(`http://localhost:8080/user/wallet/add?amount=${amount}`)
             .then((response) => {
-                setBalance(response.data.newBalance);
+                getUserBalance();
                 createNotification(userId, "Cart", "Add funds successfully to wallet");
             })
             .catch((error) => {
@@ -34,14 +36,15 @@ function WalletPage() {
             });
     };
 
-    const [balance, setBalance] = useState(0);
+    const getUserBalance = () => {
+        axios.get(`http://localhost:8080/user/wallet`)
+            .then((response) => setBalance(response.data))
+            .catch(error => alert(error));
+    };
+
     useEffect(() => {
 
-        const getUserBalance = () => {
-            axios.get(`http://localhost:8080/user/wallet`)
-                .then((response) => setBalance(response.data))
-                .catch(error => alert(error));
-        };
+
         if (userId) {
             getUserBalance();
         }
