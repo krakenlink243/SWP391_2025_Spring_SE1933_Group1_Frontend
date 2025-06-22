@@ -1,76 +1,113 @@
-/* src/components/SplashScreen/SplashScreen.css */
-
-/* --- Màn hình khởi động --- */
-.splash-screen {
+.splash-container {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100vh; /* Chiếm toàn bộ màn hình */
-  background-color: #1b2838; /* Màu nền tối giống Steam */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100vw;
+  height: 100vh;
   z-index: 9999;
-  transition: opacity 1s ease-in-out; /* Hiệu ứng fade-out cho nền */
-}
-
-/* Khi thoát, làm mờ nền đi */
-.splash-screen.exiting {
-  opacity: 0;
-}
-
-/* --- Container cho Logo và Spinner --- */
-.logo-container {
-  position: relative;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: #000000;
+  transition: background-color 4s ease-in-out, opacity 1s ease-in-out;
 }
 
-/* --- Logo --- */
-.splash-logo {
-  width: 100px; /* Kích thước logo ban đầu */
-  height: auto;
-  z-index: 2; /* Nằm trên spinner */
-
-  /* --- Đây là phần quan trọng nhất cho hiệu ứng TRANSITION --- */
-  transition: all 1.5s ease-in-out; /* Thời gian và kiểu transition là 1.5 giây */
-  /* Các thuộc tính sẽ thay đổi: width, top, left */
+.splash-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Khi màn hình thoát, áp dụng các style mới cho logo để nó di chuyển */
-.splash-screen.exiting .splash-logo {
-  width: 40px; /* Kích thước mới (giống logo trong header) */
-  position: fixed; /* Chuyển position để có thể di chuyển khắp màn hình */
-  top: 10px; /* Vị trí trên cùng (giống header) */
-  left: 20px; /* Vị trí bên trái (giống header) */
+/* --- Trạng thái ban đầu (ĐÃ CẬP NHẬT) --- */
+.splash-container.stage-initial .continue-text {
+  opacity: 1;
+}
+.splash-container.stage-initial .psp-wave {
+  /* Áp dụng animation "thở" mới.
+    Nó sẽ chạy trong 5 giây, lặp lại vô tận.
+  */
+  animation: wave-breathing 5s ease-in-out infinite;
 }
 
-/* --- Hiệu ứng Loading Spinner --- */
-.spinner {
-  position: absolute;
-  width: 150px; /* Kích thước của vòng tròn loading */
-  height: 150px;
-  border-radius: 50%;
-  border: 5px solid rgba(255, 255, 255, 0.2); /* Vòng tròn mờ nền */
-  border-top-color: #66c0f4; /* Màu sáng cho phần xoay */
-  animation: spin 1.5s linear infinite; /* Animation xoay */
-  z-index: 1; /* Nằm dưới logo */
-  transition: opacity 0.5s ease; /* Hiệu ứng fade-out cho spinner */
+/* --- Trạng thái đang chạy animation (sau khi click) --- */
+.splash-container.stage-animating {
+  background-color: #1b2838;
+  cursor: default;
 }
-
-/* Khi thoát, ẩn spinner đi */
-.splash-screen.exiting .spinner {
+.splash-container.stage-animating .continue-text {
   opacity: 0;
 }
+.splash-container.stage-animating .psp-wave {
+  /*
+    Chuyển sang animation "bung ra" như cũ.
+    "animation-name" sẽ ghi đè animation "thở" ở trên.
+  */
+  animation: wave-animation 4s ease-out forwards;
+}
 
-/* --- Keyframes cho animation xoay --- */
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
+/* --- Trạng thái đang mờ dần --- */
+.splash-container.stage-fading {
+  background-color: #1b2838;
+  opacity: 0;
+  cursor: default;
+}
+
+/* --- Các thành phần và keyframes --- */
+.continue-text {
+  color: #ccc;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 3px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 1; /* Đảm bảo chữ luôn ở trên sóng */
+}
+
+/* Style cơ bản cho sóng */
+.psp-wave {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 200px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center,
+      rgba(137, 207, 240, 0.3) 0%,
+      rgba(137, 207, 240, 0) 70%);
+  opacity: 0; /* animation sẽ điều khiển opacity */
+}
+
+/* --- KEYFRAMES --- */
+
+/* @keyframes MỚI cho hiệu ứng sóng "thở"
+*/
+@keyframes wave-breathing {
+  0% {
+    transform: translate(-50%, -50%) scale(0.95);
+    opacity: 0.7;
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.95);
+    opacity: 0.7;
+  }
+}
+
+/* @keyframes cũ cho hiệu ứng sóng "bung ra" sau khi click */
+@keyframes wave-animation {
+  0% {
+    transform: translate(-50%, -50%) scale(1); /* Bắt đầu từ kích thước hiện tại */
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2); /* Bung to hơn nữa */
+    opacity: 0;
   }
 }

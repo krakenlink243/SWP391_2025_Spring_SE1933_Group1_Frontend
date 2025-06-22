@@ -8,33 +8,26 @@ import Particles from "react-tsparticles";
 import { useState, useEffect } from "react";
 import axios from "axios";
 const ProfilePage = () => {
-  const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const id = localStorage.getItem("userId");
-    setUserId(id);
-  }, []);
-  console.log("User ID from localStorage:", userId); // DEBUG: Kiểm tra userId
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const avatar =
-    "https://avatars.steamstatic.com/b5bd56c1aa4644a474a2e4972be27ef9e82e517e_full.jpg";
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
     const fetchUserData = async () => {
+      setLoading(true);
+      // Lấy userId từ localStorage ngay bên trong effect
+      const userId = localStorage.getItem("userId");
+
       if (!userId) {
-        setError("User ID not provided.");
+        setError("User ID not found in localStorage. Please login again.");
         setLoading(false);
         return;
       }
-      setLoading(true);
+
       try {
-        // API call không đổi, nó sẽ lấy về dữ liệu bạn đã cung cấp
         const response = await axios.get(
           `http://localhost:8080/user/profile/${userId}`
-        ); // Giả sử đây là API lấy user detail
+        );
         setProfileData(response.data);
       } catch (err) {
         setError("Could not fetch profile data. The user may not exist.");
@@ -43,13 +36,22 @@ const ProfilePage = () => {
         setLoading(false);
       }
     };
+
     fetchUserData();
-  }, [userId]);
+  }, []);
+
+
+  if (loading)
+    return <div className="profile-page-status">Loading Profile...</div>;
+  if (error) return <div className="profile-page-status error">{error}</div>;
+  if (!profileData)
+    return <div className="profile-page-status">Profile not found.</div>;
 
   // Các phần xử lý loading, error, not found giữ nguyên
   if (loading)
     return <div className="profile-page-status">Loading Profile...</div>;
   if (error) return <div className="profile-page-status error">{error}</div>;
+  console.log(profileData?.avatarUrl);
   return (
     <div className="profile-page">
       <div className="dynamic-background">
@@ -60,10 +62,14 @@ const ProfilePage = () => {
           <div className="profile-info-container">
             <div className="profile-left-info">
               <div className="profile-avatar-section">
-                <img src={avatar} alt="User Avatar" className="main-avatar" />
+                <img
+                  src={profileData?.avatarUrl}
+                  alt="User Avatar"
+                  className="main-avatar"
+                />
                 <div
                   className={`status-indicator ${
-                    profileData?.isOnline ? "online" : "offline"
+                    profileData.isOnline ? "online" : "offline"
                   }`}
                 ></div>
               </div>
@@ -83,7 +89,11 @@ const ProfilePage = () => {
             <div className="profile-actions">
               <button
                 className="action-btn primary"
-                onClick={() => navigate(`/profile/${userId}/edit/info`)}
+                onClick={() =>
+                  navigate(
+                    `/profile/${localStorage.getItem("userId")}/edit/info`
+                  )
+                }
               >
                 Edit Profile
               </button>

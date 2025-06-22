@@ -8,7 +8,7 @@ import {
   Link,
   useLocation,
 } from "react-router-dom"; // Import các component của router
-import { useState, useEffect, useRef } from "react"; // Import useState và useEffect từ React
+import { useState, useEffect, loadingState, useRef } from "react"; // Import useState và useEffect từ React
 import axios from "axios"; // Import axios để thực hiện các yêu cầu HTTP
 import "./App.css";
 
@@ -38,12 +38,14 @@ import EditProfilePage from "./components/Profile/EditProfilePage";
 import SendUserFeedback from "./pages/SendUserFeedback";
 import Library from "./pages/LibraryPage/Library";
 import WalletPage from "./pages/WalletPage/WalletPage";
+import AvatarSettings from "./components/Profile/AvatarSettings/AvatarSettings";
 
 function AppRoutes() {
   // Added by Phan NT Son 18-06-2025
   const headerHeight = useRef(null);
   const navHeight = useRef(null);
   const footerHeight = useRef(null);
+
   const [calculatedHeight, setCalculatedHeight] = useState(0);
 
   const calMinimumHeight = () => {
@@ -65,53 +67,84 @@ function AppRoutes() {
   // Renamed by Phan NT Son
   console.log("App component is rendering..."); // DEBUG: Kiểm tra xem component có render không
 
-  // --- LOGIC CHO SPLASH SCREEN ---
-  const [loadingState, setLoadingState] = useState({
-    isFirstVisit: false,
-    isExiting: false,
-    isFinished: false,
-  });
+  // --- LOGIC CHO SPLASH SCREEN  ---
+
+  // Sử dụng một state duy nhất để quản lý các giai đoạn của splash screen
+  // 'pending': Trạng thái chờ, chưa biết là người dùng cũ hay mới
+  // 'active': Là người dùng mới, đang hiển thị splash screen
+  // 'exiting': Đang trong quá trình mờ dần để thoát
+  // 'finished': Đã kết thúc, hiển thị ứng dụng chính
+  const [splashStage, setSplashStage] = useState("pending");
+  const audioRef = useRef(null); // Giữ tham chiếu đến đối tượng Audio
 
   useEffect(() => {
-    calMinimumHeight();
+    checkToken(); // Kiểm tra token khi component mount
+    calMinimumHeight(); // Tính toán chiều cao tối thiểu khi component mount
+    // Effect này chỉ chạy một lần duy nhất khi component được mount
+    // vì mảng phụ thuộc là rỗng [].
+    console.log("Splash effect is running for the first time...");
 
-    console.log("useEffect is running..."); // DEBUG: Kiểm tra xem effect có chạy không
     const hasVisited = localStorage.getItem("hasVisited");
 
     if (!hasVisited) {
-      console.log("First visit detected. Starting splash screen timer.");
-      setLoadingState((prevState) => ({ ...prevState, isFirstVisit: true }));
+      console.log("Returning user. Skipping splash screen.");
+      setSplashStage("finished");
+    } else {
+      // Nếu là người dùng mới, kích hoạt splash screen
+      console.log("First visit detected. Activating splash screen.");
+      setSplashStage("active");
 
-      const transitionTimer = setTimeout(() => {
-        console.log("5s timer finished. Starting transition.");
-        setLoadingState((prevState) => ({ ...prevState, isExiting: true }));
-      }, 2000); // 5 giây
+      // --- Xử lý âm thanh ---
+      audioRef.current = new Audio("/sounds/boot_sound.mp3");
+      audioRef.current.load();
 
+      const playAudioOnInteraction = () => {
+        if (audioRef.current) {
+          audioRef.current
+            .play()
+            .catch((err) => console.error("Audio play failed:", err));
+        }
+        // Gỡ bỏ listener sau lần tương tác đầu tiên để tránh phát lại
+        window.removeEventListener("click", playAudioOnInteraction);
+        window.removeEventListener("keydown", playAudioOnInteraction);
+      };
+
+      // Thêm trình lắng nghe sự kiện
+      window.addEventListener("click", playAudioOnInteraction);
+      window.addEventListener("keydown", playAudioOnInteraction);
+
+      // --- Xử lý Timers ---
+      // Timer 1: Sau 6 giây, bắt đầu quá trình thoát (fade out)
+      const exitTimer = setTimeout(() => {
+        console.log("Main splash duration finished. Starting transition.");
+        setSplashStage("exiting");
+      }, 6000); // 6 giây
+
+      // Timer 2: Sau 7 giây (6s + 1s fade out), kết thúc hoàn toàn
       const finishTimer = setTimeout(() => {
         console.log("Transition finished. Hiding splash screen.");
-        setLoadingState((prevState) => ({ ...prevState, isFinished: true }));
+        setSplashStage("finished");
         localStorage.setItem("hasVisited", "true");
-      }, 3000);
+      }, 7000); // 7 giây
 
+      // --- Hàm dọn dẹp (Cleanup Function) ---
+      // Hàm này sẽ được gọi khi component bị unmount (ví dụ: chuyển trang)
+      // để tránh rò rỉ bộ nhớ.
       return () => {
-        clearTimeout(transitionTimer);
+        console.log("Cleaning up splash screen effects.");
+        clearTimeout(exitTimer);
         clearTimeout(finishTimer);
+        window.removeEventListener("click", playAudioOnInteraction);
+        window.removeEventListener("keydown", playAudioOnInteraction);
       };
-    } else {
-      console.log("Returning user. Skipping splash screen.");
-      setLoadingState({
-        isFirstVisit: false,
-        isExiting: false,
-        isFinished: true,
-      });
     }
+  }, []); // <-- MẢNG RỖNG RẤT QUAN TRỌNG!
 
-    checkToken();
-  }, [loadingState.isFinished]);
-
+  // Các biến được suy ra từ state, giúp code ở phần JSX dễ đọc hơn
   const shouldRenderSplash =
-    loadingState.isFirstVisit && !loadingState.isFinished;
-  const hideHeaderLogo = loadingState.isFirstVisit && !loadingState.isFinished;
+    splashStage === "active" || splashStage === "exiting";
+  const isSplashExiting = splashStage === "exiting";
+  const hideHeaderLogo = shouldRenderSplash;
   // --- KẾT THÚC LOGIC SPLASH SCREEN ---
 
   // Added by Phan NT Son
@@ -149,15 +182,13 @@ function AppRoutes() {
   };
 
   return (
-    <div className={`app-container${isProfilePage ? " transparent" : ""}`}>
+    <div className="app-wrapper">
       {" "}
-      <div className="app-container">
-        {shouldRenderSplash && (
-          <SplashScreen isExiting={loadingState.isExiting} />
-        )}
+      <div className={`app-container${isProfilePage ? "" : ""}`}>
+        {shouldRenderSplash && <SplashScreen isExiting={isSplashExiting} />}
         <div
           className={`main-app-content ${
-            !loadingState.isFinished ? "hidden" : ""
+            splashStage !== "finished" ? "hidden" : ""
           }`}
         >
           {/* Adjusted by Phan NT Son */}
@@ -208,7 +239,7 @@ function AppRoutes() {
               path="/approvepublisher/:publisherId"
               element={<ApprovePublisherDetails />}
             ></Route>
-            <Route path="/sendfeedback" element={<SendFeedback/>}></Route>
+            <Route path="/sendfeedback" element={<SendFeedback />}></Route>
             {/* hoangvq */}
             <Route path="/profile" element={<ProfilePage />} />
             {/* Added by TSHUY */}
@@ -216,6 +247,10 @@ function AppRoutes() {
             <Route
               path="/profile/:userId/edit/info"
               element={<EditProfilePage />}
+            />
+            <Route
+              path="/profile/:userId/edit/avatar"
+              element={<AvatarSettings />}
             />
             {/* Added by TSHUY */}
             {/* Notmebro */}
@@ -242,8 +277,8 @@ function ApprovePublisher() {
 function ApprovePublisherDetails() {
   return <PublisherApproveDetails />;
 }
-function SendFeedback(){
-  return <SendUserFeedback/>
+function SendFeedback() {
+  return <SendUserFeedback />;
 }
 function LoginF() {
   return <Login />;

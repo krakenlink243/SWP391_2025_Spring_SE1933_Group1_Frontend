@@ -45,7 +45,7 @@ function DetailHeader({ game }) {
         try {
             const response = await axios.post(
                 //adjust add by Bathanh
-                `http://localhost:8080/users/${userId}/cart/add?gameId=${game.gameId}`
+                `http://localhost:8080/user/${userId}/cart/add?gameId=${game.gameId}`
             );
             console.log("Add to cart response:", response.data);
 

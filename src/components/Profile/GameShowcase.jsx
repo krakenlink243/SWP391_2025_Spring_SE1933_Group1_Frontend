@@ -15,7 +15,7 @@ const GameShowcase = ({ userId, gameCount }) => {
       try {
         // API endpoint của bạn, không cần tham số phân trang theo yêu cầu
         const response = await axios.get(
-          `http://localhost:8080/users/${userId}/library`
+          `http://localhost:8080/user/library`
         );
 
         // SỬA ĐỔI 1: Lấy danh sách game từ `response.data.library`
