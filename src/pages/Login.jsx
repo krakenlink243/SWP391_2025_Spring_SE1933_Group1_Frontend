@@ -33,13 +33,19 @@ const Login = () => {
       let decodedToken = null;
       const token = localStorage.getItem("token");
       decodedToken = jwtDecode(token);
+
       const expireDate = decodedToken.exp;
       const userId = decodedToken.userId;
       const role = decodedToken.role;
+      const avatarUrl = decodedToken.avatarUrl;
+
       localStorage.setItem("username", username);
       localStorage.setItem("userId", userId);
       localStorage.setItem("role", role);
       localStorage.setItem("expDate", expireDate);
+      localStorage.setItem("avatarUrl", avatarUrl);
+
+
       return <Navigate to="/" replace />;
 
       // navigate('/');
