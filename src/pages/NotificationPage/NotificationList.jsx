@@ -15,8 +15,10 @@ function NotificationList() {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
+    if (token) {
+      getNotificationList();
 
-    getNotificationList();
+    }
   }, [reloadSignal]);
 
   const reloadList = () => {

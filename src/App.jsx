@@ -50,10 +50,15 @@ function AppRoutes() {
 
   const calMinimumHeight = () => {
     if (headerHeight.current && navHeight.current) {
-      const windowHeight = window.screen.availHeight;
+      const windowHeight = window.innerHeight;
       const headerH = headerHeight.current.offsetHeight;
       const navH = navHeight.current.offsetHeight;
       const footH = footerHeight.current.offsetHeight;
+
+      console.log("windowHeight:", windowHeight);
+      console.log("headerH:", headerH);
+      console.log("navH:", navH);
+      console.log("footH:", footH);
 
       setCalculatedHeight(windowHeight - headerH - navH - footH);
     }
@@ -163,11 +168,11 @@ function AppRoutes() {
           {isAdminRoute && <AdminHeader
             currentTab={adminTab}
             changeToTab={handleAdminTabChange}
+            ref={headerHeight}
           />}
-          {isChatRoute && <ChatHeader />}
-          {!isAdminRoute && !isChatRoute && <Header hideLogo={hideHeaderLogo} />}
+          {!isAdminRoute && !isChatRoute && <Header hideLogo={hideHeaderLogo} ref={headerHeight} />}
 
-          {!isAdminRoute && !isChatRoute && <Navbar />}
+          {!isAdminRoute && !isChatRoute && <Navbar ref={navHeight} />}
           {/* --!! */}
 
           {/* Remove BrowserRouter by Phan NT Son */}
@@ -221,7 +226,7 @@ function AppRoutes() {
             <Route path="/chat" element={<Chat />} />
           </Routes>
         </div>
-        {!isAdminRoute && !isChatRoute && <Footer />}
+        {!isAdminRoute && !isChatRoute && <Footer ref={footerHeight} />}
       </div>
     </div>
   );
