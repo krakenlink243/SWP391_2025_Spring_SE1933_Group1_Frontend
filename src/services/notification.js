@@ -9,7 +9,7 @@ export const createNotification = async (receiverId ,type, message) => {
         const response = await axios.post(
             "http://localhost:8080/notification/create",
             {
-                userId: receiverId, 
+                receiverId: receiverId, 
                 notificationType: type,
                 notificationContent: message,
             }

@@ -70,4 +70,8 @@
   padding-right: calc(.5rem + 14px);
 }
 
+.header-user-action-icon img{
+  width: 100% ;
+}
+
 /* Thêm CSS cho các phần tử khác như language selector nếu có */

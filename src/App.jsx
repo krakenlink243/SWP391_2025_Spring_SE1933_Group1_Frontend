@@ -39,6 +39,8 @@ import SendUserFeedback from "./pages/SendUserFeedback";
 import Library from "./pages/LibraryPage/Library";
 import WalletPage from "./pages/WalletPage/WalletPage";
 import AvatarSettings from "./components/Profile/AvatarSettings/AvatarSettings";
+import ChatPage from "./pages/Community/ChatPage"; // Added by Phan NT Son
+import ChatHeader from "./pages/Community/ChatHeader"; // Added by Phan NT Son
 
 function AppRoutes() {
   // Added by Phan NT Son 18-06-2025
@@ -50,15 +52,16 @@ function AppRoutes() {
 
   const calMinimumHeight = () => {
     if (headerHeight.current && navHeight.current) {
-      const windowHeight = window.screen.availHeight;
+      const windowHeight = window.innerHeight;
       const headerH = headerHeight.current.offsetHeight;
       const navH = navHeight.current.offsetHeight;
       const footH = footerHeight.current.offsetHeight;
 
-      console.log(windowHeight);
-      console.log(headerH);
-      console.log(navH);
-      console.log(footH);
+      console.log("windowHeight:", windowHeight);
+      console.log("headerH:", headerH);
+      console.log("navH:", navH);
+      console.log("footH:", footH);
+
       setCalculatedHeight(windowHeight - headerH - navH - footH);
     }
   };
@@ -160,6 +163,7 @@ function AppRoutes() {
    */
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
+  const isChatRoute = location.pathname.startsWith("/chat");
   const isProfilePage = location.pathname.startsWith("/profile");
   const [adminTab, setAdminTab] = useState("Request Management");
   const handleAdminTabChange = (tab) => {
@@ -189,16 +193,16 @@ function AppRoutes() {
             splashStage !== "finished" ? "hidden" : ""
           }`}
         >
+          {/* START FROM HERE */}
           {/* Adjusted by Phan NT Son */}
-          {isAdminRoute ? (
-            <AdminHeader
-              currentTab={adminTab}
-              changeToTab={handleAdminTabChange}
-            />
-          ) : (
-            <Header hideLogo={hideHeaderLogo} />
-          )}
-          {!isAdminRoute && <Navbar />}
+          {isAdminRoute && <AdminHeader
+            currentTab={adminTab}
+            changeToTab={handleAdminTabChange}
+            ref={headerHeight}
+          />}
+          {!isAdminRoute && !isChatRoute && <Header hideLogo={hideHeaderLogo} ref={headerHeight} />}
+
+          {!isAdminRoute && !isChatRoute && <Navbar ref={navHeight} />}
           {/* --!! */}
 
           {/* Remove BrowserRouter by Phan NT Son */}
@@ -218,10 +222,10 @@ function AppRoutes() {
             <Route path="/register" element={<RegisterF />} />
             <Route path="/register-details" element={<RegisterDetailsF />} />
             <Route path="/transaction" element={<Transaction />} />
-            <Route path="/cart" element={<Cart />} />
+            <Route path="/cart" element={<Cart minHeight={calculatedHeight} />} />
             <Route path="/library" element={<Library />} />
             {/*adjusted by Bathanh - 15/6/2025 2:03PM */}
-            <Route path="/notifications" element={<NotificationList />} />
+            <Route path="/notifications" element={<NotifPage minimumHeight={calculatedHeight} />} />
             <Route
               path="/admin"
               element={<AdminDashboard tab={adminTab} />}
@@ -253,9 +257,10 @@ function AppRoutes() {
             {/* Added by TSHUY */}
             {/* Notmebro */}
             <Route path="/wallet" element={<Wallet />} />
+            <Route path="/chat" element={<Chat />} />
           </Routes>
         </div>
-        <Footer /> {/* Added by TSHUY */}
+        {!isAdminRoute && !isChatRoute && <Footer ref={footerHeight} />}
       </div>
     </div>
   );
@@ -355,6 +360,19 @@ function NotifPage({ minimumHeight }) {
         <div className="spacer col-lg-2"></div>
         <NotificationList />
       </div>
+    </div>
+  );
+}
+
+/**
+ * @author Phan NT Son
+ * @since 22-06-2025
+ * @returns 
+ */
+function Chat() {
+  return (
+    <div>
+      <ChatPage />
     </div>
   );
 }

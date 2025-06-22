@@ -12,8 +12,8 @@ import axios from 'axios';
  */
 const Header = forwardRef((props, ref) => {
   const token = localStorage.getItem("token");
-
-  const section = [2, 2, 4, 3, 1]
+  const username = localStorage.getItem("username");
+  const section = [2, 2, 4, 2, 2]
   /**
    * @author Bathanh
    *add methods allows to get user balance from backend
@@ -43,7 +43,8 @@ const Header = forwardRef((props, ref) => {
         <div className={`header-nav col-lg-${section[2]}`}>
           <a href="/">STORE</a>
           <a href="#">COMMUNITY</a>
-          <a href="#">ABOUT</a>
+          {username && (<a href=''>{username}</a>)}
+          <a href="#">{token ? ("CHAT") : ("ABOUT")}</a>
           <a href="#">SUPPORT</a>
         </div>
         <div className={`header-user-action col-lg-${section[3]}`}>
@@ -72,12 +73,13 @@ const Header = forwardRef((props, ref) => {
                     </div>
 
                   </div>
-                  <div className="user-wallet w-50">
+                  <div className="user-wallet w-100">
                     {balance.toLocaleString("en-US", { style: "currency", currency: "USD" })}
                   </div>
                 </div>
                 <div className="header-user-action-icon w-25">
-                  <p className="">Icon</p>
+                  {/* <img src={localStorage.getItem("avatarUrl")}></img> */}
+                  <img src='https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4' alt={username}></img>
                 </div>
               </>
             )
