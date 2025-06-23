@@ -16,7 +16,8 @@ import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import GameDetail from "./pages/GameDetail/GameDetail";
 import HomePage from "./pages/HomePage/HomePage";
-import SendGameToAdmin from "./pages/SendGameToAdmin";
+import SendGametoAdmin from "./pages/SendGametoAdmin";
+import OAuth2RedirectHandler from "./pages/OAuth2RedirectHandler"; // Added by Loc Phan
 import Login from "./pages/Login";
 import RegisterEmail from "./pages/RegisterEmail";
 import RegisterDetails from "./pages/RegisterDetails";
@@ -85,7 +86,7 @@ function AppRoutes() {
     calMinimumHeight(); // Tính toán chiều cao tối thiểu khi component mount
     // Effect này chỉ chạy một lần duy nhất khi component được mount
     // vì mảng phụ thuộc là rỗng [].
-    console.log("hasVisited check running..." ,localStorage.getItem("hasVisited"));
+    console.log("hasVisited check running...", localStorage.getItem("hasVisited"));
     const hasVisited = localStorage.getItem("hasVisited");
     if (!hasVisited) {
       console.log("Returning user. Skipping splash screen.");
@@ -189,9 +190,8 @@ function AppRoutes() {
       <div className={`app-container${isProfilePage ? "" : ""}`}>
         {shouldRenderSplash && <SplashScreen isExiting={isSplashExiting} />}
         <div
-          className={`main-app-content ${
-            splashStage !== "finished" ? "hidden" : ""
-          }`}
+          className={`main-app-content ${splashStage !== "finished" ? "hidden" : ""
+            }`}
         >
           {/* START FROM HERE */}
           {/* Adjusted by Phan NT Son */}
@@ -219,6 +219,7 @@ function AppRoutes() {
             <Route path="/sendgame" element={<RequestAddGame />}></Route>
             {/* hoangvq */}
             <Route path="/login" element={<LoginF />} />
+            <Route path="/oauth2/callback" element={<OAuth2RedirectHandler />} /> {/* Added by Loc Phan */}
             <Route path="/register" element={<RegisterF />} />
             <Route path="/register-details" element={<RegisterDetailsF />} />
             <Route path="/transaction" element={<Transaction />} />

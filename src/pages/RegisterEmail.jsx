@@ -58,6 +58,7 @@ const RegisterEmail = () => {
       <main className="main">
         <form className="form" onSubmit={handleSubmit}>
           <h1 className="form-title">CREATE YOUR ACCOUNT</h1>
+          {message && <p className="message">{message}</p>}
           <div className="form-group">
             <label htmlFor="email" className="form-label">
               Email address
@@ -90,7 +91,7 @@ const RegisterEmail = () => {
           </button>
         </form>
       </main>
-      {message && <p className="message">{message}</p>}
+      
     </div>
   );
 };
