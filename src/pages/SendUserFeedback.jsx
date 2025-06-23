@@ -84,6 +84,9 @@ function SendUserFeedback() {
             console.log(error);
           }
     }
+    const handleRemove = (indexToRemove) => {
+        setArr(prev => prev.filter((_, i) => i !== indexToRemove));
+    };
   return (
     <div className='sendfeedback-container'>
         <div className='sendfeedback-title'>
@@ -101,9 +104,12 @@ function SendUserFeedback() {
         <div className='inner-image'>
         <PhotoProvider>
           {arr.map((item, index) => (
-            <PhotoView key={index} src={item}>
-              <img src={item} alt="" style={{ cursor: "pointer", width: "150px" }} />
-            </PhotoView>
+            <div className='image-wrapper' key={index}>
+              <PhotoView src={item}>
+                <img src={item} alt="" style={{ cursor: "pointer", width: "150px" }} />
+              </PhotoView>
+              <span className="remove-icon" onClick={() => handleRemove(index)}>−</span>
+            </div>
           ))}
         </PhotoProvider>
             <input type="file" multiple style={{ display: "none" }} accept=".jpg,.png" ref={mediaFileRef} onChange={handleFileSelect}/>
