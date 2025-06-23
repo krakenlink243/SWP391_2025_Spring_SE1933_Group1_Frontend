@@ -5,7 +5,7 @@ import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import "./Login.css";
 import { jwtDecode } from "jwt-decode";
 import { useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 
 const Login = () => {
   const [username, setUsername] = useState("");

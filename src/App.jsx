@@ -17,6 +17,7 @@ import Navbar from "./components/Navbar/Navbar";
 import GameDetail from "./components/GameDetail/GameDetail";
 import HomePage from "./pages/HomePage/HomePage";
 import SendGametoAdmin from "./pages/SendGametoAdmin";
+import OAuth2RedirectHandler from "./pages/OAuth2RedirectHandler"; // Added by Loc Phan
 import Login from "./pages/Login";
 import RegisterEmail from "./pages/RegisterEmail";
 import RegisterDetails from "./pages/RegisterDetails";
@@ -135,6 +136,7 @@ function AppRoutes() {
             element={<ApproveDetailsF />}
           ></Route>
           <Route path="/sendgame" element={<RequestAddGame />}></Route>
+          <Route path="/oauth2/callback" element={<OAuth2RedirectHandler />} /> {/* Added by Loc Phan */}
           <Route path="/login" element={<LoginF />} />
           <Route path="/register" element={<RegisterF />} />
           <Route path="/register-details" element={<RegisterDetailsF />} />
