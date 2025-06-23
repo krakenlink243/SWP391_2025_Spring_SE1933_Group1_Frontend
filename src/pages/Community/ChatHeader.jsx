@@ -11,7 +11,7 @@ const ChatHeader = forwardRef((props, ref) => {
             <div className="chat-header-nav col-lg-11 d-flex gap-2">
                 <a href="/">STORE</a>
                 <a href="#">COMMUNITY</a>
-                <a href="#">{username}</a>
+                <a href="/profile">{username}</a>
                 <a href="#">SUPPORT</a>
             </div>
         </div>

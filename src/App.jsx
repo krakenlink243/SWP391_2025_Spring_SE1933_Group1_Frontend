@@ -8,7 +8,7 @@ import {
   Link,
   useLocation,
 } from "react-router-dom"; // Import các component của router
-import { useState, useEffect, loadingState, useRef } from "react"; // Import useState và useEffect từ React
+import { useState, useEffect, loadingState, useRef, useMemo } from "react"; // Import useState và useEffect từ React
 import axios from "axios"; // Import axios để thực hiện các yêu cầu HTTP
 import "./App.css";
 
@@ -40,7 +40,7 @@ import Library from "./pages/LibraryPage/Library";
 import WalletPage from "./pages/WalletPage/WalletPage";
 import AvatarSettings from "./components/Profile/AvatarSettings/AvatarSettings";
 import ChatPage from "./pages/Community/ChatPage"; // Added by Phan NT Son
-import ChatHeader from "./pages/Community/ChatHeader"; // Added by Phan NT Son
+import FriendsPage from "./pages/Friend/FriendsPage"; // Added by Phan NT Son
 
 function AppRoutes() {
   // Added by Phan NT Son 18-06-2025
@@ -51,19 +51,12 @@ function AppRoutes() {
   const [calculatedHeight, setCalculatedHeight] = useState(0);
 
   const calMinimumHeight = () => {
-    if (headerHeight.current && navHeight.current) {
-      const windowHeight = window.innerHeight;
-      const headerH = headerHeight.current.offsetHeight;
-      const navH = navHeight.current.offsetHeight;
-      const footH = footerHeight.current.offsetHeight;
+    const windowHeight = window.innerHeight;
+    const headerH = headerHeight.current ? headerHeight.current.offsetHeight : 0;
+    const navH = navHeight.current ? navHeight.current.offsetHeight : 0;
+    const footH = footerHeight.current ? footerHeight.current.offsetHeight : 0;
 
-      console.log("windowHeight:", windowHeight);
-      console.log("headerH:", headerH);
-      console.log("navH:", navH);
-      console.log("footH:", footH);
-
-      setCalculatedHeight(windowHeight - headerH - navH - footH);
-    }
+    setCalculatedHeight(windowHeight - headerH - navH - footH);
   };
   // --!!
 
@@ -85,7 +78,7 @@ function AppRoutes() {
     calMinimumHeight(); // Tính toán chiều cao tối thiểu khi component mount
     // Effect này chỉ chạy một lần duy nhất khi component được mount
     // vì mảng phụ thuộc là rỗng [].
-    console.log("hasVisited check running..." ,localStorage.getItem("hasVisited"));
+    console.log("hasVisited check running...", localStorage.getItem("hasVisited"));
     const hasVisited = localStorage.getItem("hasVisited");
     if (!hasVisited) {
       console.log("Returning user. Skipping splash screen.");
@@ -162,13 +155,32 @@ function AppRoutes() {
    * @author Phan NT Son
    */
   const location = useLocation();
-  const isAdminRoute = location.pathname.startsWith("/admin");
-  const isChatRoute = location.pathname.startsWith("/chat");
-  const isProfilePage = location.pathname.startsWith("/profile");
+  const currentPath = location.pathname;
+  const needlessNavPath = ["/profile/friends", "/chat", "/admin"];
+  const needlessHeaderPath = ["/admin", "/chat"];
+  const needlessFooterPath = ["/admin", "/chat"];
+  const isAddminPath = currentPath.startsWith("/admin")
+
   const [adminTab, setAdminTab] = useState("Request Management");
   const handleAdminTabChange = (tab) => {
     setAdminTab(tab);
   };
+
+  const isNeedlessHeader = useMemo(
+    () => needlessHeaderPath.some((p) => currentPath.startsWith(p)),
+    [currentPath]
+  );
+
+  const isNeedlessNav = useMemo(
+    () => needlessNavPath.some((p) => currentPath.startsWith(p)),
+    [currentPath]
+  );
+
+  const isNeedlessFooter = useMemo(
+    () => needlessFooterPath.some((p) => currentPath.startsWith(p)),
+    [currentPath]
+  );
+
   //--!!
 
   /**
@@ -183,26 +195,26 @@ function AppRoutes() {
     }
   };
 
+
   return (
     <div className="app-wrapper">
       {" "}
-      <div className={`app-container${isProfilePage ? "" : ""}`}>
+      <div className={`app-container`}>
         {shouldRenderSplash && <SplashScreen isExiting={isSplashExiting} />}
         <div
-          className={`main-app-content ${
-            splashStage !== "finished" ? "hidden" : ""
-          }`}
+          className={`main-app-content ${splashStage !== "finished" ? "hidden" : ""
+            }`}
         >
           {/* START FROM HERE */}
           {/* Adjusted by Phan NT Son */}
-          {isAdminRoute && <AdminHeader
+          {isAddminPath && <AdminHeader
             currentTab={adminTab}
             changeToTab={handleAdminTabChange}
             ref={headerHeight}
           />}
-          {!isAdminRoute && !isChatRoute && <Header hideLogo={hideHeaderLogo} ref={headerHeight} />}
+          {!isNeedlessHeader && <Header hideLogo={hideHeaderLogo} ref={headerHeight} />}
 
-          {!isAdminRoute && !isChatRoute && <Navbar ref={navHeight} />}
+          {!isNeedlessNav && <Navbar ref={navHeight} />}
           {/* --!! */}
 
           {/* Remove BrowserRouter by Phan NT Son */}
@@ -258,9 +270,10 @@ function AppRoutes() {
             {/* Notmebro */}
             <Route path="/wallet" element={<Wallet />} />
             <Route path="/chat" element={<Chat />} />
+            <Route path="/profile/friends" element={<Friends />} />
           </Routes>
         </div>
-        {!isAdminRoute && !isChatRoute && <Footer ref={footerHeight} />}
+        {!isNeedlessFooter && <Footer ref={footerHeight} />}
       </div>
     </div>
   );
@@ -375,6 +388,24 @@ function Chat() {
       <ChatPage />
     </div>
   );
+}
+
+/**
+ * @author Phan NT Son
+ * @since 23-06-2025
+ * @returns 
+ */
+function Friends() {
+  return (
+    <div className="container-fluid">
+      <div className="row">
+        <div className="spacer col-lg-1"></div>
+        <div className="col-lg-10">
+          <FriendsPage />
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default function App() {

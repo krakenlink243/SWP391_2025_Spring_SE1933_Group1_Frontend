@@ -13,6 +13,7 @@ import axios from "axios";
 const Header = forwardRef((props, ref) => {
   const token = localStorage.getItem("token");
   const username = localStorage.getItem("username");
+  const role = localStorage.getItem("role");
   const section = [2, 2, 4, 2, 2];
   /**
    * @author Bathanh
@@ -52,9 +53,9 @@ const Header = forwardRef((props, ref) => {
         <div className={`header-nav col-lg-${section[2]}`}>
           <a href="/">STORE</a>
           <a href="#">COMMUNITY</a>
-          {username && <a href="">{username}</a>}
-          <a href="#">{token ? "CHAT" : "ABOUT"}</a>
-          <a href="#">SUPPORT</a>
+          {username && <a href="/profile">{username}</a>}
+          <a href={token && '/chat'}>{token ? "CHAT" : "ABOUT"}</a>
+          {role != 'Admin' && <a href="/sendfeedback">SUPPORT</a>}
         </div>
         <div className={`header-user-action col-lg-${section[3]}`}>
           {!token ? (
