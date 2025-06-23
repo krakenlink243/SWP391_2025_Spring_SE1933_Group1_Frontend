@@ -109,8 +109,9 @@ const AvatarSettings = ({ currentUser }) => {
       );
 
       const newAvatarUrl = response.data.url;
-      // Cập nhật giao diện ngay lập tức
+      localStorage.setItem("avatarUrl", newAvatarUrl); // Cập nhật avatar trong localStorage
       setCurrentAvatar(newAvatarUrl);
+      window.location.reload();
       // Thêm avatar mới vào thư viện để hiển thị
       if (!avatarLibrary.includes(newAvatarUrl)) {
         setAvatarLibrary((prev) => [newAvatarUrl, ...prev]);
