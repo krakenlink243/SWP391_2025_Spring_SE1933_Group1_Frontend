@@ -13,6 +13,7 @@ import axios from "axios";
 const Header = forwardRef((props, ref) => {
   const token = localStorage.getItem("token");
   const username = localStorage.getItem("username");
+  const role = localStorage.getItem("role");
   const section = [2, 2, 4, 2, 2];
   /**
    * @author Bathanh
@@ -22,14 +23,13 @@ const Header = forwardRef((props, ref) => {
    */
   const [balance, setBalance] = useState(0);
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
     const getUserBalance = () => {
       axios
         .get(`http://localhost:8080/user/wallet`)
         .then((response) => setBalance(response.data))
         .catch((error) => alert(error));
     };
-    if (userId) {
+    if (token) {
       getUserBalance();
     }
   }, []);
@@ -50,11 +50,20 @@ const Header = forwardRef((props, ref) => {
           </a>
         </div>
         <div className={`header-nav col-lg-${section[2]}`}>
-          <a href="/">STORE</a>
-          <a href="#">COMMUNITY</a>
-          {username && <a href="">{username}</a>}
-          <a href="#">{token ? "CHAT" : "ABOUT"}</a>
-          <a href="#">SUPPORT</a>
+          <a className="header-nav-item" href="/">STORE</a>
+          <a className="header-nav-item" href="#">COMMUNITY</a>
+          {username && (
+            <div className="nav-user-dropdown-wrapper">
+              <a className="header-nav-item" href="/profile">{username}</a>
+              <div className="nav-box-dropdown">
+                <a className="submenuitem" href="/profile">Profile</a>
+                <a className="submenuitem" href="/profile/friends">Friends</a>
+              </div>
+            </div>
+          )}
+
+          <a className="header-nav-item" href={token && '/chat'}>{token ? "CHAT" : "ABOUT"}</a>
+          {role != 'Admin' && <a className="header-nav-item" href="/sendfeedback">SUPPORT</a>}
         </div>
         <div className={`header-user-action col-lg-${section[3]}`}>
           {!token ? (
@@ -90,7 +99,7 @@ const Header = forwardRef((props, ref) => {
                 </div>
               </div>
               <div className="header-user-action-icon w-25">
-                <img src={localStorage.getItem("avatarUrl")}></img>
+                <a href="/profile"><img src={localStorage.getItem("avatarUrl")}></img></a>
               </div>
             </>
           )}

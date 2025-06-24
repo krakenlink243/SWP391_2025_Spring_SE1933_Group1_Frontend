@@ -37,7 +37,7 @@ export const connectSocket = (onMessageReceived) => {
   stompClient.activate();
 };
 
-export const sendMessage = (sender, receiver, content) => {
+export const sendMessage = (conversationId, sender, receiver, content) => {
   if (!stompClient || !stompClient.connected) {
     console.warn('⚠️ WebSocket is not connected yet.');
     return;
@@ -45,7 +45,7 @@ export const sendMessage = (sender, receiver, content) => {
 
   stompClient.publish({
     destination: '/app/chat.send',
-    body: JSON.stringify({ senderUsername: sender, receiverUsername: receiver, content }),
+    body: JSON.stringify({ conversationId: conversationId, senderUsername: sender, receiverUsername: receiver, content }),
   });
 };
 
