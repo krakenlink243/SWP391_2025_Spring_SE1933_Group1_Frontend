@@ -20,23 +20,25 @@ const OAuth2RedirectHandler = () => {
     const token = params.get("token");
 
     if (token) {
-        localStorage.setItem("token", token);
+      console.log("OAuth2RedirectHandler: token", token);
+      localStorage.setItem("token", token);
+      
 
-        const decoded = jwtDecode(token);
-        const userId = decoded.userId;
-        const role = decoded.role;
-        const username = decoded.sub;
-  
-        localStorage.setItem("userId", userId);
-        localStorage.setItem("role", role);
-        localStorage.setItem("username", username);
-        
-  
-        // Redirect and clean up token from URL
-        window.location.href = "/";
-      } else {
-        window.location.href = "/login";
-      }
+      const decoded = jwtDecode(token);
+      const userId = decoded.userId;
+      const role = decoded.role;
+      const username = decoded.sub;
+      const avatarUrl = decoded.avatarUrl;
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("role", role);
+      localStorage.setItem("username", username);
+      localStorage.setItem("avatarUrl", avatarUrl);
+      console.log("Local storage token" + localStorage.getItem("token"));
+      // Redirect and clean up token from URL
+      // window.location.href = "/";
+    } else {
+      window.location.href = "/login";
+    }
   }, []);
 
   return <p>Logging in via Google...</p>;
