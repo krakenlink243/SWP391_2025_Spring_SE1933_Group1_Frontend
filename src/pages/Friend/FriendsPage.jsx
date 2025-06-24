@@ -4,7 +4,7 @@ import AddFriendTab from "./AddFriendTab";
 import PendingInvitesTab from "./PendingInvitesTab";
 import BlockedTab from "./BlockedTab";
 import { useState } from "react";
-
+import './FriendPage.css';
 
 function FriendsPage() {
     const token = localStorage.getItem("token");
@@ -15,17 +15,17 @@ function FriendsPage() {
         const avatarUrl = localStorage.getItem("avatarUrl");
         const [curTab, setCurTab] = useState(0);
 
-        const tabs = [<MainTab />, <AddFriendTab />, <PendingInvitesTab />, <BlockedTab />];
+        const tabs = [<MainTab setCurTab={setCurTab} />, <AddFriendTab />, <PendingInvitesTab />, <BlockedTab />];
 
         return (
-            <div className="friend-page-container text-white">
-                <div className="friend-page-header d-flex flex-row" style={{height:"127px"}}>
+            <div className="friend-page-container">
+                <div className="friend-page-header d-flex flex-row align-items-center">
                     <img src={avatarUrl} alt="avatar" className="avatar" />
-                    <span className="username">{username}</span>
+                    <a className="username" href="/profile">{username}</a>
                 </div>
                 <div className="friend-page-content d-flex flex-row">
                     <div className="content-left-nav d-flex flex-column w-25">
-                        <div className="nav-title">Friends</div>
+                        <h4 className="nav-title">Friends</h4>
                         <div
                             className={`nav-item${curTab === 0 ? " active" : ""}`}
                             onClick={() => setCurTab(0)}

@@ -55,6 +55,8 @@ function AppRoutes() {
     const headerH = headerHeight.current ? headerHeight.current.offsetHeight : 0;
     const navH = navHeight.current ? navHeight.current.offsetHeight : 0;
     const footH = footerHeight.current ? footerHeight.current.offsetHeight : 0;
+    console.log("headerH:", headerH, "navH:", navH, "footH:", footH);
+
 
     setCalculatedHeight(windowHeight - headerH - navH - footH);
   };
@@ -270,7 +272,7 @@ function AppRoutes() {
             {/* Notmebro */}
             <Route path="/wallet" element={<Wallet />} />
             <Route path="/chat" element={<Chat />} />
-            <Route path="/profile/friends" element={<Friends />} />
+            <Route path="/profile/friends" element={<Friends minimumHeight={calculatedHeight} />} />
           </Routes>
         </div>
         {!isNeedlessFooter && <Footer ref={footerHeight} />}
@@ -395,9 +397,9 @@ function Chat() {
  * @since 23-06-2025
  * @returns 
  */
-function Friends() {
+function Friends({ minimumHeight }) {
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" style={{ background: "url(https://community.fastly.steamstatic.com/public/images/friends/colored_body_top2.png?v=2) center top no-repeat #1b2838", minHeight: `${minimumHeight}px` }}>
       <div className="row">
         <div className="spacer col-lg-1"></div>
         <div className="col-lg-10">

@@ -1,0 +1,62 @@
+.friend-page-container {
+    font-family: "Motiva Sans", Sans-serif;
+    font-weight: 300;
+    padding-bottom: 128px;
+}
+
+.friend-page-container .friend-page-header {
+    height: 127px;
+    background: url(https://community.fastly.steamstatic.com/public/images/bg_highlight.png) center bottom no-repeat;
+}
+
+.friend-page-header img {
+    height: 100%;
+    padding: 25px;
+}
+
+.friend-page-header a {
+    color: #ebebeb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.friend-page-container .friend-page-content {
+    font-family: "Motiva Sans", Sans-serif;
+    font-weight: 300;
+    margin: 0px 10px;
+}
+
+.friend-page-content .content-left-nav {
+    margin: 0px 20px 0px 10px;
+}
+
+.content-left-nav .nav-title {
+    color: #7092a5;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    padding: 12px 0 0 8px;
+    font-size: 11px;
+}
+
+.content-left-nav .nav-item {
+    color: #ebebeb;
+    text-decoration: none;
+    cursor: pointer;
+    display: block;
+    padding: 10px 10px;
+}
+
+.content-left-nav .nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.content-left-nav .active {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.friend-page-content .content-right-detail{
+    transition: opacity 500ms;
+    opacity: 1.0;
+    margin-top: 24px;
+}
