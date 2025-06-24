@@ -38,8 +38,9 @@ import EditProfilePage from "./components/Profile/EditProfilePage";
 import SendUserFeedback from "./pages/SendUserFeedback";
 import Library from "./pages/LibraryPage/Library";
 import WalletPage from "./pages/WalletPage/WalletPage";
-
-
+import AvatarSettings from "./components/Profile/AvatarSettings/AvatarSettings";
+import ChatPage from "./pages/Community/ChatPage"; // Added by Phan NT Son
+import ChatHeader from "./pages/Community/ChatHeader"; // Added by Phan NT Son
 
 function AppRoutes() {
   // Added by Phan NT Son 18-06-2025
@@ -240,7 +241,7 @@ function AppRoutes() {
               path="/approvepublisher/:publisherId"
               element={<ApprovePublisherDetails />}
             ></Route>
-            <Route path="/sendfeedback" element={<SendFeedback/>}></Route>
+            <Route path="/sendfeedback" element={<SendFeedback />}></Route>
             {/* hoangvq */}
             <Route path="/profile" element={<ProfilePage />} />
             {/* Added by TSHUY */}
@@ -282,13 +283,6 @@ function ApprovePublisherDetails() {
 function SendFeedback() {
   return <SendUserFeedback />;
 }
-function ApproveFeedback(){
-  return <FeedbackApprovePage />;
-}
-function ApproveFeedbackDetails(){
-  return <FeedbackApproveDetails />;
-}
-
 function LoginF() {
   return <Login />;
 }
