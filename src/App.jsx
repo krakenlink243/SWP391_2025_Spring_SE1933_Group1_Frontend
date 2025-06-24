@@ -7,6 +7,7 @@ import {
   Outlet,
   Link,
   useLocation,
+  Navigate,
 } from "react-router-dom"; // Import các component của router
 import { useState, useEffect, loadingState, useRef, useMemo } from "react"; // Import useState và useEffect từ React
 import axios from "axios"; // Import axios để thực hiện các yêu cầu HTTP
@@ -78,6 +79,7 @@ function AppRoutes() {
   useEffect(() => {
     checkToken(); // Kiểm tra token khi component mount
     calMinimumHeight(); // Tính toán chiều cao tối thiểu khi component mount
+
     // Effect này chỉ chạy một lần duy nhất khi component được mount
     // vì mảng phụ thuộc là rỗng [].
     console.log("hasVisited check running...", localStorage.getItem("hasVisited"));
@@ -158,7 +160,7 @@ function AppRoutes() {
    */
   const location = useLocation();
   const currentPath = location.pathname;
-  const needlessNavPath = ["/profile/friends", "/chat", "/admin"];
+  const needlessNavPath = ["/profile", "/chat", "/admin", "/sendfeedback","/wallet","/cart"];
   const needlessHeaderPath = ["/admin", "/chat"];
   const needlessFooterPath = ["/admin", "/chat"];
   const isAddminPath = currentPath.startsWith("/admin")
@@ -194,6 +196,7 @@ function AppRoutes() {
     const currentTime = Math.floor(Date.now() / 1000);
     if (expDate === null || expDate < currentTime) {
       localStorage.clear();
+      return <Navigate to={"/"} replace />
     }
   };
 

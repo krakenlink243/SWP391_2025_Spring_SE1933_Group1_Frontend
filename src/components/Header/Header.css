@@ -18,10 +18,10 @@
   display: flex;
   align-items: center;
   flex-grow: 1;
-  /* Cho phép nav chiếm không gian còn lại */
+  position: relative;
 }
 
-.header-nav a {
+.header-nav .header-nav-item {
   color: #c7d5e0;
   text-decoration: none;
   padding: 10px 15px;
@@ -36,6 +36,28 @@
   color: #ffffff;
   /* Sáng hơn khi hover */
 }
+
+.nav-user-dropdown-wrapper {
+  position: relative;
+}
+
+.nav-box-dropdown {
+  display: none;
+  flex-direction: column;
+  background: white;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 1000;
+  padding: 5px 10px;
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+}
+
+.nav-user-dropdown-wrapper:hover .nav-box-dropdown {
+  display: flex;
+}
+
 
 .header-user-action {
   display: flex;
@@ -65,13 +87,13 @@
   color: #ffffff;
 }
 
-.user-wallet{
+.user-wallet {
   text-align: end;
   padding-right: calc(.5rem + 14px);
 }
 
-.header-user-action-icon img{
-  width: 100% ;
+.header-user-action-icon img {
+  width: 100%;
 }
 
 /* Thêm CSS cho các phần tử khác như language selector nếu có */
