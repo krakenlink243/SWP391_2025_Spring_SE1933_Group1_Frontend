@@ -14,7 +14,6 @@ function GameApprovePage() {
       try {
         const response = await axios.get(`http://localhost:8080/request/game/${page}`);
         setLoadedRequest(response.data.content);
-        console.log(response.data.content)
         setTotalPages(response.data.totalPages);
         console.log(response.data);
       } catch (err) {
@@ -107,24 +106,22 @@ function GameApprovePage() {
   return (
     <div className='game-approve-container'>
       <div>
-        <div style={{cursor:"pointer",textDecoration:"underline",textUnderlineOffset:"5px"}} onClick={()=>{window.location.href=`/aprrovegame`}}>Game Request</div>
-        <div style={{cursor:"pointer"}} onClick={()=>{window.location.href=`/approvepublisher`}}>Publisher Request</div>
-        <div style={{cursor:"pointer"}} onClick={()=>{window.location.href=``}}>Review Report</div>
-        <div style={{cursor:"pointer"}} onClick={()=>{window.location.href=`/approvefeedback`}}>Feedback</div>
+        <div style={{cursor:"pointer", textDecoration:"underline",textUnderlineOffset:"5px"}}>Game Request</div>
+        <div style={{cursor:"pointer"}}>Apply Request</div>
+        <div style={{cursor:"pointer"}}>Report</div>
+        <div style={{cursor:"pointer"}}>Other Request</div>
       </div>
-      {loadedRequest.length > 0 ? (
-        <div className='request-item' style={{ backgroundColor: "#1B2838" }}>
-          <img
-            src={isChecked ? "/icons/Approve.png" : "/icons/Checkbox.png"}
-            alt="Checkbox"
-            onClick={handleTick}
-          />
-          <div>
-            <img src="/icons/Approve.png" alt="" onClick={handleApproveSelected} />
-            <img src="/icons/Decline.png" alt="" onClick={handleDeclineSelected} />
-          </div>
-        </div>
-      ) : (<p>There is no game pending for approve at this time</p>)}
+      <div className='request-item' style={{backgroundColor:"#1B2438"}}>
+      <img
+        src={isChecked ? "/icons/Approve.png" : "/icons/Checkbox.png"}
+        alt="Checkbox"
+        onClick={handleTick}
+      />
+      <div>
+        <img src="/icons/Decline.png" alt="" onClick={handleDeclineSelected}  />
+        <img src="/icons/Approve.png" alt="" onClick={handleApproveSelected}/>
+      </div>
+      </div>
       {loadedRequest.map((request) => (
       <RequestItem 
         key={request.requestId} 

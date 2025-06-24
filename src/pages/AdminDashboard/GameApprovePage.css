@@ -2,7 +2,7 @@
 .game-approve-container {
     display: flex;
     flex-direction: column;
-    /* background-color: #1B2438; */
+    background-color: #1B2438;
     color: white;
     padding: 20px;
     max-width: 800px;
@@ -11,11 +11,7 @@
     /*Fixed by Phan NT Son - Make it fit to screen, no more blank under*/
     /* min-height: 100vh;  */
 }
-.game-approve-container p{
-    text-align: center;
-    font-size: 16px;
-    margin-top: 10px;
-}
+
 /* Navigation bar */
 .game-approve-container > div:first-child {
     display: flex;

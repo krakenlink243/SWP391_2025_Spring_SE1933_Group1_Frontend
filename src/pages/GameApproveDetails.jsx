@@ -36,7 +36,7 @@ function GameApproveDetails() {
         // Get download link after formData is updated
         if(response.data.gameUrl) {
           try {
-            const downloadResponse = await axios.get(`http://localhost:8080/request/file/download/${response.data.gameUrl}`);
+            const downloadResponse = await axios.get(`http://localhost:8080/request/download/${response.data.gameUrl}`);
             console.log(downloadResponse.data);
             setDownloadLink(downloadResponse.data);
           } catch(error) {
