@@ -10,6 +10,7 @@ import { createNotification } from '../../services/notification';
  * @returns 
  */
 function WalletPage() {
+    const [balance, setBalance] = useState(0);
     const amountArr = [75, 150, 375, 750, 1500];
     const token = localStorage.getItem("token");
     if (!token) {
@@ -17,15 +18,15 @@ function WalletPage() {
     }
     const username = localStorage.getItem("username");
     const userId = localStorage.getItem("userId");
-    const [balance, setBalance] = useState(0);
+
 
 
     /**
      * 
      * @param {*} amount of money to add to wallet
      */
-    const addMoney = (amount) => {
-        axios.post(`http://localhost:8080/user/wallet/add?amount=${amount}`)
+    const addMoney = async (amount) => {
+        await axios.post(`http://localhost:8080/user/wallet/add?amount=${amount}`)
             .then((response) => {
                 getUserBalance();
                 createNotification(userId, "Cart", "Add funds successfully to wallet");
