@@ -148,10 +148,23 @@ function SendGameToAdmin() {
       await handleDelete();
       window.location.href="/"
   }
-  const normalizeValue = (e) => {
+  const normalizeValue = async (e) => {
     const { name, value } = e.target;
+    if(name ==='gameName'){
+    const response = await axios.get(`http://localhost:8080/request/game/exist/check`,{params: { gameName: value }});
+    console.log(response.data.message)
+    console.log(response.data.debug)
+      if(response.data.message === true){
+        alert('Game name already exists!');
+        setFormData(prev => ({...prev,[name]: ''}));
+        return;
+      }
+    }
     setFormData(prev => ({...prev,[name]: trimValue(value)}));
   }
+  const handleRemove = (indexToRemove) => {
+    setArr(prev => prev.filter((_, i) => i !== indexToRemove));
+  };  
   return (
     <>
     <div className='game-application'>
@@ -203,9 +216,12 @@ function SendGameToAdmin() {
         <div className='inner-image'>
         <PhotoProvider>
           {arr.map((item, index) => (
-            <PhotoView key={index} src={item}>
-              <img src={item} alt="" style={{ cursor: "pointer", width: "150px" }} />
-            </PhotoView>
+            <div className='image-wrapper' key={index}>
+              <PhotoView src={item}>
+                <img src={item} alt="" style={{ cursor: "pointer", width: "150px" }} />
+              </PhotoView>
+              <span className="remove-icon" onClick={() => handleRemove(index)}>−</span>
+            </div>
           ))}
         </PhotoProvider>
             <input type="file" multiple style={{ display: "none" }} accept=".jpg,.png" ref={mediaFileRef} onChange={handleFileSelect}/>
