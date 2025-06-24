@@ -56,8 +56,8 @@ const Header = forwardRef((props, ref) => {
             <div className="nav-user-dropdown-wrapper">
               <a className="header-nav-item" href="/profile">{username}</a>
               <div className="nav-box-dropdown">
-                <a href="/profile">Profile</a>
-                <a href="/profile/friends">Friends</a>
+                <a className="submenuitem" href="/profile">Profile</a>
+                <a className="submenuitem" href="/profile/friends">Friends</a>
               </div>
             </div>
           )}
@@ -99,7 +99,7 @@ const Header = forwardRef((props, ref) => {
                 </div>
               </div>
               <div className="header-user-action-icon w-25">
-                <img src={localStorage.getItem("avatarUrl")}></img>
+                <a href="/profile"><img src={localStorage.getItem("avatarUrl")}></img></a>
               </div>
             </>
           )}

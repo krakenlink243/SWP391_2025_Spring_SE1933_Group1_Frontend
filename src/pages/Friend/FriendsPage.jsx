@@ -14,8 +14,18 @@ function FriendsPage() {
         const username = localStorage.getItem("username");
         const avatarUrl = localStorage.getItem("avatarUrl");
         const [curTab, setCurTab] = useState(0);
+        const [fadeClass, setFadeClass] = useState("fade-in");
 
         const tabs = [<MainTab setCurTab={setCurTab} />, <AddFriendTab />, <PendingInvitesTab />, <BlockedTab />];
+
+        const handleChangeTab = (indx) => {
+            setFadeClass("fade-out");
+
+            setTimeout(() => {
+                setCurTab(indx);
+                setFadeClass("fade-in");
+            }, 300);
+        };
 
         return (
             <div className="friend-page-container">
@@ -28,30 +38,30 @@ function FriendsPage() {
                         <h4 className="nav-title">Friends</h4>
                         <div
                             className={`nav-item${curTab === 0 ? " active" : ""}`}
-                            onClick={() => setCurTab(0)}
+                            onClick={() => handleChangeTab(0)}
                         >
                             Your Friends
                         </div>
                         <div
                             className={`nav-item${curTab === 1 ? " active" : ""}`}
-                            onClick={() => setCurTab(1)}
+                            onClick={() => handleChangeTab(1)}
                         >
                             Add a Friend
                         </div>
                         <div
                             className={`nav-item${curTab === 2 ? " active" : ""}`}
-                            onClick={() => setCurTab(2)}
+                            onClick={() => handleChangeTab(2)}
                         >
                             Pending Invites
                         </div>
                         <div
                             className={`nav-item${curTab === 3 ? " active" : ""}`}
-                            onClick={() => setCurTab(3)}
+                            onClick={() => handleChangeTab(3)}
                         >
                             Blocked
                         </div>
                     </div>
-                    <div className="content-right-detail w-75">
+                    <div className={`content-right-detail w-75 ${fadeClass}`}>
                         {tabs[curTab]}
                     </div>
                 </div>

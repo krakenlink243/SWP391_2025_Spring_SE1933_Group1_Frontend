@@ -61,6 +61,11 @@ function PendingInvitesTab() {
                     <span className="title">Received Invites</span>
                 </div>
                 <div className="result">
+                    {receivedInvites.length == 0 && (
+                        <div className="result-not-found">
+                            Sorry, there are no pending friend invites to show.
+                        </div>
+                    )}
                     {receivedInvites.map((invite) => (
                         <div className="box-item" key={invite.invitorId}>
                             <div className="friend-box">
@@ -93,23 +98,30 @@ function PendingInvitesTab() {
                 <div className="box-title">
                     <span className="title">Sent Invites</span>
                 </div>
-                {sentInvites.map((invite) => (
-                    <div className="box-item" key={invite.invitorId}>
-                        <div className="friend-box">
-                            <div className="avatar">
-                                <img src={`${invite.invitorAvatarUrl}`} alt={`${invite.invitorName}`} />
+                <div className="result">
+                    {receivedInvites.length == 0 && (
+                        <div className="result-not-found">
+                            Sorry, there are no pending sent invites to show.
+                        </div>
+                    )}
+                    {sentInvites.map((invite) => (
+                        <div className="box-item" key={invite.invitorId}>
+                            <div className="friend-box">
+                                <div className="avatar">
+                                    <img src={`${invite.invitorAvatarUrl}`} alt={`${invite.invitorName}`} />
+                                </div>
+                                <div className="description">
+                                    {invite.invitorName}
+                                </div>
                             </div>
-                            <div className="description">
-                                {invite.invitorName}
+                            <div className="friend-actions">
+                                <div className="actions-btn" onClick={() => handleCancel(invite.invitorId)}>
+                                    <span>Cancel</span>
+                                </div>
                             </div>
                         </div>
-                        <div className="friend-actions">
-                            <div className="actions-btn" onClick={() => handleCancel(invite.invitorId)}>
-                                <span>Cancel</span>
-                            </div>
-                        </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         </div>
     );

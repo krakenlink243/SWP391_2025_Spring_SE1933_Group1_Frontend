@@ -32,7 +32,7 @@ function MainTab({setCurTab}) {
                 </div>
             </div>
             <div className="main-tab-body d-flex flex-row gap-2 flex-wrap">
-                {/* {friendList.length == 0 && <div>You have no friends</div>} */}
+                {friendList.length == 0 && <div>You have no friends</div>}
                 {
                     friendList.map((friend, idx) => (
                         <div key={friend.friendId} className="friend-item d-flex flex-row gap-2 align-items-center">
