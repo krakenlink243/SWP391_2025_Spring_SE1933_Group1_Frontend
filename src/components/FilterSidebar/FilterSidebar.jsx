@@ -6,7 +6,7 @@ const FilterSidebar = ({ allTags, allPublishers, filters, onFilterChange }) => {
   const [tagSearchTerm, setTagSearchTerm] = useState("");
   const [publisherSearchTerm, setPublisherSearchTerm] = useState("");
   useEffect(() => {
-      onFilterChange("price", localPrice);
+      onFilterChange("maxPrice", localPrice);
   }, [localPrice, filters.maxPrice, onFilterChange]);
 
   const displayedTags = useMemo(() => {

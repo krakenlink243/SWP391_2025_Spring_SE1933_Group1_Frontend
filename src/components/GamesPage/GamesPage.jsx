@@ -103,7 +103,7 @@ const GamesPage = () => {
   const handleFilterChange = useCallback((filterType, value) => {
     setFilters((prevFilters) => {
       const newFilters = { ...prevFilters };
-      if (filterType === "price" || filterType === "sort") {
+      if (filterType === "maxPrice" || filterType === "sort") {
         newFilters[filterType] = value;
       } else if (filterType === "tag") {
         const newTagIds = new Set(prevFilters.selectedTagIds);

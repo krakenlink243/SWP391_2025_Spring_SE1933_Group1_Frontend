@@ -68,7 +68,7 @@ function DetailHeader({ game }) {
     };
 
     const checkGameInCart = () => {
-        axios.get(`http://localhost:8080/users/${userId}/cart/contains/${game.gameId}`)
+        axios.get(`http://localhost:8080/user/cart/contain/${game.gameId}`)
             .then(response => {
                 if (response.data === true) setGameInCart(true);
             })
@@ -79,13 +79,13 @@ function DetailHeader({ game }) {
     };
 
     const checkGameInLib = () => {
-        axios.get(`http://localhost:8080/users/${userId}/library/contains/${game.gameId}`)
+        axios.get(`http://localhost:8080/user/library/contain/${game.gameId}`)
             .then(response => {
                 if (response.data === true) setGameInLib(true);
             })
             .catch(error => {
-                console.error("Error checking cart:", error);
-                setGameInCart(false);
+                console.error("Error checking library:", error);
+                setGameInLib(false);
             });
     };
 
@@ -171,6 +171,7 @@ function DetailHeader({ game }) {
                     <div className="content-row mb-0">
                         <div className="game-tags">
                             {game.tags.map((tag) => (
+                                // Mỗi tag giờ là một Link trỏ đến trang game với query parameter
                                 <Link
                                     to={`/games?tags=${tag.tagId}`} // URL sẽ có dạng /games?tags=17
                                     key={tag.tagId}

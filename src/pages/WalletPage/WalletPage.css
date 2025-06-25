@@ -1,3 +1,6 @@
 .add-money-container .main-content .items .item{
-background: linear-gradient(135deg,#546B73, #E2F4FF);
+background: linear-gradient(135deg,#283c50, #599bc5b4);
+}
+.btn-green-ui{
+    color: rgb(13, 90, 30);
 }

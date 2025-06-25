@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {jwtDecode} from "jwt-decode";
 import "./Library.css";
+import { useNavigate } from "react-router-dom";
 
 const sortOptions = [
   { value: "az", label: "A-Z" },
@@ -11,17 +11,11 @@ const sortOptions = [
 ];
 
 const token = localStorage.getItem("token");
-let userName = "";
-if (token) {
-  try {
-    const decoded = jwtDecode(token);
-    userName = decoded.sub || decoded.username || "";
-  } catch (e) {
-    userName = "";
-  }
-}
+const username = localStorage.getItem("username");
 
 const Library = () => {
+  const navigate = useNavigate();
+
   if (!token) {
     window.location.href = "/";
     return null;
@@ -34,9 +28,7 @@ const Library = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:8080/user/library`, {
-        headers: { Authorization: `Bearer ${token}` }
-      })
+      .get("http://localhost:8080/user/library")
       .then((res) => {
         setGames(res.data.library || []);
         setLoading(false);
@@ -44,7 +36,6 @@ const Library = () => {
       .catch(() => setLoading(false));
   }, []);
 
-  // Sorting logic
   const getSortedGames = () => {
     const sorted = [...games];
     switch (sortBy) {
@@ -72,14 +63,20 @@ const Library = () => {
         <div className="library-sidebar-title">All Games ({games.length})</div>
         <ul className="library-game-list">
           {getSortedGames().map((game) => (
-            <li key={game.gameId} className="library-game-list-item">
+            <li
+              key={game.gameId}
+              className="library-game-list-item"
+              onClick={() => navigate(`/game/${game.gameId}`)}
+            >
               {game.name}
             </li>
           ))}
         </ul>
       </div>
       <div className="library-content">
-        <h2 className="library-title">{userName ? `${userName}'s Library` : "My Library"}</h2>
+        <h2 className="library-title">
+          {username ? `${username}'s Library` : "My Library"}
+        </h2>
         <div className="library-filter-row">
           <label htmlFor="library-sort" className="library-filter-label">
             Sort by:
@@ -100,11 +97,17 @@ const Library = () => {
         {loading ? (
           <div className="library-loading">Loading...</div>
         ) : games.length === 0 ? (
-          <div className="library-empty">You have not purchased any games yet.</div>
+          <div className="library-empty">
+            You have not purchased any games yet.
+          </div>
         ) : (
           <div className="library-grid">
             {getSortedGames().map((game) => (
-              <div className="library-game-card" key={game.gameId}>
+              <div
+                className="library-game-card"
+                key={game.gameId}
+                onClick={() => navigate(`/game/${game.gameId}`)}
+              >
                 <div className="library-game-image-container">
                   <img
                     className="library-game-image"
