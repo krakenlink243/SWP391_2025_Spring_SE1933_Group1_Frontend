@@ -1,0 +1,97 @@
+.transaction-detail-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  color: #c6d4df;
+  background-color: #0f1c2e;
+  border-radius: 4px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.transaction-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.transaction-detail-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #66c0f4;
+}
+
+.back-button {
+  background-color: #2a475e;
+  color: #ffffff;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: #3b6e8d;
+}
+
+.transaction-detail-box {
+  background-color: #1b2838;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  box-shadow: 0 0 5px rgba(102, 192, 244, 0.4);
+}
+
+.transaction-detail-box p {
+  margin: 10px 0;
+  font-size: 15px;
+  color: #dbe5f1;
+}
+
+.transaction-detail-loading,
+.transaction-detail-error {
+  text-align: center;
+  margin-top: 50px;
+  color: #ffffff;
+  font-size: 18px;
+}
+
+.transaction-issue-section {
+  margin-top: 30px;
+}
+
+.issue-title {
+  color: #66c0f4;
+  font-size: 16px;
+  margin-bottom: 14px;
+}
+
+.issue-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.issue-option {
+  background-color: #394b59;
+  color: #c6d4df;
+  padding: 12px 16px;
+  border-radius: 2px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.issue-option:hover {
+  background-color: #417a9b;
+}
+
+.issue-arrow {
+  color: #c6d4df;
+  font-size: 14px;
+}

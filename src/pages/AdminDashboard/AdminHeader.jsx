@@ -26,7 +26,7 @@ const AdminHeader = forwardRef(({ currentTab, changeToTab }, ref) => {
     useEffect(() => {
         const userId = localStorage.getItem("userId");
         const getUserBalance = () => {
-            axios.get(`http://localhost:8080/users/${userId}/balance`)
+            axios.get(`http://localhost:8080/user/wallet`)
                 .then((response) => setBalance(response.data))
                 .catch(error => alert(error));
         };
@@ -62,7 +62,7 @@ const AdminHeader = forwardRef(({ currentTab, changeToTab }, ref) => {
 
                         </div>
                         <div className="user-wallet w-50">
-                            <p>Money hehe</p>
+                            <p>{balance}</p>
                         </div>
                     </div>
                     <div className="header-user-action-icon w-25">
