@@ -41,6 +41,8 @@ import WalletPage from "./pages/WalletPage/WalletPage";
 import AvatarSettings from "./components/Profile/AvatarSettings/AvatarSettings";
 import ChatPage from "./pages/Community/ChatPage"; // Added by Phan NT Son
 import ChatHeader from "./pages/Community/ChatHeader"; // Added by Phan NT Son
+import AccountDetailsPage from "./components/AccountDetail/AccountDetailsPage"; // Added by TSHuy
+import PaymentResultPage from "./components/Payment/PaymentResultPage"; // Added by TSHuy
 
 function AppRoutes() {
   // Added by Phan NT Son 18-06-2025
@@ -85,7 +87,10 @@ function AppRoutes() {
     calMinimumHeight(); // Tính toán chiều cao tối thiểu khi component mount
     // Effect này chỉ chạy một lần duy nhất khi component được mount
     // vì mảng phụ thuộc là rỗng [].
-    console.log("hasVisited check running..." ,localStorage.getItem("hasVisited"));
+    console.log(
+      "hasVisited check running...",
+      localStorage.getItem("hasVisited")
+    );
     const hasVisited = localStorage.getItem("hasVisited");
     if (!hasVisited) {
       console.log("Returning user. Skipping splash screen.");
@@ -195,12 +200,16 @@ function AppRoutes() {
         >
           {/* START FROM HERE */}
           {/* Adjusted by Phan NT Son */}
-          {isAdminRoute && <AdminHeader
-            currentTab={adminTab}
-            changeToTab={handleAdminTabChange}
-            ref={headerHeight}
-          />}
-          {!isAdminRoute && !isChatRoute && <Header hideLogo={hideHeaderLogo} ref={headerHeight} />}
+          {isAdminRoute && (
+            <AdminHeader
+              currentTab={adminTab}
+              changeToTab={handleAdminTabChange}
+              ref={headerHeight}
+            />
+          )}
+          {!isAdminRoute && !isChatRoute && (
+            <Header hideLogo={hideHeaderLogo} ref={headerHeight} />
+          )}
 
           {!isAdminRoute && !isChatRoute && <Navbar ref={navHeight} />}
           {/* --!! */}
@@ -222,14 +231,17 @@ function AppRoutes() {
             <Route path="/register" element={<RegisterF />} />
             <Route path="/register-details" element={<RegisterDetailsF />} />
             <Route path="/transaction" element={<Transaction />} />
-            <Route path="/cart" element={<Cart minHeight={calculatedHeight} />} />
+            <Route
+              path="/cart"
+              element={<Cart minHeight={calculatedHeight} />}
+            />
             <Route path="/library" element={<Library />} />
             {/*adjusted by Bathanh - 15/6/2025 2:03PM */}
-            <Route path="/notifications" element={<NotifPage minimumHeight={calculatedHeight} />} />
             <Route
-              path="/admin"
-              element={<AdminDashboard tab={adminTab} />}
-            />{" "}
+              path="/notifications"
+              element={<NotifPage minimumHeight={calculatedHeight} />}
+            />
+            <Route path="/admin" element={<AdminDashboard tab={adminTab} />} />{" "}
             {/* Added by Phan NT Son */}
             {/* hoangvq */}
             <Route path="/sendpublisher" element={<SendPublisher />}></Route>
@@ -258,6 +270,8 @@ function AppRoutes() {
             {/* Notmebro */}
             <Route path="/wallet" element={<Wallet />} />
             <Route path="/chat" element={<Chat />} />
+            <Route path="/account" element={<AccountDetailsPage />} />
+            <Route path="/payment-result" element={<PaymentResultPage />} />
           </Routes>
         </div>
         {!isAdminRoute && !isChatRoute && <Footer ref={footerHeight} />}
@@ -367,7 +381,7 @@ function NotifPage({ minimumHeight }) {
 /**
  * @author Phan NT Son
  * @since 22-06-2025
- * @returns 
+ * @returns
  */
 function Chat() {
   return (
