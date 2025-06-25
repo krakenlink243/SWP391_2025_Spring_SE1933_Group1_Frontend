@@ -78,7 +78,7 @@ function SendUserFeedback() {
             });
             console.log(response);
             alert(response.data.message);
-            window.location.href="/";
+            window.location.href="/feedbackhub";
       
           }catch(error){
             console.log(error);
@@ -117,7 +117,7 @@ function SendUserFeedback() {
         </div>
         <div className='feedback-button'>
             <Button label="SEND" color='blue-button' onClick={handleSubmit}/>
-            <Button label="CANCEL" color='grey-button'/>
+            <Button label="CANCEL" color='grey-button' onClick={() => window.location.href="/feedbackhub"}/>
         </div>
     </div>
   )
