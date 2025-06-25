@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import './MainTab.css'
+import { useOnlineUsers } from "../../utils/OnlineUsersContext";
 
-function MainTab({setCurTab}) {
+function MainTab({ setCurTab }) {
     const [friendList, setFriendList] = useState([]);
+    const onlineUsers = useOnlineUsers();
+    console.log("List:" + onlineUsers);
 
     const getFriendList = () => {
         axios.get("http://localhost:8080/user/friends")
@@ -24,7 +27,7 @@ function MainTab({setCurTab}) {
                     /
                     <span className="friends-limit"> 285 </span>
                 </div>
-                <div className="btn-add-friend" onClick={()=> setCurTab(1)}>
+                <div className="btn-add-friend" onClick={() => setCurTab(1)}>
                     <span>
                         <i className="icon"></i>
                         Add a Friend
@@ -43,9 +46,13 @@ function MainTab({setCurTab}) {
                                 />
                             </div>
                             <div className="friend-name">{friend.friendName}</div>
+
                         </div>
                     ))
                 }
+                {onlineUsers.map(u => (
+                    <div key={u} className="text-white">{u} is online</div>
+                ))}
             </div>
         </div>
     );

@@ -42,6 +42,7 @@ import WalletPage from "./pages/WalletPage/WalletPage";
 import AvatarSettings from "./components/Profile/AvatarSettings/AvatarSettings";
 import ChatPage from "./pages/Community/ChatPage"; // Added by Phan NT Son
 import FriendsPage from "./pages/Friend/FriendsPage"; // Added by Phan NT Son
+import { OnlineUserProvider } from "./utils/OnlineUsersContext";
 
 function AppRoutes() {
   // Added by Phan NT Son 18-06-2025
@@ -160,7 +161,7 @@ function AppRoutes() {
    */
   const location = useLocation();
   const currentPath = location.pathname;
-  const needlessNavPath = ["/profile", "/chat", "/admin", "/sendfeedback","/wallet","/cart"];
+  const needlessNavPath = ["/profile", "/chat", "/admin", "/sendfeedback", "/wallet", "/cart", "/login", "/register"];
   const needlessHeaderPath = ["/admin", "/chat"];
   const needlessFooterPath = ["/admin", "/chat"];
   const isAddminPath = currentPath.startsWith("/admin")
@@ -415,8 +416,10 @@ function Friends({ minimumHeight }) {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AppRoutes />
-    </BrowserRouter>
+    <OnlineUserProvider>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
+    </OnlineUserProvider>
   );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import './BlockedTab.css';
+import axios from "axios";
 
 function BlockedTab() {
 

@@ -22,7 +22,7 @@ function NotificationBox() {
     }
   }, [isOpen]);
 
-  const getUnreadNotificationList = async () => {
+  const getUnreadNotificationList = () => {
     axios.get(`http://localhost:8080/notification/list/unread`)
       .then((response) => {
         setData(response.data);
