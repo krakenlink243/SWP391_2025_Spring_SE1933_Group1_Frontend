@@ -61,16 +61,11 @@ const AdminHeader = forwardRef(({ currentTab, changeToTab }, ref) => {
                             </div>
 
                         </div>
-<<<<<<< HEAD
-                        <div className="user-wallet w-50">
-                            <p>{balance}</p>
-=======
                         <div className="user-wallet w-100">
                             {balance.toLocaleString("en-US", {
                                 style: "currency",
                                 currency: "USD",
                             })}
->>>>>>> 43bd65b6b4a186812e6e9d895fe25daf90c4f733
                         </div>
                     </div>
                     <div className="header-user-action-icon w-25">
