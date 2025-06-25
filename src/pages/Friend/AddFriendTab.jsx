@@ -12,6 +12,8 @@ function AddFriendTab() {
     const [friendList, setFriendList] = useState([]);
     const [sentInvites, setSentInvites] = useState([]);
     const [copied, setCopied] = useState(false);
+    const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
+
 
     const getFriendList = () => {
         axios.get("http://localhost:8080/user/friends")
@@ -130,7 +132,7 @@ function AddFriendTab() {
                                     <div className="search-result-user d-flex flex-row">
                                         <div className="search-result-avatar">
                                             <img
-                                                src={searchResult.avatarUrl ? searchResult.avatarUrl : "https://avatars.fastly.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg"}
+                                                src={searchResult.avatarUrl ? searchResult.avatarUrl : UNKNOW_AVATAR_URL}
                                                 alt={searchResult.username}
                                             />
                                         </div>

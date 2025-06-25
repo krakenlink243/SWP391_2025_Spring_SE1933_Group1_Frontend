@@ -45,6 +45,7 @@ import ChatHeader from "./pages/Community/ChatHeader"; // Added by Phan NT Son
 import AccountDetailsPage from "./components/AccountDetail/AccountDetailsPage"; // Added by TSHuy
 import PaymentResultPage from "./components/Payment/PaymentResultPage"; // Added by TSHuy
 import FriendsPage from "./pages/Friend/FriendsPage"; // Added by Phan NT Son
+import { OnlineUserProvider } from "./utils/OnlineUsersContext";
 
 import FeedbackApprovePage from "./pages/FeedbackApprovePage";
 import FeedbackApproveDetails from "./pages/FeedbackApproveDetails";
@@ -170,14 +171,7 @@ function AppRoutes() {
    */
   const location = useLocation();
   const currentPath = location.pathname;
-  const needlessNavPath = [
-    "/profile",
-    "/chat",
-    "/admin",
-    "/sendfeedback",
-    "/wallet",
-    "/cart",
-  ];
+  const needlessNavPath = ["/profile", "/chat", "/admin", "/sendfeedback", "/wallet", "/cart", "/login", "/register"];
   const needlessHeaderPath = ["/admin", "/chat"];
   const needlessFooterPath = ["/admin", "/chat"];
   const isAddminPath = currentPath.startsWith("/admin");
@@ -481,8 +475,10 @@ function Friends({ minimumHeight }) {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AppRoutes />
-    </BrowserRouter>
+    <OnlineUserProvider>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
+    </OnlineUserProvider>
   );
 }
