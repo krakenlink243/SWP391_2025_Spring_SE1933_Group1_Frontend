@@ -2,6 +2,7 @@ import axios from "axios";
 import { sendMessage, connectSocket } from "../../services/chatSocketService";
 import { useEffect, useState, useRef } from "react";
 import './ChatBodyRight.css'
+import ChatHistory from "./ChatHistory";
 
 function ChatBodyRight({ friend }) {
 
@@ -9,7 +10,9 @@ function ChatBodyRight({ friend }) {
     const [messages, setMessages] = useState([]);
     const didConnectRef = useRef(false);
     const [conversation, setConversation] = useState();
+    const historyRef = useRef(null);
     const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
+
 
     const loadConversation = () => {
         axios.get(`http://localhost:8080/user/conversation/${friend.friendId}`)
@@ -40,10 +43,21 @@ function ChatBodyRight({ friend }) {
         };
     }, []);
 
+    useEffect(() => {
+        const container = historyRef.current;
+        if (!container) return;
+        // Scroll to very bottom
+        container.scrollTop = container.scrollHeight;
+    }, [
+        messages,                         // new live messages
+        conversation?.messages?.length    // newly loaded past messages
+    ]);
+
+
     const handleSend = () => {
         if (input.trim() === "") return;
         sendMessage(conversation.conversationId, currentUser, friend.friendName, input);
-        setMessages(prev => [...prev, { senderUsername: currentUser, content: input }]);
+        setMessages(prev => [...prev, { senderUsername: currentUser, content: input, sentAt: new Date().toISOString() }]);
         setInput("");
     };
 
@@ -62,32 +76,13 @@ function ChatBodyRight({ friend }) {
                                 {friend.friendName}
                             </div>
                         </div>
-                    </div>
-                    <div className="chat-history-scroll" style={{ height: "85%" }}>
                         <div className="padder-top"></div>
-                        {
-                            conversation && conversation.messages && conversation.messages.map((message, idx) => (
-                                <div key={idx}>{message.messageContent}</div>
-                            ))
-                        }
-                        {
-                            messages.map((message, idx) => (
-                                <div key={`new-${idx}`}>{message.content}</div>
-                            ))
-                        }
-                        <div className="chat-message-block is-friend">
-                            <div className="chat-speaker">
-
-                            </div>
-                            <div className="msg"></div>
-                        </div>
-                        <div className="chat-message-block is-user">
-                            <div className="chat-speaker">
-
-                            </div>
-                            <div className="msg"></div>
-
-                        </div>
+                    </div>
+                    <div className="chat-history-scroll" style={{ height: "85%" }} ref={historyRef}>
+                        <ChatHistory
+                            pastMessages={conversation?.messages || []}
+                            liveMessages={messages}
+                        />
 
                     </div>
                     <div className="chat-entry d-flex flex-row" style={{ height: "10%" }}>

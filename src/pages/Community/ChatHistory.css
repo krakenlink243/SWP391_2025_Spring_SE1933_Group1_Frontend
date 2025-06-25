@@ -1,0 +1,59 @@
+.chat-history {
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.day-header {
+    text-align: center;
+    margin: 1rem 0;
+    font-weight: bold;
+    color: #666;
+}
+
+.message-group {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.message-group.user {
+    align-items: flex-end;
+}
+
+.message-group.friend {
+    align-items: flex-start;
+}
+
+.sender-name {
+    font-size: 0.8rem;
+    margin-bottom: 0.2rem;
+    color: #333;
+}
+
+.bubble {
+    border-radius: 8px;
+    padding: 0.5rem;
+    max-width: 60%;
+    background: #f1f1f1;
+}
+
+.message-group.user .bubble {
+    background: #cfe9ff;
+}
+
+.msg-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
+}
+
+.msg-text {
+    word-break: break-word;
+}
+
+.msg-time {
+    font-size: 0.7rem;
+    margin-left: 0.5rem;
+    align-self: flex-end;
+    color: #999;
+}

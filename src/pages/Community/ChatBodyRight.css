@@ -10,11 +10,12 @@
     border-left: none;
     box-shadow: inset 1px 1px 0px rgba(71, 71, 71, .3);
     background-color: #1c232c;
+    position: relative;
 }
 
 .chat-tab .friend-box {
     width: 189px;
-    height: 36px;
+    height: 100%;
     position: relative;
     display: flex;
     align-items: center;
@@ -51,9 +52,54 @@
     font-size: 14px;
 }
 
-.chat-history-scroll .padder-top {
+.chat-tab .padder-top {
     background: linear-gradient(to right, #3a3e46 80%, #2c3037 100%);
     min-height: 4px;
     transition: background-color .2s ease-in-out;
-    position: relative;
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    width: 100%;
+    left: 0;
+    right: 0;
+}
+
+/*
+webkit
+*/
+
+/* width of the entire scrollbar */
+.chat-history-scroll::-webkit-scrollbar {
+    height: 12px;
+    width: 14px;
+    background: transparent;
+    z-index: 12;
+    overflow: visible;
+}
+
+/* the track (background) of the scrollbar */
+.chat-history-scroll::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 4px;
+
+}
+
+/* the draggable thumb */
+.chat-history-scroll::-webkit-scrollbar-thumb {
+    width: 10px;
+    background-color: #434953;
+    border-radius: 10px;
+    border: 4px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    transition: background-color .32s ease-in-out;
+    margin: 4px;
+    min-height: 32px;
+    min-width: 32px;
+}
+
+/* thumb when hovered */
+.chat-history-scroll::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+    width: 3px;
+
 }

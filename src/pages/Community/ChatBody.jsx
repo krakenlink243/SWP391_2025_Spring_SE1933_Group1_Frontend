@@ -19,7 +19,7 @@ function ChatBody({ bodyH }) {
         });
     }, [])
     return (
-        <div className="chat-main d-flex flex-row p-0" style={{ height: `${bodyH}px` }}>
+        <div className="chat-main split d-flex flex-row p-0" style={{ height: `${bodyH}px` }}>
             <ChatBodyLeft
                 setCurFriendChat={setCurFriendChat}
             />
