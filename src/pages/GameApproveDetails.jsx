@@ -9,6 +9,7 @@ import axios from 'axios'
 import { useParams } from 'react-router'
 import { PhotoProvider,PhotoView } from 'react-photo-view'
 import "react-photo-view/dist/react-photo-view.css";
+import { createNotification } from '../services/notification'
 function GameApproveDetails() {
   const gameId = useParams().gameId;
   const [downloadLink,setDownloadLink] = useState('');
@@ -26,7 +27,8 @@ function GameApproveDetails() {
     mediaUrls: [],
     tags: [],
     gameUrl: '',
-    publisherName:''
+    publisherName:'',
+    publisherId:''
   })
   useEffect(() => {
     const getGameDetails = async() =>{
@@ -61,14 +63,19 @@ function GameApproveDetails() {
     }
   }
   const handleDecline = async() =>{
-    try{
-      const response = await axios.patch(`http://localhost:8080/request/game/reject/${gameId}`);
-      console.log(response.data);
-      alert("Game Declined");
-      window.location.href = '/aprrovegame'
-    }catch(error){
-      console.log(error);
-    }
+    const answer = window.prompt("Send answer to" + " " + formData.publisherName)
+      if(answer.trim() !== ""){
+        try {
+          createNotification(formData.publisherId,"Game Decline Response","Answer for "+formData.gameName+": " + answer)
+          const response = await axios.patch(`http://localhost:8080/request/game/reject/${gameId}`);
+          console.log("Approved request:", response.data)
+        } catch (err) {
+          console.error("Error approving request:", err);
+        }
+        window.location.href = '/aprrovegame'
+      }else{
+        alert('Please enter answer')
+      }
   }
   const handleGetLinkDownload = async() =>{
     try{

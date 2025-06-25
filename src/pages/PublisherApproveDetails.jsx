@@ -8,6 +8,7 @@ import { trimValue } from '../utils/validators'
 import ImageUploading from 'react-images-uploading'
 import './ApplyToPublisher.css'
 import axios from 'axios'
+import { createNotification } from '../services/notification'
 function PublisherApproveDetails() {
   const publisherId = useParams().publisherId
   const [formData,setFormData] = useState(
@@ -17,7 +18,8 @@ function PublisherApproveDetails() {
       address:"",
       socialNumber:"",
       country:"",
-      imageUrl:""
+      imageUrl:"",
+      userId:"",
     }
   )
   const fetchData = async () => {
@@ -42,14 +44,19 @@ function PublisherApproveDetails() {
     }
   };
   const handleDecline = async (requestId) =>{
-    try {
-      const response = await axios.patch(`http://localhost:8080/request/publisher/reject/${requestId}`);
-      console.log("Approved request:", response.data);
-      alert("Publisher Declined")
-      window.location.href=`/approvepublisher/`
-    } catch (err) {
-      console.error("Error approving request:", err);
-    }
+    const answer = window.prompt("Send answer to" + " " + formData.legalName + publisherId)
+      if(answer.trim() !== ""){
+        try {
+          createNotification(formData.userId,"Publisher Apply Response","Answer for your publisher apply "+formData.publisherName+": " + answer)
+          const response = await axios.patch(`http://localhost:8080/request/publisher/reject/${requestId}`);
+          console.log("Approved request:", response.data)
+        } catch (err) {
+          console.error("Error approving request:", err);
+        }
+        window.location.href=`/approvepublisher`
+      }else{
+        alert('Please enter answer')
+      }
   }
   return (
     <>

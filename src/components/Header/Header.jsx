@@ -63,7 +63,8 @@ const Header = forwardRef((props, ref) => {
           )}
 
           <a className="header-nav-item" href={token && '/chat'}>{token ? "CHAT" : "ABOUT"}</a>
-          {role != 'Admin' && <a className="header-nav-item" href="/sendfeedback">SUPPORT</a>}
+          {role != 'Admin' && <a className="header-nav-item" href="/feedbackhub">FEEDBACK HUB</a>}
+          {role === 'Admin' && <a className="header-nav-item" href="/aprrovegame">ADMIN TOOLS</a>}
         </div>
         <div className={`header-user-action col-lg-${section[3]}`}>
           {!token ? (
