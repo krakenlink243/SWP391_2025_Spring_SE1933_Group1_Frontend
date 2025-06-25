@@ -5,35 +5,52 @@ import "./AccountDetailsPage.css";
 const AccountDetailsPage = () => {
   const [account, setAccount] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [amount, setAmount] = useState(50000); // Số tiền nạp mặc định
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // === STATE CHO MODAL NẠP TIỀN (BẰNG USD) ===
+  const [amountUsd, setAmountUsd] = useState(5); // Số tiền nạp mặc định là $5
+  const [bankCode, setBankCode] = useState("");
+  const [language, setLanguage] = useState("vn");
+
   useEffect(() => {
-    axios
-      .get(
-        `http://localhost:8080/user/profile/${localStorage.getItem("userId")}`
-      )
-      .then((res) => setAccount(res.data))
-      .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
+    // Gọi API để lấy thông tin tài khoản
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      axios
+        .get(`http://localhost:8080/user/profile/${userId}`)
+        .then((res) => setAccount(res.data))
+        .catch((err) => console.error(err))
+        .finally(() => setLoading(false));
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   const handleAddFunds = async () => {
-    if (amount <= 0) {
-      alert("Please enter a valid amount.");
-      return;
-    }
-    if (amount < 5) {
-      alert("Minimum ammount is 5$");
+    if (amountUsd < 5) {
+      // Giới hạn số tiền nạp tối thiểu là $5
+      alert("Minimum funding amount is $5.");
       return;
     }
     try {
+      // Xây dựng các tham số cho request
+      const params = {
+        amount: amountUsd,
+        language: language,
+      };
+      if (bankCode) {
+        params.bankCode = bankCode;
+      }
+
       const response = await axios.post(
-        `http://localhost:8080/api/v1/payments/create-vnpay-payment?amount=${amount}`
+        `http://localhost:8080/api/v1/payments/create-vnpay-payment`,
+        null,
+        { params: params }
       );
+
       const { paymentUrl } = response.data;
       if (paymentUrl) {
-        window.location.href = paymentUrl;
+        window.location.href = paymentUrl; // Chuyển hướng đến cổng thanh toán
       }
     } catch (error) {
       console.error("Failed to create payment URL:", error);
@@ -51,20 +68,18 @@ const AccountDetailsPage = () => {
             Account details
           </a>
           <a href="#">Store preferences</a>
-          {/* ... */}
         </aside>
 
         <main className="account-info-panel">
           <h1>{account?.username}'s Account</h1>
-
           <section className="info-section purchase-history">
             <h3>STORE & PURCHASE HISTORY</h3>
             <div className="wallet-balance">
               <span>Wallet Balance</span>
               <strong>
-                {new Intl.NumberFormat("vi-VN", {
+                {new Intl.NumberFormat("en-US", {
                   style: "currency",
-                  currency: "USD",
+                  currency: "USD", // Hiển thị số dư bằng USD
                 }).format(account?.walletBalance || 0)}
               </strong>
             </div>
@@ -78,34 +93,53 @@ const AccountDetailsPage = () => {
               <a href="#">View purchase history</a>
             </div>
           </section>
-
           <section className="info-section contact-info">
             <h3>CONTACT INFO</h3>
             <p>Email address: {account?.email}</p>
-            {/* ... các thông tin khác ... */}
+            <a href="#">Manage email preferences</a>
           </section>
         </main>
       </div>
 
-      {/* Modal để nạp tiền */}
+      {/* MODAL NẠP TIỀN (LÀM VIỆC VỚI USD) */}
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h2>Add Funds to Wallet</h2>
+            <h2>Add Funds to Your Steam Wallet</h2>
             <div className="amount-options">
-              <button onClick={() => setAmount(50)}>50$</button>
-              <button onClick={() => setAmount(100)}>100$</button>
-              <button onClick={() => setAmount(200)}>200$</button>
+              <button onClick={() => setAmountUsd(5)}>$5.00</button>
+              <button onClick={() => setAmountUsd(10)}>$10.00</button>
+              <button onClick={() => setAmountUsd(25)}>$25.00</button>
+              <button onClick={() => setAmountUsd(50)}>$50.00</button>
+              <button onClick={() => setAmountUsd(100)}>$100.00</button>
             </div>
+
             <input
               type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              placeholder="Or enter an amount"
+              value={amountUsd}
+              onChange={(e) => setAmountUsd(e.target.value)}
+              placeholder="Or enter an amount (USD)"
+              min="5" // Đặt giá trị tối thiểu
             />
-            <div className="modal-actions">
+
+            <div className="form-group-modal">
+              <label htmlFor="bankCode">Bank (Optional)</label>
+              <select
+                id="bankCode"
+                value={bankCode}
+                onChange={(e) => setBankCode(e.target.value)}
+              >
+                <option value="">Select a bank...</option>
+                <option value="NCB">NCB (Recommended)</option>
+                <option value="VNBANK">Ngân hàng Nội địa</option>
+                <option value="VnPayQR">VNPAYQR</option>
+                <option value="VISA">VISA</option>
+              </select>
+            </div>
+
+            <div className="form-actions">
               <button onClick={handleAddFunds} className="action-btn primary">
-                Continue to VNPay
+                Add Funds
               </button>
               <button
                 onClick={() => setIsModalOpen(false)}

@@ -220,3 +220,27 @@
     gap: 15px;
     flex-wrap: wrap;
 }
+/* ... các style cũ ... */
+
+/* Style cho các group trong modal */
+.form-group-modal {
+    margin-bottom: 20px;
+  }
+  
+  .form-group-modal label {
+    display: block;
+    font-size: 14px;
+    color: #acb2b8;
+    margin-bottom: 8px;
+  }
+  
+  .form-group-modal select {
+    width: 100%;
+    padding: 12px;
+    background-color: #111a24;
+    border: 1px solid #000;
+    color: #fff;
+    font-size: 16px;
+    box-sizing: border-box;
+    border-radius: 3px;
+  }
