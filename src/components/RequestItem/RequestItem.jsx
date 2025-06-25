@@ -11,8 +11,8 @@ function RequestItem({requestName,onApprove,onDecline,onCheckChange,requestId,is
                 onClick={() => onCheckChange(requestId)} // ✅ Dynamically update check state from parent
       />
       <div style={{cursor:"pointer"}} className='request-name' onClick={onClicked}>{requestName} </div>
-      <img src="/icons/Decline.png" alt="" onClick={onDecline} />
       <img src="/icons/Approve.png" alt="" onClick={onApprove}/>
+      <img src="/icons/Decline.png" alt="" onClick={onDecline} />
     </div>
   )
 }
