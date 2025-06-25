@@ -36,12 +36,13 @@ function NotificationItem({ notification, onReload }) {
       className={`notiflist-item ${read ? '' : 'unread'} d-flex flex-row w-100 justify-content-between p-2`}
       onClick={handleClick}
     >
+      {!read && <span className="notiflist-dot" />}
+
       <div>
         <div className="notiflist-type">{notification.notificationType}</div>
         <div className="notiflist-content">{notification.notificationContent}</div>
       </div>
       <div>
-        {!read && <span className="notiflist-dot" />}
         <div
           className="notiflist-delete-btn"
           onClick={e => {

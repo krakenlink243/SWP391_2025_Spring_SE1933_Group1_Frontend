@@ -1,0 +1,14 @@
+.feedback-hub-container{
+    width: 60%;
+    margin: 0 auto;
+}
+.feedback-hub-title{
+    margin-top: 50px;
+    color: white;
+}
+.your-feedback{
+    margin-top: 50px;
+}
+.your-feedback h2{
+    color: white
+}

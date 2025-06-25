@@ -23,22 +23,7 @@
 
   <script type="module" src="/src/main.jsx"></script>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const loaderWrapper = document.getElementById("loader-wrapper");
-      const startupAudio = new Audio("/sounds/startup-sound.mp3");
-      startupAudio.load();
-      const startApp = () => {
-        if (!loaderWrapper.classList.contains("hidden")) {
-          startupAudio.play().catch((error) => {
-            console.error("Lỗi phát âm thanh:", error);
-          });
-          loaderWrapper.classList.add("hidden");
-        }
-      };
-      loaderWrapper.addEventListener("click", startApp, { once: true });
-    });
-  </script>
+
 </body>
 
 </html>

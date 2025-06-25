@@ -16,7 +16,7 @@ import axios from "axios";
 const AdminHeader = forwardRef(({ currentTab, changeToTab }, ref) => {
     const [showLogout, setShowLogout] = useState(false);
     const { t, i18n } = useTranslation();
-    const section = [2, 2, 4, 3, 1]
+    const section = [2, 2, 4, 2, 2]
 
     const changeLanguage = (lng) => {
         i18n.changeLanguage(lng);
@@ -28,7 +28,7 @@ const AdminHeader = forwardRef(({ currentTab, changeToTab }, ref) => {
         const getUserBalance = () => {
             axios.get(`http://localhost:8080/user/wallet`)
                 .then((response) => setBalance(response.data))
-                .catch(error => alert(error));
+                .catch((error) => alert(error));
         };
         if (userId) {
             getUserBalance();
@@ -54,19 +54,28 @@ const AdminHeader = forwardRef(({ currentTab, changeToTab }, ref) => {
                             <div className="w-25 px-2">
                                 <NotificationBox />
                             </div>
-                            <div className="w-50 px-2">
+                            <div className="w-50 px-2 d-flex flex-row-reverse">
                                 <UserDropBox
                                     userBalance={balance}
                                 />
                             </div>
 
                         </div>
+<<<<<<< HEAD
                         <div className="user-wallet w-50">
                             <p>{balance}</p>
+=======
+                        <div className="user-wallet w-100">
+                            {balance.toLocaleString("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                            })}
+>>>>>>> 43bd65b6b4a186812e6e9d895fe25daf90c4f733
                         </div>
                     </div>
                     <div className="header-user-action-icon w-25">
-                        <p className="">Icon</p>
+                        <img src={localStorage.getItem("avatarUrl")}></img>
+
                     </div>
 
                 </div>

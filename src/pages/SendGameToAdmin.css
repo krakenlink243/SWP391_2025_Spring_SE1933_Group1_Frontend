@@ -200,5 +200,48 @@
   .price-input{
     width: 78% !important;
   }
+  .image-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  .remove-icon {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: #3D4450;
+    border-radius: 10%;
+    padding: 2px 6px;
+    cursor: pointer;
+    display: none;
+  }
+  
+  .image-wrapper:hover .remove-icon {
+    display: block;
+  }
+  .tag-selector {
+  width: 80%;
+  }
+  .my-select__control,.my-select__menu,.my-select__menu-list {
+  background-color: #1A1C1F !important; 
+  color: white;
+  }
+  .my-select__option--is-focused {
+  background-color: transparent !important;
+  }
+  .my-select__option:hover{
+    background-color: gray !important;
+  }
+  .my-select__multi-value{
+    background-color: #232529 !important;
+  }
+  .my-select__multi-value__label{
+    color: white !important;
+  }
+
+
+
+
+  
+    
   
   

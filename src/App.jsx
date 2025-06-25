@@ -7,8 +7,9 @@ import {
   Outlet,
   Link,
   useLocation,
+  Navigate,
 } from "react-router-dom"; // Import các component của router
-import { useState, useEffect, useRef } from "react"; // Import useState và useEffect từ React
+import { useState, useEffect, loadingState, useRef, useMemo } from "react"; // Import useState và useEffect từ React
 import axios from "axios"; // Import axios để thực hiện các yêu cầu HTTP
 import "./App.css";
 
@@ -39,80 +40,117 @@ import EditProfilePage from "./components/Profile/EditProfilePage";
 import SendUserFeedback from "./pages/SendUserFeedback";
 import Library from "./pages/LibraryPage/Library";
 import WalletPage from "./pages/WalletPage/WalletPage";
+import AvatarSettings from "./components/Profile/AvatarSettings/AvatarSettings";
+import ChatPage from "./pages/Community/ChatPage"; // Added by Phan NT Son
+import ChatHeader from "./pages/Community/ChatHeader"; // Added by Phan NT Son
+import AccountDetailsPage from "./components/AccountDetail/AccountDetailsPage"; // Added by TSHuy
+import PaymentResultPage from "./components/Payment/PaymentResultPage"; // Added by TSHuy
+import FriendsPage from "./pages/Friend/FriendsPage"; // Added by Phan NT Son
 
+import FeedbackApprovePage from "./pages/FeedbackApprovePage"; 
+import FeedbackApproveDetails from "./pages/FeedbackApproveDetails"; 
+import FeedbackHub from "./pages/FeedbackHub";
+import UserFeedback from "./pages/UserFeedback";
 function AppRoutes() {
   // Added by Phan NT Son 18-06-2025
   const headerHeight = useRef(null);
   const navHeight = useRef(null);
   const footerHeight = useRef(null);
+
   const [calculatedHeight, setCalculatedHeight] = useState(0);
 
   const calMinimumHeight = () => {
-    if (headerHeight.current && navHeight.current) {
-      const windowHeight = window.screen.availHeight;
-      const headerH = headerHeight.current.offsetHeight;
-      const navH = navHeight.current.offsetHeight;
-      const footH = footerHeight.current.offsetHeight;
+    const windowHeight = window.innerHeight;
+    const headerH = headerHeight.current ? headerHeight.current.offsetHeight : 0;
+    const navH = navHeight.current ? navHeight.current.offsetHeight : 0;
+    const footH = footerHeight.current ? footerHeight.current.offsetHeight : 0;
+    console.log("headerH:", headerH, "navH:", navH, "footH:", footH);
 
-      console.log(windowHeight);
-      console.log(headerH);
-      console.log(navH);
-      console.log(footH);
-      setCalculatedHeight(windowHeight - headerH - navH - footH);
-    }
+
+    setCalculatedHeight(windowHeight - headerH - navH - footH);
   };
   // --!!
 
   // Renamed by Phan NT Son
   console.log("App component is rendering..."); // DEBUG: Kiểm tra xem component có render không
 
-  // --- LOGIC CHO SPLASH SCREEN ---
-  const [loadingState, setLoadingState] = useState({
-    isFirstVisit: false,
-    isExiting: false,
-    isFinished: false,
-  });
+  // --- LOGIC CHO SPLASH SCREEN  ---
+
+  // Sử dụng một state duy nhất để quản lý các giai đoạn của splash screen
+  // 'pending': Trạng thái chờ, chưa biết là người dùng cũ hay mới
+  // 'active': Là người dùng mới, đang hiển thị splash screen
+  // 'exiting': Đang trong quá trình mờ dần để thoát
+  // 'finished': Đã kết thúc, hiển thị ứng dụng chính
+  const [splashStage, setSplashStage] = useState("pending");
+  const audioRef = useRef(null); // Giữ tham chiếu đến đối tượng Audio
 
   useEffect(() => {
-    calMinimumHeight();
+    checkToken(); // Kiểm tra token khi component mount
+    calMinimumHeight(); // Tính toán chiều cao tối thiểu khi component mount
 
-    console.log("useEffect is running..."); // DEBUG: Kiểm tra xem effect có chạy không
+    // Effect này chỉ chạy một lần duy nhất khi component được mount
+    // vì mảng phụ thuộc là rỗng [].
+    console.log("hasVisited check running...", localStorage.getItem("hasVisited"));
     const hasVisited = localStorage.getItem("hasVisited");
-
     if (!hasVisited) {
-      console.log("First visit detected. Starting splash screen timer.");
-      setLoadingState((prevState) => ({ ...prevState, isFirstVisit: true }));
+      console.log("Returning user. Skipping splash screen.");
+      setSplashStage("finished");
+    } else {
+      // Nếu là người dùng mới, kích hoạt splash screen
+      console.log("First visit detected. Activating splash screen.");
+      setSplashStage("active");
 
-      const transitionTimer = setTimeout(() => {
-        console.log("5s timer finished. Starting transition.");
-        setLoadingState((prevState) => ({ ...prevState, isExiting: true }));
-      }, 2000); // 5 giây
+      // --- Xử lý âm thanh ---
+      audioRef.current = new Audio("/sounds/boot_sound.mp3");
+      audioRef.current.load();
 
+      const playAudioOnInteraction = () => {
+        if (audioRef.current) {
+          audioRef.current
+            .play()
+            .catch((err) => console.error("Audio play failed:", err));
+        }
+        // Gỡ bỏ listener sau lần tương tác đầu tiên để tránh phát lại
+        window.removeEventListener("click", playAudioOnInteraction);
+        window.removeEventListener("keydown", playAudioOnInteraction);
+      };
+
+      // Thêm trình lắng nghe sự kiện
+      window.addEventListener("click", playAudioOnInteraction);
+      window.addEventListener("keydown", playAudioOnInteraction);
+
+      // --- Xử lý Timers ---
+      // Timer 1: Sau 6 giây, bắt đầu quá trình thoát (fade out)
+      const exitTimer = setTimeout(() => {
+        console.log("Main splash duration finished. Starting transition.");
+        setSplashStage("exiting");
+      }, 6000); // 6 giây
+
+      // Timer 2: Sau 7 giây (6s + 1s fade out), kết thúc hoàn toàn
       const finishTimer = setTimeout(() => {
         console.log("Transition finished. Hiding splash screen.");
-        setLoadingState((prevState) => ({ ...prevState, isFinished: true }));
+        setSplashStage("finished");
         localStorage.setItem("hasVisited", "true");
-      }, 3000);
+      }, 7000); // 7 giây
 
+      // --- Hàm dọn dẹp (Cleanup Function) ---
+      // Hàm này sẽ được gọi khi component bị unmount (ví dụ: chuyển trang)
+      // để tránh rò rỉ bộ nhớ.
       return () => {
-        clearTimeout(transitionTimer);
+        console.log("Cleaning up splash screen effects.");
+        clearTimeout(exitTimer);
         clearTimeout(finishTimer);
+        window.removeEventListener("click", playAudioOnInteraction);
+        window.removeEventListener("keydown", playAudioOnInteraction);
       };
-    } else {
-      console.log("Returning user. Skipping splash screen.");
-      setLoadingState({
-        isFirstVisit: false,
-        isExiting: false,
-        isFinished: true,
-      });
     }
+  }, []); // <-- MẢNG RỖNG RẤT QUAN TRỌNG!
 
-    checkToken();
-  }, [loadingState.isFinished]);
-
+  // Các biến được suy ra từ state, giúp code ở phần JSX dễ đọc hơn
   const shouldRenderSplash =
-    loadingState.isFirstVisit && !loadingState.isFinished;
-  const hideHeaderLogo = loadingState.isFirstVisit && !loadingState.isFinished;
+    splashStage === "active" || splashStage === "exiting";
+  const isSplashExiting = splashStage === "exiting";
+  const hideHeaderLogo = shouldRenderSplash;
   // --- KẾT THÚC LOGIC SPLASH SCREEN ---
 
   // Added by Phan NT Son
@@ -129,12 +167,32 @@ function AppRoutes() {
    * @author Phan NT Son
    */
   const location = useLocation();
-  const isAdminRoute = location.pathname.startsWith("/admin");
-  const isProfilePage = location.pathname.startsWith("/profile");
+  const currentPath = location.pathname;
+  const needlessNavPath = ["/profile", "/chat", "/admin", "/sendfeedback","/wallet","/cart"];
+  const needlessHeaderPath = ["/admin", "/chat"];
+  const needlessFooterPath = ["/admin", "/chat"];
+  const isAddminPath = currentPath.startsWith("/admin")
+
   const [adminTab, setAdminTab] = useState("Request Management");
   const handleAdminTabChange = (tab) => {
     setAdminTab(tab);
   };
+
+  const isNeedlessHeader = useMemo(
+    () => needlessHeaderPath.some((p) => currentPath.startsWith(p)),
+    [currentPath]
+  );
+
+  const isNeedlessNav = useMemo(
+    () => needlessNavPath.some((p) => currentPath.startsWith(p)),
+    [currentPath]
+  );
+
+  const isNeedlessFooter = useMemo(
+    () => needlessFooterPath.some((p) => currentPath.startsWith(p)),
+    [currentPath]
+  );
+
   //--!!
 
   /**
@@ -146,31 +204,30 @@ function AppRoutes() {
     const currentTime = Math.floor(Date.now() / 1000);
     if (expDate === null || expDate < currentTime) {
       localStorage.clear();
+      return <Navigate to={"/"} replace />
     }
   };
 
+
   return (
-    <div className={`app-container${isProfilePage ? " transparent" : ""}`}>
+    <div className="app-wrapper">
       {" "}
-      <div className="app-container">
-        {shouldRenderSplash && (
-          <SplashScreen isExiting={loadingState.isExiting} />
-        )}
+      <div className={`app-container`}>
+        {shouldRenderSplash && <SplashScreen isExiting={isSplashExiting} />}
         <div
-          className={`main-app-content ${
-            !loadingState.isFinished ? "hidden" : ""
-          }`}
+          className={`main-app-content ${splashStage !== "finished" ? "hidden" : ""
+            }`}
         >
+          {/* START FROM HERE */}
           {/* Adjusted by Phan NT Son */}
-          {isAdminRoute ? (
-            <AdminHeader
-              currentTab={adminTab}
-              changeToTab={handleAdminTabChange}
-            />
-          ) : (
-            <Header hideLogo={hideHeaderLogo} />
-          )}
-          {!isAdminRoute && <Navbar />}
+          {isAddminPath && <AdminHeader
+            currentTab={adminTab}
+            changeToTab={handleAdminTabChange}
+            ref={headerHeight}
+          />}
+          {!isNeedlessHeader && <Header hideLogo={hideHeaderLogo} ref={headerHeight} />}
+
+          {!isNeedlessNav && <Navbar ref={navHeight} />}
           {/* --!! */}
 
           {/* Remove BrowserRouter by Phan NT Son */}
@@ -191,17 +248,20 @@ function AppRoutes() {
             <Route path="/register-details" element={<RegisterDetailsF />} />
             <Route path="/transaction" element={<Transaction />} />
             <Route path="/transaction/detail/:transactionId" element={<TransactionDetail />} />
-            <Route path="/cart" element={<Cart />} />
+            <Route
+              path="/cart"
+              element={<Cart minHeight={calculatedHeight} />}
+            />
             <Route path="/library" element={<Library />} />
             {/*adjusted by Bathanh - 15/6/2025 2:03PM */}
-            <Route path="/notifications" element={<NotificationList />} />
             <Route
-              path="/admin"
-              element={<AdminDashboard tab={adminTab} />}
-            />{" "}
+              path="/notifications"
+              element={<NotifPage minimumHeight={calculatedHeight} />}
+            />
+            <Route path="/admin" element={<AdminDashboard tab={adminTab} />} />{" "}
             {/* Added by Phan NT Son */}
             {/* hoangvq */}
-            <Route path="/sendpublisher" element={<SendPublisher />}></Route>
+            <Route path="/sendpublisher" element={<SendPublisher publiserId={localStorage.getItem('userId')} />}></Route>
             <Route
               path="/approvepublisher"
               element={<ApprovePublisher />}
@@ -211,6 +271,10 @@ function AppRoutes() {
               element={<ApprovePublisherDetails />}
             ></Route>
             <Route path="/sendfeedback" element={<SendFeedback/>}></Route>
+            <Route path="/approvefeedback" element={<ApproveFeedback />}></Route>
+            <Route path="/approvefeedback/:feedbackId" element={<ApproveFeedbackDetails />}></Route>
+            <Route path="/feedbackhub/:feedbackId" element={<UserFeedbackDetails />}></Route>
+            <Route path="/feedbackhub" element={<FeeedbackHub />}></Route>
             {/* hoangvq */}
             <Route path="/profile" element={<ProfilePage />} />
             {/* Added by TSHUY */}
@@ -219,12 +283,20 @@ function AppRoutes() {
               path="/profile/:userId/edit/info"
               element={<EditProfilePage />}
             />
+            <Route
+              path="/profile/:userId/edit/avatar"
+              element={<AvatarSettings />}
+            />
             {/* Added by TSHUY */}
             {/* Notmebro */}
             <Route path="/wallet" element={<Wallet />} />
+            <Route path="/chat" element={<Chat />} />
+            <Route path="/account" element={<AccountDetailsPage />} />
+            <Route path="/payment-result" element={<PaymentResultPage />} />
+            <Route path="/profile/friends" element={<Friends minimumHeight={calculatedHeight} />} />
           </Routes>
         </div>
-        <Footer /> {/* Added by TSHUY */}
+        {!isNeedlessFooter && <Footer ref={footerHeight} />}
       </div>
     </div>
   );
@@ -236,7 +308,7 @@ function ApproveDetailsF() {
   return <GameApproveDetails />;
 }
 function SendPublisher() {
-  return <ApplyToPublisher />;
+  return <ApplyToPublisher publisherId={localStorage.getItem('userId')} />;
 }
 function ApprovePublisher() {
   return <PublisherApprovePage />;
@@ -244,8 +316,20 @@ function ApprovePublisher() {
 function ApprovePublisherDetails() {
   return <PublisherApproveDetails />;
 }
-function SendFeedback(){
-  return <SendUserFeedback/>
+function SendFeedback() {
+  return <SendUserFeedback />;
+}
+function ApproveFeedback(){
+  return <FeedbackApprovePage />;
+}
+function ApproveFeedbackDetails(){
+  return <FeedbackApproveDetails />;
+}
+function UserFeedbackDetails(){
+  return <UserFeedback />;
+}
+function FeeedbackHub(){
+  return <FeedbackHub />;
 }
 function LoginF() {
   return <Login />;
@@ -326,6 +410,37 @@ function NotifPage({ minimumHeight }) {
       </div>
     </div>
   );
+}
+
+/**
+ * @author Phan NT Son
+ * @since 22-06-2025
+ * @returns
+ */
+function Chat() {
+  return (
+    <div>
+      <ChatPage />
+    </div>
+  );
+}
+
+/**
+ * @author Phan NT Son
+ * @since 23-06-2025
+ * @returns 
+ */
+function Friends({ minimumHeight }) {
+  return (
+    <div className="container-fluid" style={{ background: "url(https://community.fastly.steamstatic.com/public/images/friends/colored_body_top2.png?v=2) center top no-repeat #1b2838", minHeight: `${minimumHeight}px` }}>
+      <div className="row">
+        <div className="spacer col-lg-1"></div>
+        <div className="col-lg-10">
+          <FriendsPage />
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default function App() {

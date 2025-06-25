@@ -24,6 +24,7 @@ function GameApproveDetails() {
     shortDescription: '',
     fullDescription: '',
     mediaUrls: [],
+    tags: [],
     gameUrl: '',
     publisherName:''
   })
@@ -36,7 +37,7 @@ function GameApproveDetails() {
         // Get download link after formData is updated
         if(response.data.gameUrl) {
           try {
-            const downloadResponse = await axios.get(`http://localhost:8080/request/download/${response.data.gameUrl}`);
+            const downloadResponse = await axios.get(`http://localhost:8080/request/file/download/${response.data.gameUrl}`);
             console.log(downloadResponse.data);
             setDownloadLink(downloadResponse.data);
           } catch(error) {
@@ -51,7 +52,7 @@ function GameApproveDetails() {
   },[])
   const handleApprove = async() =>{
     try{
-      const response = await axios.patch(`http://localhost:8080/request/approvegame/${gameId}`);
+      const response = await axios.patch(`http://localhost:8080/request/game/approve/${gameId}`);
       console.log(response.data);
       alert("Game Approved");
       window.location.href = '/aprrovegame'
@@ -61,7 +62,7 @@ function GameApproveDetails() {
   }
   const handleDecline = async() =>{
     try{
-      const response = await axios.patch(`http://localhost:8080/request/game/approve/${gameId}`);
+      const response = await axios.patch(`http://localhost:8080/request/game/reject/${gameId}`);
       console.log(response.data);
       alert("Game Declined");
       window.location.href = '/aprrovegame'
@@ -93,7 +94,7 @@ function GameApproveDetails() {
             <input type="text" name="gameName" id="" value={formData.gameName} readOnly  />
             PRICE(*)
             <div>
-              <input type="text" name="price" id="" value={formData.price} readOnly  />
+              $ <input type="text" name="price" id="" value={formData.price} readOnly  />
             </div>
         </div>
       </div>
