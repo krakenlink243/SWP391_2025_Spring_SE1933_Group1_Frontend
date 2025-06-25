@@ -9,8 +9,18 @@ import axios from 'axios'
 import { validatePrice,validateEmty,validateMemory,trimValue,validateMedia } from '../utils/validators'
 import { PhotoProvider,PhotoView } from 'react-photo-view'
 import "react-photo-view/dist/react-photo-view.css";
+import Select from 'react-select';
+
 function SendGameToAdmin() {
   const [fileName,setFileName] = useState('UPLOAD');
+  const [showDropdown, setShowDropdown] = useState(false);
+  const tags = [
+  { value: 'rts', label: 'RTS' },
+  { value: 'strategy', label: 'Strategy' },
+  { value: 'rpg', label: 'RPG' },
+  { value: 'indie', label: 'Indie' },
+  // ...add all your tags here
+  ];
   const [formData,setFormData] = useState({
     gameName: '',
     price: '',
@@ -23,6 +33,7 @@ function SendGameToAdmin() {
     shortDescription: '',
     fullDescription: '',
     mediaUrls: [],
+    tags: [],
     gameUrl: '',
   })
   const fileRef = useRef(null);
@@ -165,6 +176,12 @@ function SendGameToAdmin() {
   const handleRemove = (indexToRemove) => {
     setArr(prev => prev.filter((_, i) => i !== indexToRemove));
   };  
+  const handleChangeTags = (e) => {
+    setFormData(prev => ({...prev,tags: e || []}));
+    console.log(formData.tags)
+  };
+
+
   return (
     <>
     <div className='game-application'>
@@ -180,6 +197,23 @@ function SendGameToAdmin() {
             <div>
               $ <input className='price-input' type="text" name="price" id="" value={formData.price} onChange={handleChange} />
             </div>
+            TAGS(*)
+            <div className="tag-selector">
+              <Select
+                options={tags}
+                isMulti
+                value={formData.tags}
+                onChange={handleChangeTags}
+                closeMenuOnSelect={true}
+                hideSelectedOptions={true}
+                isSearchable={false}
+                menuPlacement="bottom"
+                classNamePrefix="my-select"
+                // menuIsOpen={true}
+              />
+            </div>
+
+
         </div>
       </div>
       <div className='sys-req'>

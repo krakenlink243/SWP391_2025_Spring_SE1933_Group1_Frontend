@@ -38,9 +38,13 @@ import EditProfilePage from "./components/Profile/EditProfilePage";
 import SendUserFeedback from "./pages/SendUserFeedback";
 import Library from "./pages/LibraryPage/Library";
 import WalletPage from "./pages/WalletPage/WalletPage";
-
-
-
+import AvatarSettings from "./components/Profile/AvatarSettings/AvatarSettings";
+import ChatPage from "./pages/Community/ChatPage"; // Added by Phan NT Son
+import ChatHeader from "./pages/Community/ChatHeader"; // Added by Phan NT Son
+import FeedbackApprovePage from "./pages/FeedbackApprovePage"; 
+import FeedbackApproveDetails from "./pages/FeedbackApproveDetails"; 
+import FeedbackHub from "./pages/FeedbackHub";
+import UserFeedback from "./pages/UserFeedback";
 function AppRoutes() {
   // Added by Phan NT Son 18-06-2025
   const headerHeight = useRef(null);
@@ -231,7 +235,7 @@ function AppRoutes() {
             />{" "}
             {/* Added by Phan NT Son */}
             {/* hoangvq */}
-            <Route path="/sendpublisher" element={<SendPublisher />}></Route>
+            <Route path="/sendpublisher" element={<SendPublisher publiserId={localStorage.getItem('userId')} />}></Route>
             <Route
               path="/approvepublisher"
               element={<ApprovePublisher />}
@@ -241,6 +245,10 @@ function AppRoutes() {
               element={<ApprovePublisherDetails />}
             ></Route>
             <Route path="/sendfeedback" element={<SendFeedback/>}></Route>
+            <Route path="/approvefeedback" element={<ApproveFeedback />}></Route>
+            <Route path="/approvefeedback/:feedbackId" element={<ApproveFeedbackDetails />}></Route>
+            <Route path="/feedbackhub/:feedbackId" element={<UserFeedbackDetails />}></Route>
+            <Route path="/feedbackhub" element={<FeeedbackHub />}></Route>
             {/* hoangvq */}
             <Route path="/profile" element={<ProfilePage />} />
             {/* Added by TSHUY */}
@@ -271,7 +279,7 @@ function ApproveDetailsF() {
   return <GameApproveDetails />;
 }
 function SendPublisher() {
-  return <ApplyToPublisher />;
+  return <ApplyToPublisher publisherId={localStorage.getItem('userId')} />;
 }
 function ApprovePublisher() {
   return <PublisherApprovePage />;
@@ -288,7 +296,12 @@ function ApproveFeedback(){
 function ApproveFeedbackDetails(){
   return <FeedbackApproveDetails />;
 }
-
+function UserFeedbackDetails(){
+  return <UserFeedback />;
+}
+function FeeedbackHub(){
+  return <FeedbackHub />;
+}
 function LoginF() {
   return <Login />;
 }

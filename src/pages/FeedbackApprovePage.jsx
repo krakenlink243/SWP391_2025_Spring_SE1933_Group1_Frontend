@@ -5,6 +5,7 @@ import axios from 'axios';
 import RequestItem from '../components/RequestItem/RequestItem'
 import './AdminDashboard/GameApprovePage.css'
 import { createNotification } from '../services/notification';
+import { trimValue } from '../utils/validators';
 function FeedbackApprovePage() {
     const [totalPages, setTotalPages] = useState(1);
     const [loadedRequest,setLoadedRequest] = useState([]);
@@ -35,7 +36,9 @@ function FeedbackApprovePage() {
         if(answer.trim() !== ""){
           try {
             createNotification(senderId,"Feedback Answer","Answer for your feedback "+subject+": " + answer)
-            const response = await axios.patch(`http://localhost:8080/request/feedback/approve/${requestId}`);
+            const response = await axios.patch(`http://localhost:8080/request/feedback/approve/${requestId}`,{
+            response: trimValue(answer)
+          });
             console.log("Approved request:", response.data)
             fetchData();
           } catch (err) {

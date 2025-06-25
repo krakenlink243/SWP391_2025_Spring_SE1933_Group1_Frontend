@@ -6,10 +6,9 @@ import { PhotoProvider,PhotoView } from 'react-photo-view'
 import { useParams } from 'react-router'
 import axios from 'axios'
 import { createNotification } from '../services/notification'
-import { trimValue } from '../utils/validators'
-function FeedbackApproveDetails() {
+import PartHeading from '../components/PartHeading/PartHeading'
+function UserFeedback() {
     const feedbackId = useParams().feedbackId;
-    const [senderId,setSenderId] = useState("");
     const [arr,setArr] = useState([]);
     const [userName,setUserName] = useState("");
     const [formData,setFormData] = useState({
@@ -21,49 +20,31 @@ function FeedbackApproveDetails() {
     useEffect(() => {
         async function fetchFeedbackDetails() {
             try {
-                const response = await axios.get(`http://localhost:8080/request/feedback/details/${feedbackId}`);
+                const response = await axios.get(`http://localhost:8080/request/feedback/user/details/${feedbackId}`);
                 setFormData(response.data);
                 setArr(response.data.mediaUrls);
                 setUserName(response.data.userName);
-                setSenderId(response.data.userId);
             } catch (error) {
                 console.error('Error fetching feedback details:', error);
             }
         }
         fetchFeedbackDetails();
     }, []);
-    const handleAnswer = async() =>{
-      const answer = window.prompt("Send answer to" + " " + userName)
-      if(answer.trim() !== ""){
-        try {
-          createNotification(senderId,"Feedback Answer","Answer for your feedback "+formData.subject+": " + answer)
-          const response = await axios.patch(`http://localhost:8080/request/feedback/approve/${feedbackId}`,{
-            response: trimValue(answer)
-          });
-          console.log("Approved request:", response.data)
-        } catch (err) {
-          console.error("Error approving request:", err);
+    const handleDeleteClick = async (feedbackId) => {
+        if(window.confirm("Are you sure you want to delete this feedback?")){
+            try {
+                await axios.delete(`http://localhost:8080/request/feedback/user/${feedbackId}`);
+                window.location.href=`/feedbackhub`;
+            } catch (error) {
+                console.error('Error deleting feedback:', error);
+            }
         }
-        window.location.href=`/approvefeedback`
-      }else{
-        alert('Please enter answer')
-      }
-    }
-    const handleDecline = async() =>{
-      try {
-        const response = await axios.patch(`http://localhost:8080/request/feedback/reject/${feedbackId}`);
-        console.log("Approved request:", response.data)
-        fetchData();
-      } catch (err) {
-        console.error("Error approving request:", err);
-      }
-      window.location.href=`/approvefeedback`
-    }
+    };
   return (
     <div className='sendfeedback-container'>
         <div className='sendfeedback-title'>
             <h1>FEEDBACK</h1>
-            <h2>from {userName} </h2>
+            <h2>your feedback</h2>
         </div>
         <div className='feedback-content'>
             Subject
@@ -81,12 +62,20 @@ function FeedbackApproveDetails() {
           ))}
         </PhotoProvider>
         </div>
+        <div>
+            <PartHeading content="Response" />
+            <div>
+                {formData.response !== null
+                    ? formData.response
+                    : 'Not yet answered'}
+            </div>
+        </div>
         <div className='feedback-button'>
-            <Button label="ANSWER" color='blue-button' onClick={handleAnswer}/>
-            <Button label="DECLINE" color='grey-button' onClick={handleDecline}/>
+            {/* <Button label="UPDATE" color='blue-button' /> */}
+            <Button label="DELETE" color='red-button' onClick={() => handleDeleteClick(feedbackId)} />
         </div>
     </div>
   )
 }
 
-export default FeedbackApproveDetails
+export default UserFeedback
