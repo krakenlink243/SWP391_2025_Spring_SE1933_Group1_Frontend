@@ -1,0 +1,59 @@
+.multi-chat-dialog-container {
+    position: relative;
+    background: radial-gradient(ellipse farthest-corner at 50% 30%, #2b2d33 0%, #1e2025 50%, #14151a 100%);
+}
+
+.multi-chat-dialog-container .chat-tab {
+    padding-left: 4px;
+    border: 1px solid rgba(0, 0, 0, .3);
+    border-bottom: none;
+    border-left: none;
+    box-shadow: inset 1px 1px 0px rgba(71, 71, 71, .3);
+    background-color: #1c232c;
+}
+
+.chat-tab .friend-box {
+    width: 189px;
+    height: 36px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0px 12px 0px 10px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    box-sizing: border-box;
+    transition: padding 200ms ease-out;
+    color: #6dcff6;
+    background-color: #3a3e46;
+    gap: 10px;
+}
+
+.friend-box .friend-avatar img {
+    height: calc(100% - 2px);
+}
+
+.friend-box .friend-name {
+    flex-grow: 1;
+    line-height: 16px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: clip;
+    font-size: 14px;
+    transition: text-overflow 0s linear;
+}
+
+.chat-wrapper .chat-history-scroll {
+    overflow: auto;
+    position: relative;
+    padding: 0 6px 14px 6px;
+    word-break: break-word;
+    background: radial-gradient(ellipse farthest-corner at 50% 30%, #212329 0%, #1e2025 50%, #1c1d22 100%);
+    font-size: 14px;
+}
+
+.chat-history-scroll .padder-top {
+    background: linear-gradient(to right, #3a3e46 80%, #2c3037 100%);
+    min-height: 4px;
+    transition: background-color .2s ease-in-out;
+    position: relative;
+}

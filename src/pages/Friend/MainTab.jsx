@@ -49,7 +49,7 @@ function MainTab({ setCurTab }) {
                                     alt={friend.friendName}
                                 />
                             </div>
-                            <div className={`spacer `}></div>
+                            <div className={`spacer`}></div>
                             <div className="friend-name">{friend.friendName}</div>
 
                         </div>

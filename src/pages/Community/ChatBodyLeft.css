@@ -1,0 +1,159 @@
+.friend-list .friend-list-header-container {
+    min-height: 84px;
+    background-color: #1c232c;
+    border-bottom: none;
+    box-shadow: inset rgba(61, 68, 80, .75) 1px 1px 1px 0px, inset rgba(61, 68, 80, .25) -1px 0px 1px 0px;
+    position: relative;
+    user-select: none;
+    cursor: default;
+    flex-shrink: 0;
+}
+
+.friend-list-header-container .current-user {}
+
+.current-user .status-header-glow {
+    position: absolute;
+    opacity: 1;
+    transition: opacity .92s ease-in-out;
+    pointer-events: none;
+}
+
+.current-user .status-header-glow stop {
+    transition: stop-color 1s ease;
+}
+
+.current-user .status-header-glow stop:first-child {
+    stop-color: rgba(117, 174, 197, .3);
+}
+
+.current-user .status-header-glow stop:last-child {
+    stop-color: rgba(0, 122, 204, 0);
+    stop-opacity: 0;
+}
+
+.current-user .avatar-and-user {
+    padding-left: 8px;
+    padding-top: 18px;
+    padding-bottom: 8px;
+    width: 100%;
+}
+
+.avatar-and-user .current-avatar {
+    width: 48px;
+    height: 48px;
+    transition-property: box-shadow, filter, transform;
+    transition-duration: .24s, .16s;
+    transition-timing-function: ease-in-out;
+    z-index: 100;
+    position: relative;
+    -webkit-app-region: no-drag;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.avatar-and-user .current-avatar:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+.avatar-and-user .current-avatar img {
+    border: 1px solid #383c43;
+    height: calc(100% - 2px);
+    width: calc(100% - 2px);
+    box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, .3);
+    transition: filter .24s ease-in-out;
+}
+
+.avatar-and-user .label-holder {
+    margin-left: 5px;
+    flex-grow: 1;
+    color: #6dcff6;
+}
+
+.avatar-and-user .label-holder .name {
+    font-size: 16px;
+    font-family: "Motiva Sans", Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    transition: color .94s ease-in-out;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    min-width: 0;
+    line-height: 16px;
+}
+
+.avatar-and-user .label-holder .status {
+    margin-bottom: 1px;
+    font-size: 12px;
+    transition: color .94s ease-in-out;
+}
+
+.friends-list-container .friend-list-content {
+    background: radial-gradient(ellipse farthest-corner at 50% 30%, #212329 0%, #1e2025 50%, #1c1d22 100%);
+
+}
+
+.friends-list-container .friend-list-content .friend-list-wrapper {
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.friend-list-content .friend-list-wrapper .friend {
+    height: 38px;
+    display: flex;
+    flex-direction: row;
+    margin: 2px 0 2px 0;
+    padding: 2px 0 2px 0;
+    cursor: pointer;
+    gap: .2rem;
+}
+
+.friend-list-content .friend-list-wrapper .online{
+    color: #6dcff6;
+}
+
+.friend-list-content .friend-list-wrapper .offline{
+    color: #a0a0a0;
+}
+
+.friend-list-content .friend-list-wrapper .online:hover {
+    background-color: rgba(36, 52, 64, .3);
+}
+
+.friend-list-content .friend-list-wrapper .offline:hover {
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.friend .friend-avatar {
+    height: 36px;
+    width: 36px;
+}
+
+.friend .friend-avatar img {
+    height: 100%;
+    width: 100%;
+}
+
+.friend .spacer {
+    width: 4px;
+    height: 100%;
+}
+
+.online .spacer {
+    background-color: #57cbde;
+}
+
+.offline .spacer {
+    background-color: #898989;
+}
+
+
+
+
+.friends-list-container .friend-list .friend-list-footer {
+    position: relative;
+    min-height: 26px;
+    background-color: #22252b;
+    flex-shrink: 0;
+    box-shadow: inset rgba(61, 68, 80, .3) 1px 1px 0px 0px;
+}
