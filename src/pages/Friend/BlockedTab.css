@@ -1,0 +1,74 @@
+.blocked-tab .blocked-tab-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    background-color: #015e80;
+}
+
+.blocked-tab-header .status {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 14px;
+    color: #fff;
+    font-weight: normal;
+    min-width: 250px;
+}
+
+.blocked-tab .blocked-tab-body {
+    margin: 8px 0 0 0;
+}
+
+.blocked-tab-body .result-not-found {
+    padding: 16px;
+    font-size: 17px;
+    background: rgba(0, 0, 0, 0.2);
+    color: #969696;
+    margin: 8px 0px 0px 0px;
+    flex-grow: 1;
+}
+
+.blocked-tab-body .blocked-user-item {
+    width: calc(25% - .5rem);
+    position: relative;
+    height: 48px;
+    font-size: 11px;
+    line-height: 13px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background-color: rgba(29, 31, 36, .8);
+    border: 1px solid transparent;
+}
+
+.blocked-tab-body .blocked-user-item:hover {
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+.blocked-tab .blocked-user-item .blocked-user-avatar {
+    width: 48px;
+    height: 48px;
+}
+
+.blocked-tab .blocked-user-item .blocked-user-avatar img {
+    width: 100%;
+    border-radius: 2px;
+    border: none;
+    -webkit-user-drag: none;
+}
+
+.blocked-tab .blocked-user-item .blocked-user-name {
+    width: calc(100% - 48px);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    line-height: 15px;
+    color: #898989;
+}
+
+.blocked-tab .blocked-user-item .blocked-user-badge{
+    text-transform: uppercase;
+    color: red;
+    font-size: 15px;
+}

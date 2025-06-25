@@ -4,7 +4,7 @@ function ChatBodyRight() {
 
     const [input, setInput] = useState("");
     const [messages, setMessages] = useState([]);
-    const didConnectRef = useRef(false); // 👈 Dùng ref để chống connect nhiều lần
+    const didConnectRef = useRef(false);
 
     useEffect(() => {
         if (didConnectRef.current) return;
@@ -16,7 +16,7 @@ function ChatBodyRight() {
 
         // Optional cleanup
         return () => {
-            didConnectRef.current = false; // 👈 reset nếu bạn cần reconnect sau này
+            didConnectRef.current = false;
         };
     }, []);
 
