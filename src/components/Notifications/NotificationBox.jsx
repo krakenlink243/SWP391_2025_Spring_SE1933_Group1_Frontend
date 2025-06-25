@@ -33,7 +33,6 @@ function NotificationBox() {
 
   const toggleOpenNotification = () => {
     setIsOpen((prev) => !prev);
-
   }
 
   return (

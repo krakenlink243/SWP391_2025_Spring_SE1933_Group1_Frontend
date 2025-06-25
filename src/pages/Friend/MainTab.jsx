@@ -6,13 +6,17 @@ import { useOnlineUsers } from "../../utils/OnlineUsersContext";
 function MainTab({ setCurTab }) {
     const [friendList, setFriendList] = useState([]);
     const onlineUsers = useOnlineUsers();
-    console.log("List:" + onlineUsers);
+    const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
 
     const getFriendList = () => {
         axios.get("http://localhost:8080/user/friends")
             .then((response) => { setFriendList(response.data) })
             .catch((err) => { console.log("Error fetching friends list: " + err) })
     };
+
+    const isOnline = (username) => {
+        return onlineUsers.includes(username);
+    }
 
     useEffect(() => {
         getFriendList();
@@ -38,21 +42,20 @@ function MainTab({ setCurTab }) {
                 {friendList.length == 0 && <div>You have no friends</div>}
                 {
                     friendList.map((friend, idx) => (
-                        <div key={friend.friendId} className="friend-item d-flex flex-row gap-2 align-items-center">
+                        <div key={friend.friendId} className={`friend-item d-flex flex-row align-items-center ${isOnline(friend.friendName) ? "online" : "offline"}`}>
                             <div className="friend-avatar">
                                 <img
-                                    src={friend.friendAvatarUrl}
+                                    src={friend.friendAvatarUrl ? friend.friendAvatarUrl : UNKNOW_AVATAR_URL}
                                     alt={friend.friendName}
                                 />
                             </div>
+                            <div className={`spacer`}></div>
                             <div className="friend-name">{friend.friendName}</div>
 
                         </div>
                     ))
                 }
-                {onlineUsers.map(u => (
-                    <div key={u} className="text-white">{u} is online</div>
-                ))}
+
             </div>
         </div>
     );

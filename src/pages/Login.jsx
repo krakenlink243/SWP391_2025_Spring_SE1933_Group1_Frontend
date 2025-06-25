@@ -44,7 +44,7 @@ const Login = () => {
       localStorage.setItem("role", role);
       localStorage.setItem("expDate", expireDate);
       localStorage.setItem("avatarUrl", avatarUrl ? avatarUrl : "https://avatars.fastly.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg");
-
+      localStorage.setItem("unknowAvatar", "https://avatars.fastly.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg");
 
       return <Navigate to="/" replace />;
 

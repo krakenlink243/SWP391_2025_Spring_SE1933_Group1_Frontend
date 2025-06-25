@@ -2,17 +2,11 @@ import { useEffect, useState } from "react";
 import Split from "split.js";
 import ChatBodyLeft from "./ChatBodyLeft";
 import ChatBodyRight from "./ChatBodyRight";
-import axios from "axios";
+import './ChatBody.css';
 
 function ChatBody({ bodyH }) {
 
-    const [friendList, setFriendList] = useState([]);
-
-    const getFriendList = () => {
-        axios.get("http://localhost:8080/user/friends")
-            .then((resp) => { setFriendList(resp.data) })
-            .catch((err) => { console.log("Error get list friend: " + err) });
-    };
+    const [curFriendChat, setCurFriendChat] = useState(null);
 
     useEffect(() => {
 
@@ -26,8 +20,12 @@ function ChatBody({ bodyH }) {
     }, [])
     return (
         <div className="chat-main d-flex flex-row p-0" style={{ height: `${bodyH}px` }}>
-            <ChatBodyLeft />
-            <ChatBodyRight />
+            <ChatBodyLeft
+                setCurFriendChat={setCurFriendChat}
+            />
+            <ChatBodyRight
+                friend={curFriendChat}
+            />
 
         </div>
     );

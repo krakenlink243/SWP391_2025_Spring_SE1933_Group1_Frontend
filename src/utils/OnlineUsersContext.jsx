@@ -17,15 +17,23 @@ export function OnlineUserProvider({ children }) {
 
         const client = new Client({
             webSocketFactory: () => new SockJS(`http://localhost:8080/ws-chat?token=${token}`),
-            reconnectDelay: 5000,
+            reconnectDelay: 300,
 
         });
 
         client.onConnect = () => {
             console.log("Connect to Socket Online User")
-            client.subscribe("/user/queue/online", (frame) => {
+
+            client.subscribe("/app/online", (frame) => {
                 setOnlineUsers(JSON.parse(frame.body));
             });
+
+            client.subscribe("/topic/online", (frame) => {
+                console.log("[Socket] Received /topic/online:", frame.body); // DEBUG
+                setOnlineUsers(JSON.parse(frame.body));
+            });
+
+            client.publish({ destination: "/app/online" });
         };
 
 

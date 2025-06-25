@@ -45,7 +45,7 @@ export const sendMessage = (conversationId, sender, receiver, content) => {
 
   stompClient.publish({
     destination: '/app/chat.send',
-    body: JSON.stringify({ conversationId: conversationId, senderUsername: sender, receiverUsername: receiver, content }),
+    body: JSON.stringify({ conversationId: conversationId, senderUsername: sender, receiverUsername: receiver, content: content }),
   });
 };
 

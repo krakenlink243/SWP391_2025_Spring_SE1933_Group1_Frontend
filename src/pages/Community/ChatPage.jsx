@@ -10,10 +10,9 @@ function ChatPage() {
     if (!token) {
         return <Navigate to={"/"} replace />
     } else {
-        const avatarUrl = localStorage.getItem("avatarUrl");
         const headerH = useRef(null);
         const [bodyH, setBodyH] = useState(0);
-
+        
         useEffect(() => {
             const calculateH = () => {
                 const windowH = window.innerHeight;
