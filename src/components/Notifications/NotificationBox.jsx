@@ -17,10 +17,10 @@ function NotificationBox() {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    if (token) {
+    if (isOpen && token) {
       getUnreadNotificationList();
     }
-  }, [isOpen]);
+  }, [isOpen, token]);
 
   const getUnreadNotificationList = () => {
     axios.get(`http://localhost:8080/notification/list/unread`)
