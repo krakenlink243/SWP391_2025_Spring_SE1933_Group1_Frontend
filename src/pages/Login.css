@@ -7,6 +7,9 @@
   font-size: 1.25rem;
   user-select: none;
 }
+.message{
+  color: red;
+}
 
 .header-right {
   color: #d0d0d0;
