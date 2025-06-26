@@ -8,26 +8,15 @@ export const connectSocket = (onMessageReceived) => {
   const token = localStorage.getItem("token");
   if (stompClient && stompClient.connected && subscribed) return;
   stompClient = new Client({
-    webSocketFactory: () => new SockJS(`http://localhost:8080/ws-chat?token=${token}`),
+    webSocketFactory: () => new SockJS(`http://localhost:8080/ws-community?token=${token}`),
     reconnectDelay: 5000,
     heartbeatIncoming: 4000,
     heartbeatOutgoing: 4000,
-    connectHeaders: {
-      token: token  // or however you store it
-    },
     onConnect: () => {
-      console.log('🔌 Connected to WebSocket', stompClient.connected);
-      if (!subscribed) {
-
-        stompClient.subscribe('/user/queue/messages', (frame) => {
-          console.log("Received message: ", frame.body);
-          console.log('sub #', Math.random().toFixed(3), 'got', frame.body);
-          const msg = JSON.parse(frame.body);
-          onMessageReceived(msg);
-        });
-        subscribed = true;
-
-      }
+      stompClient.subscribe('/user/queue/messages', (frame) => {
+        const msg = JSON.parse(frame.body);
+        onMessageReceived(msg);
+      });
     },
     onStompError: (err) => {
       console.error('❌ STOMP error:', err);
@@ -35,6 +24,12 @@ export const connectSocket = (onMessageReceived) => {
   });
 
   stompClient.activate();
+};
+
+export const disconnectSocket = () => {
+  if (stompClient && stompClient.connected) {
+    stompClient.deactivate();
+  }
 };
 
 export const sendMessage = (conversationId, sender, receiver, content) => {

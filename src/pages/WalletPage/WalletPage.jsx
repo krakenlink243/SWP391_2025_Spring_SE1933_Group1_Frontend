@@ -3,7 +3,6 @@ import axios from "axios";
 import "./WalletPage.css";
 import { Navigate } from "react-router-dom";
 import "../../services/notification";
-import { createNotification } from "../../services/notification";
 
 /**
  * @author Phan NT Son

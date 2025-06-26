@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { connectSocketNotif } from "../../services/notification";
 import { FaBell } from 'react-icons/fa';
 import './NotificationBox.css';
 
@@ -17,10 +18,23 @@ function NotificationBox() {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
+    connectSocketNotif((notification) => {
+      setData(prev => [...prev, notification]);
+    })
+  }, [])
+
+  useEffect(() => {
     if (isOpen && token) {
       getUnreadNotificationList();
     }
   }, [isOpen, token]);
+
+  useEffect(() => {
+    if (token) {
+      getUnreadNotificationList();
+    }
+    // eslint-disable-next-line
+  }, [token, window.location.pathname]);
 
   const getUnreadNotificationList = () => {
     axios.get(`http://localhost:8080/notification/list/unread`)

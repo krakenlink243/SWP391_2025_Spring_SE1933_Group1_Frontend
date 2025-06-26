@@ -39,15 +39,18 @@ function ReviewForm({ onReload, game }) {
                 <div className='review-post-body d-flex'>
                     <div className='review-post-body-avatar'>
                         <img src={CUR_USER_AVATAR ? CUR_USER_AVATAR : UNKNOW_AVATAR_URL} />
-
                     </div>
                     <div className='review-post-body-actions w-100'>
                         <div className='actions-input-box'>
                             <textarea
                                 placeholder="Write your review here..."
                                 value={reviewContent}
+                                maxLength={8000}
                                 onChange={(e) => setReviewContent(e.target.value)}
                             ></textarea>
+                            <div className="text-end small text-muted">
+                                {reviewContent.length} / 8000
+                            </div>
                         </div>
                         <div className='actions-buttons  d-flex justify-content-between align-items-center w-100'>
                             <div className="recommend-buttons">

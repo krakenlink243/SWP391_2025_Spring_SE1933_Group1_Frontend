@@ -5,7 +5,6 @@ import Button from '../components/Button/Button'
 import { PhotoProvider,PhotoView } from 'react-photo-view'
 import { useParams } from 'react-router'
 import axios from 'axios'
-import { createNotification } from '../services/notification'
 import PartHeading from '../components/PartHeading/PartHeading'
 function UserFeedback() {
     const feedbackId = useParams().feedbackId;

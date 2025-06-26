@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import './ReviewList.css'
-import { createNotification } from "../../services/notification"; // Import hàm tạo thông báo
+import { createNotification } from "../../services/notification";
 import axios from "axios";
 /**
  * @author Phan NT Sons
