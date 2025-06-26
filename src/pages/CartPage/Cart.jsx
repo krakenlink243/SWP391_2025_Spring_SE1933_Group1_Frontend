@@ -137,9 +137,9 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
                     <img
                       className="library-game-image"
                       src={
-                        item.media && item.media.length > 0
-                          ? item.media[0].url
-                          : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcIgF8vDI5cJMjYmRzfS3rOUWA-M9kw0iWRQ&s"
+                        item.imageUrl
+                          ? item.imageUrl
+                          : "https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg" // fallback
                       }
                       alt={item.title || 'Unnamed Game'}
                     />
