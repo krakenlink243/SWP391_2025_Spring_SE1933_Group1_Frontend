@@ -49,6 +49,9 @@ function FeedbackHub() {
         </div>
         <div className='your-feedback'>
             <h2>YOUR SUBMITTED FEEDBACK</h2>
+            {feedbackItems.length === 0 ? (
+                <p>No feedback available.</p>
+            ) : (
             <div className='your-feedback-item'>
                 {feedbackItems.map((feedback) => (
                     <FeedbackItem
@@ -63,6 +66,7 @@ function FeedbackHub() {
                     />
                 ))}
             </div>
+            )}
             <div className="pagination-controls">
                 {Array.from({ length: totalPages }, (_, index) => (
                     <button 
