@@ -27,7 +27,7 @@ function ReviewButtons({ originalReview, gameId, userId }) {
 
     const checkUserOption = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/review/${gameId}/${authorId}/check?userId=${userId}`);
+            const response = await axios.get(`http://localhost:8080/review/${gameId}/${authorId}/check`);
             const result = response.data;
             setUserOption(result === 1 ? 1 : result === -1 ? -1 : 0);
         } catch (error) {

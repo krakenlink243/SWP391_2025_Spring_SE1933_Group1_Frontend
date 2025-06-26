@@ -20,7 +20,6 @@ function Review({ game }) {
       <div className="line-seperate w-100"></div>
       <ReviewForm
         onReload={triggerReload}
-        userId={userId}
         game={game} />
 
       <ReviewList

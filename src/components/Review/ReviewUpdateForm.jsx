@@ -10,12 +10,9 @@ function ReviewUpdateForm({ originalReview, onReload, onCancel, gameId, userId }
         if (!window.confirm('Are you sure you want to update this review?')) {
             return;
         }
-        const resp = await axios.put(`http://localhost:8080/review/${gameId}/update-review`, {
-            userId: userId,
+        const resp = await axios.put(`http://localhost:8080/review/update/${gameId}`, {
             reviewContent: updateReviewContent,
             recommended: updateRecommended,
-            helpful: originalReview.helpful,
-            notHelpful: originalReview.notHelpful,
         });
         console.log('Update response:', resp.data);
         onReload();
@@ -26,7 +23,9 @@ function ReviewUpdateForm({ originalReview, onReload, onCancel, gameId, userId }
         if (!window.confirm('Are you sure you want to delete this review?')) {
             return false;
         }
-        const resp = await axios.delete(`http://localhost:8080/review/${gameId}/delete-review/${userId}`);
+        const resp = await axios.delete(`http://localhost:8080/review/delete`, {
+            gameId: gameId,
+        });
         onReload();
         onCancel();
     };

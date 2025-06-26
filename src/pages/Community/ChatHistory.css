@@ -17,29 +17,39 @@
 }
 
 .message-group.user {
-    align-items: flex-end;
+    color: #969aa1;
 }
 
 .message-group.friend {
-    align-items: flex-start;
+    color: #c1c6cf;
 }
 
-.sender-name {
-    font-size: 0.8rem;
-    margin-bottom: 0.2rem;
-    color: #333;
+
+.message-group .sender-small-profile{
+    display: flex;
+    flex-direction: row;
+    height: 38px;
+    gap: 10px;
+    align-items: center;
+}
+
+.sender-small-profile img{
+    height: 100%;
+}
+
+.user .sender-small-profile{
+    color: #4f96b3;
+}
+
+.friend .sender-small-profile{
+    color: #6dcff6;
 }
 
 .bubble {
-    border-radius: 8px;
-    padding: 0.5rem;
+    padding: 0.5rem 0  0.5rem 48px;
     max-width: 60%;
-    background: #f1f1f1;
 }
 
-.message-group.user .bubble {
-    background: #cfe9ff;
-}
 
 .msg-line {
     display: flex;

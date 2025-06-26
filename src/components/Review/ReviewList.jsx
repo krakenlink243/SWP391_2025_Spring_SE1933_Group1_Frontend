@@ -8,12 +8,11 @@ function ReviewList({ reloadSignal, onReload, game, userId }) {
   const [editingId, setEditingId] = useState(null);
   const [data, setData] = useState([]);
   const [visibleCount, setVisibleCount] = useState(5);
-
-  const mediaUrl = "https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4";
+  const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/review/${game.gameId}/review-list`)
+      .get(`http://localhost:8080/review/list/${game.gameId}`)
       .then((response) => {
         setData(response.data);
         console.log(response.data);
@@ -57,7 +56,7 @@ function ReviewList({ reloadSignal, onReload, game, userId }) {
             ) : (
               <div className="review-content d-flex flex-row gap-1">
                 <div className="author-profile">
-                  <img src={mediaUrl} ></img>
+                  <img src={review.userAvatarUrl ? review.userAvatarUrl : UNKNOW_AVATAR_URL} ></img>
                   <strong>{review.userName}</strong>
                 </div>
                 <div className="content-detail d-flex flex-column align-items-start">

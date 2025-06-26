@@ -2,9 +2,12 @@ import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import './ReviewForm.css';
 import Button from '../Button/Button';
-function ReviewForm({ onReload, game, userId }) {
+function ReviewForm({ onReload, game }) {
     const [reviewContent, setReviewContent] = useState('');
     const [recommended, setRecommended] = useState(null);
+    const CUR_USER_AVATAR = localStorage.getItem("avatarUrl");
+    const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
+
 
     const handleSubmit = async () => {
         if (recommended === null || reviewContent.trim() === '') {
@@ -13,10 +16,10 @@ function ReviewForm({ onReload, game, userId }) {
         }
         try {
             console.log('recommended:', recommended);
-            const response = await axios.post(`http://localhost:8080/review/${game.gameId}/post-review`, {
+            const response = await axios.post(`http://localhost:8080/review/post`, {
                 recommended: recommended,
-                userId: userId,
                 reviewContent: reviewContent,
+                gameId: game.gameId,
             });
             console.log('Review submitted:', response.data);
             setReviewContent('');
@@ -35,7 +38,7 @@ function ReviewForm({ onReload, game, userId }) {
                 </div>
                 <div className='review-post-body d-flex'>
                     <div className='review-post-body-avatar'>
-                        <img src='https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4' />
+                        <img src={CUR_USER_AVATAR ? CUR_USER_AVATAR : UNKNOW_AVATAR_URL} />
 
                     </div>
                     <div className='review-post-body-actions w-100'>

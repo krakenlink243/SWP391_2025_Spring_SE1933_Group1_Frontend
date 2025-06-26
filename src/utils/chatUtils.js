@@ -3,8 +3,8 @@ export function prepareChatHistory(pastMessages, liveMessages) {
   const all = [
     ...pastMessages.map(m => ({
       rawTs: m.createAt,
-      senderKey: m.senderName,        // normalize to string
-      senderName: m.senderName,       // or map ID→username if you have it
+      senderKey: m.senderName,        
+      senderName: m.senderName,       
       content: m.messageContent,
     })),
     ...liveMessages.map(m => ({
@@ -48,12 +48,13 @@ export function prepareChatHistory(pastMessages, liveMessages) {
     // e) Group into bubbles by same senderKey
     const lastGroup = bucket.groups[bucket.groups.length - 1];
     if (lastGroup && lastGroup.senderKey === item.senderKey) {
-      lastGroup.messages.push({ content: item.content, time });
+      lastGroup.messages.push({ content: item.content });
     } else {
       bucket.groups.push({
         senderKey:  item.senderKey,
         senderName: item.senderName,
-        messages:   [{ content: item.content, time }]
+        groupTimestamp: dateObj,
+        messages:   [{ content: item.content }]
       });
     }
   });
