@@ -22,7 +22,7 @@ function DetailHeader({ game }) {
     const [gameInCart, setGameInCart] = useState(false);
     const [gameInLib, setGameInLib] = useState(false);
 
-    
+
     useEffect(() => {
         const extractMediaUrl = () => {
             game.media.map((m) => {
@@ -195,7 +195,7 @@ function DetailHeader({ game }) {
                             ) : (
                                 <div className="price">Free to Play</div>
                             )}
-                            
+
                             {!gameInCart && !gameInLib ? (
                                 <div className="btn-add-to-cart" onClick={addCartHandler}>
                                     <a className="btn-green-ui">

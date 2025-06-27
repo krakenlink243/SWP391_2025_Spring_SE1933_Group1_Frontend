@@ -80,13 +80,13 @@ function AppRoutes() {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
+    checkToken();
     const fetchCurrentUser = async () => {
-      // Giả sử bạn có token
       const token = localStorage.getItem("token");
-      const decodedToken = jwtDecode(token);
+      // Giả sử bạn có token
       if (token) {
         try {
-          const userId = decodedToken.userId;
+          const userId = localStorage.getItem("userId");
           const response = await axios.get(
             `http://localhost:8080/user/profile/${userId}`
           );
