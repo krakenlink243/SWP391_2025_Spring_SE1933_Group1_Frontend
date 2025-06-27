@@ -81,7 +81,7 @@ function ReviewList({ reloadSignal, onReload, game, userId }) {
                     <span className="review-was-helpful">Was this review helpful?</span>
                     <div className={`${review.userId == userId ? "d-flex flex-row justify-content-between align-items-center" : ""}`}>
                       <ReviewButtons
-                        gameId={game.gameId}
+                        game={game}
                         originalReview={review}
                         userId={userId}
                       />

@@ -40,11 +40,15 @@ export const connectSocketNotif = (onNotifReceived) => {
         heartbeatIncoming: 4000,
         heartbeatOutgoing: 4000,
         onConnect: () => {
+            if (!subscribed) {
+                stompClient.subscribe('/user/queue/notifications', (frame) => {
+                    const notif = JSON.parse(frame.body);
+                    onNotifReceived(notif);
+                }
+                );
+                subscribed = true;
+            }
 
-            stompClient.subscribe('/user/queue/notifications', (frame) => {
-                const notif = JSON.parse(frame.body);
-                onNotifReceived(notif);
-            });
         },
         onStompError: (err) => {
             console.error('❌ STOMP error:', err);
@@ -56,6 +60,12 @@ export const connectSocketNotif = (onNotifReceived) => {
 
 export const disconnectSocketNotif = () => {
     if (stompClient && stompClient.connected) {
-        stompClient.deactivate();
+        stompClient.deactivate().then(() => {
+            console.log("🛑 Socket disconnected");
+            subscribed = false; // ✅ reset để lần sau có thể subscribe lại
+        });
+
+    } else {
+        subscribed = false;
     }
 };

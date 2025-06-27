@@ -32,17 +32,26 @@
 }
 
 .notifbox-box {
+  display: none;
+}
+
+.notifbox-box.active {
+  display: block;
+  transition: all 0.4s ease-in-out;
   position: absolute;
   right: 0;
   top: 30px;
   width: 320px;
-  background: linear-gradient(144deg,rgb(51, 56, 63),#25282E);
+  background: linear-gradient(144deg, rgb(51, 56, 63), #25282E);
   overflow: hidden;
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
 }
 
 .notifbox-header {
   height: 30px;
-  
+
 }
 
 .notifbox-title {
@@ -51,7 +60,7 @@
   font-size: 16px;
 }
 
-.notfif-button{
+.notfif-button {
   background-color: #454953;
   border-radius: 0px;
   font-size: smaller;
@@ -75,7 +84,10 @@
 .notifbox-item::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-color: #6c757d21;
   opacity: 0;
   transition: opacity 0.4s ease;
@@ -88,7 +100,7 @@
 
 
 
-.notifbox-dot{
+.notifbox-dot {
   background-color: #66c0f4;
   width: 10px;
   height: 10px;
@@ -103,4 +115,3 @@
   color: #8899aa;
   padding: 15px;
 }
-

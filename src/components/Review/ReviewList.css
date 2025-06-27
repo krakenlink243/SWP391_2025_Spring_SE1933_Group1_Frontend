@@ -85,6 +85,7 @@
   line-height: 17px;
   color: #acb2b8;
   overflow-wrap: break-word;
+  position: relative;
 }
 
 .content-detail .partical {
