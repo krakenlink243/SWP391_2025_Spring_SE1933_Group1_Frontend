@@ -24,6 +24,7 @@ import RegisterDetails from "./pages/RegisterDetails";
 import GameApprrovePage from "./pages/AdminDashboard/GameApprovePage";
 import GameApproveDetails from "./pages/GameApproveDetails";
 import Transaction from "./pages/TransactionPage/Transaction";
+import TransactionDetail from "./pages/TransactionPage/TransactionDetail";
 import Cart from "./pages/CartPage/Cart";
 import SplashScreen from "./components/SplashScreen/SplashScreen"; // Import SplashScreen component
 import NotificationList from "./pages/NotificationPage/NotificationList";
@@ -201,6 +202,7 @@ function AppRoutes() {
             <Route path="/register" element={<RegisterF />} />
             <Route path="/register-details" element={<RegisterDetailsF />} />
             <Route path="/transaction" element={<Transaction />} />
+            <Route path="/transaction/detail/:transactionId" element={<TransactionDetail />} />
             <Route
               path="/cart"
               element={<Cart minHeight={calculatedHeight} />}

@@ -3,11 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./TransactionDetail.css";
 
+
+
 const TransactionDetail = () => {
   const { transactionId } = useParams();
   const navigate = useNavigate();
   const [transaction, setTransaction] = useState(null);
   const [loading, setLoading] = useState(true);
+  const userId = localStorage.getItem("userId");
   const username = localStorage.getItem("username");
 
   useEffect(() => {
