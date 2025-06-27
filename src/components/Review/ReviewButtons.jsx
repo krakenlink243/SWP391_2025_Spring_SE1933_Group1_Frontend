@@ -41,7 +41,7 @@ function ReviewButtons({ originalReview, gameId, userId }) {
             setHelpfulCount(helpfulCount + 1);
             setUserOption(1);
             try {
-                const response = await axios.patch(`http://localhost:8080/review/${gameId}/${authorId}/helpful`, {
+                const response = await axios.patch(`http://localhost:8080/review/vote/helpful`, {
                     userId: userId
                 });
                 if (response.data === "Success") {
@@ -54,7 +54,7 @@ function ReviewButtons({ originalReview, gameId, userId }) {
             setHelpfulCount(helpfulCount - 1);
             setUserOption(0);
             try {
-                const response = await axios.patch(`http://localhost:8080/review/${gameId}/${authorId}/clean-reaction`, {
+                const response = await axios.patch(`http://localhost:8080/review/vote/clean`, {
                     userId: userId
                 });
 
@@ -68,7 +68,7 @@ function ReviewButtons({ originalReview, gameId, userId }) {
             setNotHelpfulCount(notHelpfulCount + 1);
             setUserOption(-1);
             try {
-                const response = await axios.patch(`http://localhost:8080/review/${gameId}/${authorId}/not-helpful`, {
+                const response = await axios.patch(`http://localhost:8080/review/unhelpful`, {
                     userId: userId
                 });
 
@@ -82,7 +82,7 @@ function ReviewButtons({ originalReview, gameId, userId }) {
             setNotHelpfulCount(notHelpfulCount - 1);
             setUserOption(0);
             try {
-                const response = await axios.patch(`http://localhost:8080/review/${gameId}/${authorId}/clean-reaction`, {
+                const response = await axios.patch(`http://localhost:8080/review/clean`, {
                     userId: userId
                 });
 
