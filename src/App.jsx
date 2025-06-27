@@ -51,6 +51,8 @@ import FeedbackApprovePage from "./pages/FeedbackApprovePage";
 import FeedbackApproveDetails from "./pages/FeedbackApproveDetails";
 import FeedbackHub from "./pages/FeedbackHub";
 import UserFeedback from "./pages/UserFeedback";
+import EmailSettings from "./components/EmailChange/EmailSettings";
+import { jwtDecode } from "jwt-decode";
 function AppRoutes() {
   // Added by Phan NT Son 18-06-2025
   const headerHeight = useRef(null);
@@ -74,87 +76,30 @@ function AppRoutes() {
 
   // Renamed by Phan NT Son
   console.log("App component is rendering..."); // DEBUG: Kiểm tra xem component có render không
-
-  // --- LOGIC CHO SPLASH SCREEN  ---
-
-  // Sử dụng một state duy nhất để quản lý các giai đoạn của splash screen
-  // 'pending': Trạng thái chờ, chưa biết là người dùng cũ hay mới
-  // 'active': Là người dùng mới, đang hiển thị splash screen
-  // 'exiting': Đang trong quá trình mờ dần để thoát
-  // 'finished': Đã kết thúc, hiển thị ứng dụng chính
-  const [splashStage, setSplashStage] = useState("pending");
-  const audioRef = useRef(null); // Giữ tham chiếu đến đối tượng Audio
-
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    checkToken(); // Kiểm tra token khi component mount
-    calMinimumHeight(); // Tính toán chiều cao tối thiểu khi component mount
-
-    // Effect này chỉ chạy một lần duy nhất khi component được mount
-    // vì mảng phụ thuộc là rỗng [].
-    console.log(
-      "hasVisited check running...",
-      localStorage.getItem("hasVisited")
-    );
-    if (true) {
-      console.log("Returning user. Skipping splash screen.");
-      setSplashStage("finished");
-    } else {
-      // Nếu là người dùng mới, kích hoạt splash screen
-      console.log("First visit detected. Activating splash screen.");
-      setSplashStage("active");
-
-      // --- Xử lý âm thanh ---
-      audioRef.current = new Audio("/sounds/boot_sound.mp3");
-      audioRef.current.load();
-
-      const playAudioOnInteraction = () => {
-        if (audioRef.current) {
-          audioRef.current
-            .play()
-            .catch((err) => console.error("Audio play failed:", err));
+    const fetchCurrentUser = async () => {
+      // Giả sử bạn có token
+      const token = localStorage.getItem("token");
+      const decodedToken = jwtDecode(token);
+      if (token) {
+        try {
+          const userId = decodedToken.userId;
+          const response = await axios.get(
+            `http://localhost:8080/user/profile/${userId}`
+          );
+          setCurrentUser(response.data);
+        } catch (error) {
+          console.error("Failed to fetch current user", error);
+          // Xử lý lỗi, có thể đăng xuất người dùng
         }
-        // Gỡ bỏ listener sau lần tương tác đầu tiên để tránh phát lại
-        window.removeEventListener("click", playAudioOnInteraction);
-        window.removeEventListener("keydown", playAudioOnInteraction);
-      };
+      }
+      setLoading(false);
+    };
 
-      // Thêm trình lắng nghe sự kiện
-      window.addEventListener("click", playAudioOnInteraction);
-      window.addEventListener("keydown", playAudioOnInteraction);
-
-      // --- Xử lý Timers ---
-      // Timer 1: Sau 6 giây, bắt đầu quá trình thoát (fade out)
-      const exitTimer = setTimeout(() => {
-        console.log("Main splash duration finished. Starting transition.");
-        setSplashStage("exiting");
-      }, 6000); // 6 giây
-
-      // Timer 2: Sau 7 giây (6s + 1s fade out), kết thúc hoàn toàn
-      const finishTimer = setTimeout(() => {
-        console.log("Transition finished. Hiding splash screen.");
-        setSplashStage("finished");
-        localStorage.setItem("hasVisited", "true");
-      }, 7000); // 7 giây
-
-      // --- Hàm dọn dẹp (Cleanup Function) ---
-      // Hàm này sẽ được gọi khi component bị unmount (ví dụ: chuyển trang)
-      // để tránh rò rỉ bộ nhớ.
-      return () => {
-        console.log("Cleaning up splash screen effects.");
-        clearTimeout(exitTimer);
-        clearTimeout(finishTimer);
-        window.removeEventListener("click", playAudioOnInteraction);
-        window.removeEventListener("keydown", playAudioOnInteraction);
-      };
-    }
-  }, []); // <-- MẢNG RỖNG RẤT QUAN TRỌNG!
-
-  // Các biến được suy ra từ state, giúp code ở phần JSX dễ đọc hơn
-  const shouldRenderSplash =
-    splashStage === "active" || splashStage === "exiting";
-  const isSplashExiting = splashStage === "exiting";
-  const hideHeaderLogo = shouldRenderSplash;
-  // --- KẾT THÚC LOGIC SPLASH SCREEN ---
+    fetchCurrentUser();
+  }, []);
 
   // Added by Phan NT Son
   // Set up axios interceptor to include token in headers
@@ -171,7 +116,16 @@ function AppRoutes() {
    */
   const location = useLocation();
   const currentPath = location.pathname;
-  const needlessNavPath = ["/profile", "/chat", "/admin", "/sendfeedback", "/wallet", "/cart", "/login", "/register"];
+  const needlessNavPath = [
+    "/profile",
+    "/chat",
+    "/admin",
+    "/sendfeedback",
+    "/wallet",
+    "/cart",
+    "/login",
+    "/register",
+  ];
   const needlessHeaderPath = ["/admin", "/chat"];
   const needlessFooterPath = ["/admin", "/chat"];
   const isAddminPath = currentPath.startsWith("/admin");
@@ -215,12 +169,7 @@ function AppRoutes() {
     <div className="app-wrapper">
       {" "}
       <div className={`app-container`}>
-        {shouldRenderSplash && <SplashScreen isExiting={isSplashExiting} />}
-        <div
-          className={`main-app-content ${
-            splashStage !== "finished" ? "hidden" : ""
-          }`}
-        >
+        <div className={`main-app-content`}>
           {/* START FROM HERE */}
           {/* Adjusted by Phan NT Son */}
           {isAddminPath && (
@@ -230,9 +179,7 @@ function AppRoutes() {
               ref={headerHeight}
             />
           )}
-          {!isNeedlessHeader && (
-            <Header hideLogo={hideHeaderLogo} ref={headerHeight} />
-          )}
+          {!isNeedlessHeader && <Header ref={headerHeight} />}
 
           {!isNeedlessNav && <Navbar ref={navHeight} />}
           {/* --!! */}
@@ -316,6 +263,10 @@ function AppRoutes() {
             <Route
               path="/profile/friends"
               element={<Friends minimumHeight={calculatedHeight} />}
+            />
+            <Route
+              path="/change-email"
+              element={<EmailSettings currentUser={currentUser} />}
             />
           </Routes>
         </div>
