@@ -44,20 +44,19 @@ function NotificationBox() {
   useEffect(() => {
     const unread = data.filter((n) => !n.read).length;
     setUnreadCount(unread);
-    console.log("NOTIF LIST:", data);
-    data.forEach((item, idx) => {
-      console.log(`Notification ${idx}:`, item);
-    });
   }, [data]);
 
   // Get list of Unread notif from DB when Token & pathname change
   useEffect(() => {
+    const token = localStorage.getItem("token");
     if (token) {
+      console.log("Token: " + token);
       getUnreadNotificationList();
     }
   }, [token, window.location.pathname]);
 
   const getUnreadNotificationList = () => {
+    const token = localStorage.getItem("token");
     if (!token) return;
     axios.get(`http://localhost:8080/notification/list/unread`)
       .then((response) => {

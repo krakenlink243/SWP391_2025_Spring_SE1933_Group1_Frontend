@@ -17,6 +17,38 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.content .cart-area {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: center;
+  align-items: center;
+}
+
+.cart-area a {
+  font-size: 11px;
+  text-align: center;
+  color: #fff;
+  display: block;
+  background: #5c7e10;
+  text-transform: none;
+  line-height: 20px;
+  cursor: pointer;
+  padding: 0px 20px;
+  border-radius: 1px;
+}
+
+.cart-area a:hover {
+  color: #fff;
+  background: #7ea64b;
+}
+
+
+.cart-area .cart-icon {
+  width: 15px;
+  vertical-align: sub;
+}
+
 .content .store-nav-area {
   position: absolute;
   left: 0;

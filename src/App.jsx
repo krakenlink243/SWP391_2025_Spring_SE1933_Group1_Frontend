@@ -123,7 +123,6 @@ function AppRoutes() {
     "/admin",
     "/sendfeedback",
     "/wallet",
-    "/cart",
     "/login",
     "/register",
   ];
@@ -201,8 +200,8 @@ function AppRoutes() {
             <Route path="/login" element={<LoginF />} />
             <Route path="/register" element={<RegisterF />} />
             <Route path="/register-details" element={<RegisterDetailsF />} />
-            <Route path="/transaction" element={<Transaction />} />
-            <Route path="/transaction/detail/:transactionId" element={<TransactionDetail />} />
+            <Route path="/account/history" element={<Transaction />} />
+            <Route path="/account/history/detail/:transactionId" element={<TransactionDetail />} />
             <Route
               path="/cart"
               element={<Cart minHeight={calculatedHeight} />}
@@ -258,7 +257,7 @@ function AppRoutes() {
             />
             {/* Added by TSHUY */}
             {/* Notmebro */}
-            <Route path="/wallet" element={<Wallet />} />
+            <Route path="/account/wallet" element={<Wallet />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/account" element={<AccountDetailsPage />} />
             <Route path="/payment-result" element={<PaymentResultPage />} />

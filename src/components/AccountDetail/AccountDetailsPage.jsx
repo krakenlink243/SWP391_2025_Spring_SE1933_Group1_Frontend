@@ -90,7 +90,7 @@ const AccountDetailsPage = () => {
               >
                 Add funds to your Wallet
               </button>
-              <a href="#">View purchase history</a>
+              <a href="/account/history">View purchase history</a>
             </div>
           </section>
           <section className="info-section contact-info">

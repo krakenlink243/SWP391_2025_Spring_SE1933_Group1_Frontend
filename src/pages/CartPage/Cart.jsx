@@ -122,7 +122,7 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
     <div className="cart-steam-bg" style={{ minHeight: `${minHeight}px` }}>
       <div className="cart-main-steam">
         <h2 className="cart-title-steam">
-          {username ? `${username}'s Shopping Cart` : "Shopping Cart"}
+          Your Shopping Cart
         </h2>
         <div className="cart-list-steam">
           {loading ? (

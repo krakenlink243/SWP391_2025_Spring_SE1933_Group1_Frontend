@@ -33,11 +33,8 @@ function UserDropBox({ userBalance }) {
           Store preferences
         </a>
         {role == 'Publisher' ? <a href="/sendgame">Request Add Game</a> : <></>}
-        <a className="dropdown-item" href="/transaction">
-          Transaction
-        </a>
         {role == 'Standard' ? <a href="/sendpublisher">Request Publisher</a> : <></>}
-        <a className="dropdown-item" href="/wallet">
+        <a className="dropdown-item" href="/account/wallet">
           View my wallet:{" "}
           <span style={{ color: "#4cb4ff" }}>
             {userBalance.toLocaleString("en-US", {

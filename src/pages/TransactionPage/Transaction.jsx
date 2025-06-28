@@ -55,7 +55,7 @@ const Transaction = () => {
   return (
     <div className="transaction-steam-bg">
       <div className="transaction-main-steam">
-        <h2 className="transaction-title-steam">{username ? `${username}'s Transaction History` : 'Transaction History'}</h2>
+        <h2 className="transaction-title-steam">{username ? `${username}'s Purchase History` : 'Purchase History'}</h2>
         <div className="transaction-list-steam">
           {loading ? (
             <div className="transaction-loading">Loading...</div>
