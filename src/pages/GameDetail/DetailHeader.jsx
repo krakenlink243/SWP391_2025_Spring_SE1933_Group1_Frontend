@@ -18,7 +18,7 @@ import { Navigation, Thumbs, Scrollbar } from 'swiper/modules';
 function DetailHeader({ game }) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const [mediaUrlArr, setMediaUrlArr] = useState([]);
-    const userId = localStorage.getItem("userId");
+    const CUR_USERID = localStorage.getItem("userId");
     const [gameInCart, setGameInCart] = useState(false);
     const [gameInLib, setGameInLib] = useState(false);
 
@@ -37,12 +37,18 @@ function DetailHeader({ game }) {
                 return Array.from(new Set(urls)); // Loại trùng
             });
 
-            checkGameInCart();
-            checkGameInLib();
+            if (CUR_USERID) {
+                checkGameInCart();
+                checkGameInLib();
+            }
         }
     }, [game])
 
     const addCartHandler = async () => {
+        if (!CUR_USERID) {
+            window.location.href = "/login";
+            return;
+        }
         try {
             const response = await axios.post(
                 //adjust add by Bathanh
@@ -53,7 +59,7 @@ function DetailHeader({ game }) {
             // @author Phan NT Son
             // Tạo thông báo khi người dùng thêm game vào giỏ hàng
             if (response.data.success) {
-                createNotification(userId, "Cart", `Game ${game.name} has been added to your cart.`);
+                createNotification(CUR_USERID, "Cart", `Game ${game.name} has been added to your cart.`);
                 alert("Game added to cart successfully!");
                 checkGameInCart();
                 checkGameInLib();

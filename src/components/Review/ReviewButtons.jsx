@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import './ReviewList.css'
 import { createNotification } from "../../services/notification";
 import axios from "axios";
+import './ReviewButtons.css';
+
 /**
  * @author Phan NT Sons
  * @param {*} param0 
  * @returns 
  */
-function ReviewButtons({ originalReview, game, userId }) {
+function ReviewButtons({ originalReview, game }) {
 
     const [helpfulCount, setHelpfulCount] = useState(originalReview.helpful);
     const [notHelpfulCount, setNotHelpfulCount] = useState(originalReview.notHelpful);
@@ -21,7 +22,8 @@ function ReviewButtons({ originalReview, game, userId }) {
 
     useEffect(() => {
         const fetchData = async () => {
-            await checkUserOption();
+            if (CUR_USERNAME)
+                await checkUserOption();
             setIsReady(true);
         };
         fetchData();
@@ -38,6 +40,11 @@ function ReviewButtons({ originalReview, game, userId }) {
     };
 
     const handleVote = (isHelpful) => {
+        if (!CUR_USERNAME) {
+            window.location.href = "/login";
+            return;
+        }
+
         const PATHS = {
             HELPFUL: "http://localhost:8080/review/vote/helpful",
             NOT_HELPFUL: "http://localhost:8080/review/vote/unhelpful",

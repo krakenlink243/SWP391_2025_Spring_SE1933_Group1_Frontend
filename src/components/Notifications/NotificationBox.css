@@ -1,7 +1,7 @@
 .notifbox-container {
   position: relative;
   display: inline-block;
-  z-index: 1000;
+  z-index: 11;
   width: 100%;
 
 }
@@ -91,7 +91,7 @@
   background-color: #6c757d21;
   opacity: 0;
   transition: opacity 0.4s ease;
-  z-index: 1;
+  z-index: 12;
 }
 
 .notifbox-item:hover::before {

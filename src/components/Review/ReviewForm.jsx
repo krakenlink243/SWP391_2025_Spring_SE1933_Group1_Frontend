@@ -21,7 +21,6 @@ function ReviewForm({ onReload, game }) {
                 reviewContent: reviewContent,
                 gameId: game.gameId,
             });
-            console.log('Review submitted:', response.data);
             setReviewContent('');
             return true;
         } catch (error) {

@@ -41,8 +41,15 @@ function ReviewUpdateForm({ originalReview, onReload, onCancel, gameId, userId }
             <div className='update-review-form-inputs'>
                 <textarea
                     value={updateReviewContent}
-                    onChange={(e) => setUpdateReviewContent(e.target.value)}
+                    onChange={(e) => {
+                        if (e.target.value.length <= 8000) {
+                            setUpdateReviewContent(e.target.value);
+                        }
+                    }}
                 />
+                <div className="char-count">
+                    {updateReviewContent.length} / 8000
+                </div>
             </div>
             <div className="recommend-buttons">
                 <div className='pb-1'>Do you recommend this game?</div>
@@ -60,8 +67,9 @@ function ReviewUpdateForm({ originalReview, onReload, onCancel, gameId, userId }
                 <button
                     onClick={handleUpdate}
                     disabled={
-                        updateReviewContent === originalReview.reviewContent &&
-                        updateRecommended === originalReview.recommended
+                        (updateReviewContent === originalReview.reviewContent &&
+                        updateRecommended === originalReview.recommended) ||
+                        updateReviewContent.length > 8000
                     }
                     className='update-button'
                 >

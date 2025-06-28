@@ -48,7 +48,7 @@
   position: absolute;
   top: 100%;
   left: 0;
-  z-index: 1000;
+  z-index: 11;
   background: #3D4450;
   box-shadow: 3px 3px 5px -3px #000;
   text-align: left;
@@ -83,6 +83,7 @@
   align-items: center;
   width: 100%;
   text-align: center;
+  justify-content: end;
 }
 
 

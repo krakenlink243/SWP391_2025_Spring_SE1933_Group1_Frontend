@@ -29,8 +29,8 @@ function UserDropBox({ userBalance }) {
         <a className="dropdown-item" href="/account">
           Account details: <span style={{ color: "#4cb4ff" }}>{username}</span>
         </a>
-        <a className="dropdown-item" href="/preferences">
-          Store preferences
+        <a className="dropdown-item" href="/library">
+          Library
         </a>
         {role == 'Publisher' ? <a href="/sendgame">Request Add Game</a> : <></>}
         {role == 'Standard' ? <a href="/sendpublisher">Request Publisher</a> : <></>}

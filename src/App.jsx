@@ -125,6 +125,7 @@ function AppRoutes() {
     "/wallet",
     "/login",
     "/register",
+    "/library"
   ];
   const needlessHeaderPath = ["/admin", "/chat"];
   const needlessFooterPath = ["/admin", "/chat"];
