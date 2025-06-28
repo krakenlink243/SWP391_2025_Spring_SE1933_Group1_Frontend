@@ -1,8 +1,28 @@
+.notiflist-container .user-header {
+    height: 127px;
+    background: url(https://community.fastly.steamstatic.com/public/images/bg_highlight.png) center bottom no-repeat;
+    gap: 25px;
+    padding: 0 25px;
+    width: 100%;
+}
+
+.user-header img {
+    height: calc(100% - 25px);
+    cursor: pointer;
+}
+
+.user-header a {
+    color: #ebebeb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .notiflist-container .notiflist-title {
     font-size: 18px;
     padding: 5px 0px;
     color: #fff;
 }
+
 
 .notiflist-list .notiflist-item {
     background: rgba(0, 0, 0, .2);

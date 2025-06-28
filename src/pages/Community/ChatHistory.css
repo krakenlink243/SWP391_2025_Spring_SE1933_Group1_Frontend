@@ -1,6 +1,7 @@
 .chat-history {
     overflow-y: auto;
     padding: 1rem;
+    height: 100%;
 }
 
 .day-header {
@@ -66,4 +67,41 @@
     margin-left: 0.5rem;
     align-self: flex-end;
     color: #999;
+}
+
+
+/*
+webkit
+*/
+
+/* width of the entire scrollbar */
+.chat-history::-webkit-scrollbar {
+    height: 12px;
+    width: 14px;
+    background: transparent;
+}
+
+/* the track (background) of the scrollbar */
+.chat-history::-webkit-scrollbar-track {
+    border-radius: 4px;
+}
+
+/* the draggable thumb */
+.chat-history::-webkit-scrollbar-thumb {
+    width: 10px;
+    background-color: #434953;
+    border-radius: 10px;
+    border: 4px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    transition: background-color .32s ease-in-out;
+    margin: 4px;
+    min-height: 32px;
+    min-width: 32px;
+}
+
+/* thumb when hovered */
+.chat-history::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+    width: 3px;
+
 }

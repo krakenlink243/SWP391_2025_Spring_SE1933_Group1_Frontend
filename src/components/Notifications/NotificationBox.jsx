@@ -53,7 +53,7 @@ function NotificationBox() {
       console.log("Token: " + token);
       getUnreadNotificationList();
     }
-  }, [token, window.location.pathname]);
+  }, []);
 
   const getUnreadNotificationList = () => {
     const token = localStorage.getItem("token");

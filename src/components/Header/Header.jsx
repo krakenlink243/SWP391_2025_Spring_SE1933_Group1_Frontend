@@ -41,7 +41,8 @@ const Header = forwardRef((props, ref) => {
         "/profile",
         "/profile/friends",
         "/profile/:userId/edit/info",
-        "/profile/:userId/edit/avatar"
+        "/profile/:userId/edit/avatar",
+        "/notifications"
       ],
     },
     {

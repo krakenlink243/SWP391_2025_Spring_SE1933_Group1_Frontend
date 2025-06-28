@@ -74,6 +74,10 @@
   overflow-y: auto;
 }
 
+.notifbox-list::-webkit-scrollbar{
+  display: none;
+}
+
 
 .notifbox-item {
   position: relative;

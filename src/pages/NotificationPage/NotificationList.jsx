@@ -13,6 +13,8 @@ function NotificationList() {
   const [reloadSignal, setReloadSignal] = useState(0);
   const [countUnRead, setCountUnRead] = useState(0);
   const token = localStorage.getItem("token");
+  const CUR_AVATAR_URL = localStorage.getItem("avatarUrl");
+  const CUR_USERNAME = localStorage.getItem("username");
 
   useEffect(() => {
     if (token) {
@@ -49,16 +51,29 @@ function NotificationList() {
   } else {
     return (
       <div className="notiflist-container col-lg-8 d-flex align-items-start flex-column py-5 text-white">
-        <div className="notiflist-title">Notifications ({countUnRead} unread)</div>
-        <div className="notiflist-list w-100 d-flex flex-column gap-2">
-          {data.map((notification) => (
-            <NotificationItem
-              key={notification.notifId}
-              notification={notification}
-              onReload={reloadList}
-            />
-          ))}
+        <div className="user-header d-flex flex-row align-items-center">
+          <img src={CUR_AVATAR_URL} alt="avatar" className="avatar" onClick={() => window.location.href = "/profile"} />
+          <a className="username" href="/profile">{CUR_USERNAME}</a>
         </div>
+        {data.length > 0 ? (
+          <div>
+            <div className="notiflist-title">Notifications ({countUnRead} unread)</div>
+            <div className="notiflist-list w-100 d-flex flex-column gap-2">
+              {data.map((notification) => (
+                <NotificationItem
+                  key={notification.notifId}
+                  notification={notification}
+                  onReload={reloadList}
+                />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="d-flex flex-column align-items-center w-100 py-5">
+            <h3>You have no notifications at this time.</h3>
+            <p>This is where you'll be able to see SteamCL notifications regarding your Friends, Games, and more.</p>
+          </div>
+        )}
       </div>
     );
   }
