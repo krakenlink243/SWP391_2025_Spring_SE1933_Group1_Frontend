@@ -1,5 +1,43 @@
 {
-  "welcome": "Welcome",
-  "logout": "Logout",
-  "language": "Language"
+  
+  "STORE": "STORE",
+  "COMMUNITY": "COMMUNITY",
+  "ABOUT": "ABOUT",
+  "SUPPORT": "SUPPORT",
+  "CHAT": "CHAT",
+  "ADMIN TOOLS": "ADMIN TOOLS",
+
+  "Your Store": "Your Store",
+  "New & Noteworthy": "New & Noteworthy",
+  "Categories": "Categories",
+  "Points Shop": "Points Shop",
+  "News": "News",
+  "Labs": "Labs",
+  "search": "search",
+
+  "trang 1": "/",
+  "BROWSE BY CATEGORY": "BROWSE BY CATEGORY",
+
+  "trang 2": "/game",
+  "Sort by": "Sort by",
+  "Name (A-Z)":"Name (A-Z)",
+  "Name (Z-A)":"Name (Z-A)",
+  "Release Date (Newest)":"Release Date (Newest)",
+  "Release Date (Oldest)":"Release Date (Oldest)",
+  "Price (Low to High)":"Price (Low to High)",
+  "Price (High to Low)":"Price (High to Low)",
+  "All Games":"All Games",
+  "titles found.":"titles found.",
+  "Free":"Free",
+  "Page":"Page",
+  "of":"of",
+  "Prev":"Prev",
+  "Next":"Next",
+  "Narrow by Price":"Narrow by Price",
+  "Under":"Under",
+  "Any Price":"Any Price",
+  "Narrow by Tag":"Narrow by Tag",
+  "Search for tags":"Search for tags",
+  "Narrow by Publisher":"Narrow by Publisher",
+  "Search for publishers":"Search for publishers"
 }
