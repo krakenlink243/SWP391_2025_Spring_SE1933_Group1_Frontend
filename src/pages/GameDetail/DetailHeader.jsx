@@ -22,7 +22,6 @@ function DetailHeader({ game }) {
     const [gameInCart, setGameInCart] = useState(false);
     const [gameInLib, setGameInLib] = useState(false);
 
-    
     useEffect(() => {
         const extractMediaUrl = () => {
             game.media.map((m) => {
