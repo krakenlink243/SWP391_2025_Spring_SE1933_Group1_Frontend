@@ -54,6 +54,9 @@ import FeedbackHub from "./pages/FeedbackHub";
 import UserFeedback from "./pages/UserFeedback";
 import EmailSettings from "./components/EmailChange/EmailSettings";
 import { jwtDecode } from "jwt-decode";
+
+import AIGeneratorFrontend from "./pages/test"; // TEST
+
 function AppRoutes() {
   // Added by Phan NT Son 18-06-2025
   const headerHeight = useRef(null);

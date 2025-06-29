@@ -7,11 +7,17 @@ import Particles from "react-tsparticles";
 // import particleConfig from "./particles.json";
 import { useState, useEffect } from "react";
 import axios from "axios";
+
+import { useOnlineUsers } from "../../utils/OnlineUsersContext"; // Added by Phan Son 29-06
+
 const ProfilePage = () => {
   const navigate = useNavigate();
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const onlineUsers = useOnlineUsers(); // Added by Phan Son 29-06
+
   useEffect(() => {
     const fetchUserData = async () => {
       setLoading(true);
@@ -29,6 +35,7 @@ const ProfilePage = () => {
           `http://localhost:8080/user/profile/${userId}`
         );
         setProfileData(response.data);
+        console.log(response.data);
       } catch (err) {
         setError("Could not fetch profile data. The user may not exist.");
         console.error(err);
@@ -40,6 +47,9 @@ const ProfilePage = () => {
     fetchUserData();
   }, []);
 
+  const isUserOnline = (username) => {
+    return onlineUsers.includes(username);
+  };
 
   if (loading)
     return <div className="profile-page-status">Loading Profile...</div>;
@@ -68,9 +78,8 @@ const ProfilePage = () => {
                   className="main-avatar"
                 />
                 <div
-                  className={`status-indicator ${
-                    profileData.isOnline ? "online" : "offline"
-                  }`}
+                  className={`status-indicator ${isUserOnline(profileData.username) ? "online" : "offline"
+                    }`}
                 ></div>
               </div>
 
@@ -158,10 +167,10 @@ const ProfilePage = () => {
               {profileData.isOnline !== undefined && (
                 <p
                   className={
-                    profileData.isOnline ? "status-online" : "status-offline"
+                    isUserOnline(profileData.username) ? "status-online" : "status-offline"
                   }
                 >
-                  {profileData.isOnline
+                  {isUserOnline(profileData.username)
                     ? "Currently Online"
                     : "Currently Offline"}
                 </p>
