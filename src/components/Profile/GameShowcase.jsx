@@ -51,7 +51,7 @@ const GameShowcase = ({ userId, gameCount }) => {
         <h3>
           Games <span>({gameCount ?? 0})</span>
         </h3>
-        <Link to={`/users/${userId}/library`} className="view-all-link">
+        <Link to={`/library`} className="view-all-link">
           View All
         </Link>
       </div>
