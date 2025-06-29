@@ -7,7 +7,7 @@ const sortOptions = [
   { value: "az", label: "A-Z" },
   { value: "za", label: "Z-A" },
   { value: "priceLowHigh", label: "Price (Low to High)" },
-  { value: "priceHighLow", label: "Price (High to Low)" }
+  { value: "priceHighLow", label: "Price (High to Low)" },
 ];
 
 const token = localStorage.getItem("token");
@@ -15,11 +15,6 @@ const username = localStorage.getItem("username");
 
 const Library = () => {
   const navigate = useNavigate();
-
-  if (!token) {
-    window.location.href = "/";
-    return null;
-  }
 
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,11 +25,21 @@ const Library = () => {
     axios
       .get("http://localhost:8080/user/library")
       .then((res) => {
-        setGames(res.data.library || []);
+        setGames(
+          (res.data.content || []).map((item) => ({
+            ...item.gameDetail,
+            playtimeInMillis: item.playtimeInMillis,
+          }))
+        );
         setLoading(false);
       })
       .catch(() => setLoading(false));
   }, []);
+
+  if (!token) {
+    window.location.href = "/";
+    return null;
+  }
 
   const getSortedGames = () => {
     const sorted = [...games];
@@ -120,6 +125,9 @@ const Library = () => {
                   />
                 </div>
                 <div className="library-game-name">{game.name}</div>
+                <div className="library-game-played-time">
+                  {(game.playtimeInMillis / 60000).toFixed(1)} minutes played
+                </div>
               </div>
             ))}
           </div>

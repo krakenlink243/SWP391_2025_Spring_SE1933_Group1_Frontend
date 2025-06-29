@@ -146,3 +146,9 @@
   margin-top: 6px;
   word-break: break-word;
 }
+.library-game-played-time {
+  color: #c7d5e0;
+  font-size: 14px;
+  margin-top: 4px;
+  text-align: center;
+}
