@@ -8,15 +8,14 @@ import './ReviewButtons.css';
  * @param {*} param0 
  * @returns 
  */
-function ReviewButtons({ originalReview, game }) {
+function ReviewButtons({ reivewHelpful, reivewNotHelpful, authorId, game }) {
 
-    const [helpfulCount, setHelpfulCount] = useState(originalReview.helpful);
-    const [notHelpfulCount, setNotHelpfulCount] = useState(originalReview.notHelpful);
+    const [helpfulCount, setHelpfulCount] = useState(reivewHelpful);
+    const [notHelpfulCount, setNotHelpfulCount] = useState(reivewNotHelpful);
 
 
     const [userOption, setUserOption] = useState(null);
     const [isReady, setIsReady] = useState(false);
-    const authorId = originalReview.userId;
     const CUR_USERNAME = localStorage.getItem("username");
 
 
@@ -28,6 +27,11 @@ function ReviewButtons({ originalReview, game }) {
         };
         fetchData();
     }, []);
+
+    useEffect(() => {
+        setHelpfulCount(reivewHelpful);
+        setNotHelpfulCount(reivewNotHelpful);
+    }, [reivewHelpful, reivewNotHelpful]);
 
     const checkUserOption = async () => {
         try {

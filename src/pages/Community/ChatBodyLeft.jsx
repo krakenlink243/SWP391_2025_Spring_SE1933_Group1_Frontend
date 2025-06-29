@@ -38,9 +38,6 @@ function ChatBodyLeft({ setCurFriendChat }) {
             .catch((err) => { console.log("Error fetching friends list: " + err) })
     };
 
-
-
-
     return (
         <div id="left-pane" className="friends-list-container bg-light h-100">
             <div className="friend-list h-100 d-flex flex-column">

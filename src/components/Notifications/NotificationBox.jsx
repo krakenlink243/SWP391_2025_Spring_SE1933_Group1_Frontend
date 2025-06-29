@@ -82,10 +82,8 @@ function NotificationBox() {
 
   return (
     <div className="notifbox-container">
-      <div className="notifbox-bell" onClick={toggleOpenNotification}>
+      <div className={`notifbox-bell ${unreadCount > 0 ? "notif" : ""}`} onClick={toggleOpenNotification}>
         <FaBell />
-        {unreadCount > 0 && <span className="notifbox-badge"></span>}
-
       </div>
 
       <div className={`notifbox-box text-light p-3 ${isOpen ? "active" : ""}`}>
@@ -109,7 +107,7 @@ function NotificationBox() {
           )}
         </ul>
       </div>
-    </div>
+    </div >
   );
 }
 

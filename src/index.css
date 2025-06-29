@@ -11,6 +11,7 @@ body,
   display: flex;
   flex-direction: column;
 }
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -25,14 +26,17 @@ body,
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 .main-content {
   flex: 1;
 }
+
 a {
   font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -63,9 +67,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -78,6 +84,7 @@ button:focus-visible {
   display: flex;
   flex-direction: column;
 }
+
 footer {
   padding: 1em;
   color: #888;
@@ -90,3 +97,10 @@ footer {
 /*
 Removed @media by Phan NT Son - disable light mode prefrence based on user brower
 */
+
+body::selection {
+  background: #54a5d4;
+  text-shadow: 1px 1px 2px #000000aa;
+  color: #fff;
+
+}

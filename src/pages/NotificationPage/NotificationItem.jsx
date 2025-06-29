@@ -9,13 +9,11 @@ import "./NotificationList.css"
  * @returns 
  */
 function NotificationItem({ notification, onReload }) {
-  const [read, setRead] = useState(notification.read);
-
   const handleClick = () => {
-    if (!read) {
+    if (!notification.read) {
       axios.patch(`http://localhost:8080/notification/markread/${notification.notifId}`)
         .then(() => {
-          setRead(true);
+          onReload();
         })
         .catch((error) => console.error("Error marking notification as read:", error));
     }
@@ -33,10 +31,10 @@ function NotificationItem({ notification, onReload }) {
 
   return (
     <div
-      className={`notiflist-item ${read ? '' : 'unread'} d-flex flex-row w-100 justify-content-between p-2`}
+      className={`notiflist-item ${notification.read ? '' : 'unread'} d-flex flex-row w-100 justify-content-between p-2`}
       onClick={handleClick}
     >
-      {!read && <span className="notiflist-dot" />}
+      {!notification.read && <span className="notiflist-dot" />}
 
       <div>
         <div className="notiflist-type">{notification.notificationType}</div>
