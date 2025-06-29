@@ -4,7 +4,7 @@ import ReviewListItem from "./ReviewListItem";
 import ReviewUpdateForm from "./ReviewUpdateForm";
 import axios from "axios";
 import './Review.css';
-
+import { connectSocketReview, disconnectSocketReview } from "../../services/reviewNotif";
 
 /**
  * @author Phan NT Son
@@ -16,22 +16,65 @@ function Review({ game }) {
   const [reloadSignal, setReloadSignal] = useState(0);
   const triggerReload = () => setReloadSignal(prev => prev + 1);
 
-  const CUR_USERID = localStorage.getItem("userId");
+  const CUR_USERID = Number(localStorage.getItem("userId"));
   const [reviewList, setReviewList] = useState([]);
   const [visibleCount, setVisibleCount] = useState(5);
   const [editingId, setEditingId] = useState(null);
 
+
   const shownReviews = reviewList.slice(0, visibleCount);
 
+  useEffect(() => {
+    console.log("[State] reviewList changed:", reviewList);
+  }, [reviewList]);
 
   useEffect(() => {
     axios
       .get(`http://localhost:8080/review/list/${game.gameId}`)
       .then((response) => {
         setReviewList(response.data);
+        console.log(response.data);
       })
       .catch((error) => console.error("Error fetching reviews:", error));
+
   }, [reloadSignal]);
+
+  useEffect(() => {
+    connectSocketReview(game.gameId, (dto) => {
+      switch (dto.type) {
+        case 'UPDATE_REACTION':
+          handleUpdateReaction(dto); break;
+        case 'UPDATE_CONTENT':
+          handleUpdateContent(dto); break;
+        case 'NEW_REVIEW':
+        case 'DELETE_REVIEW':
+          triggerReload(); break; // cập nhật toàn bộ
+      }
+    });
+    return () => disconnectSocketReview();
+  }, []);
+
+  function handleUpdateReaction(dto) {
+    setReviewList(prev => {
+      return prev.map(r =>
+        r.authorId === dto.authorId && r.gameId === dto.gameId
+          ? { ...r, helpful: dto.newLikeCount, notHelpful: dto.newUnLikeCount }
+          : r
+      );
+    });
+  }
+
+
+  function handleUpdateContent(dto) {
+    setReviewList(prev =>
+      prev.map(r =>
+        r.authorId === dto.authorId && r.gameId === dto.gameId
+          ? { ...r, content: dto.newContent, recommended: dto.newRecommended }
+          : r
+      )
+    );
+
+  }
 
   const { recommendPct, notRecommendPct } = useMemo(() => {
     const total = reviewList.length;
@@ -41,18 +84,24 @@ function Review({ game }) {
     return { recommendPct: pct, notRecommendPct: 100 - pct };
   }, [reviewList]);
 
-  function isAlreadyHaveReview() {
-    return reviewList.some(review => review.userId === CUR_USERID);
-  }
+  const isHavingReview = useMemo(() => {
+    return reviewList.some((review) => review.authorId === CUR_USERID);
+  }, [reviewList, CUR_USERID]);
+
+
 
   return (
     <div className="review-container w-100">
       <h2>CUSTOMER REVIEWS FOR {game.name}</h2>
       <div className="line-seperate w-100"></div>
-      {isAlreadyHaveReview() && (
+      {/* {!isHavingReview && (
+      )} */}
+
+      {!isHavingReview && (
         <ReviewForm
           onReload={triggerReload}
           game={game} />
+
       )}
 
       {reviewList.length > 0 ? (
@@ -71,9 +120,9 @@ function Review({ game }) {
 
       <div className="reviews d-flex flex-column gap-2">
         {shownReviews.map((review) => (
-          <div key={review.userId} className="review">
+          <div key={`${review.authorId}-${review.gameId}`} className="review">
 
-            {editingId === review.userId ? (
+            {editingId === review.authorId ? (
               <ReviewUpdateForm
                 originalReview={review}
                 onCancel={() => setEditingId(null)}

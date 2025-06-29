@@ -59,6 +59,7 @@ export default function ChatHistory({ pastMessages, liveMessages, friend }) {
                                 {group.messages.map((msg, j) => (
                                     <div key={j} className="msg-line">
                                         <span className="msg-text">{msg.content}</span>
+                                        <div></div>
                                     </div>
                                 ))}
                             </div>

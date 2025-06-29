@@ -23,9 +23,8 @@ function ReviewUpdateForm({ originalReview, onReload, onCancel, gameId, userId }
         if (!window.confirm('Are you sure you want to delete this review?')) {
             return false;
         }
-        const resp = await axios.delete(`http://localhost:8080/review/delete`, {
-            gameId: gameId,
-        });
+        await axios.delete(`http://localhost:8080/review/delete/${gameId}`).catch((err) => { console.log("Error: " + err) });
+
         onReload();
         onCancel();
     };
@@ -68,7 +67,7 @@ function ReviewUpdateForm({ originalReview, onReload, onCancel, gameId, userId }
                     onClick={handleUpdate}
                     disabled={
                         (updateReviewContent === originalReview.reviewContent &&
-                        updateRecommended === originalReview.recommended) ||
+                            updateRecommended === originalReview.recommended) ||
                         updateReviewContent.length > 8000
                     }
                     className='update-button'

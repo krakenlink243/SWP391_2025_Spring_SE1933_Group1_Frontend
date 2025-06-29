@@ -18,6 +18,21 @@
   color: white;
 }
 
+.notifbox-bell.notif {
+  background-color: #5c7e10;
+  color: #fff;
+}
+
+.notifbox-bell.notif:hover {
+  background-color: #7ea64b;
+  transition-property: background;
+  transition-duration: 250ms;
+}
+
+/*
+
+*/
+
 .notifbox-badge {
   position: absolute;
   top: -5px;
@@ -72,6 +87,10 @@
   padding: 0;
   max-height: 300px;
   overflow-y: auto;
+}
+
+.notifbox-list::-webkit-scrollbar {
+  display: none;
 }
 
 

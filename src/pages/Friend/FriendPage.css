@@ -7,11 +7,13 @@
 .friend-page-container .friend-page-header {
     height: 127px;
     background: url(https://community.fastly.steamstatic.com/public/images/bg_highlight.png) center bottom no-repeat;
+    gap: 25px;
+    padding: 0 25px;
 }
 
 .friend-page-header img {
-    height: 100%;
-    padding: 25px;
+    height: calc(100% - 25px);
+    cursor: pointer;
 }
 
 .friend-page-header a {

@@ -41,7 +41,8 @@ const Header = forwardRef((props, ref) => {
         "/profile",
         "/profile/friends",
         "/profile/:userId/edit/info",
-        "/profile/:userId/edit/avatar"
+        "/profile/:userId/edit/avatar",
+        "/notifications"
       ],
     },
     {
@@ -157,7 +158,7 @@ const Header = forwardRef((props, ref) => {
             </>
           ) : (
             <>
-              <div className="header-user-action-content d-flex flex-column align-items-end w-75 ">
+              <div className="header-user-action-content d-flex flex-column align-items-end w-75 gap-2">
                 <div className="user-action-content">
 
                   <div className="w-25">
