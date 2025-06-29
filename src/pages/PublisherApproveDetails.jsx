@@ -34,6 +34,10 @@ function PublisherApproveDetails() {
     fetchData();
   }, []);
   const handleApprove = async (requestId) => {
+    const confirmApprove = window.confirm("Are you sure you want to approve this publisher?");
+    if (!confirmApprove) {
+      return;
+    }
     try {
       const response = await axios.patch(`http://localhost:8080/request/publisher/approve/${requestId}`);
       console.log("Approved request:", response.data);
@@ -60,7 +64,8 @@ function PublisherApproveDetails() {
   }
   return (
     <>
-    <div className='apply-publisher-title'><h1>Publisher Application</h1></div>
+    <div className='apply-publisher-title'>
+      <h1>Publisher Application</h1>
     <div className='apply-publisher-container'>
       <div className='publisher-info'>
         Legal Name
@@ -81,6 +86,7 @@ function PublisherApproveDetails() {
       <div className="publisher-image">
         <img src={formData.imageUrl} alt="preview" style={{ width: "200px", height: "200px", objectFit: "cover", borderRadius: "4px" }} />
       </div>
+    </div>
     </div>
     </>
   )

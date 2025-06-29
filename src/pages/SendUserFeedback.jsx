@@ -86,11 +86,12 @@ function SendUserFeedback() {
     }
     const handleRemove = (indexToRemove) => {
         setArr(prev => prev.filter((_, i) => i !== indexToRemove));
+        setFiles(prev => prev.filter((_, i) => i !== indexToRemove));
     };
   return (
     <div className='sendfeedback-container'>
         <div className='sendfeedback-title'>
-            <h1>SEND FEEDBACK</h1>
+            <h1>Send Feedback</h1>
             <h2>Hi, {userName}</h2>
             <p style={{fontStyle: "italic"}}>If you have any thing to tell us to improve our products or any question, please tell us below. </p>
         </div>
@@ -102,6 +103,8 @@ function SendUserFeedback() {
             <textarea name="message" id="" onChange={handleChange} onBlur={normalizeValue} value={formData.message}></textarea>
         </div>
         <div className='inner-image'>
+        <input type="file" multiple style={{ display: "none" }} accept=".jpg,.png" ref={mediaFileRef} onChange={handleFileSelect}/>
+        <Button className='upload-media' label='+' onClick={() => mediaFileRef.current.click()} color='gray-button'/>
         <PhotoProvider>
           {arr.map((item, index) => (
             <div className='image-wrapper' key={index}>
@@ -110,14 +113,12 @@ function SendUserFeedback() {
               </PhotoView>
               <span className="remove-icon" onClick={() => handleRemove(index)}>−</span>
             </div>
-          ))}
+          )).reverse()}
         </PhotoProvider>
-            <input type="file" multiple style={{ display: "none" }} accept=".jpg,.png" ref={mediaFileRef} onChange={handleFileSelect}/>
-            <Button className='upload-media' label='+' onClick={() => mediaFileRef.current.click()} color='blue-button'/>
         </div>
         <div className='feedback-button'>
-            <Button label="SEND" color='blue-button' onClick={handleSubmit}/>
-            <Button label="CANCEL" color='grey-button' onClick={() => window.location.href="/feedbackhub"}/>
+            <Button label="Send" color='blue-button' onClick={handleSubmit}/>
+            <Button label="Cancel" color='grey-button' onClick={() => window.location.href="/feedbackhub"}/>
         </div>
     </div>
   )

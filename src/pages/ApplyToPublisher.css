@@ -1,12 +1,14 @@
 .apply-publisher-title {
-  margin-top: 50px;
-    font-size: 22px; 
-    font-weight: bold;
-    text-align: left;
-    margin-left: 20%;
-    width: 100%;
-    margin-bottom: 20px;
+    margin-top: 40px !important;
+    width: 50%;
+    margin: 0 auto; /* Center it */
     color: #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #23272B;
+    margin-bottom: 50px;
+    color: #ADB2B8; 
+    border: 1px solid #000000;
   }
   
   .apply-publisher-container {
@@ -14,13 +16,10 @@
     flex-direction: row; /* Align form and image side by side */
     justify-content: space-between;
     gap: 10%;
-    width: 60%;
-    margin: 0 auto; /* Center it */
-    color: #ccc;
   }
   
   .publisher-info {
-    flex: 1; /* More space for form fields */
+    flex-grow: 1; /* More space for form fields */
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -57,8 +56,8 @@
     box-sizing: border-box; /* Ensure padding doesn’t shrink the element */
 }
 .publisher-button{
-  margin-top: 50px;
-  margin-bottom: 50px;
+  margin-top: 30px;
+  margin-bottom: 30px;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;

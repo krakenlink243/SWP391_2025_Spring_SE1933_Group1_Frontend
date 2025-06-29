@@ -13,10 +13,16 @@
   }
   
   .request-name {
-    flex-grow: 1; /* Makes the text take up available space */
-    color: #fff; /* White text for contrast */
+    flex: 2; 
+    color: #fff; 
+    /* text-align: center; */
   }
-  
+  .from-user{
+    flex: 1;
+  }
+  .feedback-date{
+    flex: 1;
+  }
   /* .request-item img:last-child {
     margin-left: auto; 
   } */

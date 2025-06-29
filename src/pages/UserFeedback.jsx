@@ -71,7 +71,7 @@ function UserFeedback() {
         </div>
         <div className='feedback-button'>
             {/* <Button label="UPDATE" color='blue-button' /> */}
-            <Button label="DELETE" color='red-button' onClick={() => handleDeleteClick(feedbackId)} />
+            <Button label="Delete" color='red-button' onClick={() => handleDeleteClick(feedbackId)} />
         </div>
     </div>
   )

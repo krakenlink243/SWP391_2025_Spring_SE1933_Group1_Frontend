@@ -1,7 +1,7 @@
 //@author: Vu Hoang
 import React from 'react'
 import './RequestItem.css'
-function RequestItem({requestName,onApprove,onDecline,onCheckChange,requestId,isTicked,onClicked}) {
+function RequestItem({requestName,from,date,onApprove,onDecline,onCheckChange,requestId,isTicked,onClicked}) {
 
   return (
     <div className='request-item'>
@@ -11,6 +11,8 @@ function RequestItem({requestName,onApprove,onDecline,onCheckChange,requestId,is
                 onClick={() => onCheckChange(requestId)} // ✅ Dynamically update check state from parent
       />
       <div style={{cursor:"pointer"}} className='request-name' onClick={onClicked}>{requestName} </div>
+      <div className='from-user'>{from}</div>
+      <div className='feedback-date'>{date}</div>
       <img src="/icons/Approve.png" alt="" onClick={onApprove}/>
       <img src="/icons/Decline.png" alt="" onClick={onDecline} />
     </div>

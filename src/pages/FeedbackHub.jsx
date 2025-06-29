@@ -42,13 +42,13 @@ function FeedbackHub() {
   return (
     <div className='feedback-hub-container'>
         <div className='feedback-hub-title'>
-            <h1>FEEDBACK HUB</h1>
+            <h1>Feedback Hub</h1>
         </div>
         <div className='create-feedback-button'>
-            <Button label='CREATE NEW FEEDBACK' color='blue-button' onClick={() => window.location.href = '/sendfeedback'}/>
+            <Button label='Write new Feedback' color='blue-button' onClick={() => window.location.href = '/sendfeedback'}/>
         </div>
         <div className='your-feedback'>
-            <h2>YOUR SUBMITTED FEEDBACK</h2>
+            <h2>Your Submitted Feedback</h2>
             {feedbackItems.length === 0 ? (
                 <p>No feedback available.</p>
             ) : (

@@ -53,6 +53,10 @@ function GameApproveDetails() {
     getGameDetails();
   }, [])
   const handleApprove = async () => {
+    const confirmApprove = window.confirm("Are you sure you want to approve this game?");
+    if (!confirmApprove) {
+      return;
+    }
     try {
       const response = await axios.patch(`http://localhost:8080/request/game/approve/${gameId}`);
       console.log(response.data);
@@ -90,44 +94,42 @@ function GameApproveDetails() {
 
   return (
     <>
-      <div className='game-application'>
-        <h1 >{formData.publisherName.toUpperCase()}'s  GAME APPLICATION FORM</h1>
-      </div>
       <div className='form-border'>
+        <h1 >{formData.publisherName}'s  Game Application</h1>
         <div className='game-mandatory-information'>
           <img className='game-avatar' src={gameicon} alt="" />
           <div className='name-price'>
-            NAME(*)
+            Name(*)
             <input type="text" name="gameName" id="" value={formData.gameName} readOnly />
-            PRICE(*)
+            Price(*)
             <div>
               $ <input type="text" name="price" id="" value={formData.price} readOnly />
             </div>
           </div>
         </div>
         <div className='sys-req'>
-          <PartHeading content='SYSTEM REQUIREMENTS' />
+          <PartHeading content='System Requirements' />
           <div className='sys-req-col-container'>
             <div className='sys-req-col1'>
               OS(*)
               <input type="text" name="os" id="" value={formData.os} readOnly />
-              PROCESSOR(*)
+              Processor(*)
               <input type="text" name="processor" id="" value={formData.processor} readOnly />
-              MEMORY(*)
+              Memory(*)
               <input type="text" name="memory" id="" value={formData.memory} readOnly />
             </div>
             <div className='sys-req-col2'>
-              GRAPHICS(*)
+              Graphics(*)
               <input type="text" name="graphics" id="" value={formData.graphics} readOnly />
-              STORAGE(*)
+              Storage(*)
               <input type="text" name="storage" id="" value={formData.storage} readOnly />
-              ADDITIONAL NOTES
+              Additional Notes
               <textarea name="additionalNotes" id="" value={formData.additionalNotes} readOnly></textarea>
             </div>
           </div>
         </div>
         <div className='summary'>
-          <PartHeading content='SUMMARY' />
+          <PartHeading content='Summary' />
           <textarea name="shortDescription" id="" cols="30" rows="10" value={formData.shortDescription} readOnly></textarea>
         </div>
         <div className='summary'>
@@ -135,7 +137,7 @@ function GameApproveDetails() {
           <textarea name="fullDescription" id="" cols="30" rows="10" value={formData.fullDescription} readOnly></textarea>
         </div>
         <div className='game-assets'>
-          <PartHeading content='ASSETS' />
+          <PartHeading content='Assets' />
           <div className='inner-image'>
             <PhotoProvider>
               {formData.mediaUrls.map((item, index) => (
@@ -147,14 +149,14 @@ function GameApproveDetails() {
           </div>
         </div>
         <div className='game-file'>
-          <PartHeading content='FILES' />
+          <PartHeading content='Files' />
           <a href={`${downloadLink}`}>
             <Button className='upload-button' label="Download Game File" onClick={handleGetLinkDownload} />
           </a>
         </div>
         <div className='send-request-cancel'>
-          <Button className='cancel-button' label='DECLINE' onClick={handleDecline} color={'grey-button'} />
-          <Button className='send-button' label='APPROVE' isApprove={'true'} onClick={handleApprove} color='blue-button' />
+          <Button className='cancel-button' label='Decline' onClick={handleDecline} color={'grey-button'} />
+          <Button className='send-button' label='Approve' isApprove={'true'} onClick={handleApprove} color='blue-button' />
         </div>
       </div>
     </>
