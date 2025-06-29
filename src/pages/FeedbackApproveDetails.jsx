@@ -50,6 +50,10 @@ function FeedbackApproveDetails() {
       }
     }
     const handleDecline = async() =>{
+      const confirmDecline = window.confirm("Are you sure you want to decline this feedback?");
+      if (!confirmDecline) {
+        return;
+      }
       try {
         const response = await axios.patch(`http://localhost:8080/request/feedback/reject/${feedbackId}`);
         console.log("Approved request:", response.data)
@@ -82,8 +86,8 @@ function FeedbackApproveDetails() {
         </PhotoProvider>
         </div>
         <div className='feedback-button'>
-            <Button label="ANSWER" color='blue-button' onClick={handleAnswer}/>
-            <Button label="DECLINE" color='grey-button' onClick={handleDecline}/>
+            <Button label="Answer" color='blue-button' onClick={handleAnswer}/>
+            <Button label="Decline" color='grey-button' onClick={handleDecline}/>
         </div>
     </div>
   )

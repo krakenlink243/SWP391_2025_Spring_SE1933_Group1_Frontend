@@ -110,12 +110,15 @@ function PublisherApprovePage() {
         <div style={{cursor:"pointer"}} onClick={()=>{window.location.href=`/approvefeedback`}}>Feedback</div>
       </div>
       {loadedRequest.length > 0 ? (
-        <div className='request-item' style={{ backgroundColor: "#1B2838" }}>
+        <div className='request-items' style={{ backgroundColor: "#1B2838" }}>
           <img
             src={isChecked ? "/icons/Approve.png" : "/icons/Checkbox.png"}
             alt="Checkbox"
             onClick={handleTick}
           />
+          <div>Publisher Name</div>
+          <div>From</div>
+          <div>Date</div>
           <div>
             <img src="/icons/Approve.png" alt="" onClick={handleApproveSelected} />
             <img src="/icons/Decline.png" alt="" onClick={handleDeclineSelected} />
@@ -127,6 +130,8 @@ function PublisherApprovePage() {
         key={request.requestId} 
         requestId={request.requestId}
         requestName={request.publisherName} 
+        from={request.username}
+        date={request.createdDate}
         onApprove={() => handleApprove(request.requestId)} 
         onDecline={() => handleDecline(request.requestId)} 
         onCheckChange={handleCheckChange} 

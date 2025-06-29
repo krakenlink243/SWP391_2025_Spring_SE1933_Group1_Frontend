@@ -104,12 +104,15 @@ function FeedbackApprovePage() {
         <div style={{ cursor: "pointer", textDecoration: "underline", textUnderlineOffset: "5px" }} onClick={() => { window.location.href = `/approvefeedback` }}>Feedback</div>
       </div>
       {loadedRequest.length > 0 ? (
-        <div className='request-item' style={{ backgroundColor: "#1B2838" }}>
+        <div className='request-items' style={{ backgroundColor: "#1B2838" }}>
           <img
             src={isChecked ? "/icons/Approve.png" : "/icons/Checkbox.png"}
             alt="Checkbox"
             onClick={handleTick}
           />
+          <div>Feedback Subject</div>
+          <div>From</div>
+          <div>Date</div>
           <div>
             <img src="/icons/Decline.png" alt="" onClick={handleDeclineSelected} />
             {/* <img src="/icons/Approve.png" alt="" onClick={handleApproveSelected} /> */}
@@ -121,6 +124,8 @@ function FeedbackApprovePage() {
           key={request.requestId}
           requestId={request.requestId}
           requestName={request.subject}
+          from={request.userName}
+          date={request.createdDate}
           onApprove={() => handleApprove(request.requestId, request.userName, request.subject, request.userId)}
           onDecline={() => handleDecline(request.requestId)}
           onCheckChange={handleCheckChange}

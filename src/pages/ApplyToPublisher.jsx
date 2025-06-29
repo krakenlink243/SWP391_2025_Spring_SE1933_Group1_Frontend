@@ -91,6 +91,10 @@ function ApplyToPublisher() {
       alert("Please fill in all fields!");
       return;
     }
+    const confirmSubmit = window.confirm("Are you sure you want to submit this application?");
+    if (!confirmSubmit) {
+      return;
+    }
     try {
       if(image){
         const imgData = new FormData();
@@ -117,7 +121,8 @@ function ApplyToPublisher() {
   }
   return (
     <>
-    <div className='apply-publisher-title'><h1>Publisher Application</h1></div>
+    <div className='apply-publisher-title'>
+      <h1>Publisher Application</h1>
     <div className='apply-publisher-container'>
       <div className='publisher-info'>
         Legal Name(*)
@@ -170,6 +175,7 @@ function ApplyToPublisher() {
         )}
         </ImageUploading>
       </div>
+    </div>
     </div>
     </>
   )
