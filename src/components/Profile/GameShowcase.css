@@ -1,0 +1,75 @@
+.game-showcase-container {
+    /* section-box style được kế thừa từ ProfilePage.css */
+    padding: 0; /* Ghi đè padding của section-box để header chiếm toàn bộ chiều rộng */
+}
+
+.showcase-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 8px 12px;
+}
+
+.showcase-header h3 {
+    border-bottom: none;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    font-size: 14px;
+}
+
+.showcase-header h3 span {
+    color: #acb2b8;
+    font-weight: normal;
+}
+
+.view-all-link {
+    color: #acb2b8;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.view-all-link:hover {
+    color: #fff;
+}
+
+.showcase-list {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Khoảng cách giữa các game */
+}
+
+.showcase-list > p {
+    color: #8f98a0;
+    font-size: 13px;
+    margin: 10px 0;
+}
+
+.showcase-item {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Khoảng cách giữa ảnh và tên game */
+    background-color: rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.showcase-item:hover {
+    background-color: rgba(102, 192, 244, 0.2);
+}
+
+.showcase-item-image {
+    width: 184px; /* Kích thước ảnh capsule của Steam */
+    height: 69px;
+    object-fit: cover;
+    display: block; /* Loại bỏ khoảng trống thừa dưới ảnh */
+}
+
+.showcase-item-title {
+    font-size: 15px;
+    color: #c7d5e0;
+    font-weight: normal;
+    margin: 0;
+}

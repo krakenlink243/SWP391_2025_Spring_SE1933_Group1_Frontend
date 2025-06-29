@@ -1,0 +1,84 @@
+.review-post-container {
+    padding: 20px;
+    color: white;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, rgba(97, 100, 101, 0.3) 0%, rgba(226, 244, 255, 0.3) 100%);
+    margin: 20px auto;
+}
+
+.review-post-header h2 {
+    font-size: 18px;
+    margin: 0;
+    margin-bottom: 3px;
+    color: #66c0f4;
+    font-family: "Motiva Sans", Sans-serif;
+    font-weight: 300;
+    width: 100%;
+    border-top: 1px solid #212c3d;
+    padding-top: 10px;
+    text-transform: unset;
+    letter-spacing: inherit;
+}
+
+.review-post-body-avatar {
+    position: relative;
+    width: 96px;
+    margin-right: 16px;
+}
+
+.review-post-body-avatar img {
+    width: calc(100% - 2px);
+    border: 3px solid #75b022;
+}
+
+.review-post-body-actions {
+    flex: 4;
+}
+
+
+.actions-input-box textarea {
+    border: 1px solid #233c51;
+    border-radius: 3px;
+    height: 132px;
+    width: 100%;
+    background-color: #222b35;
+    color: #d6d7d8;
+    padding: 10px 11px;
+    font-size: 13px;
+    font-family: "Motiva Sans", Sans-serif;
+    font-weight: normal;
+    box-shadow: inset 0px 0px 7px rgba(0, 0, 0, 0.5);
+}
+
+.review-form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.recommend-buttons {
+    gap: 20px;
+    margin: 10px 0;
+}
+
+.recommend-buttons .button {
+    cursor: pointer;
+    background: rgba(103, 193, 245, 0.2);
+    color: #67c1f5 !important;
+    transition: background-color 0.2s;
+    width: 50%;
+    border-radius: 0px;
+}
+
+.recommend-buttons .button:hover {
+    text-decoration: none;
+    color: #fff !important;
+    background: linear-gradient(-60deg, #417a9b 5%, #67c1f5 95%);
+}
+
+/* Khi được chọn */
+.recommend-buttons .selected {
+    text-decoration: none;
+    color: #fff !important;
+    background: rgba(103, 193, 245, 0.6);
+}

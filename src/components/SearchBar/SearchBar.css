@@ -1,0 +1,118 @@
+.search-bar-form {
+    position: relative;
+    display: flex;
+    align-items: center;
+    max-width: 210px;
+    max-height: 35px;
+    background-color: #316282;
+    /* Màu nền xanh đậm cho cả form */
+    border-radius: 3px;
+}
+
+.search-input {
+    flex-grow: 1;
+    /* Cho phép input co giãn */
+    font-size: 14px;
+    padding: 10px;
+    border: none;
+    background-color: transparent;
+    /* Nền trong suốt để thấy màu của form */
+    color: #e0e0e0;
+    max-width: calc(100% - 35px);
+}
+
+.search-input::placeholder {
+    color: #c7d5e0;
+    opacity: 0.6;
+}
+
+.search-input:focus {
+    outline: none;
+}
+
+.search-button {
+    background: #5b9ace;
+    /* Màu xanh sáng cho nút */
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 3px 3px 0;
+    /* Bo góc phải */
+    width: 35px;
+    height: 35px;
+    
+}
+
+.search-button svg {
+    color: #e0e0e0;
+    width: 16px;
+    height: 16px;
+}
+
+/* === STYLING CHO DROPDOWN GỢI Ý MỚI === */
+.suggestions-dropdown {
+    position: absolute;
+    top: 105%;
+    left: 0;
+    right: 0;
+    background-color: #3d4450;
+    border: 1px solid #1a1a1a;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.suggestion-item {
+    display: flex;
+    /* Dùng flexbox để xếp ảnh và text cạnh nhau */
+    align-items: center;
+    padding: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    border-bottom: 1px solid #4a4a4a;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover {
+    background-color: #5b9ace;
+    /* Màu highlight khi hover */
+}
+
+.suggestion-image {
+    width: 120px;
+    /* Chiều rộng cố định cho ảnh */
+    height: 45px;
+    /* Chiều cao cố định */
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.suggestion-text-content {
+    display: flex;
+    flex-direction: column;
+    /* Xếp title và price theo chiều dọc */
+    justify-content: center;
+}
+
+.suggestion-title {
+    font-size: 14px;
+    color: #e0e0e0;
+}
+
+.suggestion-price {
+    font-size: 12px;
+    color: #acb2b8;
+}
+
+.suggestion-item.loading,
+.suggestion-item.no-results {
+    justify-content: center;
+    padding: 15px;
+    font-style: italic;
+    color: #acb2b8;
+}

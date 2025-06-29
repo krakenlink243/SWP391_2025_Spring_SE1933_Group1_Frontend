@@ -1,0 +1,114 @@
+/* src/components/Header/Header.css */
+.header {
+  background-color: #171a21;
+  padding: 10px 20px;
+  color: #c7d5e0;
+  height: 104px;
+  /* Chiều cao cố định cho header, bạn có thể điều chỉnh */
+  border-bottom: 1px solid #000000;
+  /* Đường viền mỏng phía dưới */
+}
+
+.header-logo .logo {
+  height: 100%;
+  /*Removed margin by Phan Son*/
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  position: relative;
+}
+
+.header-nav .header-nav-item {
+  color: #c7d5e0;
+  text-decoration: none;
+  padding: 10px 15px;
+  text-transform: uppercase;
+  /* Chữ hoa giống Steam */
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
+}
+
+.header-nav a:hover {
+  color: #ffffff;
+  /* Sáng hơn khi hover */
+}
+
+.nav-user-dropdown-wrapper {
+  position: relative;
+}
+
+.nav-box-dropdown {
+  display: none;
+  flex-direction: column;
+  background: white;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 11;
+  background: #3D4450;
+  box-shadow: 3px 3px 5px -3px #000;
+  text-align: left;
+}
+
+.nav-user-dropdown-wrapper:hover .nav-box-dropdown {
+  display: flex;
+}
+
+.nav-box-dropdown .submenuitem {
+  text-decoration: none;
+  text-transform: none;
+  font-size: 12px;
+  color: #dcdedf;
+  padding: 6px 15px;
+}
+
+.nav-box-dropdown .submenuitem:hover {
+  text-decoration: none;
+  background: #dcdedf;
+  color: #171a21;
+}
+
+
+.header-user-action {
+  display: flex;
+  align-items: start;
+}
+
+.user-action-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  justify-content: end;
+}
+
+
+.user-action-content a {
+  /* Nếu bạn dùng link cho login/register */
+  color: #c7d5e0;
+  text-decoration: none;
+  padding: 8px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.user-action-content a:hover {
+  background-color: #2a3f5a;
+  /* Màu nền nhẹ khi hover */
+  color: #ffffff;
+}
+
+.user-wallet {
+  text-align: end;
+  padding-right: calc(.5rem + 14px);
+}
+
+.header-user-action-icon img {
+  width: 100%;
+}
+
+/* Thêm CSS cho các phần tử khác như language selector nếu có */

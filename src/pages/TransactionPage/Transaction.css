@@ -1,0 +1,110 @@
+.transaction-steam-bg {
+  background-color: #1a222a;
+  min-height: 100vh;
+  padding: 20px;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+}
+
+.transaction-main-steam {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+.transaction-title-steam {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #c7d5e0;
+  text-transform: uppercase;
+}
+
+.transaction-list-steam {
+  margin-top: 20px;
+}
+
+.transaction-items-container {
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #0f1419;
+}
+
+.transaction-loading,
+.transaction-empty-steam {
+  text-align: center;
+  padding: 20px;
+  color: #c7d5e0;
+}
+
+.transaction-table-steam {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.transaction-th-date,
+.transaction-th-item,
+.transaction-th-amount,
+.transaction-th-changes,
+.transaction-th-type,
+.transaction-th-detail {
+  padding: 10px;
+  text-align: left;
+  color: #c7d5e0;
+  font-size: 16px;
+  border-bottom: 1px solid #1a252f;
+}
+
+.transaction-th-amount,
+.transaction-th-changes,
+.transaction-th-detail {
+  text-align: right;
+}
+
+.transaction-row-steam {
+  border-bottom: 1px solid #1a252f;
+}
+
+.transaction-row-steam:last-child {
+  border-bottom: none;
+}
+
+.transaction-td-date,
+.transaction-td-item {
+  padding: 10px;
+  font-size: 16px;
+  color: #c7d5e0;
+}
+
+.transaction-td-amount {
+  padding: 10px;
+  font-size: 16px;
+  color: #c7d5e0;
+  text-align: right;
+}
+
+.transaction-td-changes {
+  padding: 10px;
+  font-size: 16px;
+  color: #ff4444; /* Màu đỏ để chỉ tiền bị trừ */
+  text-align: right;
+}
+
+.transaction-td-type {
+  padding: 10px;
+  font-size: 16px;
+  color: #c7d5e0;
+}
+
+.transaction-td-detail {
+  padding: 10px;
+  font-size: 16px;
+  color: #c7d5e0; /* Màu mặc định */
+  text-align: right;
+  cursor: pointer;
+}
+
+.transaction-td-detail:hover {
+  color: #66c0f4; /* Màu xanh khi trỏ vào */
+}

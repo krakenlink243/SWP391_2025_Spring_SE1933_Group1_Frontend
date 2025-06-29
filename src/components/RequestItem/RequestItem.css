@@ -1,0 +1,32 @@
+.request-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #333; /* Dark background */
+    border-bottom: 1px solid #444; /* Slight divider between items */
+  }
+  
+  .request-item img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  
+  .request-name {
+    flex-grow: 1; /* Makes the text take up available space */
+    color: #fff; /* White text for contrast */
+  }
+  
+  /* .request-item img:last-child {
+    margin-left: auto; 
+  } */
+  .request-item img {
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .request-item img:hover {
+    transform: scale(1.1); /* Slightly enlarges the icon */
+    filter: brightness(150%); /* Makes it visually lighter */
+    opacity: 0.8; /* Adds a subtle fade effect */
+  }

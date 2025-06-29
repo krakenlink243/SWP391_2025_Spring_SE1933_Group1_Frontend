@@ -1,0 +1,116 @@
+/* src/components/FilterSidebar/FilterSidebar.css */
+.filter-sidebar-container {
+  width: 250px; /* Chiều rộng cố định cho sidebar */
+  background-color: #101d2f; /* Màu nền hơi khác cho sidebar */
+  padding: 15px;
+  border-radius: 3px;
+  color: #c1d5e0;
+  height: fit-content; /* Chiều cao vừa đủ nội dung */
+}
+
+.filter-sidebar-container h4 {
+  color: #ffffff;
+  font-size: 15px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #2a3f5a;
+}
+
+.filter-sidebar-container .filter-group {
+  margin-bottom: 20px;
+}
+
+.filter-sidebar-container label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #a0b1c0;
+  cursor: pointer;
+}
+
+.filter-sidebar-container label input[type="checkbox"],
+.filter-sidebar-container label input[type="radio"] {
+  margin-right: 8px;
+  accent-color: #66c0f4; /* Màu cho checkbox/radio khi được chọn */
+}
+
+.filter-sidebar-container .show-more-tags {
+  display: block;
+  background-color: #304257;
+  color: #c1d5e0;
+  text-decoration: none;
+  padding: 8px;
+  text-align: center;
+  border-radius: 2px;
+  font-size: 13px;
+  margin-top: 10px;
+}
+.filter-sidebar-container .show-more-tags:hover {
+  background-color: #3d536c;
+}
+/* ... Các style cũ ... */
+
+.price-filter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#price-range {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.price-label {
+  font-weight: bold;
+  color: #66c0f4;
+}
+
+.filter-search {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  background-color: #1b2838;
+  border: 1px solid #66c0f4;
+  color: #c7d5e0;
+  border-radius: 3px;
+  box-sizing: border-box; /* Quan trọng để padding không làm tăng kích thước */
+}
+
+.checkbox-list {
+  max-height: 250px; /* Giới hạn chiều cao và cho phép cuộn */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-item {
+  display: block; /* Để mỗi label chiếm một dòng */
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.filter-item input[type="checkbox"] {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.filter-item:hover {
+  color: #ffffff;
+}
+
+/* Tùy chỉnh thanh cuộn cho đẹp hơn (tùy chọn) */
+.checkbox-list::-webkit-scrollbar {
+width: 8px;
+}
+
+.checkbox-list::-webkit-scrollbar-track {
+background: #2a475e;
+}
+
+.checkbox-list::-webkit-scrollbar-thumb {
+background-color: #66c0f4;
+border-radius: 4px;
+}

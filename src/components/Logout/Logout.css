@@ -1,0 +1,31 @@
+.logout-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75); /* nền mờ đậm */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.logout-modal {
+  background-color: #1b2838; /* màu nền Steam */
+  border: 1px solid #4cb4ff; /* viền xanh Steam */
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(76, 180, 255, 0.4);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  color: #fff;
+  animation: fadeInModal 0.3s ease-out forwards;
+}
+
+.logout-modal h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #4cb4ff;
+}

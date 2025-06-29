@@ -1,0 +1,83 @@
+/* Container và các tiêu đề đã có style từ EditProfilePage.css */
+
+.avatar-preview-area {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.avatar-preview {
+  width: 184px;
+  height: 184px;
+  border: 2px solid #363c44;
+}
+
+.avatar-upload-actions p {
+  font-size: 13px;
+  color: #acb2b8;
+  margin: 0 0 15px 0;
+}
+
+/* Giao diện Crop */
+.cropper-container {
+  padding: 20px;
+  text-align: center;
+  border: 1px solid #66c0f4; /* Làm nổi bật vùng crop */
+}
+.cropper-container .ReactCrop {
+  max-width: 500px;
+  margin: 20px auto;
+}
+.cropper-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* Thư viện avatar */
+.avatar-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.avatar-option {
+  width: 64px;
+  height: 64px;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: border-color 0.2s;
+  padding: 2px;
+  background-color: #000;
+}
+
+.avatar-option:hover {
+  border-color: #8f98a0;
+}
+.avatar-option.active {
+  border-color: #66c0f4;
+}
+.avatar-option img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Kế thừa style từ file CSS chung của bạn nếu có */
+.action-btn.secondary {
+  /* ... */
+}
+.save-btn {
+  /* ... */
+}
+.cancel-btn {
+  /* ... */
+}
+.feedback-error,
+.feedback-success {
+  /* ... */
+}

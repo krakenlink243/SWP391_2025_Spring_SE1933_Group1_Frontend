@@ -1,0 +1,23 @@
+/* ---- BỐ CỤC TỔNG THỂ ---- */
+.games-page-container {
+}
+
+.page-main-content {
+  display: flex; /* Kích hoạt Flexbox */
+  gap: 20px;     /* Khoảng cách giữa 2 cột */
+  align-items: flex-start; /* Căn các mục theo đỉnh */
+}
+
+/* === CỘT TRÁI - SIDEBAR === */
+.filter-sidebar-wrapper {
+  flex-shrink: 0;     /* Ngăn sidebar bị co lại */
+}
+
+/* === CỘT PHẢI - NỘI DUNG CHÍNH === */
+.game-content-wrapper {
+  flex-grow: 1;       /* QUAN TRỌNG: Cho phép cột này co giãn chiếm hết không gian còn lại */
+  display: flex;
+  flex-direction: column;
+  gap: 5px;          /* Khoảng cách giữa các phần tử bên trong (Search, Header, List) */
+}
+

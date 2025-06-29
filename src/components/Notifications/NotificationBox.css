@@ -1,0 +1,136 @@
+.notifbox-container {
+  position: relative;
+  display: inline-block;
+  z-index: 11;
+  width: 100%;
+
+}
+
+.notifbox-bell {
+  position: relative;
+  cursor: pointer;
+  font-size: 14px;
+  color: #c7d5e0;
+  background-color: #1b2838;
+}
+
+.notifbox-bell:hover {
+  color: white;
+}
+
+.notifbox-bell.notif {
+  background-color: #5c7e10;
+  color: #fff;
+}
+
+.notifbox-bell.notif:hover {
+  background-color: #7ea64b;
+  transition-property: background;
+  transition-duration: 250ms;
+}
+
+/*
+
+*/
+
+.notifbox-badge {
+  position: absolute;
+  top: -5px;
+  right: -6px;
+  background-color: #66c0f4;
+  color: black;
+  font-weight: bold;
+  padding: 2px 5px;
+  border-radius: 10px;
+  width: 15px;
+  height: 15px;
+}
+
+.notifbox-box {
+  display: none;
+}
+
+.notifbox-box.active {
+  display: block;
+  transition: all 0.4s ease-in-out;
+  position: absolute;
+  right: 0;
+  top: 30px;
+  width: 320px;
+  background: linear-gradient(144deg, rgb(51, 56, 63), #25282E);
+  overflow: hidden;
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.notifbox-header {
+  height: 30px;
+
+}
+
+.notifbox-title {
+  font-weight: bold;
+  margin: 0;
+  font-size: 16px;
+}
+
+.notfif-button {
+  background-color: #454953;
+  border-radius: 0px;
+  font-size: smaller;
+}
+
+.notifbox-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.notifbox-list::-webkit-scrollbar {
+  display: none;
+}
+
+
+.notifbox-item {
+  position: relative;
+  background: linear-gradient(144deg, rgb(84 96 112), rgb(23 23 23));
+  overflow: hidden;
+}
+
+.notifbox-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #6c757d21;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 12;
+}
+
+.notifbox-item:hover::before {
+  opacity: 1;
+}
+
+
+
+.notifbox-dot {
+  background-color: #66c0f4;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  top: 10px;
+  right: 10px;
+  position: absolute;
+}
+
+.notifbox-empty {
+  text-align: center;
+  color: #8899aa;
+  padding: 15px;
+}

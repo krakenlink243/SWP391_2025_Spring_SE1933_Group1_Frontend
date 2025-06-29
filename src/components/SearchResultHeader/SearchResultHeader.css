@@ -1,0 +1,54 @@
+.search-results-header {
+    background: transparent;
+    border-radius: 3px;
+    color: #c7d5e0;
+    gap: 10px;
+}
+
+.top-search-wrapper {
+    background: #00000060;
+    padding: 8px;
+}
+
+.top-search-bar {}
+
+.results-count {
+    background: #00000040;
+    padding: 8px;
+}
+
+.results-count h3 {
+    font-size: medium;
+    color: #fff;
+}
+
+.results-count p {
+    font-size: 0.9em;
+    color: #FAFAD2;
+    margin: 0;
+}
+
+.sort-options {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sort-options label {
+    font-size: 0.9em;
+    color: #8f98a0;
+}
+
+.sort-options select {
+    background-color: #2a475e;
+    color: #c7d5e0;
+    border: 1px solid #000;
+    padding: 8px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.sort-options select:focus {
+    outline: none;
+    border-color: #66c0f4;
+}

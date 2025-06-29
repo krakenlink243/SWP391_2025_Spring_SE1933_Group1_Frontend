@@ -1,0 +1,29 @@
+.chat-header-container {
+    padding: 10px;
+    background-color: #000;
+}
+
+.chat-header-container .chat-header-nav a {
+    padding: 0px 7px;
+    color: #b8b6b4;
+    line-height: 16px;
+    font-size: 14px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-family: "Motiva Sans", Sans-serif;
+    font-weight: normal;
+}
+
+.chat-header-container .chat-header-nav a:hover {
+    color: #fff;
+}
+
+
+.split .gutter {
+    cursor: ew-resize;
+    border: .5px solid #121216;
+    border-top: 2px solid rgba(34, 37, 43, .8);
+    border-bottom: 3px solid rgba(34, 37, 43, .9);
+    background-color: #22252b;
+    min-width: 3px;
+}

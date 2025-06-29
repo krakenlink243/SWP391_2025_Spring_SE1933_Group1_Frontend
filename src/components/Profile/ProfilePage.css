@@ -1,0 +1,462 @@
+/* ---- CÀI ĐẶT TỔNG THỂ CHO TRANG ---- */
+.profile-page {
+  position: relative;
+  color: #e5e5e5;
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+}
+
+/* ---- VIDEO NỀN ĐỘNG (LỚP DƯỚI CÙNG) ---- */
+.profile-page .dynamic-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.profile-page .dynamic-background::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(27, 40, 56, 0.7);
+}
+
+.profile-page .dynamic-background video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---- KHUNG NỘI DUNG CHÍNH (LỚP BÊN TRÊN) ---- */
+.profile-page .profile-content {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 40px auto 0 auto;
+  padding: 0 20px 20px 20px;
+  background: linear-gradient(
+    to bottom,
+    rgba(23, 26, 33, 0.95),
+    rgba(27, 40, 56, 0.85)
+  );
+}
+
+/* ---- Profile Header Styles ---- */
+.profile-page .profile-header {
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: -20px -20px 24px -20px;
+  height: 300px;
+  margin-bottom: 20px;
+}
+
+.profile-page .profile-background-art {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.profile-page .profile-background-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(1px);
+}
+
+.profile-page .profile-gradient-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80%;
+  background: linear-gradient(
+    to top,
+    rgba(23, 26, 33, 1) 20%,
+    rgba(23, 26, 33, 0)
+  );
+}
+.profile-page .profile-gradient-overlay {
+  height: 60%;
+  background: linear-gradient(transparent, rgba(27, 40, 56, 0.9));
+}
+
+.profile-page .profile-info-container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 20px;
+  padding-top: 150px;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+}
+
+.profile-page .profile-left-info {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.profile-page .profile-avatar-section {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.profile-page .main-avatar {
+  width: 128px;
+  height: 128px;
+  border-radius: 4px;
+  border: 3px solid #171a21;
+  width: 120px;
+  height: 120px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.profile-page .status-indicator {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 3px solid #171a21;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #1b2838;
+}
+
+.profile-page .status-indicator.online {
+  background-color: #57cbde;
+}
+
+.profile-page .status-indicator.offline {
+  background-color: #898989;
+}
+
+.profile-page .profile-details-header {
+  flex-grow: 1;
+}
+
+.profile-page .profile-details-header h1 {
+  margin: 0;
+  font-size: 2.2em;
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.profile-page .profile-details-header p {
+  margin: 5px 0 0;
+  color: #acb2b8;
+}
+
+.profile-page .profile-details {
+  margin-bottom: 10px;
+}
+
+.profile-page .username {
+  font-size: 28px;
+  font-weight: 300;
+  margin: 0 0 5px 0;
+  color: #ffffff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.profile-page .real-name {
+  font-size: 14px;
+  color: #8f98a0;
+  margin: 0 0 10px 0;
+}
+
+.profile-page .level-badge {
+  background: linear-gradient(45deg, #3d4450, #2a475e);
+  border: 1px solid #495663;
+  border-radius: 4px;
+  padding: 4px 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+}
+
+.profile-page .level-text {
+  color: #8f98a0;
+}
+
+.profile-page .level-number {
+  color: #66c0f4;
+  font-weight: bold;
+}
+
+.profile-page .profile-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* --- Style cơ sở cho tất cả các nút hành động --- */
+.profile-page .action-btn {
+  padding: 10px 20px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  font-size: 15px;
+  font-weight: normal;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s ease-in-out;
+}
+
+/* --- NÚT HÀNH ĐỘNG CHÍNH (PRIMARY) --- */
+.profile-page .action-btn.primary {
+  background-color: rgba(102, 192, 245, 0.2);
+  color: #c7d5e0;
+}
+
+.profile-page .action-btn.primary:hover {
+  background-color: rgba(102, 192, 245, 0.4);
+  color: #ffffff;
+}
+
+.profile-page .action-btn.secondary {
+  background-color: rgba(143, 152, 160, 0.1);
+  border-color: rgba(143, 152, 160, 0.4);
+  color: #c7d5e0;
+}
+
+.profile-page .action-btn.secondary:hover {
+  background-color: rgba(143, 152, 160, 0.2);
+  color: #ffffff;
+}
+
+/* ---- BỐ CỤC 2 CỘT ---- */
+.profile-page .profile-main {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.profile-page .profile-left {
+  flex: 2;
+  min-width: 0;
+}
+
+.profile-page .profile-right {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---- STYLE CHUNG CHO CÁC KHUNG (BOX) ---- */
+.profile-page .section-box {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 1px;
+  margin-bottom: 24px;
+  border-radius: 3px;
+}
+
+.profile-page .section-box h3 {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font-size: 14px;
+  font-weight: normal;
+  padding: 8px 12px;
+  margin: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.profile-page .section-box > div,
+.profile-page .section-box > ul,
+.profile-page .section-box > p {
+  padding: 12px;
+}
+
+.profile-page .game-showcase .game-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.profile-page .game-item {
+  width: calc(20% - 7px);
+}
+.profile-page .game-item img {
+  width: 100%;
+  height: auto;
+}
+.profile-page .view-all-games {
+  display: block;
+  text-align: right;
+  color: #acb2b8;
+  font-size: 12px;
+  text-decoration: none;
+  padding-top: 10px;
+}
+.profile-page .view-all-games:hover {
+  color: #fff;
+}
+.profile-page .profile-bio p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #acb2b8;
+  margin: 0;
+}
+.profile-page .details-list {
+  list-style: none;
+  padding: 0 12px 12px;
+}
+.profile-page .details-list li {
+  padding: 8px 0;
+  border-top: 1px solid #363c44;
+  font-size: 13px;
+  color: #acb2b8;
+  display: flex;
+  justify-content: space-between;
+}
+.profile-page .details-list li span {
+  color: #fff;
+  font-weight: bold;
+}
+
+/* ---- CỘT TRÁI: GAME SHOWCASE & BIO ---- */
+.profile-page .game-showcase .game-list {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(150px, 1fr)
+  );
+  gap: 15px;
+}
+
+.profile-page .game-item {
+  text-decoration: none;
+  color: #acb2b8;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.profile-page .game-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.profile-page .game-item img {
+  width: 100%;
+  height: 225px;
+  object-fit: cover;
+}
+
+.profile-page .game-item span {
+  display: block;
+  padding: 10px;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-page .view-all-games {
+  display: block;
+  text-align: right;
+  margin-top: 15px;
+  color: #acb2b8;
+  font-size: 12px;
+  text-decoration: none;
+}
+.profile-page .view-all-games:hover {
+  color: #fff;
+}
+
+.profile-page .profile-bio p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #acb2b8;
+  margin: 0;
+}
+
+/* ---- CỘT PHẢI: PROFILE DETAILS ---- */
+.profile-page .profile-details h3,
+.profile-page .status-online,
+.profile-page .status-offline {
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  border-bottom: 1px solid #363c44;
+}
+
+.profile-page .status-online {
+  color: #57cbde;
+}
+.profile-page .status-offline {
+  color: #898989;
+}
+
+.profile-page .details-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.profile-page .details-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #363c44;
+  font-size: 14px;
+  color: #acb2b8;
+  display: flex;
+  justify-content: space-between;
+}
+.profile-page .details-list li:last-child {
+  border-bottom: none;
+}
+.profile-page .details-list li span {
+  color: #fff;
+  font-weight: bold;
+}
+
+/* ---- Trạng thái loading, error ---- */
+.profile-page .profile-page-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  font-size: 1.5em;
+  color: #c7d5e0;
+}
+.profile-page .profile-page-status.error {
+  color: #ff6b6b;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .profile-page .profile-info-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .profile-page .main-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .profile-page .username {
+    font-size: 22px;
+  }
+
+  .profile-page .profile-header {
+    height: 250px;
+  }
+}

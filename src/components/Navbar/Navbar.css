@@ -1,0 +1,111 @@
+.store-header {
+  background-color: transparent;
+  display: block;
+  visibility: visible;
+  margin-bottom: 0;
+  height: 66px;
+  min-width: 940px;
+}
+
+.store-header .content {
+  height: 66px;
+  position: relative;
+  width: 100%;
+  z-index: 10;
+  color: #c6d4df;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.content .cart-area {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: center;
+  align-items: center;
+}
+
+.cart-area a {
+  font-size: 11px;
+  text-align: center;
+  color: #fff;
+  display: block;
+  background: #5c7e10;
+  text-transform: none;
+  line-height: 20px;
+  cursor: pointer;
+  padding: 0px 20px;
+  border-radius: 1px;
+}
+
+.cart-area a:hover {
+  color: #fff;
+  background: #7ea64b;
+}
+
+
+.cart-area .cart-icon {
+  width: 15px;
+  vertical-align: sub;
+}
+
+.content .store-nav-area {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 24px;
+  height: 49px;
+}
+
+.store-nav-area .store-nav-bg {
+  background: linear-gradient(90deg, rgba(62, 103, 150, 0.919) 11.38%, rgba(58, 120, 177, 0.8) 25.23%, rgb(15, 33, 110) 100%);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+  height: 35px;
+}
+
+.store-nav-bg .store-nav {
+  height: 35px;
+  display: flex;
+}
+
+.store-nav .tab {
+  padding: 1px;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.store-nav .tab:hover {
+  background: linear-gradient(90deg, rgba(33, 162, 255, 0.25) 0%, rgba(33, 162, 255, 0.15) 50%, rgba(50, 50, 51, 0) 100%);
+  text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+  height: 33px;
+}
+
+.store-nav .tab .pulldown {
+  color: #e5e5e5;
+  font-size: 13px;
+  line-height: 34px;
+  text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+  margin-right: 0px;
+  background: none;
+  padding: 0 15px;
+  display: block;
+  font-weight: bold;
+}
+
+.store-nav .tab a {
+  display: inline;
+  color: #e5e5e5;
+  font-weight: bold;
+}
+
+.store-nav .search-flex-spacer {
+  flex: 1;
+  width: 20px;
+}
+
+.store-nav .search-area {
+  flex-grow: 1;
+  flex-shrink: 0;
+  max-width: 210px;
+}

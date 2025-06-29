@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+.loader-wrapper {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #1b2838;
+  display: flex;
+  flex-direction: column; /* Thay đổi để xếp chồng các phần tử */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  cursor: pointer; /* Thêm con trỏ chuột */
+  transition: opacity 0.5s ease; /* Thêm hiệu ứng mờ dần */
+}
+/* Lớp CSS mới để ẩn đi màn hình khởi động */
+.loader-wrapper.hidden {
+  opacity: 0;
+  pointer-events: none; /* Vô hiệu hóa tương tác khi đã ẩn */
+}
+.loader {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #fff;
+  border-bottom-color: #646cff;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.enter-prompt {
+  color: white;
+  margin-top: 20px;
+  font-size: 1.2em;
+  opacity: 0.8;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
