@@ -3,17 +3,10 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import './Cart.css';
 
-/**
- * @author BaThanh
- * @description Component for showing cart, removing games from cart, and checkout cart.
- * @param {*} param0 
- * @returns 
- */
 const userId = localStorage.getItem("userId");
 const username = localStorage.getItem('username');
 
-const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
-
+const Cart = ({ minHeight }) => {
   if (!userId) {
     window.location.href = "/";
   }
@@ -30,33 +23,33 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
     gameName: "",
   });
 
-  // Fetch balance from API http://localhost:8080/user/wallet
+  // Add Funds Modal State
+  const [showAddFundsModal, setShowAddFundsModal] = useState(false);
+  const [amountUsd, setAmountUsd] = useState(5);
+  const [bankCode, setBankCode] = useState("");
+  const [language, setLanguage] = useState("vn");
+
   useEffect(() => {
     axios.get('http://localhost:8080/user/wallet')
       .then(response => {
-        console.log('Wallet API response:', response.data);
         setBalance(Number(response.data) || 0);
       })
-      .catch(error => {
-        console.error('Error fetching wallet balance:', error.message, error.response?.status, error.response?.data);
+      .catch(() => {
         setBalance(0);
       });
   }, []);
 
-  // Fetch cart từ backend
   const fetchCart = async () => {
     setLoading(true);
     try {
       const response = await axios.get('http://localhost:8080/user/cart');
-      console.log('Cart API response:', response.data);
       const data = response.data;
       if (data.success && Array.isArray(data.data)) {
         setCartItems(data.data);
       } else {
         setCartItems([]);
       }
-    } catch (error) {
-      console.error('Error fetching cart:', error.message, error.response?.status, error.response?.data);
+    } catch {
       setCartItems([]);
     } finally {
       setLoading(false);
@@ -72,9 +65,7 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
     try {
       await axios.delete(`http://localhost:8080/user/cart/remove?gameId=${gameId}`);
       await fetchCart();
-    } catch (error) {
-      console.error('Error removing game:', error.message, error.response?.status, error.response?.data);
-    } finally {
+    } catch { } finally {
       setLoading(false);
     }
   };
@@ -83,18 +74,15 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
     setShowConfirmModal(false);
     setLoading(true);
     try {
-      const total = cartItems.reduce((sum, item) => sum + (item.price || 0), 0);
       const response = await axios.post('http://localhost:8080/user/cart/checkout');
-      if (!response.data.success) throw new Error('Checkout failed');
+      if (!response.data.success) throw new Error('Purchase failed!');
       setResultMessage('Purchase successful!');
       setCartItems([]);
       await fetchCart();
       const userRes = await axios.get('http://localhost:8080/user/wallet');
-      console.log('Updated wallet response:', userRes.data);
       setBalance(Number(userRes.data) || 0);
     } catch (error) {
-      setResultMessage(error.message === 'Purchase failed!');
-      console.error('Error during checkout:', error.message, error.response?.status, error.response?.data);
+      setResultMessage("Purchase failed!");
     } finally {
       setShowResultModal(true);
       setLoading(false);
@@ -136,17 +124,15 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
                   <div className="cart-item-image">
                     <img
                       className="library-game-image"
-                      src={
-                        item.imageUrl
-                          ? item.imageUrl
-                          : "https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg" // fallback
-                      }
+                      src={item.imageUrl || "https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg"}
                       alt={item.title || 'Unnamed Game'}
                     />
                   </div>
                   <div className="cart-item-title">{item.title || 'Unnamed Game'}</div>
                   <div className="cart-item-price-container">
-                    <span className="cart-item-price">${item.discountPrice > 0 ? item.discountPrice.toFixed(2) : item.price?.toFixed(2) || '0.00'}</span>
+                    <span className="cart-item-price">
+                      ${item.discountPrice > 0 ? item.discountPrice.toFixed(2) : item.price?.toFixed(2) || '0.00'}
+                    </span>
                   </div>
                   <div className="cart-item-remove">
                     <button
@@ -161,13 +147,13 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
                 </div>
               ))}
               <div className="cart-item-steam">
-                <div className="cart-item-image"></div> {/* Placeholder để giữ cấu trúc flex */}
+                <div className="cart-item-image"></div>
                 <div className="cart-item-title">Estimated total:</div>
                 <div className="cart-item-price-container">
                   <span className="cart-item-price">${total}</span>
                 </div>
                 <div className="cart-item-remove">
-                  <span className="cart-item-empty"></span> {/* Placeholder cho nút remove */}
+                  <span className="cart-item-empty"></span>
                 </div>
               </div>
             </div>
@@ -177,8 +163,17 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
               <Link className="cart-btn-steam" to="/game">Continue Shopping</Link>
               <button
                 className="cart-btn-steam cart-btn-blue-steam"
-                onClick={() => setShowConfirmModal(true)}
-                disabled={cartItems.length === 0 || loading || total > balance}
+                onClick={() => {
+                  if (parseFloat(total) > balance) {
+                    const shortfall = parseFloat(total) - balance;
+                    setAmountUsd(shortfall < 5 ? 5 : parseFloat(shortfall.toFixed(2)));
+                    alert("Purchase failed. Please add more funds to your account balance.");
+                    setShowAddFundsModal(true);
+                  } else {
+                    setShowConfirmModal(true);
+                  }
+                }}
+                disabled={cartItems.length === 0 || loading}
               >
                 Purchase for Myself
               </button>
@@ -186,60 +181,106 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
           )}
         </div>
       </div>
+
       {showConfirmModal && (
         <div className="cart-modal-steam">
           <div className="cart-modal-content-steam">
             <h3>Confirm Purchase</h3>
             <p>Are you sure you want to purchase all games in your cart?</p>
             <div className="cart-modal-btns-steam">
-              <button
-                onClick={() => setShowConfirmModal(false)}
-                className="cart-btn-steam"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleCheckout}
-                className="cart-btn-steam cart-btn-blue-steam"
-                disabled={loading}
-              >
-                Confirm
-              </button>
+              <button onClick={() => setShowConfirmModal(false)} className="cart-btn-steam">Cancel</button>
+              <button onClick={handleCheckout} className="cart-btn-steam cart-btn-blue-steam" disabled={loading}>Confirm</button>
             </div>
           </div>
         </div>
       )}
+
       {showResultModal && (
         <div className="cart-modal-steam">
           <div className="cart-modal-content-steam">
             <h3>Purchase Result</h3>
             <p>{resultMessage}</p>
             <div className="cart-modal-btns-steam">
-              <button
-                onClick={() => setShowResultModal(false)}
-                className="cart-btn-steam"
-              >
-                OK
-              </button>
+              <button onClick={() => setShowResultModal(false)} className="cart-btn-steam">OK</button>
             </div>
           </div>
         </div>
       )}
+
       {removeConfirm.show && (
         <div className="cart-modal-steam">
           <div className="cart-modal-content-steam">
             <h3>Remove Game</h3>
             <p>Are you sure you want to remove <b>{removeConfirm.gameName || 'Unnamed Game'}</b> from your cart?</p>
             <div className="cart-modal-btns-steam">
-              <button onClick={closeRemoveConfirm} className="cart-btn-steam">
-                Cancel
-              </button>
-              <button
-                onClick={confirmRemove}
-                className="cart-btn-steam cart-btn-blue-steam"
-                disabled={loading}
+              <button onClick={closeRemoveConfirm} className="cart-btn-steam">Cancel</button>
+              <button onClick={confirmRemove} className="cart-btn-steam cart-btn-blue-steam" disabled={loading}>Remove</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showAddFundsModal && (
+        <div className="cart-modal-steam">
+          <div className="cart-modal-content-steam">
+            <h2>Add Funds to Your Wallet</h2>
+            <div className="amount-options">
+              {[5, 10, 25, 50, 100].map((val) => (
+                <button key={val} onClick={() => setAmountUsd(val)}>${val.toFixed(2)}</button>
+              ))}
+            </div>
+            <input
+              type="number"
+              value={amountUsd}
+              onChange={(e) => setAmountUsd(Number(e.target.value))}
+              placeholder="Enter amount (USD)"
+              min="5"
+            />
+            <div className="form-group-modal">
+              <label htmlFor="bankCode">Bank (Optional)</label>
+              <select
+                id="bankCode"
+                value={bankCode}
+                onChange={(e) => setBankCode(e.target.value)}
               >
-                Remove
+                <option value="">Select a bank...</option>
+                <option value="NCB">NCB (Recommended)</option>
+                <option value="VNBANK">Ngân hàng Nội địa</option>
+                <option value="VnPayQR">VNPAYQR</option>
+                <option value="VISA">VISA</option>
+              </select>
+            </div>
+            <div className="cart-modal-btns-steam">
+              <button
+                onClick={async () => {
+                  if (amountUsd < 5) {
+                    alert("Minimum funding amount is $5.");
+                    return;
+                  }
+                  try {
+                    const params = { amount: amountUsd, language };
+                    if (bankCode) params.bankCode = bankCode;
+
+                    const res = await axios.post(
+                      `http://localhost:8080/api/v1/payments/create-vnpay-payment`,
+                      null,
+                      { params }
+                    );
+                    if (res.data?.paymentUrl) {
+                      window.location.href = res.data.paymentUrl;
+                    } else {
+                      alert("Could not create payment link.");
+                    }
+                  } catch (err) {
+                    alert("Error creating payment link.");
+                  }
+                }}
+                className="cart-btn-steam cart-btn-blue-steam"
+              >
+                Add Funds
+              </button>
+              <button onClick={() => setShowAddFundsModal(false)} className="cart-btn-steam">
+                Cancel
               </button>
             </div>
           </div>
