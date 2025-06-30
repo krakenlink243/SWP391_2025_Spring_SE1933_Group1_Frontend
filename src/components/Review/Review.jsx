@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import ReviewList from "./ReviewList";
 import ReviewForm from "./ReviewForm";
-import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 
 /**
  * @author Phan NT Son
@@ -10,25 +8,27 @@ import { jwtDecode } from "jwt-decode";
  * @param {*} param0 
  * @returns 
  */
-function Review({ gameId }) {
+function Review({ game }) {
   const [reloadSignal, setReloadSignal] = useState(0);
   const triggerReload = () => setReloadSignal(prev => prev + 1);
 
   const userId = localStorage.getItem("userId");
 
   return (
-    <>
+    <div className="review-container w-100">
+      <h2>CUSTOMER REVIEWS FOR {game.name}</h2>
+      <div className="line-seperate w-100"></div>
       <ReviewForm
         onReload={triggerReload}
         userId={userId}
-        gameId={gameId} />
+        game={game} />
 
       <ReviewList
         reloadSignal={reloadSignal}
         onReload={triggerReload}
         userId={userId}
-        gameId={gameId} />
-    </>
+        game={game} />
+    </div>
   );
 }
 

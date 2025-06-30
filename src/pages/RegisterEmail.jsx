@@ -30,11 +30,12 @@ const RegisterEmail = () => {
         }
       );
 
-      if (res.data.available) {
-        navigate("/register-details", { state: { email } });
-      } else {
+      if (!res.data.available) {
         setMessage("Email already in use.");
+        return;
       }
+      await axios.post("http://localhost:8080/api/auth/send-verification-otp", { email });
+      navigate("/verify-email", { state: { email } });
     } catch (err) {
       console.error(err);
       setMessage("Error checking email.");

@@ -60,11 +60,11 @@ function SendGameToAdmin() {
       }));
       return;  
     }
-    if(value.length > 4 && name ==='price'){
-      alert("Game price must under $10000!")
+    if(value > 1000 && name ==='price'){
+      alert("Game price must be under or equals $1000!")
       setFormData(prev => ({
         ...prev,
-        [name]: value.slice(0, 1000), // Truncate without trimming spaces
+        [name]: "", // Truncate without trimming spaces
       }));
       return;
   
@@ -93,15 +93,17 @@ function SendGameToAdmin() {
     try{
       const uploadImage = new FormData();
       files.forEach(file => uploadImage.append('files',file));
-      const responseMedia = await axios.post('http://localhost:8080/publisher/uploadImage',uploadImage,{
+      const responseMedia = await axios.post('http://localhost:8080/request/image/upload',uploadImage,{
         header:{"Content-Type": "multipart/form-data"},
       });
       console.log(files.length)
       console.log(responseMedia.data.imageUrls);
       setFormData(prev => ({...prev,mediaUrls: responseMedia.data.imageUrls}));
-      const response = await axios.post('http://localhost:8080/publisher/addGame',{...formData,mediaUrls: responseMedia.data.imageUrls});
+      const response = await axios.post('http://localhost:8080/request/game/add',{...formData,mediaUrls: responseMedia.data.imageUrls});
       console.log(response);
       alert(response.data.message);
+      window.location.href="/";
+
     }catch(error){
       console.log(error);
     }
@@ -121,7 +123,7 @@ function SendGameToAdmin() {
       if(formData.gameUrl === ""){
         return;
       }
-      const response = await axios.delete(`http://localhost:8080/publisher/delete/${formData.gameUrl}`);
+      const response = await axios.delete(`http://localhost:8080/request/file/delete/${formData.gameUrl}`);
       console.log(response.data.message);
     } catch (error) {
       console.log(error);
@@ -133,7 +135,7 @@ function SendGameToAdmin() {
     const form = new FormData();
     form.append('file',selectedFile);
     try {
-      const response = await axios.post('http://localhost:8080/publisher/upload',form,{header:{"Content-Type": "multipart/form-data"},});
+      const response = await axios.post('http://localhost:8080/request/file/upload',form,{header:{"Content-Type": "multipart/form-data"},});
       console.log(response.data.fileId);
       setFormData(prev =>({...prev,gameUrl:response.data.fileId}));
       setFileName(response.data.fileName);
@@ -163,7 +165,7 @@ function SendGameToAdmin() {
             <input type="text" name="gameName" id="" value={formData.gameName}  onChange={handleChange} onBlur={normalizeValue} />
             PRICE(*)
             <div>
-              <input type="text" name="price" id="" value={formData.price} onChange={handleChange} /> $
+              $ <input className='price-input' type="text" name="price" id="" value={formData.price} onChange={handleChange} />
             </div>
         </div>
       </div>

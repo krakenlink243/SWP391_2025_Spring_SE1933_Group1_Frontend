@@ -13,7 +13,7 @@ function NotificationBoxItem({ notification }) {
 
     const handleClick = () => {
         if (!read) {
-            axios.patch(`http://localhost:8080/notification/mark-as-read/${notification.notifId}`)
+            axios.patch(`http://localhost:8080/notification/markread/${notification.notifId}`)
                 .then(() => {
                     setRead(true);
                 })
@@ -23,11 +23,11 @@ function NotificationBoxItem({ notification }) {
 
     return (
         <li>
-            <div className={`notif-item d-flex flex-column align-items-start px-3 py-2 w-100`}
+            <div className={`notifbox-item d-flex flex-column align-items-start px-3 py-2 w-100`}
                 onClick={handleClick}>
                 <p>{notification.notificationType}</p>
-                <span className="notif-content">{notification.notificationContent}</span>
-                {!read && <span className="notif-dot" />}
+                <span className="notifbox-content">{notification.notificationContent}</span>
+                {!read && <span className="notifbox-dot" />}
 
             </div>
         </li>

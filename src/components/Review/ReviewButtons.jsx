@@ -96,16 +96,18 @@ function ReviewButtons({ originalReview, gameId, userId }) {
     }
 
     if (!isReady) {
-        return <div className="spinner"></div>;
+        return <div className="btn-spinner"></div>;
     }
 
     return (
-        <div className="review-helpful-buttons">
-            <div onClick={() => handleClick(true)} className={userOption === 1 ? 'active' : ''}>
-                <p>Yes <span role="img" aria-label="thumbs up" style={{ color: 'green', fontSize: '1.5em' }}>👍</span> {helpfulCount}</p>
+        <div className="vote-button">
+            <div onClick={() => handleClick(true)} className={`${userOption === 1 ? 'active' : ''} cus-btn`}>
+                {/* <p>Yes {helpfulCount}</p> */}
+                <span>Yes {helpfulCount}</span>
             </div>
-            <div onClick={() => handleClick(false)} className={userOption === -1 ? 'active' : ''}>
-                <p>No <span role="img" aria-label="thumbs down" style={{ color: 'red', fontSize: '1.5em' }}>👎</span> {notHelpfulCount}</p>
+            <div onClick={() => handleClick(false)} className={`${userOption === -1 ? 'active' : ''} cus-btn`}>
+                {/* <p>No {notHelpfulCount}</p> */}
+                <span>No {notHelpfulCount}</span>
             </div>
         </div>
     );

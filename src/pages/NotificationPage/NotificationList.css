@@ -1,0 +1,47 @@
+.notiflist-container .notiflist-title {
+    font-size: 18px;
+    padding: 5px 0px;
+    color: #fff;
+}
+
+.notiflist-list .notiflist-item {
+    background: rgba(0, 0, 0, .2);
+    position: relative;
+    cursor: pointer;
+}
+
+.notiflist-list .notiflist-item:hover {
+    background: #474f5c;
+}
+
+.notiflist-list .unread {
+    background: rgba(0, 0, 0, .5);
+}
+
+.notiflist-list .unread .notiflist-dot {
+    background: #66c0f4;
+    width: .4rem;
+    height: .4rem;
+    border-radius: 50%;
+    position: absolute;
+    top: .1rem;
+    left: .1rem;
+}
+
+.notiflist-item .notiflist-delete-btn path {
+    stroke: #8b929a;
+}
+
+.notiflist-item .notiflist-delete-btn:hover path {
+
+    stroke: #8a220f;
+}
+
+
+.notiflist-list .notiflist-item .notiflist-delete-btn {
+    display: none;
+}
+
+.notiflist-list .notiflist-item:hover .notiflist-delete-btn {
+    display: block;
+}

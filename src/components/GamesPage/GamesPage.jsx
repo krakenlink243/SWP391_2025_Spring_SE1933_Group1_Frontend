@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import FilterSidebar from "../FilterSidebar/FilterSidebar";
 import GameList from "../GameList/GameList";
-import SearchBar from "../SearchBar/SearchBar";
 import Pagination from "../Pagination/Pagination";
 import SearchResultsHeader from "../SearchResultHeader/SearchResultHeader";
 import "./GamesPage.css";
@@ -129,17 +128,15 @@ const GamesPage = () => {
 
   // --- RENDER ---
   return (
-    <div className="games-page-container">
+    <div className="games-page-container mt-5">
       <div className="page-main-content">
-        <main className="game-content-wrapper">
-          <div className="top-search-bar">
-            <SearchBar onSearchSubmit={handleSearchSubmit} />
-          </div>
+        <div className="game-content-wrapper">
           <SearchResultsHeader
             resultCount={totalGames}
             searchTerm={filters.searchTerm}
             currentSort={filters.sort}
             onSortChange={handleFilterChange}
+            handleSearchSubmit={handleSearchSubmit}
           />
           <GameList games={games} loading={loading} error={error} />
           <Pagination
@@ -147,7 +144,7 @@ const GamesPage = () => {
             totalPages={totalPages}
             onPageChange={setCurrentPage}
           />
-        </main>
+        </div>
         <aside className="filter-sidebar-wrapper">
           <FilterSidebar
             allTags={allTags}

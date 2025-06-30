@@ -127,3 +127,11 @@ main {
   width: 2.5rem;
   height: 2.5rem;
 }
+
+.message-error {
+  color: red;
+}
+
+.message-success {
+  color: green;
+}
