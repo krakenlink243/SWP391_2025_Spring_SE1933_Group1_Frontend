@@ -75,16 +75,19 @@ const Transaction = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {transactions.map((tx, idx) => (
-                    <tr key={idx} className="transaction-row-steam">
-                      <td className="transaction-td-date">{(tx.dateCreated || tx.createdAt || tx.date || '').toString().slice(0, 10)}</td>
-                      <td className="transaction-td-item">{tx.gameName || tx.item || 'Unknown Item'}</td>
-                      <td className="transaction-td-type">Purchase Game</td>
-                      <td className="transaction-td-amount">${(tx.price ?? tx.amount ?? tx.totalAmount ?? 0).toFixed(2)}</td>
-                      <td className="transaction-td-changes">- ${(tx.price ?? tx.amount ?? tx.totalAmount ?? 0).toFixed(2)}</td>
-                      <td className="transaction-td-detail" onClick={() => handleDetailClick(tx.transactionId)}>Detail</td>
-                    </tr>
-                  ))}
+                  {transactions.map((tx, idx) => {
+                    const amount = tx.price ?? tx.amount ?? tx.totalAmount ?? 0;
+                    return (
+                      <tr key={idx} className="transaction-row-steam">
+                        <td className="transaction-td-date">{(tx.dateCreated || tx.createdAt || tx.date || '').toString().slice(0, 10)}</td>
+                        <td className="transaction-td-item">{tx.gameName || tx.item || 'Unknown Item'}</td>
+                        <td className="transaction-td-type">Purchase Game</td>
+                        <td className="transaction-td-amount">{amount === 0 ? 'Free' : `$${amount.toFixed(2)}`}</td>
+                        <td className="transaction-td-changes">{amount === 0 ? '' : `- $${amount.toFixed(2)}`}</td>
+                        <td className="transaction-td-detail" onClick={() => handleDetailClick(tx.transactionId)}>Detail</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
