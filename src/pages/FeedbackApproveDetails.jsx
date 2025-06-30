@@ -7,6 +7,8 @@ import { useParams } from 'react-router'
 import axios from 'axios'
 import { createNotification } from '../services/notification'
 import { trimValue } from '../utils/validators'
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Required for default styles
 function FeedbackApproveDetails() {
     const feedbackId = useParams().feedbackId;
     const [senderId,setSenderId] = useState("");
@@ -32,23 +34,69 @@ function FeedbackApproveDetails() {
         }
         fetchFeedbackDetails();
     }, []);
-    const handleAnswer = async() =>{
-      const answer = window.prompt("Send answer to" + " " + userName)
-      if(answer.trim() !== ""){
-        try {
-          createNotification(senderId,"Feedback Answer","Answer for your feedback "+formData.subject+": " + answer)
-          const response = await axios.patch(`http://localhost:8080/request/feedback/approve/${feedbackId}`,{
-            response: trimValue(answer)
-          });
-          console.log("Approved request:", response.data)
-        } catch (err) {
-          console.error("Error approving request:", err);
-        }
-        window.location.href=`/approvefeedback`
-      }else{
-        alert('Please enter answer')
-      }
-    }
+    // const handleAnswer = async() =>{
+    //   const answer = window.prompt("Send answer to" + " " + userName)
+    //   if(answer.trim() !== ""){
+    //     try {
+    //       createNotification(senderId,"Feedback Answer","Answer for your feedback "+formData.subject+": " + answer)
+    //       const response = await axios.patch(`http://localhost:8080/request/feedback/approve/${feedbackId}`,{
+    //         response: trimValue(answer)
+    //       });
+    //       console.log("Approved request:", response.data)
+    //     } catch (err) {
+    //       console.error("Error approving request:", err);
+    //     }
+    //     window.location.href=`/approvefeedback`
+    //   }else{
+    //     alert('Please enter answer')
+    //   }
+    // }
+const handleAnswer = () => {
+  let answer = '';
+
+  confirmAlert({
+    title: `Send answer to ${userName}`,
+    customUI: ({ onClose }) => (
+      <div className="custom-ui" style={{
+        background: '#fff',
+        padding: '2rem',
+        borderRadius: '8px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+        maxWidth: '400px',
+        margin: 'auto'
+      }}>
+        <h2>Answer for: {formData.subject}</h2>
+        <textarea
+          rows={5}
+          style={{ width: '100%', marginBottom: '1rem' }}
+          onChange={(e) => (answer = e.target.value)}
+          placeholder="Type your answer here..."
+        />
+        <button
+          onClick={async () => {
+            if (answer.trim() !== '') {
+              try {
+                createNotification(senderId, 'Feedback Answer', `Answer for your feedback ${formData.subject}: ${answer}`);
+                const response = await axios.patch(`http://localhost:8080/request/feedback/approve/${feedbackId}`, {
+                  response: trimValue(answer)
+                });
+                console.log('Approved request:', response.data);
+                window.location.href = '/approvefeedback';
+              } catch (err) {
+                console.error('Error approving request:', err);
+              }
+              onClose();
+            } else {
+              alert('Please enter answer');
+            }
+          }}
+        >
+          Submit
+        </button>
+      </div>
+    )
+  });
+};
     const handleDecline = async() =>{
       const confirmDecline = window.confirm("Are you sure you want to decline this feedback?");
       if (!confirmDecline) {

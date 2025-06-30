@@ -30,8 +30,11 @@ export const validateEmty = (value) => {
   return value.length > 0;
 };
 export const trimValue = (value) => {
-  return value.trim().replace(/\s+/g, ' ');
-}
+  return value
+    .trim()
+    .replace(/[ \t]+/g, ' '); // replace multiple spaces or tabs, not newlines
+};
+
 export const validateMedia = ([]) =>{
   console.log([].length)
   return [].length

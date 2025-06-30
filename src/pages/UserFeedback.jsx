@@ -65,7 +65,7 @@ function UserFeedback() {
             <PartHeading content="Response" />
             <div>
                 {formData.response !== null
-                    ? formData.response
+                    ? <div className='feedback-content'><textarea  name="answer" id="" readOnly value={formData.response}></textarea></div>
                     : 'Not yet answered'}
             </div>
         </div>
