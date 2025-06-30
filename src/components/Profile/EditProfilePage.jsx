@@ -1,11 +1,112 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import "./EditProfilePage.css";
-import GeneralSettings from "./GeneralSettings"; // Import component form
-import AvatarSettings from "./AvatarSettings/AvatarSettings"; // Import component avatar
+import AvatarSettings from "./AvatarSettings/AvatarSettings";
+
+// Component con cho form "General", giờ đây nó nhận thêm prop `errors`
+const GeneralSettings = ({
+  formData,
+  handleInputChange,
+  handleSubmit,
+  loading,
+  error,
+  successMessage,
+  errors,
+}) => {
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className="settings-section">
+        <h2>About</h2>
+        <p className="section-description">
+          Set your profile name and details. This information is public.
+        </p>
+      </div>
+
+      <div className="settings-section">
+        <h3>General</h3>
+        <div className="form-group">
+          <label htmlFor="profileName">PROFILE NAME</label>
+          <input
+            type="text"
+            id="profileName"
+            name="profileName"
+            value={formData.profileName}
+            onChange={handleInputChange}
+          />
+          {/* Hiển thị lỗi nếu có */}
+          {errors.profileName && (
+            <p className="form-error-message">{errors.profileName}</p>
+          )}
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="country">COUNTRY</label>
+          <select
+            id="country"
+            name="country"
+            value={formData.country}
+            onChange={handleInputChange}
+          >
+            <option value="">(Do not display)</option>
+            <option value="Vietnam">Vietnam</option>
+            <option value="USA">United States</option>
+            <option value="Japan">Japan</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="gender">GENDER</label>
+          <select
+            id="gender"
+            name="gender"
+            value={formData.gender}
+            onChange={handleInputChange}
+          >
+            <option value="">(Unknown)</option>
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="dob">DATE OF BIRTH</label>
+          <input
+            type="date"
+            id="dob"
+            name="dob"
+            value={formData.dob}
+            onChange={handleInputChange}
+          />
+          {errors.dob && <p className="form-error-message">{errors.dob}</p>}
+        </div>
+      </div>
+
+      <div className="settings-section">
+        <h3>About</h3>
+        <div className="form-group">
+          <label htmlFor="summary">SUMMARY</label>
+          <textarea
+            id="summary"
+            name="summary"
+            value={formData.summary}
+            onChange={handleInputChange}
+          ></textarea>
+          {errors.summary && (
+            <p className="form-error-message">{errors.summary}</p>
+          )}
+        </div>
+      </div>
+
+      <div className="form-actions">
+        <button type="submit" className="save-btn" disabled={loading}>
+          {loading ? "Saving..." : "Save"}
+        </button>
+        {error && <p className="feedback-error">{error}</p>}
+        {successMessage && <p className="feedback-success">{successMessage}</p>}
+      </div>
+    </form>
+  );
+};
 
 const EditProfilePage = () => {
-  // State để quản lý tab nào đang active
   const [activeTab, setActiveTab] = useState("general");
   const [currentUser, setCurrentUser] = useState(null);
   const [formData, setFormData] = useState({
@@ -15,22 +116,28 @@ const EditProfilePage = () => {
     gender: "",
     summary: "",
   });
+
+  // State mới để lưu các lỗi của form
+  const [errors, setErrors] = useState({});
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
 
-  // Fetch dữ liệu người dùng một lần ở component cha này
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
     const fetchUserData = async () => {
       setLoading(true);
+      const userId = localStorage.getItem("userId");
+      if (!userId) {
+        setError("User ID not found.");
+        setLoading(false);
+        return;
+      }
       try {
-        // Sử dụng API /me/profile để lấy thông tin user đã đăng nhập
         const response = await axios.get(
           `http://localhost:8080/user/profile/${userId}`
         );
         setCurrentUser(response.data);
-        // Điền dữ liệu vào form
         const { profileName, country, dob, gender, summary } = response.data;
         setFormData({
           profileName: profileName || "",
@@ -39,8 +146,8 @@ const EditProfilePage = () => {
           gender: gender || "",
           summary: summary || "",
         });
-      } catch {
-        setError("Failed to load user data. Please log in.");
+      } catch (err) {
+        setError("Failed to load user data.");
       } finally {
         setLoading(false);
       }
@@ -48,14 +155,41 @@ const EditProfilePage = () => {
     fetchUserData();
   }, []);
 
-  // Hàm xử lý thay đổi input, sẽ được truyền xuống GeneralSettings
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    // Xóa lỗi của trường đang được sửa
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: null }));
+    }
+  };
+
+  // Hàm để kiểm tra dữ liệu form
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.profileName || formData.profileName.trim() === "") {
+      newErrors.profileName = "Profile Name cannot be empty.";
+    }
+    if (formData.summary && formData.summary.length > 25) {
+      newErrors.summary = "Summary cannot exceed 500 characters.";
+    }
+    if (formData.dob && new Date(formData.dob) > new Date()) {
+      newErrors.dob = "Date of Birth cannot be in the future.";
+    }
+    return newErrors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Bước 1: Validate form trước khi gửi
+    const formErrors = validateForm();
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors); // Nếu có lỗi, hiển thị lỗi và không submit
+      return;
+    }
+
+    // Nếu không có lỗi, tiếp tục submit
     setLoading(true);
     setError(null);
     setSuccessMessage("");
@@ -67,7 +201,7 @@ const EditProfilePage = () => {
       );
       setFormData(response.data);
       setSuccessMessage("Your profile has been saved successfully!");
-    } catch {
+    } catch (err) {
       setError("Failed to save profile. Please try again.");
     } finally {
       setLoading(false);
@@ -75,12 +209,8 @@ const EditProfilePage = () => {
     }
   };
 
-  // Hàm để render nội dung chính dựa trên tab đang active
   const renderContent = () => {
-    const userId = localStorage.getItem("userId");
-    if (!userId) {
-      return <div className="edit-profile-status">Loading user data...</div>;
-    }
+    if (!currentUser) return null;
 
     switch (activeTab) {
       case "general":
@@ -92,10 +222,11 @@ const EditProfilePage = () => {
             loading={loading}
             error={error}
             successMessage={successMessage}
+            errors={errors} // <-- Truyền state lỗi xuống cho form
           />
         );
       case "avatar":
-        return <AvatarSettings currentUser={userId} />;
+        return <AvatarSettings currentUser={currentUser} />;
       default:
         return <h2>Select a setting</h2>;
     }
@@ -108,7 +239,6 @@ const EditProfilePage = () => {
   return (
     <div className="edit-profile-page">
       <div className="edit-profile-container">
-        {/* === SIDEBAR ĐIỀU HƯỚNG VỚI LOGIC onClick === */}
         <aside className="settings-sidebar">
           <ul>
             <li className={activeTab === "general" ? "active" : ""}>
@@ -133,17 +263,9 @@ const EditProfilePage = () => {
                 Avatar
               </a>
             </li>
-            <li>
-              <a href="#">Profile Background</a>
-            </li>
-            <li>
-              <a href="#">Mini Profile</a>
-            </li>
-            {/* ... các tab khác ... */}
+            {/* ... */}
           </ul>
         </aside>
-
-        {/* === NỘI DUNG CHÍNH THAY ĐỔI THEO TAB === */}
         <main className="settings-content">{renderContent()}</main>
       </div>
     </div>
