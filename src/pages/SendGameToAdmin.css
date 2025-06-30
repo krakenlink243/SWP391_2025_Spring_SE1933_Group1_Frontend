@@ -251,6 +251,13 @@
   .my-select__multi-value__label{
     color: white !important;
   }
+  .my-select__input{
+    color: white !important;
+  }
+  .game-file progress{
+    width: 100%;
+    background-color: red;
+  }
 
 
 

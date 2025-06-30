@@ -58,7 +58,7 @@ import FeedbackHub from "./pages/FeedbackHub";
 import UserFeedback from "./pages/UserFeedback";
 import EmailSettings from "./components/EmailChange/EmailSettings";
 import { jwtDecode } from "jwt-decode";
-
+import SendGameToAdmin from "./pages/SendGametoAdmin";
 import AIGeneratorFrontend from "./pages/test"; // TEST
 
 function AppRoutes() {

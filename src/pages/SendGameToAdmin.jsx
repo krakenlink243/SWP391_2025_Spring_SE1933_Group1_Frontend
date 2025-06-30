@@ -1,6 +1,6 @@
 //@author: Vu Hoang
 import React from 'react'
-import { useState,useRef } from'react'
+import { useState,useRef,useEffect } from'react'
 import gameicon from '../assets/gameicon.png'
 import './SendGameToAdmin.css'
 import PartHeading from '../components/PartHeading/PartHeading'
@@ -13,14 +13,42 @@ import Select from 'react-select';
 
 function SendGameToAdmin() {
   const [fileName,setFileName] = useState('Upload');
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [eventSource, setEventSource] = useState(null);
   const tags = [
-  { value: 'rts', label: 'RTS' },
-  { value: 'strategy', label: 'Strategy' },
-  { value: 'rpg', label: 'RPG' },
-  { value: 'indie', label: 'Indie' },
-  // ...add all your tags here
-  ];
+  { value: 18, label: 'Action' },
+  { value: 17, label: 'Adventure' },
+  { value: 29, label: 'Anime' },
+  { value: 31, label: 'Casual' },
+  { value: 12, label: 'Choices Matter' },
+  { value: 4, label: 'Classic' },
+  { value: 27, label: 'Co-op' },
+  { value: 23, label: 'Crafting' },
+  { value: 15, label: 'Exploration' },
+  { value: 20, label: 'Fantasy' },
+  { value: 28, label: 'FPS' },
+  { value: 16, label: 'Free to Play' },
+  { value: 10, label: 'Great Soundtrack' },
+  { value: 3, label: 'Historical' },
+  { value: 14, label: 'Horror' },
+  { value: 8, label: 'Indie' },
+  { value: 6, label: 'Multiplayer' },
+  { value: 19, label: 'Open World' },
+  { value: 11, label: 'Pixel Graphics' },
+  { value: 25, label: 'Platformer' },
+  { value: 26, label: 'Puzzle' },
+  { value: 30, label: 'Racing' },
+  { value: 7, label: 'RPG' },
+  { value: 1, label: 'RTS' },
+  { value: 21, label: 'Sci-fi' },
+  { value: 24, label: 'Simulation' },
+  { value: 5, label: 'Singleplayer' },
+  { value: 9, label: 'Story Rich' },
+  { value: 2, label: 'Strategy' },
+  { value: 13, label: 'Surreal' },
+  { value: 22, label: 'Survival' },
+];
+
+
   const [formData,setFormData] = useState({
     gameName: '',
     price: '',
@@ -41,6 +69,7 @@ function SendGameToAdmin() {
   const inputRef = useRef(null);
   const [files,setFiles] = useState([]);
   const [arr,setArr] = useState([]);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === 'price' && !validatePrice(value)) {
@@ -140,21 +169,60 @@ function SendGameToAdmin() {
       console.log(error);
     }
   }
-  const handleGameUpload = async(e) =>{
-    await handleDelete();
-    const selectedFile = e.target.files[0];
-    const form = new FormData();
-    form.append('file',selectedFile);
-    try {
-      const response = await axios.post('http://localhost:8080/request/file/upload',form,{header:{"Content-Type": "multipart/form-data"},});
-      console.log(response.data.fileId);
-      setFormData(prev =>({...prev,gameUrl:response.data.fileId}));
-      setFileName(response.data.fileName);
-    } catch (error) {
-      console.log(error);
-    }
-    
+  const handleGameUpload = async (e) => {
+  const selectedFile = e.target.files[0];
+  if (!selectedFile) return;
+  await handleDelete();
+  setUploadProgress(0);
+  const form = new FormData();
+  form.append('file', selectedFile);
+
+  // Close previous SSE connection if exists
+  if (eventSource) {
+    eventSource.close();
   }
+
+  // Open new SSE connection
+  const newEventSource = new EventSource('http://localhost:8080/request/progress');
+  setEventSource(newEventSource);
+
+  newEventSource.onmessage = (event) => {
+    const data = event.data;
+    if (!isNaN(data)) {
+      setUploadProgress(parseFloat(data));
+    } else {
+      console.log('SSE:', data);
+    }
+
+    // Auto-close when upload completes
+    if (data === 'Upload complete') {
+      setUploadProgress(100);
+      newEventSource.close();
+    }
+  };
+
+  newEventSource.onerror = () => {
+    console.warn('SSE connection error.');
+    newEventSource.close();
+  };
+
+  try {
+    const response = await axios.post(
+      'http://localhost:8080/request/file/upload',
+      form,
+      {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      }
+    );
+
+    console.log('Uploaded:', response.data.fileId);
+    setFormData((prev) => ({ ...prev, gameUrl: response.data.fileId }));
+    setFileName(response.data.fileName);
+  } catch (error) {
+    console.log('Upload failed:', error);
+    newEventSource.close();
+  }
+};
   const handleCancel = async() =>{
       await handleDelete();
       window.location.href="/"
@@ -205,7 +273,7 @@ function SendGameToAdmin() {
                 onChange={handleChangeTags}
                 closeMenuOnSelect={true}
                 hideSelectedOptions={true}
-                isSearchable={false}
+                isSearchable={true}
                 menuPlacement="bottom"
                 classNamePrefix="my-select"
                 // menuIsOpen={true}
@@ -265,6 +333,14 @@ function SendGameToAdmin() {
         <PartHeading content='Files(*)'/>   
         <input type="file" accept='.zip' style={{display:"none"}} ref={fileRef} onChange={handleGameUpload}  /> 
         <Button className='upload-button' label={fileName} onClick={() => fileRef.current.click()} color='blue-button'/>  
+        {uploadProgress > 0 && uploadProgress < 100 && (
+        <>
+          <progress value={uploadProgress} max="100" />
+          <p>{uploadProgress.toFixed(2)}%</p>
+        </>
+        )}
+
+
       </div>
       <div className='send-request-cancel'>
         <Button className='cancel-button' label='Cancel' onClick={handleCancel} color='grey-button'/>
