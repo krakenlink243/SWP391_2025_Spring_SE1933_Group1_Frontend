@@ -1,8 +1,112 @@
+.notiflist-container .user-header {
+    height: 127px;
+    background: url(https://community.fastly.steamstatic.com/public/images/bg_highlight.png) center bottom no-repeat;
+    gap: 25px;
+    padding: 0 25px;
+    width: 100%;
+}
+
+.user-header img {
+    height: calc(100% - 25px);
+    cursor: pointer;
+}
+
+.user-header a {
+    color: #ebebeb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.notiflist-container .left-col {
+    flex: 3;
+}
+
+.notiflist-container .right-col {
+    background-color: rgba(0, 0, 0, .2);
+    padding: 10px;
+    flex: 2;
+    max-height: 250px;
+}
+
+.right-col .right-col-btn {
+    padding: 0px 14px;
+    margin: 2px 0;
+    line-height: 32px;
+    color: #dfe3e6;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 2px;
+    cursor: pointer;
+    transition-property: opacity, background, color, box-shadow;
+    transition-duration: .2s;
+    transition-timing-function: ease-out;
+    background: #3d4450;
+    background-position: 99% 1%;
+    background-size: 300% 300%;
+    flex: 1;
+}
+
+.right-col .right-col-btn:hover {
+    background: #464d58;
+    color: #fff;
+}
+
+.right-col #filter-wrapper #title {
+    padding-top: 20px;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #9298a0;
+}
+
+#filter-wrapper .filter-item {
+    padding-left: 10px;
+    color: #9298a0;
+    cursor: pointer;
+    padding: 4px;
+    margin-bottom: 8px;
+}
+
+.filter-item input[type="checkbox"] {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    background-color: #0004;
+    margin-right: 8px;
+    box-shadow: inset 1px .5px 3px rgba(1, 1, 1, .4);
+    border-radius: 2px;
+
+}
+
+.filter-item input[type="checkbox"]:checked,
+.filter-item input[type="checkbox"]:checked:hover {
+    background-color: #66c0f4;
+}
+
+.filter-item input[type="checkbox"]:hover {
+    background-color: #090909;
+}
+
+
+.reset-btn {
+    background-color: #3b4c5a;
+    color: #c7d5e0;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 2px;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.reset-btn:hover {
+    background-color: #4a5a6a;
+}
+
 .notiflist-container .notiflist-title {
     font-size: 18px;
     padding: 5px 0px;
     color: #fff;
 }
+
 
 .notiflist-list .notiflist-item {
     background: rgba(0, 0, 0, .2);

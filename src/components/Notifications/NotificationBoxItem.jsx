@@ -8,7 +8,7 @@ import './NotificationBox.css';
  * @param {*} param0 
  * @returns 
  */
-function NotificationBoxItem({ notification }) {
+function NotificationBoxItem({ notification, markRead }) {
     const [read, setRead] = useState(notification.read);
 
     const handleClick = () => {
@@ -16,6 +16,7 @@ function NotificationBoxItem({ notification }) {
             axios.patch(`http://localhost:8080/notification/markread/${notification.notifId}`)
                 .then(() => {
                     setRead(true);
+                    markRead(notification.notifId);
                 })
                 .catch((error) => console.error("Error marking notification as read:", error));
         }

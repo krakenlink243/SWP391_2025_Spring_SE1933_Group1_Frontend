@@ -10,12 +10,9 @@ function ReviewUpdateForm({ originalReview, onReload, onCancel, gameId, userId }
         if (!window.confirm('Are you sure you want to update this review?')) {
             return;
         }
-        const resp = await axios.put(`http://localhost:8080/review/${gameId}/update-review`, {
-            userId: userId,
+        const resp = await axios.put(`http://localhost:8080/review/update/${gameId}`, {
             reviewContent: updateReviewContent,
             recommended: updateRecommended,
-            helpful: originalReview.helpful,
-            notHelpful: originalReview.notHelpful,
         });
         console.log('Update response:', resp.data);
         onReload();
@@ -26,7 +23,8 @@ function ReviewUpdateForm({ originalReview, onReload, onCancel, gameId, userId }
         if (!window.confirm('Are you sure you want to delete this review?')) {
             return false;
         }
-        const resp = await axios.delete(`http://localhost:8080/review/${gameId}/delete-review/${userId}`);
+        await axios.delete(`http://localhost:8080/review/delete/${gameId}`).catch((err) => { console.log("Error: " + err) });
+
         onReload();
         onCancel();
     };
@@ -42,8 +40,15 @@ function ReviewUpdateForm({ originalReview, onReload, onCancel, gameId, userId }
             <div className='update-review-form-inputs'>
                 <textarea
                     value={updateReviewContent}
-                    onChange={(e) => setUpdateReviewContent(e.target.value)}
+                    onChange={(e) => {
+                        if (e.target.value.length <= 8000) {
+                            setUpdateReviewContent(e.target.value);
+                        }
+                    }}
                 />
+                <div className="char-count">
+                    {updateReviewContent.length} / 8000
+                </div>
             </div>
             <div className="recommend-buttons">
                 <div className='pb-1'>Do you recommend this game?</div>
@@ -61,8 +66,9 @@ function ReviewUpdateForm({ originalReview, onReload, onCancel, gameId, userId }
                 <button
                     onClick={handleUpdate}
                     disabled={
-                        updateReviewContent === originalReview.reviewContent &&
-                        updateRecommended === originalReview.recommended
+                        (updateReviewContent === originalReview.reviewContent &&
+                            updateRecommended === originalReview.recommended) ||
+                        updateReviewContent.length > 8000
                     }
                     className='update-button'
                 >

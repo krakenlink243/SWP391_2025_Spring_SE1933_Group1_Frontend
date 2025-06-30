@@ -1,0 +1,246 @@
+.account-details-page {
+    color: #c7d5e0;
+    width: 100%;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+.account-info-panel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.account-main-content {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* ---- SIDEBAR ---- */
+.account-sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    background-color: #2a475e;
+    padding: 15px;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.account-sidebar a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #c7d5e0;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.account-sidebar a:hover {
+    background-color: #3b5f7e;
+}
+
+.account-sidebar a.active {
+    background-color: #5b9ace;
+    color: #fff;
+}
+
+/* ---- MAIN PANEL ---- */
+.account-info-panel {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.account-info-panel h1 {
+    font-size: 26px;
+    font-weight: 300;
+    color: #fff;
+    margin: 0 0 20px 0;
+    border-bottom: 1px solid #36495f;
+    padding-bottom: 15px;
+}
+
+.info-section {
+    background-color: #2a475e;
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 25px;
+    width: 100%;
+    max-width: 900px;
+    box-sizing: border-box;
+}
+
+.purchase-history {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.info-section h3 {
+    margin: 0 0 15px 0;
+    color: #66c0f4;
+    font-size: 16px;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+.wallet-balance {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1b2838;
+    padding: 15px;
+    border-radius: 3px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.wallet-balance span {
+    font-size: 14px;
+    color: #acb2b8;
+}
+
+.wallet-balance strong {
+    font-size: 20px;
+    color: #fff;
+}
+
+.action-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: auto;
+}
+
+.action-links .action-btn,
+.action-links a {
+    color: #66c0f4;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.action-links .action-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+}
+
+.action-links a:hover,
+.action-links .action-btn:hover {
+    color: #fff;
+}
+
+.contact-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #acb2b8;
+}
+
+/* ---- MODAL ---- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal-content {
+    background-color: #1b2838;
+    padding: 30px;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid #66c0f4;
+    box-shadow: 0 0 20px rgba(102, 192, 244, 0.3);
+    box-sizing: border-box;
+}
+
+.modal-content h2 {
+    margin: 0 0 25px 0;
+    text-align: center;
+    color: #fff;
+    font-weight: 300;
+}
+
+.amount-options {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.amount-options button {
+    background-color: #2a475e;
+    border: 1px solid #3b5f7e;
+    color: #c7d5e0;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.amount-options button:hover {
+    background-color: #3b5f7e;
+    border-color: #66c0f4;
+}
+
+.modal-content input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #111a24;
+    border: 1px solid #000;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 3px;
+    margin-bottom: 25px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+/* ... các style cũ ... */
+
+/* Style cho các group trong modal */
+.form-group-modal {
+    margin-bottom: 20px;
+  }
+  
+  .form-group-modal label {
+    display: block;
+    font-size: 14px;
+    color: #acb2b8;
+    margin-bottom: 8px;
+  }
+  
+  .form-group-modal select {
+    width: 100%;
+    padding: 12px;
+    background-color: #111a24;
+    border: 1px solid #000;
+    color: #fff;
+    font-size: 16px;
+    box-sizing: border-box;
+    border-radius: 3px;
+  }

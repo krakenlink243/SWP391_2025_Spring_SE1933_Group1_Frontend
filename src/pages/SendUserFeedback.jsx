@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState,useRef } from 'react'
 import "./SendUserFeedback.css"
 import Button from '../components/Button/Button'
 import { PhotoProvider,PhotoView } from 'react-photo-view'
 import { trimValue } from '../utils/validators'
+import axios from 'axios'
 function SendUserFeedback() {
     const [userName,setUserName] = useState("");
     const [formData,setFormData] = useState({
@@ -11,6 +12,10 @@ function SendUserFeedback() {
         message: "",
         mediaUrls: [],
     });
+    useEffect(() => {
+        const userName = localStorage.getItem("username");
+        setUserName(userName);
+    }, []);
     const handleChange = (e) => {
         const { name, value } = e.target;
         if(name === 'subject' && value.length > 256){
@@ -49,35 +54,71 @@ function SendUserFeedback() {
         setFiles(prev => [...prev,...selectFile]);
         const mediaPreview = selectFile.map(file => URL.createObjectURL(file));
         setArr(prev => [...prev,...mediaPreview]);
-      }
+      
+    }
+    const handleSubmit = async (e) =>{
+        e.preventDefault();
+        if(!formData.subject || !formData.message){
+            alert("Please fill in all fields!");
+            return;
+        }
+        try{
+            let responseMedia;
+            if(files.length > 0){
+                const uploadImage = new FormData();
+                files.forEach(file => uploadImage.append('files',file));
+                responseMedia = await axios.post('http://localhost:8080/request/image/upload',uploadImage,{
+                header:{"Content-Type": "multipart/form-data"},
+                });
+                console.log(files.length)
+                console.log(responseMedia.data.imageUrls);
+                setFormData(prev => ({...prev,mediaUrls: responseMedia.data.imageUrls}));
+            }
+            const response = await axios.post('http://localhost:8080/request/feedback/send',{...formData,mediaUrls: responseMedia?.data?.imageUrls || []
+            });
+            console.log(response);
+            alert(response.data.message);
+            window.location.href="/feedbackhub";
+      
+          }catch(error){
+            console.log(error);
+          }
+    }
+    const handleRemove = (indexToRemove) => {
+        setArr(prev => prev.filter((_, i) => i !== indexToRemove));
+        setFiles(prev => prev.filter((_, i) => i !== indexToRemove));
+    };
   return (
     <div className='sendfeedback-container'>
         <div className='sendfeedback-title'>
-            <h1>SEND FEEDBACK</h1>
+            <h1>Send Feedback</h1>
             <h2>Hi, {userName}</h2>
             <p style={{fontStyle: "italic"}}>If you have any thing to tell us to improve our products or any question, please tell us below. </p>
         </div>
         <div className='feedback-content'>
-            Subject
+            Subject(*)
             <input type="text" name="subject" id="" value={formData.subject} onChange={handleChange} onBlur={normalizeValue} />
             <br />
-            Your Feedback
+            Your Feedback(*)
             <textarea name="message" id="" onChange={handleChange} onBlur={normalizeValue} value={formData.message}></textarea>
         </div>
         <div className='inner-image'>
+        <input type="file" multiple style={{ display: "none" }} accept=".jpg,.png" ref={mediaFileRef} onChange={handleFileSelect}/>
+        <Button className='upload-media' label='+' onClick={() => mediaFileRef.current.click()} color='gray-button'/>
         <PhotoProvider>
           {arr.map((item, index) => (
-            <PhotoView key={index} src={item}>
-              <img src={item} alt="" style={{ cursor: "pointer", width: "150px" }} />
-            </PhotoView>
-          ))}
+            <div className='image-wrapper' key={index}>
+              <PhotoView src={item}>
+                <img src={item} alt="" style={{ cursor: "pointer", width: "150px" }} />
+              </PhotoView>
+              <span className="remove-icon" onClick={() => handleRemove(index)}>−</span>
+            </div>
+          )).reverse()}
         </PhotoProvider>
-            <input type="file" multiple style={{ display: "none" }} accept=".jpg,.png" ref={mediaFileRef} onChange={handleFileSelect}/>
-            <Button className='upload-media' label='+' onClick={() => mediaFileRef.current.click()} color='blue-button'/>
         </div>
         <div className='feedback-button'>
-            <Button label="SEND" color='blue-button'/>
-            <Button label="CANCEL" color='grey-button'/>
+            <Button label="Send" color='blue-button' onClick={handleSubmit}/>
+            <Button label="Cancel" color='grey-button' onClick={() => window.location.href="/feedbackhub"}/>
         </div>
     </div>
   )

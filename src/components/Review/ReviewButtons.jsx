@@ -1,33 +1,41 @@
 import { useEffect, useState } from "react";
-import './ReviewList.css'
-import { createNotification } from "../../services/notification"; // Import hàm tạo thông báo
+import { createNotification } from "../../services/notification";
 import axios from "axios";
+import './ReviewButtons.css';
+
 /**
  * @author Phan NT Sons
  * @param {*} param0 
  * @returns 
  */
-function ReviewButtons({ originalReview, gameId, userId }) {
+function ReviewButtons({ reivewHelpful, reivewNotHelpful, authorId, game }) {
 
-    const [helpfulCount, setHelpfulCount] = useState(originalReview.helpful);
-    const [notHelpfulCount, setNotHelpfulCount] = useState(originalReview.notHelpful);
+    const [helpfulCount, setHelpfulCount] = useState(reivewHelpful);
+    const [notHelpfulCount, setNotHelpfulCount] = useState(reivewNotHelpful);
+
+
     const [userOption, setUserOption] = useState(null);
     const [isReady, setIsReady] = useState(false);
-    const authorId = originalReview.userId;
-    const username = localStorage.getItem("username");
+    const CUR_USERNAME = localStorage.getItem("username");
 
 
     useEffect(() => {
         const fetchData = async () => {
-            await checkUserOption();
+            if (CUR_USERNAME)
+                await checkUserOption();
             setIsReady(true);
         };
         fetchData();
     }, []);
 
+    useEffect(() => {
+        setHelpfulCount(reivewHelpful);
+        setNotHelpfulCount(reivewNotHelpful);
+    }, [reivewHelpful, reivewNotHelpful]);
+
     const checkUserOption = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/review/${gameId}/${authorId}/check?userId=${userId}`);
+            const response = await axios.get(`http://localhost:8080/review/${game.gameId}/${authorId}/check`);
             const result = response.data;
             setUserOption(result === 1 ? 1 : result === -1 ? -1 : 0);
         } catch (error) {
@@ -35,64 +43,53 @@ function ReviewButtons({ originalReview, gameId, userId }) {
         }
     };
 
-    const handleClick = async (isHelpful) => {
-        // If the user hasn't voted yet
-        if (userOption === 0 && isHelpful) {
-            setHelpfulCount(helpfulCount + 1);
-            setUserOption(1);
-            try {
-                const response = await axios.patch(`http://localhost:8080/review/${gameId}/${authorId}/helpful`, {
-                    userId: userId
-                });
-                if (response.data === "Success") {
-                    createNotification(authorId, "Community", `${username} have vote your review helpful`);
-                }
-            } catch (error) {
-                console.error("Error updating helpful count:", error);
-            }
-        } else if (userOption === 1 && isHelpful) { // If the user has already voted helpful
-            setHelpfulCount(helpfulCount - 1);
-            setUserOption(0);
-            try {
-                const response = await axios.patch(`http://localhost:8080/review/${gameId}/${authorId}/clean-reaction`, {
-                    userId: userId
-                });
+    const handleVote = (isHelpful) => {
+        if (!CUR_USERNAME) {
+            window.location.href = "/login";
+            return;
+        }
 
-                if (response.data === "Success") {
-                    createNotification(authorId, "Community", `${username} have unvote your review`);
-                }
-            } catch (error) {
-                console.error("Error updating unhelpful count:", error);
-            }
-        } else if (userOption === 0 && !isHelpful) { // If the user hasn't voted yet and votes not helpful
-            setNotHelpfulCount(notHelpfulCount + 1);
-            setUserOption(-1);
-            try {
-                const response = await axios.patch(`http://localhost:8080/review/${gameId}/${authorId}/not-helpful`, {
-                    userId: userId
-                });
+        const PATHS = {
+            HELPFUL: "http://localhost:8080/review/vote/helpful",
+            NOT_HELPFUL: "http://localhost:8080/review/vote/unhelpful",
+            CLEAN: "http://localhost:8080/review/vote/clean"
+        };
 
-                if (response.data === "Success") {
-                    createNotification(authorId, "Community", `${username} have vote your review not helpful`);
-                }
-            } catch (error) {
-                console.error("Error updating not helpful count:", error);
-            }
-        } else if (userOption === -1 && !isHelpful) { // If the user has already voted not helpful
-            setNotHelpfulCount(notHelpfulCount - 1);
-            setUserOption(0);
-            try {
-                const response = await axios.patch(`http://localhost:8080/review/${gameId}/${authorId}/clean-reaction`, {
-                    userId: userId
-                });
 
-                if (response.data === "Success") {
-                    createNotification(authorId, "Community", `${username} have unvote your review`);
+        const RESP_OK = "SUCCESS";
+
+        if (userOption === 0) {
+            const path = isHelpful ? PATHS.HELPFUL : PATHS.NOT_HELPFUL;
+            const countSetter = isHelpful ? setHelpfulCount : setNotHelpfulCount;
+            const newOption = isHelpful ? 1 : -1;
+
+            countSetter(prev => prev + 1);
+            setUserOption(newOption);
+
+            axios.patch(path, { gameId: game.gameId, authorId }).then(resp => {
+                if (resp.data === RESP_OK) {
+                    const status = isHelpful ? "helpful" : "not helpful";
+                    createNotification(authorId, "Community", `${CUR_USERNAME} vote your Review about ${game.name} ${status}`);
                 }
-            } catch (error) {
-                console.error("Error updating unhelpful count:", error);
+            }).catch(err => {
+                console.error("Error while voting:", err);
+            });
+
+        } else {
+            if ((isHelpful === true && userOption === 1) || (isHelpful === false && userOption === -1)) {
+                const countSetter = isHelpful ? setHelpfulCount : setNotHelpfulCount;
+                countSetter(prev => prev - 1);
+                setUserOption(0);
+
+                axios.patch(PATHS.CLEAN, {
+                    gameId: game.gameId,
+                    authorId: authorId
+                }).catch((err) => {
+                    console.log("Error Internal Clean Vote. " + err);
+                });
             }
         }
+
     }
 
     if (!isReady) {
@@ -101,11 +98,11 @@ function ReviewButtons({ originalReview, gameId, userId }) {
 
     return (
         <div className="vote-button">
-            <div onClick={() => handleClick(true)} className={`${userOption === 1 ? 'active' : ''} cus-btn`}>
+            <div onClick={() => handleVote(true)} className={`${userOption === 1 ? 'active' : ''} cus-btn`}>
                 {/* <p>Yes {helpfulCount}</p> */}
                 <span>Yes {helpfulCount}</span>
             </div>
-            <div onClick={() => handleClick(false)} className={`${userOption === -1 ? 'active' : ''} cus-btn`}>
+            <div onClick={() => handleVote(false)} className={`${userOption === -1 ? 'active' : ''} cus-btn`}>
                 {/* <p>No {notHelpfulCount}</p> */}
                 <span>No {notHelpfulCount}</span>
             </div>

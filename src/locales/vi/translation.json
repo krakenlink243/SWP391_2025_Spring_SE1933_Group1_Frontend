@@ -1,5 +1,44 @@
 {
-  "welcome": "Chào mừng",
-  "logout": "Đăng xuất cái đm mày",
-  "language": "Ngôn ngữ"
+  
+  "STORE": "CỬA HÀNG",
+  "COMMUNITY": "CỘNG ĐỒNG",
+  "ABOUT": "GIỚI THIỆU",
+  "SUPPORT": "HỖ TRỢ",
+  "CHAT": "TRÒ CHUYỆN",
+  "ADMIN TOOLS": "CÔNG CỤ ADMIN",
+
+  "Your Store": "Cửa hàng của bạn",
+  "New & Noteworthy": "Tin nổi bật",
+  "Categories": "Các danh mục",
+  "Points Shop": "Cửa hàng điểm",
+  "News": "Tin tức",
+  "Labs": "Phòng thí nghiệm",
+  "search": "tìm kiếm",
+
+  "trang 1": "/",
+  "BROWSE BY CATEGORY": "TÌM THEO DANH MỤC",
+
+  "trang 2": "/game",
+  "Sort by": "Sắp xếp theo",
+  "Name (A-Z)":"Tên (A-Z)",
+  "Name (Z-A)":"Tên (Z-A)",
+  "Release Date (Newest)":"Thời gian ra mắt (Mới nhất)",
+  "Release Date (Oldest)":"Thời gian ra mắt (Muộn nhất)",
+  "Price (Low to High)":"Giá (Thấp đến Cao)",
+  "Price (High to Low)":"Giá (Cao đến Thấp",
+  "All Games":"Tất cả trò chơi",
+  "titles found.":"mục được tìm thấy.",
+  "Free":"Miễn phí",
+  "Page":"Trang",
+  "of":"trên",
+  "Prev":"Trước",
+  "Next":"Sau",
+  "Narrow by Price":"Giới hạn bởi tiền",
+  "Under":"Dưới",
+  "Any Price":"Giá bất kỳ",
+  "Narrow by Tag":"Giới hạn bởi thể loại",
+  "Search for tags":"Tìm kiếm theo thể loại",
+  "Narrow by Publisher":"Giới hạn bởi nhà xuất bản",
+  "Search for publishers":"Tìm kiếm theo nhà xuất bản"
+
 }

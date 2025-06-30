@@ -5,16 +5,16 @@ import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import "./Login.css";
 import { jwtDecode } from "jwt-decode";
 import { useLocation } from 'react-router-dom';
-import { useEffect} from 'react';
+import { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-
+import { useNavigate} from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const location = useLocation();
-  
+
   useEffect(() => {
     if (location.state?.fromRegister) {
       setMessage('Registration successful!');
@@ -57,7 +57,6 @@ const Login = () => {
       localStorage.setItem("expDate", expireDate);
       localStorage.setItem("avatarUrl", avatarUrl);
 
-
       return <Navigate to="/" replace />;
 
       // navigate('/');
@@ -81,11 +80,11 @@ const Login = () => {
 
       const token = response.data.token;
       localStorage.setItem("token", token);
-      setMessage("Google login successful!");
-      // navigate('/')
+      alert("Google login successful!");
+      navigate('/')
     } catch (err) {
       console.error(err);
-      setMessage("Google login failed");
+      alert("Google login failed");
     }
   };
 
@@ -94,8 +93,8 @@ const Login = () => {
       <main>
         <section class="form-section">
           <h1 class="form-title">Log in</h1>
-          {message && <p>{message}</p>}
           <form onSubmit={handleLogin} class="form">
+            {message && <p className="message">{message}</p>}
             <label htmlFor="username" class="form-label">
               Log in with username
             </label>
@@ -126,7 +125,9 @@ const Login = () => {
               <button type="submit" class="submit-button">
                 Log in
               </button>
-
+              <a href="/forgot-password" class="forgot-password-link">
+                Forgot password?
+              </a>
               <a href="http://localhost:8080/oauth2/authorization/google">
                 <img src="/google-logo.jpg" alt="Google login" className="google-logo" />
               </a>
@@ -145,7 +146,7 @@ const Login = () => {
                   height="40"
                 /> */}
             </div>
-            
+
           </form>
         </section>
       </main>

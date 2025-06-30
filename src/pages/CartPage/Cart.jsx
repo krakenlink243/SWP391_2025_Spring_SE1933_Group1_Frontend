@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import './Cart.css';
-import {jwtDecode} from "jwt-decode";
 
 /**
  * @author BaThanh
@@ -10,20 +9,12 @@ import {jwtDecode} from "jwt-decode";
  * @param {*} param0 
  * @returns 
  */
-const token = localStorage.getItem("token");
-let userName = '';
-if (token) {
-  try {
-    const decoded = jwtDecode(token);
-    userName = decoded.sub || decoded.username || '';
-  } catch (e) {
-    userName = '';
-  }
-}
+const userId = localStorage.getItem("userId");
+const username = localStorage.getItem('username');
 
 const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
 
-  if (!localStorage.getItem("token")) {
+  if (!userId) {
     window.location.href = "/";
   }
 
@@ -39,34 +30,33 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
     gameName: "",
   });
 
-  // Fetch balance từ API /user/wallet
-  const fetchBalance = async () => {
-    try {
-      const response = await axios.get('http://localhost:8080/user/wallet', {
-        headers: { Authorization: `Bearer ${token}` }
+  // Fetch balance from API http://localhost:8080/user/wallet
+  useEffect(() => {
+    axios.get('http://localhost:8080/user/wallet')
+      .then(response => {
+        console.log('Wallet API response:', response.data);
+        setBalance(Number(response.data) || 0);
+      })
+      .catch(error => {
+        console.error('Error fetching wallet balance:', error.message, error.response?.status, error.response?.data);
+        setBalance(0);
       });
-      setBalance(response.data);
-    } catch {
-      setBalance(0);
-    }
-  };
+  }, []);
 
   // Fetch cart từ backend
   const fetchCart = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:8080/user/cart`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await axios.get('http://localhost:8080/user/cart');
+      console.log('Cart API response:', response.data);
       const data = response.data;
-      if (Array.isArray(data.data)) {
+      if (data.success && Array.isArray(data.data)) {
         setCartItems(data.data);
-      } else if (Array.isArray(data.cartGames)) {
-        setCartItems(data.cartGames);
       } else {
         setCartItems([]);
       }
     } catch (error) {
+      console.error('Error fetching cart:', error.message, error.response?.status, error.response?.data);
       setCartItems([]);
     } finally {
       setLoading(false);
@@ -75,19 +65,15 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
 
   useEffect(() => {
     fetchCart();
-    fetchBalance();
-    // --!!
   }, []);
 
   const handleRemove = async (gameId) => {
     setLoading(true);
     try {
-      await axios.delete(`http://localhost:8080/user/cart/remove?gameId=${gameId}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await axios.delete(`http://localhost:8080/user/cart/remove?gameId=${gameId}`);
       await fetchCart();
     } catch (error) {
-      // handle error
+      console.error('Error removing game:', error.message, error.response?.status, error.response?.data);
     } finally {
       setLoading(false);
     }
@@ -97,15 +83,18 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
     setShowConfirmModal(false);
     setLoading(true);
     try {
-      await axios.post(`http://localhost:8080/user/cart/checkout`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const total = cartItems.reduce((sum, item) => sum + (item.price || 0), 0);
+      const response = await axios.post('http://localhost:8080/user/cart/checkout');
+      if (!response.data.success) throw new Error('Checkout failed');
       setResultMessage('Purchase successful!');
       setCartItems([]);
       await fetchCart();
-      await fetchBalance();
+      const userRes = await axios.get('http://localhost:8080/user/wallet');
+      console.log('Updated wallet response:', userRes.data);
+      setBalance(Number(userRes.data) || 0);
     } catch (error) {
-      setResultMessage('Purchase failed!');
+      setResultMessage(error.message === 'Purchase failed!');
+      console.error('Error during checkout:', error.message, error.response?.status, error.response?.data);
     } finally {
       setShowResultModal(true);
       setLoading(false);
@@ -133,7 +122,7 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
     <div className="cart-steam-bg" style={{ minHeight: `${minHeight}px` }}>
       <div className="cart-main-steam">
         <h2 className="cart-title-steam">
-          {userName ? `${userName}'s Shopping Cart` : "Shopping Cart"}
+          Your Shopping Cart
         </h2>
         <div className="cart-list-steam">
           {loading ? (
@@ -143,15 +132,26 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
           ) : (
             <div className="cart-items-container">
               {cartItems.map((item) => (
-                <div className="cart-item-steam" key={item.id || item.gameId}>
-                  <div className="cart-item-title">{item.title || item.name || 'Unnamed Game'}</div>
+                <div className="cart-item-steam" key={item.id}>
+                  <div className="cart-item-image">
+                    <img
+                      className="library-game-image"
+                      src={
+                        item.imageUrl
+                          ? item.imageUrl
+                          : "https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg" // fallback
+                      }
+                      alt={item.title || 'Unnamed Game'}
+                    />
+                  </div>
+                  <div className="cart-item-title">{item.title || 'Unnamed Game'}</div>
                   <div className="cart-item-price-container">
                     <span className="cart-item-price">${item.discountPrice > 0 ? item.discountPrice.toFixed(2) : item.price?.toFixed(2) || '0.00'}</span>
                   </div>
                   <div className="cart-item-remove">
                     <button
                       className="cart-item-remove-btn"
-                      onClick={() => openRemoveConfirm(item.id || item.gameId, item.title || item.name || 'Unnamed Game')}
+                      onClick={() => openRemoveConfirm(item.id, item.title || 'Unnamed Game')}
                       title="Remove"
                       disabled={loading}
                     >
@@ -161,11 +161,14 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
                 </div>
               ))}
               <div className="cart-item-steam">
+                <div className="cart-item-image"></div> {/* Placeholder để giữ cấu trúc flex */}
                 <div className="cart-item-title">Estimated total:</div>
                 <div className="cart-item-price-container">
                   <span className="cart-item-price">${total}</span>
                 </div>
-                <div className="cart-item-empty"></div>
+                <div className="cart-item-remove">
+                  <span className="cart-item-empty"></span> {/* Placeholder cho nút remove */}
+                </div>
               </div>
             </div>
           )}

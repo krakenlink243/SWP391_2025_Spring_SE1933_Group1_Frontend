@@ -7,7 +7,7 @@ import axios from "axios";
 // Added by Phan NT Son
 import { createNotification } from "../../services/notification";
 // add by Bathanh
-  const userId = localStorage.getItem("userId");
+const userId = localStorage.getItem("userId");
 
 const GameDetail = () => {
   const { gameId } = useParams();
@@ -15,6 +15,7 @@ const GameDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeMedia, setActiveMedia] = useState(null);
+
 
   const handleThumbnailClick = (mediaItem) => {
     setActiveMedia(mediaItem);
@@ -71,7 +72,10 @@ const GameDetail = () => {
       // @author Phan NT Son
       // Tạo thông báo khi người dùng thêm game vào giỏ hàng
       if (response.data.success) {
-        createNotification(`Game ${game.name} has been added to your cart.`);
+        createNotification(
+          localStorage.getItem("userId"),
+          "Cart",
+          `Game ${game.name} has been added to your cart.`);
         alert("Game added to cart successfully!");
       } else {
         alert("Game already bought or not available.");
@@ -123,9 +127,8 @@ const GameDetail = () => {
             {game.media.map((mediaItem) => (
               <div
                 key={mediaItem.mediaId}
-                className={`thumbnail-container ${
-                  activeMedia?.mediaId === mediaItem.mediaId ? "active" : ""
-                }`}
+                className={`thumbnail-container ${activeMedia?.mediaId === mediaItem.mediaId ? "active" : ""
+                  }`}
                 onClick={() => handleThumbnailClick(mediaItem)}
               >
                 <img
@@ -185,7 +188,7 @@ const GameDetail = () => {
                   <span className="price">Free to Play</span>
                 )}
                 if (condition) {
-                  
+
                 }
                 <button onClick={addCartHandler} className="add-to-cart-button">
                   Add to Cart

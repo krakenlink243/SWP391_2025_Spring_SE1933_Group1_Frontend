@@ -16,7 +16,7 @@ import axios from "axios";
 const AdminHeader = forwardRef(({ currentTab, changeToTab }, ref) => {
     const [showLogout, setShowLogout] = useState(false);
     const { t, i18n } = useTranslation();
-    const section = [2, 2, 4, 3, 1]
+    const section = [2, 2, 4, 2, 2]
 
     const changeLanguage = (lng) => {
         i18n.changeLanguage(lng);
@@ -26,9 +26,9 @@ const AdminHeader = forwardRef(({ currentTab, changeToTab }, ref) => {
     useEffect(() => {
         const userId = localStorage.getItem("userId");
         const getUserBalance = () => {
-            axios.get(`http://localhost:8080/users/${userId}/balance`)
+            axios.get(`http://localhost:8080/user/wallet`)
                 .then((response) => setBalance(response.data))
-                .catch(error => alert(error));
+                .catch((error) => alert(error));
         };
         if (userId) {
             getUserBalance();
@@ -54,19 +54,23 @@ const AdminHeader = forwardRef(({ currentTab, changeToTab }, ref) => {
                             <div className="w-25 px-2">
                                 <NotificationBox />
                             </div>
-                            <div className="w-50 px-2">
+                            <div className="w-50 px-2 d-flex flex-row-reverse">
                                 <UserDropBox
                                     userBalance={balance}
                                 />
                             </div>
 
                         </div>
-                        <div className="user-wallet w-50">
-                            <p>Money hehe</p>
+                        <div className="user-wallet w-100">
+                            {balance.toLocaleString("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                            })}
                         </div>
                     </div>
                     <div className="header-user-action-icon w-25">
-                        <p className="">Icon</p>
+                        <img src={localStorage.getItem("avatarUrl")}></img>
+
                     </div>
 
                 </div>

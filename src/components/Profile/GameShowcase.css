@@ -1,75 +1,101 @@
-.game-showcase-container {
-    /* section-box style được kế thừa từ ProfilePage.css */
-    padding: 0; /* Ghi đè padding của section-box để header chiếm toàn bộ chiều rộng */
-}
-
+/* Kế thừa style từ ProfilePage.css cho .section-box và h3 */
 .showcase-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.2);
-    padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 8px 12px;
 }
 
 .showcase-header h3 {
-    border-bottom: none;
-    margin: 0;
-    padding: 0;
-    color: #fff;
-    font-size: 14px;
+  border-bottom: none;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  font-size: 14px;
 }
-
 .showcase-header h3 span {
-    color: #acb2b8;
-    font-weight: normal;
+  color: #acb2b8;
+  font-weight: normal;
 }
 
 .view-all-link {
-    color: #acb2b8;
-    font-size: 12px;
-    text-decoration: none;
+  color: #acb2b8;
+  font-size: 12px;
+  text-decoration: none;
 }
-
 .view-all-link:hover {
-    color: #fff;
+  color: #fff;
 }
 
 .showcase-list {
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px; /* Khoảng cách giữa các game */
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 280px; /* Đặt chiều cao tối thiểu để không bị giật layout khi loading */
 }
 
 .showcase-list > p {
-    color: #8f98a0;
-    font-size: 13px;
-    margin: 10px 0;
+  color: #8f98a0;
+  font-size: 13px;
+  margin: 10px 0;
 }
 
 .showcase-item {
-    display: flex;
-    align-items: center;
-    gap: 15px; /* Khoảng cách giữa ảnh và tên game */
-    background-color: rgba(0, 0, 0, 0.2);
-    text-decoration: none;
-    transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  transition: background-color 0.2s;
 }
-
 .showcase-item:hover {
-    background-color: rgba(102, 192, 244, 0.2);
+  background-color: rgba(102, 192, 244, 0.2);
 }
 
 .showcase-item-image {
-    width: 184px; /* Kích thước ảnh capsule của Steam */
-    height: 69px;
-    object-fit: cover;
-    display: block; /* Loại bỏ khoảng trống thừa dưới ảnh */
+  width: 184px;
+  height: 69px;
+  object-fit: cover;
+  display: block;
 }
 
 .showcase-item-title {
-    font-size: 15px;
-    color: #c7d5e0;
-    font-weight: normal;
-    margin: 0;
+  font-size: 15px;
+  color: #c7d5e0;
+  font-weight: normal;
+  margin: 0;
+}
+
+/* Pagination for Showcase */
+.showcase-pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px 12px 0;
+  border-top: 1px solid #363c44;
+  margin-top: 10px;
+  gap: 8px;
+}
+
+.showcase-pagination button {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #acb2b8;
+  padding: 5px 10px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.showcase-pagination button:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+.showcase-pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.showcase-pagination span {
+  font-size: 12px;
+  color: #acb2b8;
 }

@@ -7,6 +7,9 @@
   font-size: 1.25rem;
   user-select: none;
 }
+.message{
+  color: red;
+}
 
 .header-right {
   color: #d0d0d0;
@@ -126,4 +129,12 @@ main {
 .google-logo {
   width: 2.5rem;
   height: 2.5rem;
+}
+
+.message-error {
+  color: red;
+}
+
+.message-success {
+  color: green;
 }

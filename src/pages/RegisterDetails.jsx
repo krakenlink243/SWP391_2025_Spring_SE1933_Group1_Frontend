@@ -14,7 +14,9 @@ const RegisterDetails = () => {
     confirmPassword: '',
     country: '',
   });
+
   const [message, setMessage] = useState('');
+  const [usernameAvailable, setUsernameAvailable] = useState(null);
 
   useEffect(() => {
     if (!email) {
@@ -22,12 +24,30 @@ const RegisterDetails = () => {
     }
   }, [email, navigate]);
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { name, value } = e.target;
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
+
+    if (name === 'username') {
+      if (value.trim() === '') {
+        setUsernameAvailable(null);
+        return;
+      }
+
+      try {
+        const res = await axios.get("http://localhost:8080/api/auth/check-username", {
+          params: { username: value },
+        });
+        setUsernameAvailable(res.data.available);
+      } catch (error) {
+        console.error("Username check failed", error);
+        setUsernameAvailable(null);
+      }
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -36,6 +56,11 @@ const RegisterDetails = () => {
 
     if (/\s/.test(formData.username)) {
       setMessage('Username must not contain spaces.');
+      return;
+    }
+
+    if (usernameAvailable === false) {
+      setMessage('Username is already taken.');
       return;
     }
 
@@ -56,9 +81,7 @@ const RegisterDetails = () => {
       setMessage('Registration successful!');
       console.log(response.data);
 
-      // Added by Phan NT Son
-      navigate('/login', { state: { fromRegister: true } }); //Added by Loc Phan: navigate to login page after successful registration
-
+      navigate('/login', { state: { fromRegister: true } });
 
     } catch (error) {
       console.error(error);
@@ -68,21 +91,11 @@ const RegisterDetails = () => {
 
   return (
     <div className="app-container">
-      {/* <header className="header">
-        <div className="logo"></div>
-        <div className="brand">STEAMCL</div>
-        <nav className="nav">
-          <a href="#" className="nav-link active">STORE</a>
-          <a href="#" className="nav-link">COMMUNITY</a>
-          <a href="#" className="nav-link">ABOUT</a>
-          <a href="#" className="nav-link">SUPPORT</a>
-        </nav>
-      </header> */}
-
       <main className="main">
         <form className="form" onSubmit={handleSubmit}>
           <h1 className="form-title">CREATE YOUR ACCOUNT</h1>
           {message && <p className="message">{message}</p>}
+          
           <div className="form-group">
             <label className="form-label" htmlFor="username">Steam Account Name</label>
             <input
@@ -94,6 +107,12 @@ const RegisterDetails = () => {
               className="form-input"
               required
             />
+            {formData.username && usernameAvailable === false && (
+              <p className="message-error">Username already taken.</p>
+            )}
+            {formData.username && usernameAvailable === true && (
+              <p className="message-success">Username is available.</p>
+            )}
           </div>
 
           <div className="form-group">
@@ -143,8 +162,6 @@ const RegisterDetails = () => {
           </button>
         </form>
       </main>
-
-      
     </div>
   );
 };

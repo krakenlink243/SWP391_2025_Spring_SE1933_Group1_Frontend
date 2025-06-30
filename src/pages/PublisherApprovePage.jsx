@@ -104,27 +104,34 @@ function PublisherApprovePage() {
   return (
     <div className='game-approve-container'>
       <div>
-        <div style={{cursor:"pointer"}}>Game Request</div>
-        <div style={{cursor:"pointer", textDecoration:"underline",textUnderlineOffset:"5px"}}>Apply Request</div>
-        <div style={{cursor:"pointer"}}>Report</div>
-        <div style={{cursor:"pointer"}}>Other Request</div>
+        <div style={{cursor:"pointer"}} onClick={()=>{window.location.href=`/aprrovegame`}}>Game Request</div>
+        <div style={{cursor:"pointer",textDecoration:"underline",textUnderlineOffset:"5px"}} onClick={()=>{window.location.href=`/approvepublisher`}}>Publisher Request</div>
+        <div style={{cursor:"pointer"}} onClick={()=>{window.location.href=``}}>Review Report</div>
+        <div style={{cursor:"pointer"}} onClick={()=>{window.location.href=`/approvefeedback`}}>Feedback</div>
       </div>
-      <div className='request-item' style={{backgroundColor:"#1B2438"}}>
-      <img
-        src={isChecked ? "/icons/Approve.png" : "/icons/Checkbox.png"}
-        alt="Checkbox"
-        onClick={handleTick}
-      />
-      <div>
-        <img src="/icons/Decline.png" alt="" onClick={handleDeclineSelected}  />
-        <img src="/icons/Approve.png" alt="" onClick={handleApproveSelected}/>
-      </div>
-      </div>
+      {loadedRequest.length > 0 ? (
+        <div className='request-items' style={{ backgroundColor: "#1B2838" }}>
+          <img
+            src={isChecked ? "/icons/Approve.png" : "/icons/Checkbox.png"}
+            alt="Checkbox"
+            onClick={handleTick}
+          />
+          <div>Publisher Name</div>
+          <div>From</div>
+          <div>Date</div>
+          <div>
+            <img src="/icons/Approve.png" alt="" onClick={handleApproveSelected} />
+            <img src="/icons/Decline.png" alt="" onClick={handleDeclineSelected} />
+          </div>
+        </div>
+      ) : (<p>There is no one want to be publisher at this time🥹</p>)}
       {loadedRequest.map((request) => (
       <RequestItem 
         key={request.requestId} 
         requestId={request.requestId}
         requestName={request.publisherName} 
+        from={request.username}
+        date={request.createdDate}
         onApprove={() => handleApprove(request.requestId)} 
         onDecline={() => handleDecline(request.requestId)} 
         onCheckChange={handleCheckChange} 
