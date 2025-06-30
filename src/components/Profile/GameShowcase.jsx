@@ -1,74 +1,110 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./GameShowcase.css";
+
+// Component con cho các nút phân trang (Không đổi)
+const ShowcasePagination = ({ currentPage, totalPages, onPageChange }) => {
+  if (totalPages <= 1) return null;
+  return (
+    <div className="showcase-pagination">
+      <button
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage === 0}
+      >
+        &laquo;
+      </button>
+      <span>
+        Page {currentPage + 1} of {totalPages}
+      </span>
+      <button
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage + 1 >= totalPages}
+      >
+        &raquo;
+      </button>
+    </div>
+  );
+};
 
 const GameShowcase = ({ userId, gameCount }) => {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalGames, setTotalGames] = useState(0);
+  const GAMES_PER_PAGE = 6;
+
+  const fetchLibraryPage = useCallback(async () => {
     if (!userId) return;
+    setLoading(true);
+    try {
+      const params = new URLSearchParams({
+        page: currentPage,
+        size: GAMES_PER_PAGE,
+        sort: "dateAdded,desc",
+      });
 
-    const fetchLibraryGames = async () => {
-      setLoading(true);
-      try {
-        // API endpoint của bạn, không cần tham số phân trang theo yêu cầu
-        const response = await axios.get(
-          `http://localhost:8080/user/library`
-        );
+      const response = await axios.get(
+        `http://localhost:8080/user/library?userId=${userId}&${params.toString()}`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
 
-        // SỬA ĐỔI 1: Lấy danh sách game từ `response.data.library`
-        setGames(response.data.library || []);
-      } catch (error) {
-        console.error("Failed to fetch library games:", error);
-        setGames([]);
-      } finally {
-        setLoading(false);
-      }
-    };
+      const pageData = response.data;
+      setGames(pageData.content || []);
+      setTotalPages(pageData.totalPages || 0);
+      setTotalGames(pageData.totalElements || 0);
+    } catch (error) {
+      console.error("Failed to fetch library games:", error);
+      setGames([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [userId, currentPage]);
 
-    fetchLibraryGames();
-  }, [userId]);
-
-  // Phần code xử lý loading không đổi
-  if (loading) {
-    return (
-      <div className="game-showcase-container section-box">
-        <h3>
-          Games <span>({gameCount ?? 0})</span>
-        </h3>
-        <div className="showcase-list">
-          <p>Loading games...</p>
-        </div>
-      </div>
-    );
-  }
+  useEffect(() => {
+    fetchLibraryPage();
+  }, [fetchLibraryPage]);
 
   return (
-    <div className="game-showcase-container section-box">
+    <div className="game-showcase section-box">
       <div className="showcase-header">
         <h3>
-          Games <span>({gameCount ?? 0})</span>
+          Games <span>({totalGames})</span>
         </h3>
-        <Link to={`/users/${userId}/library`} className="view-all-link">
+        <Link to={`/library`} className="view-all-link">
           View All
         </Link>
       </div>
       <div className="showcase-list">
-        {games.length > 0 ? (
-          games.map((game) => {
-            // SỬA ĐỔI 2: Lấy URL ảnh một cách an toàn từ mảng media
+        {loading ? (
+          <p>Loading games...</p>
+        ) : games.length > 0 ? (
+          // === SỬA LỖI Ở ĐÂY ===
+          games.map((libraryItem) => {
+            // 1. Lấy ra đối tượng gameDetail từ mỗi item trong thư viện
+            const game = libraryItem.gameDetail;
+
+            // 2. Kiểm tra an toàn, nếu không có game detail thì bỏ qua
+            if (!game) {
+              return null;
+            }
+
+            // 3. Lấy URL ảnh từ mảng media một cách an toàn
             const imageUrl =
               game.media?.[0]?.url ||
               "https://via.placeholder.com/184x69.png?text=No+Image";
 
             return (
-              // SỬA ĐỔI 3: Sử dụng đúng tên thuộc tính: game.gameId và game.name
+              // 4. Sử dụng đúng các thuộc tính: game.gameId và game.name
               <Link
                 to={`/game/${game.gameId}`}
                 key={game.gameId}
                 className="showcase-item"
+                title={game.name}
               >
                 <img
                   src={imageUrl}
@@ -80,9 +116,14 @@ const GameShowcase = ({ userId, gameCount }) => {
             );
           })
         ) : (
-          <p>This user has no games in their library.</p>
+          <p>This user has no games to showcase.</p>
         )}
       </div>
+      <ShowcasePagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 };

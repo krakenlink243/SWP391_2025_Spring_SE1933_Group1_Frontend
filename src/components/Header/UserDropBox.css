@@ -23,7 +23,7 @@
   min-width: 220px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
   padding: 8px 0;
-  z-index: 1000;
+  z-index: 11;
   text-align: start;
   inset: 0px 0px auto auto !important;
 }

@@ -1,15 +1,16 @@
+/* Layout chính */
 .library-layout {
   display: flex;
   min-height: 100vh;
   background: #1a222a;
 }
 
+/* Sidebar bên trái */
 .library-sidebar {
   width: 220px;
   background: #232b36;
-  padding: 24px 0 24px 0;
+  padding: 24px 0;
   border-right: 1px solid #181e25;
-  min-height: 100vh;
 }
 
 .library-sidebar-title {
@@ -22,7 +23,7 @@
 
 .library-game-list {
   list-style: none;
-  padding: 0 0 0 24px;
+  padding-left: 24px;
   margin: 0;
 }
 
@@ -38,17 +39,31 @@
   color: #66c0f4;
 }
 
+.library-game-list-item.active {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* Nội dung bên phải */
 .library-content {
   flex: 1;
   padding: 32px 40px;
 }
 
+@media (max-width: 768px) {
+  .library-content {
+    padding: 20px;
+  }
+}
+
+/* Tiêu đề chính */
 .library-title {
   color: #c7d5e0;
   font-size: 28px;
   margin-bottom: 24px;
 }
 
+/* Trạng thái loading hoặc empty */
 .library-loading,
 .library-empty {
   color: #c7d5e0;
@@ -57,54 +72,7 @@
   font-size: 18px;
 }
 
-.library-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 32px 28px;
-}
-
-.library-game-card {
-  background: #101820;
-  border-radius: 8px;
-  width: 180px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 18px 10px 12px 10px;
-  transition: box-shadow 0.2s;
-}
-
-.library-game-card:hover {
-  box-shadow: 0 4px 16px rgba(102,192,244,0.18);
-}
-
-.library-game-image-container {
-  width: 160px;
-  height: 220px;
-  background: #232b36;
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.library-game-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.library-game-name {
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  margin-top: 6px;
-  word-break: break-word;
-}
+/* Thanh filter sort */
 .library-filter-row {
   display: flex;
   align-items: center;
@@ -124,4 +92,63 @@
   border-radius: 4px;
   padding: 5px 12px;
   font-size: 15px;
+}
+
+/* Danh sách game */
+.library-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px 28px;
+}
+
+/* Thẻ game */
+.library-game-card {
+  background: #101820;
+  border-radius: 8px;
+  width: 290px; /* Tăng chiều rộng */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px 10px 12px;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.library-game-card:hover {
+  box-shadow: 0 4px 16px rgba(102, 192, 244, 0.18);
+  transform: translateY(-4px);
+}
+
+.library-game-image-container {
+  width: 240px;   /* Rộng hơn */
+  height: 240px;  /* Cao hơn tương ứng */
+  background: #232b36;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.library-game-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Tên game */
+.library-game-name {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 6px;
+  word-break: break-word;
+}
+.library-game-played-time {
+  color: #c7d5e0;
+  font-size: 14px;
+  margin-top: 4px;
+  text-align: center;
 }

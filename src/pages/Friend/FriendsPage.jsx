@@ -30,7 +30,7 @@ function FriendsPage() {
         return (
             <div className="friend-page-container">
                 <div className="friend-page-header d-flex flex-row align-items-center">
-                    <img src={avatarUrl} alt="avatar" className="avatar" />
+                    <img src={avatarUrl} alt="avatar" className="avatar" onClick={() => window.location.href = "/profile"} />
                     <a className="username" href="/profile">{username}</a>
                 </div>
                 <div className="friend-page-content d-flex flex-row">

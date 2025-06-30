@@ -3,14 +3,13 @@ import axios from "axios";
 import "./WalletPage.css";
 import { Navigate } from "react-router-dom";
 import "../../services/notification";
-import { createNotification } from "../../services/notification";
 
 /**
  * @author Phan NT Son
  * @returns
  */
 function WalletPage() {
-  const amountArr = [75, 150, 375, 750, 1500];
+  const amountArr = [50, 100, 200, 350, 500];
   const token = localStorage.getItem("token");
   if (!token) {
     return <Navigate to={"/"} replace />;
@@ -70,22 +69,19 @@ function WalletPage() {
                 <h3>
                   {" "}
                   Add{" "}
-                  {(am * 1000).toLocaleString("en-US", {
+                  {am.toLocaleString("en-US", {
                     style: "currency",
                     currency: "USD",
                   })}
                 </h3>
                 <div className="price-action d-flex flex-row align-items-center gap-2">
                   <div className="price">
-                    {(am * 1000).toLocaleString("en-US", {
+                    {am.toLocaleString("en-US", {
                       style: "currency",
                       currency: "USD",
                     })}
                   </div>
-                  <div
-                    className="btn-add-money"
-                    onClick={() => addMoney(am * 1000)}
-                  >
+                  <div className="btn-add-money" onClick={() => addMoney(am)}>
                     <a className="btn-green-ui p-2">
                       <span>Add funds</span>
                     </a>

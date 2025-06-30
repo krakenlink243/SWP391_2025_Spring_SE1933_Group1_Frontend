@@ -1,10 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import './PendingInvitesTab.css'
+import { createNotification } from "../../services/notification";
 
 function PendingInvitesTab() {
     const [sentInvites, setSentInvites] = useState([]);
     const [receivedInvites, setReceivedInvites] = useState([]);
+    const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
+    const CUR_USERNAME = localStorage.getItem("username");
 
     useEffect(() => {
         const getReceivedInvites = () => {
@@ -26,6 +29,7 @@ function PendingInvitesTab() {
         axios.patch(`http://localhost:8080/user/acceptinvite/${friendId}`)
             .then((resp) => {
                 setReceivedInvites(prev => prev.filter(inv => inv.invitorId !== friendId));
+                createNotification(friendId, "Comunity", `${CUR_USERNAME} has accepted your invites`)
             })
             .catch((err) => { console.log("Error: " + err) });
     };
@@ -70,7 +74,7 @@ function PendingInvitesTab() {
                         <div className="box-item" key={invite.invitorId}>
                             <div className="friend-box">
                                 <div className="avatar">
-                                    <img src={`${invite.invitorAvatarUrl}`} alt={`${invite.invitorName}`} />
+                                    <img src={`${invite.invitorAvatarUrl ? invite.invitorAvatarUrl : UNKNOW_AVATAR_URL}`} alt={`${invite.invitorName}`} />
                                 </div>
                                 <div className="description">
                                     {invite.invitorName}
@@ -108,7 +112,7 @@ function PendingInvitesTab() {
                         <div className="box-item" key={invite.invitorId}>
                             <div className="friend-box">
                                 <div className="avatar">
-                                    <img src={`${invite.invitorAvatarUrl}`} alt={`${invite.invitorName}`} />
+                                    <img src={`${invite.invitorAvatarUrl ? invite.invitorAvatarUrl : UNKNOW_AVATAR_URL}`} alt={`${invite.invitorName}`} />
                                 </div>
                                 <div className="description">
                                     {invite.invitorName}

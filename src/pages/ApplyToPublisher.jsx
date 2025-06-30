@@ -1,5 +1,6 @@
 // hoangvq
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useParams } from 'react-router'
 import { useState } from 'react'
 import { CountryDropdown } from 'react-country-region-selector'
 import Button from '../components/Button/Button'
@@ -9,6 +10,7 @@ import './ApplyToPublisher.css'
 import axios from 'axios'
 import { validateEmty } from '../utils/validators'
 function ApplyToPublisher() {
+  const publisherId = localStorage.getItem('userId')
   const [formData,setFormData] = useState(
     {
       legalName:"",
@@ -20,6 +22,19 @@ function ApplyToPublisher() {
     }
   )
   const [image, setImage] = useState(null);
+  useEffect(() => {
+    if(publisherId)
+      fetchData();
+  }, []);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/request/publisher/user/details/${publisherId}`);
+      setFormData(response.data);
+      console.log(response.data)
+    } catch (error) {
+      console.error("Error fetching publisher data:", error);
+    }
+  }
   const handleChange = (e) =>{
     const{name,value} = e.target;
     console.log(formData.legalName)
@@ -67,7 +82,8 @@ function ApplyToPublisher() {
     }));
   };
   const handleUpload = async () => {
-    if (!image) {
+    if (!image&&!formData.imageUrl) {
+
       alert("Please select an image first!");
       return;
     }
@@ -75,18 +91,25 @@ function ApplyToPublisher() {
       alert("Please fill in all fields!");
       return;
     }
-    const imgData = new FormData();
-    imgData.append("files", image.file); // Use actual file object
-  
+    const confirmSubmit = window.confirm("Are you sure you want to submit this application?");
+    if (!confirmSubmit) {
+      return;
+    }
     try {
-      const res = await axios.post("http://localhost:8080/request/image/upload", imgData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      console.log("Uploaded image URL:", res.data);
-      setFormData(prev => ({...prev,imageUrl: res.data.imageUrls}));
-      const response = await axios.post('http://localhost:8080/request/publisher/send',{...formData,imageUrl:res.data.imageUrls[0]});
-      console.log(response.data)
-      alert(response.data.message)
+      if(image){
+        const imgData = new FormData();
+        imgData.append("files", image.file); // Use actual file object
+        const res = await axios.post("http://localhost:8080/request/image/upload", imgData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        console.log("Uploaded image URL:", res.data);
+        setFormData(prev => ({...prev,imageUrl: res.data.imageUrls}));
+        const response = await axios.post('http://localhost:8080/request/publisher/send',{...formData,imageUrl:res.data.imageUrls[0]});
+        alert(response.data.message)
+      }else{
+        const response = await axios.post('http://localhost:8080/request/publisher/send',formData);
+        alert(response.data.message)
+      }
       window.location.href = '/';
     } catch (err) {
       console.error("Upload failed:", err);
@@ -98,18 +121,19 @@ function ApplyToPublisher() {
   }
   return (
     <>
-    <div className='apply-publisher-title'><h1>Publisher Application</h1></div>
+    <div className='apply-publisher-title'>
+      <h1>Publisher Application</h1>
     <div className='apply-publisher-container'>
       <div className='publisher-info'>
-        Legal Name
+        Legal Name(*)
         <input type="text" name="legalName" id="" onChange={handleChange} value={formData.legalName} onBlur={normalizeValue}/>
-        Publisher Name
+        Publisher Name(*)
         <input type="text" name="publisherName" id="" onChange={handleChange} value={formData.publisherName} onBlur={normalizeValue} />
-        Address
+        Address(*)
         <input type="text" name='address' onChange={handleChange} value={formData.address} onBlur={normalizeValue} />
-        Social ID
+        Social ID(*)
         <input type="number" name="socialNumber" id="" onChange={handleChange} value={formData.socialNumber}/>
-        Country      
+        Country(*)   
         <CountryDropdown value={formData.country} onChange={(e) => setFormData(prev => ({...prev,country:e}))}></CountryDropdown>
         <div className="publisher-button">
           <Button label="Cancel" color="grey-button" onClick={handleCancel} />
@@ -120,15 +144,38 @@ function ApplyToPublisher() {
         <ImageUploading value={image ? [image] : []} onChange={(list) => setImage(list[0])} dataURLKey="data_url">
         {({ onImageUpload }) => (
           <div onClick={onImageUpload} style={{ cursor: "pointer" }}>
-          {image ? (
-            <img src={image.data_url} alt="preview" style={{ width: "200px", height: "200px", objectFit: "cover", borderRadius: "4px" }} />
-          ) : (
-            <Button label="+" color="grey-button"/>
-          )}
+          {image?.data_url ? (
+  <img
+    src={image.data_url}
+    alt="preview"
+    style={{
+      width: '200px',
+      height: '200px',
+      objectFit: 'cover',
+      borderRadius: '4px',
+    }}
+  />
+) : formData.imageUrl ? (
+  <img
+    src={formData.imageUrl}
+    alt="preview"
+    style={{
+      width: '200px',
+      height: '200px',
+      objectFit: 'cover',
+      borderRadius: '4px',
+    }}
+  />
+) : (
+  <Button label="+" color="grey-button" />
+)}
+
+
           </div>
         )}
         </ImageUploading>
       </div>
+    </div>
     </div>
     </>
   )

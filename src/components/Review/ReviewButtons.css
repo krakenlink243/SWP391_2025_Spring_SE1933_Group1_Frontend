@@ -1,0 +1,28 @@
+.vote-button .cus-btn {
+    border-radius: 2px;
+    border: none;
+    padding: 1px;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none !important;
+    color: #66c0f4 !important;
+    background: #212c3d;
+}
+
+.vote-button .cus-btn span {
+    padding: 0 5px;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.vote-button .cus-btn:hover {
+    text-decoration: none !important;
+    color: #fff !important;
+    background: #66c0f4;
+}
+
+.vote-button .active {
+    text-decoration: none !important;
+    color: #fff !important;
+    background: rgba(103, 193, 245, 0.4);
+}

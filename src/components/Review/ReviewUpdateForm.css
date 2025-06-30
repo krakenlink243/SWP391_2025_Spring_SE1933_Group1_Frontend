@@ -19,7 +19,7 @@
 
 .update-review-form-inputs textarea {
   width: 100%;
-  height: 100px;
+  min-height: 150px;
   background-color: #101820;
   color: #ffffff;
   border: 1px solid #334;

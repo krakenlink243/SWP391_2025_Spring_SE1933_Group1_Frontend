@@ -1,0 +1,10 @@
+.review {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  margin-bottom: 26px;
+  background-image: url(https://store.fastly.steamstatic.com/public/images/v6/maincol_gradient_rule.png);
+  background-repeat: no-repeat;
+  background-position: top left;
+}
+
+

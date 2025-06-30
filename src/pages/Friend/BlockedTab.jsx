@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import './BlockedTab.css';
+import axios from "axios";
 
 function BlockedTab() {
 
     const [blockedList, setBlockedList] = useState([]);
+    const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
 
     const getblockedList = () => {
         axios.get("http://localhost:8080/user/blocked")
@@ -31,7 +33,7 @@ function BlockedTab() {
                         <div key={blckU.friendId} className="blocked-user-item d-flex flex-row gap-2 align-items-center">
                             <div className="blocked-user-avatar">
                                 <img
-                                    src={blckU.friendAvatarUrl}
+                                    src={blckU.friendAvatarUrl ? blckU.friendAvatarUrl : UNKNOW_AVATAR_URL}
                                     alt={blckU.friendName}
                                 />
                             </div>

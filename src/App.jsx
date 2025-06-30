@@ -27,6 +27,7 @@ import RegisterDetails from "./pages/RegisterDetails";
 import GameApprrovePage from "./pages/AdminDashboard/GameApprovePage";
 import GameApproveDetails from "./pages/GameApproveDetails";
 import Transaction from "./pages/TransactionPage/Transaction";
+import TransactionDetail from "./pages/TransactionPage/TransactionDetail";
 import Cart from "./pages/CartPage/Cart";
 import SplashScreen from "./components/SplashScreen/SplashScreen"; // Import SplashScreen component
 import NotificationList from "./pages/NotificationPage/NotificationList";
@@ -49,6 +50,16 @@ import AccountDetailsPage from "./components/AccountDetail/AccountDetailsPage"; 
 import PaymentResultPage from "./components/Payment/PaymentResultPage"; // Added by TSHuy
 import FriendsPage from "./pages/Friend/FriendsPage"; // Added by Phan NT Son
 import ResetPassword from "./pages/ForgotPassword/ResetPassword";
+import { OnlineUserProvider } from "./utils/OnlineUsersContext";
+
+import FeedbackApprovePage from "./pages/FeedbackApprovePage";
+import FeedbackApproveDetails from "./pages/FeedbackApproveDetails";
+import FeedbackHub from "./pages/FeedbackHub";
+import UserFeedback from "./pages/UserFeedback";
+import EmailSettings from "./components/EmailChange/EmailSettings";
+import { jwtDecode } from "jwt-decode";
+
+import AIGeneratorFrontend from "./pages/test"; // TEST
 
 function AppRoutes() {
   // Added by Phan NT Son 18-06-2025
@@ -60,11 +71,12 @@ function AppRoutes() {
 
   const calMinimumHeight = () => {
     const windowHeight = window.innerHeight;
-    const headerH = headerHeight.current ? headerHeight.current.offsetHeight : 0;
+    const headerH = headerHeight.current
+      ? headerHeight.current.offsetHeight
+      : 0;
     const navH = navHeight.current ? navHeight.current.offsetHeight : 0;
     const footH = footerHeight.current ? footerHeight.current.offsetHeight : 0;
     console.log("headerH:", headerH, "navH:", navH, "footH:", footH);
-
 
     setCalculatedHeight(windowHeight - headerH - navH - footH);
   };
@@ -72,85 +84,30 @@ function AppRoutes() {
 
   // Renamed by Phan NT Son
   console.log("App component is rendering..."); // DEBUG: Kiểm tra xem component có render không
-
-  // --- LOGIC CHO SPLASH SCREEN  ---
-
-  // Sử dụng một state duy nhất để quản lý các giai đoạn của splash screen
-  // 'pending': Trạng thái chờ, chưa biết là người dùng cũ hay mới
-  // 'active': Là người dùng mới, đang hiển thị splash screen
-  // 'exiting': Đang trong quá trình mờ dần để thoát
-  // 'finished': Đã kết thúc, hiển thị ứng dụng chính
-  const [splashStage, setSplashStage] = useState("pending");
-  const audioRef = useRef(null); // Giữ tham chiếu đến đối tượng Audio
-
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    checkToken(); // Kiểm tra token khi component mount
-    calMinimumHeight(); // Tính toán chiều cao tối thiểu khi component mount
-
-    // Effect này chỉ chạy một lần duy nhất khi component được mount
-    // vì mảng phụ thuộc là rỗng [].
-    console.log("hasVisited check running...", localStorage.getItem("hasVisited"));
-    const hasVisited = localStorage.getItem("hasVisited");
-    if (!hasVisited) {
-      console.log("Returning user. Skipping splash screen.");
-      setSplashStage("finished");
-    } else {
-      // Nếu là người dùng mới, kích hoạt splash screen
-      console.log("First visit detected. Activating splash screen.");
-      setSplashStage("active");
-
-      // --- Xử lý âm thanh ---
-      audioRef.current = new Audio("/sounds/boot_sound.mp3");
-      audioRef.current.load();
-
-      const playAudioOnInteraction = () => {
-        if (audioRef.current) {
-          audioRef.current
-            .play()
-            .catch((err) => console.error("Audio play failed:", err));
+    checkToken();
+    const fetchCurrentUser = async () => {
+      const token = localStorage.getItem("token");
+      // Giả sử bạn có token
+      if (token) {
+        try {
+          const userId = localStorage.getItem("userId");
+          const response = await axios.get(
+            `http://localhost:8080/user/profile/${userId}`
+          );
+          setCurrentUser(response.data);
+        } catch (error) {
+          console.error("Failed to fetch current user", error);
+          // Xử lý lỗi, có thể đăng xuất người dùng
         }
-        // Gỡ bỏ listener sau lần tương tác đầu tiên để tránh phát lại
-        window.removeEventListener("click", playAudioOnInteraction);
-        window.removeEventListener("keydown", playAudioOnInteraction);
-      };
+      }
+      setLoading(false);
+    };
 
-      // Thêm trình lắng nghe sự kiện
-      window.addEventListener("click", playAudioOnInteraction);
-      window.addEventListener("keydown", playAudioOnInteraction);
-
-      // --- Xử lý Timers ---
-      // Timer 1: Sau 6 giây, bắt đầu quá trình thoát (fade out)
-      const exitTimer = setTimeout(() => {
-        console.log("Main splash duration finished. Starting transition.");
-        setSplashStage("exiting");
-      }, 6000); // 6 giây
-
-      // Timer 2: Sau 7 giây (6s + 1s fade out), kết thúc hoàn toàn
-      const finishTimer = setTimeout(() => {
-        console.log("Transition finished. Hiding splash screen.");
-        setSplashStage("finished");
-        localStorage.setItem("hasVisited", "true");
-      }, 7000); // 7 giây
-
-      // --- Hàm dọn dẹp (Cleanup Function) ---
-      // Hàm này sẽ được gọi khi component bị unmount (ví dụ: chuyển trang)
-      // để tránh rò rỉ bộ nhớ.
-      return () => {
-        console.log("Cleaning up splash screen effects.");
-        clearTimeout(exitTimer);
-        clearTimeout(finishTimer);
-        window.removeEventListener("click", playAudioOnInteraction);
-        window.removeEventListener("keydown", playAudioOnInteraction);
-      };
-    }
-  }, []); // <-- MẢNG RỖNG RẤT QUAN TRỌNG!
-
-  // Các biến được suy ra từ state, giúp code ở phần JSX dễ đọc hơn
-  const shouldRenderSplash =
-    splashStage === "active" || splashStage === "exiting";
-  const isSplashExiting = splashStage === "exiting";
-  const hideHeaderLogo = shouldRenderSplash;
-  // --- KẾT THÚC LOGIC SPLASH SCREEN ---
+    fetchCurrentUser();
+  }, []);
 
   // Added by Phan NT Son
   // Set up axios interceptor to include token in headers
@@ -167,10 +124,20 @@ function AppRoutes() {
    */
   const location = useLocation();
   const currentPath = location.pathname;
-  const needlessNavPath = ["/profile", "/chat", "/admin", "/sendfeedback","/wallet","/cart"];
+  const needlessNavPath = [
+    "/profile",
+    "/chat",
+    "/admin",
+    "/sendfeedback",
+    "/wallet",
+    "/login",
+    "/register",
+    "/library",
+    "/notifications"
+  ];
   const needlessHeaderPath = ["/admin", "/chat"];
   const needlessFooterPath = ["/admin", "/chat"];
-  const isAddminPath = currentPath.startsWith("/admin")
+  const isAddminPath = currentPath.startsWith("/admin");
 
   const [adminTab, setAdminTab] = useState("Request Management");
   const handleAdminTabChange = (tab) => {
@@ -203,28 +170,25 @@ function AppRoutes() {
     const currentTime = Math.floor(Date.now() / 1000);
     if (expDate === null || expDate < currentTime) {
       localStorage.clear();
-      return <Navigate to={"/"} replace />
+      return <Navigate to={"/"} replace />;
     }
   };
-
 
   return (
     <div className="app-wrapper">
       {" "}
       <div className={`app-container`}>
-        {shouldRenderSplash && <SplashScreen isExiting={isSplashExiting} />}
-        <div
-          className={`main-app-content ${splashStage !== "finished" ? "hidden" : ""
-            }`}
-        >
+        <div className={`main-app-content`}>
           {/* START FROM HERE */}
           {/* Adjusted by Phan NT Son */}
-          {isAddminPath && <AdminHeader
-            currentTab={adminTab}
-            changeToTab={handleAdminTabChange}
-            ref={headerHeight}
-          />}
-          {!isNeedlessHeader && <Header hideLogo={hideHeaderLogo} ref={headerHeight} />}
+          {isAddminPath && (
+            <AdminHeader
+              currentTab={adminTab}
+              changeToTab={handleAdminTabChange}
+              ref={headerHeight}
+            />
+          )}
+          {!isNeedlessHeader && <Header ref={headerHeight} />}
 
           {!isNeedlessNav && <Navbar ref={navHeight} />}
           {/* --!! */}
@@ -249,7 +213,8 @@ function AppRoutes() {
             <Route path="/register" element={<RegisterF />} />
             <Route path="/verify-email" element={<VerifyEmail />} /> {/* Added by Loc Phan */}
             <Route path="/register-details" element={<RegisterDetailsF />} />
-            <Route path="/transaction" element={<Transaction />} />
+            <Route path="/account/history" element={<Transaction />} />
+            <Route path="/account/history/detail/:transactionId" element={<TransactionDetail />} />
             <Route
               path="/cart"
               element={<Cart minHeight={calculatedHeight} />}
@@ -263,7 +228,12 @@ function AppRoutes() {
             <Route path="/admin" element={<AdminDashboard tab={adminTab} />} />{" "}
             {/* Added by Phan NT Son */}
             {/* hoangvq */}
-            <Route path="/sendpublisher" element={<SendPublisher />}></Route>
+            <Route
+              path="/sendpublisher"
+              element={
+                <SendPublisher publiserId={localStorage.getItem("userId")} />
+              }
+            ></Route>
             <Route
               path="/approvepublisher"
               element={<ApprovePublisher />}
@@ -273,6 +243,19 @@ function AppRoutes() {
               element={<ApprovePublisherDetails />}
             ></Route>
             <Route path="/sendfeedback" element={<SendFeedback />}></Route>
+            <Route
+              path="/approvefeedback"
+              element={<ApproveFeedback />}
+            ></Route>
+            <Route
+              path="/approvefeedback/:feedbackId"
+              element={<ApproveFeedbackDetails />}
+            ></Route>
+            <Route
+              path="/feedbackhub/:feedbackId"
+              element={<UserFeedbackDetails />}
+            ></Route>
+            <Route path="/feedbackhub" element={<FeeedbackHub />}></Route>
             {/* hoangvq */}
             <Route path="/profile" element={<ProfilePage />} />
             {/* Added by TSHUY */}
@@ -287,11 +270,18 @@ function AppRoutes() {
             />
             {/* Added by TSHUY */}
             {/* Notmebro */}
-            <Route path="/wallet" element={<Wallet />} />
+            <Route path="/account/wallet" element={<Wallet />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/account" element={<AccountDetailsPage />} />
             <Route path="/payment-result" element={<PaymentResultPage />} />
-            <Route path="/profile/friends" element={<Friends minimumHeight={calculatedHeight} />} />
+            <Route
+              path="/profile/friends"
+              element={<Friends minimumHeight={calculatedHeight} />}
+            />
+            <Route
+              path="/change-email"
+              element={<EmailSettings currentUser={currentUser} />}
+            />
           </Routes>
         </div>
         {!isNeedlessFooter && <Footer ref={footerHeight} />}
@@ -306,7 +296,7 @@ function ApproveDetailsF() {
   return <GameApproveDetails />;
 }
 function SendPublisher() {
-  return <ApplyToPublisher />;
+  return <ApplyToPublisher publisherId={localStorage.getItem("userId")} />;
 }
 function ApprovePublisher() {
   return <PublisherApprovePage />;
@@ -316,6 +306,18 @@ function ApprovePublisherDetails() {
 }
 function SendFeedback() {
   return <SendUserFeedback />;
+}
+function ApproveFeedback() {
+  return <FeedbackApprovePage />;
+}
+function ApproveFeedbackDetails() {
+  return <FeedbackApproveDetails />;
+}
+function UserFeedbackDetails() {
+  return <UserFeedback />;
+}
+function FeeedbackHub() {
+  return <FeedbackHub />;
 }
 function LoginF() {
   return <Login />;
@@ -414,11 +416,18 @@ function Chat() {
 /**
  * @author Phan NT Son
  * @since 23-06-2025
- * @returns 
+ * @returns
  */
 function Friends({ minimumHeight }) {
   return (
-    <div className="container-fluid" style={{ background: "url(https://community.fastly.steamstatic.com/public/images/friends/colored_body_top2.png?v=2) center top no-repeat #1b2838", minHeight: `${minimumHeight}px` }}>
+    <div
+      className="container-fluid"
+      style={{
+        background:
+          "url(https://community.fastly.steamstatic.com/public/images/friends/colored_body_top2.png?v=2) center top no-repeat #1b2838",
+        minHeight: `${minimumHeight}px`,
+      }}
+    >
       <div className="row">
         <div className="spacer col-lg-1"></div>
         <div className="col-lg-10">
@@ -426,13 +435,15 @@ function Friends({ minimumHeight }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AppRoutes />
-    </BrowserRouter>
+    <OnlineUserProvider>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
+    </OnlineUserProvider>
   );
 }

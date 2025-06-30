@@ -31,7 +31,7 @@ const PaymentResultPage = () => {
 
       axios.post(
         `http://localhost:8080/user/wallet/add?amount=${
-          params.get("vnp_Amount") / 100
+          params.get("vnp_Amount") / 2450000
         }`
       );
     } else {

@@ -29,14 +29,12 @@ function UserDropBox({ userBalance }) {
         <a className="dropdown-item" href="/account">
           Account details: <span style={{ color: "#4cb4ff" }}>{username}</span>
         </a>
-        <a className="dropdown-item" href="/preferences">
-          Store preferences
+        <a className="dropdown-item" href="/library">
+          Library
         </a>
-        {role == 2 ? <a href="/sendgame">Request Add Game</a> : <></>}
-        <a className="dropdown-item" href="/transaction">
-          Transaction
-        </a>
-        <a className="dropdown-item" href="/wallet">
+        {role == 'Publisher' ? <a href="/sendgame">Request Add Game</a> : <></>}
+        {role == 'Standard' ? <a href="/sendpublisher">Request Publisher</a> : <></>}
+        <a className="dropdown-item" href="/account/wallet">
           View my wallet:{" "}
           <span style={{ color: "#4cb4ff" }}>
             {userBalance.toLocaleString("en-US", {

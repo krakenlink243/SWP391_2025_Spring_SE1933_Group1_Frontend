@@ -5,13 +5,18 @@ import { createNotification } from "../../services/notification";
 
 function AddFriendTab() {
 
-    const userId = localStorage.getItem("userId");
+    const CUR_USER_ID = localStorage.getItem("userId");
     const curUsername = localStorage.getItem("username");
     const [searchFriendCode, setSearchFriendCode] = useState("");
     const [searchResult, setSearchResult] = useState(null);
+
     const [friendList, setFriendList] = useState([]);
-    const [sentInvites, setSentInvites] = useState([]);
+    const [sentInvitesList, setSentInvitesList] = useState([]);
+    const [blockList, setBlockList] = useState([]);
+
     const [copied, setCopied] = useState(false);
+    const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
+
 
     const getFriendList = () => {
         axios.get("http://localhost:8080/user/friends")
@@ -19,11 +24,25 @@ function AddFriendTab() {
             .catch((err) => { console.log("Error fetching friends list: " + err) })
     };
 
+    const getSentInvitesList = () => {
+        axios.get("http://localhost:8080/user/pendinginvite/init")
+            .then((response) => { setSentInvitesList(response.data) })
+            .catch((err) => { console.log("Error get received Invites: " + err) });
+
+    }
+
+
+    const getBlockList = () => {
+        axios.get("http://localhost:8080/user/blocked")
+            .then((response) => { setBlockList(response.data) })
+            .catch((err) => { console.log("Error get block list: " + err) });
+    }
+
     const handleSendInvite = (friendId) => {
         axios.post(`http://localhost:8080/user/sendinvite/${friendId}`)
             .then((response) => {
                 createNotification(friendId, "Friend", `${curUsername} send you an invite`);
-                setSentInvites(prev => [...prev, { receiverId: friendId }]);
+                setSentInvitesList(prev => [...prev, { receiverId: friendId }]);
             })
             .catch((err) => { console.log("Error sending invite: " + err) });
     };
@@ -40,24 +59,22 @@ function AddFriendTab() {
             })
     };
 
-    const getSentInvites = () => {
-        axios.get("http://localhost:8080/user/pendinginvite/init")
-            .then((response) => { setSentInvites(response.data) })
-            .catch((err) => { console.log("Error get received Invites: " + err) });
-
-    }
-
     function handleCheckFriend(friendId) {
-        return friendList.some(friend => friend.friendId === friendId);
-    }
-    function handleCheckSentInvite(friendId) {
-        return sentInvites.some(invite => invite.receiverId === friendId);
+        return friendList.some(friend => friend.friendId === friendId) || friendId == CUR_USER_ID;
     }
 
+    function handleCheckSentInvite(friendId) {
+        return sentInvitesList.some(invite => invite.receiverId === friendId);
+    }
+
+    function handleCheckBlockFriend(friendId) {
+        return blockList.some(blckUser => blckUser.friendId === friendId);
+    }
 
     useEffect(() => {
         getFriendList();
-        getSentInvites();
+        getSentInvitesList();
+        getBlockList();
     }, [])
 
     useEffect(() => {
@@ -88,12 +105,12 @@ function AddFriendTab() {
                         </div>
                         <div className="user-code-box d-flex flex-row justify-content-between align-items-center">
                             <div className="user-code">
-                                {userId}
+                                {CUR_USER_ID}
                             </div>
                             <div
                                 className="copy-btn"
                                 onClick={() => {
-                                    navigator.clipboard.writeText(userId);
+                                    navigator.clipboard.writeText(CUR_USER_ID);
                                     setCopied(true);
                                     setTimeout(() => setCopied(false), 800);
                                 }}
@@ -130,7 +147,7 @@ function AddFriendTab() {
                                     <div className="search-result-user d-flex flex-row">
                                         <div className="search-result-avatar">
                                             <img
-                                                src={searchResult.avatarUrl ? searchResult.avatarUrl : "https://avatars.fastly.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg"}
+                                                src={searchResult.avatarUrl ? searchResult.avatarUrl : UNKNOW_AVATAR_URL}
                                                 alt={searchResult.username}
                                             />
                                         </div>
@@ -138,7 +155,10 @@ function AddFriendTab() {
                                             <h1>{searchResult.username}</h1>
                                         </div>
                                     </div>
-                                    {handleCheckFriend(searchResult.userId) || handleCheckSentInvite(searchResult.userId) ? (
+                                    {(searchResult &&
+                                        (handleCheckFriend(searchResult.userId) ||
+                                            handleCheckSentInvite(searchResult.userId) ||
+                                            handleCheckBlockFriend(searchResult.userId))) ? (
                                         <div className="send-invite-btn btn-disable">
                                             Send Invite
                                         </div>

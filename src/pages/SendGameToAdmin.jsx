@@ -9,8 +9,18 @@ import axios from 'axios'
 import { validatePrice,validateEmty,validateMemory,trimValue,validateMedia } from '../utils/validators'
 import { PhotoProvider,PhotoView } from 'react-photo-view'
 import "react-photo-view/dist/react-photo-view.css";
+import Select from 'react-select';
+
 function SendGameToAdmin() {
-  const [fileName,setFileName] = useState('UPLOAD');
+  const [fileName,setFileName] = useState('Upload');
+  const [showDropdown, setShowDropdown] = useState(false);
+  const tags = [
+  { value: 'rts', label: 'RTS' },
+  { value: 'strategy', label: 'Strategy' },
+  { value: 'rpg', label: 'RPG' },
+  { value: 'indie', label: 'Indie' },
+  // ...add all your tags here
+  ];
   const [formData,setFormData] = useState({
     gameName: '',
     price: '',
@@ -23,6 +33,7 @@ function SendGameToAdmin() {
     shortDescription: '',
     fullDescription: '',
     mediaUrls: [],
+    tags: [],
     gameUrl: '',
   })
   const fileRef = useRef(null);
@@ -148,78 +159,116 @@ function SendGameToAdmin() {
       await handleDelete();
       window.location.href="/"
   }
-  const normalizeValue = (e) => {
+  const normalizeValue = async (e) => {
     const { name, value } = e.target;
+    if(name ==='gameName'){
+    const response = await axios.get(`http://localhost:8080/request/game/exist/check`,{params: { gameName: value }});
+    console.log(response.data.message)
+    console.log(response.data.debug)
+      if(response.data.message === true){
+        alert('Game name already exists!');
+        setFormData(prev => ({...prev,[name]: ''}));
+        return;
+      }
+    }
     setFormData(prev => ({...prev,[name]: trimValue(value)}));
   }
+  const handleRemove = (indexToRemove) => {
+    setArr(prev => prev.filter((_, i) => i !== indexToRemove));
+    setFiles(prev => prev.filter((_, i) => i !== indexToRemove));
+  };  
+  const handleChangeTags = (e) => {
+    setFormData(prev => ({...prev,tags: e || []}));
+    console.log(formData.tags)
+  };
+
+
   return (
     <>
-    <div className='game-application'>
-        <h1 >GAME APPLICATION</h1>
-    </div>
     <div className='form-border'>
+      <h1 >Game Application</h1>
       <div className='game-mandatory-information'>
         <img className='game-avatar' src={gameicon} alt="" />
         <div className='name-price'>
-            NAME(*)
+            Name(*)
             <input type="text" name="gameName" id="" value={formData.gameName}  onChange={handleChange} onBlur={normalizeValue} />
-            PRICE(*)
+            Price(*)
             <div>
               $ <input className='price-input' type="text" name="price" id="" value={formData.price} onChange={handleChange} />
             </div>
+            Tags(*)
+            <div className="tag-selector">
+              <Select
+                options={tags}
+                isMulti
+                value={formData.tags}
+                onChange={handleChangeTags}
+                closeMenuOnSelect={true}
+                hideSelectedOptions={true}
+                isSearchable={false}
+                menuPlacement="bottom"
+                classNamePrefix="my-select"
+                // menuIsOpen={true}
+              />
+            </div>
+
+
         </div>
       </div>
       <div className='sys-req'>
-        <PartHeading content='SYSTEM REQUIREMENTS'/>
+        <PartHeading content='System Requirements'/>
         <div className='sys-req-col-container'>
             <div className='sys-req-col1'>
                 OS(*)
                 <input type="text" name="os" id="" value={formData.os} onChange={handleChange} onBlur={normalizeValue} />
-                PROCESSOR(*)
+                Processor(*)
                 <input type="text" name="processor" id="" value={formData.processor} onChange={handleChange} onBlur={normalizeValue} />
-                MEMORY(*)
+                Memory(*)
                 <input type="text" name="memory" id="" value={formData.memory} onChange={handleChange} onBlur={validMemory} />
             </div>
             <div className='sys-req-col2'>
-                GRAPHICS(*)
+                Graphics(*)
                 <input type="text" name="graphics" id="" value={formData.graphics} onChange={handleChange} onBlur={normalizeValue} />
-                STORAGE(*)
+                Storage(*)
                 <input type="text" name="storage" id="" value={formData.storage} onChange={handleChange} onBlur={validMemory} />
-                ADDITIONAL NOTES
+                Additionnal Notes
                 <textarea name="additionalNotes" id="" value={formData.additionalNotes} onChange={handleChange} onBlur={normalizeValue}></textarea>
             </div>
         </div>
       </div>
       <div className='summary'>
-        <PartHeading content='SUMMARY'/>
+        <PartHeading content='Summary(*)'/>
         <textarea name="shortDescription" id="" cols="30" rows="10" value={formData.shortDescription} onChange={handleChange} onBlur={normalizeValue}></textarea>
       </div>
       <div className='summary'>
-        <PartHeading content='Description'/>
+        <PartHeading content='Description(*)'/>
         <textarea name="fullDescription" id="" cols="30" rows="10" value={formData.fullDescription} onChange={handleChange}></textarea>
       </div>
       <div className='game-assets'>
-        <PartHeading content='ASSETS(*)'/>
+        <PartHeading content='Assets(*)'/>
         <div className='inner-image'>
+        <input type="file" multiple style={{ display: "none" }} accept=".jpg,.png" ref={mediaFileRef} onChange={handleFileSelect}/>
+        <Button className='upload-media' label='+' onClick={() => mediaFileRef.current.click()} color='gray-button'/>
         <PhotoProvider>
           {arr.map((item, index) => (
-            <PhotoView key={index} src={item}>
-              <img src={item} alt="" style={{ cursor: "pointer", width: "150px" }} />
-            </PhotoView>
-          ))}
+            <div className='image-wrapper' key={index}>
+              <PhotoView src={item}>
+                <img src={item} alt="" style={{ cursor: "pointer", width: "150px" }} />
+              </PhotoView>
+              <span className="remove-icon" onClick={() => handleRemove(index)}>−</span>
+            </div>
+          )).reverse()}
         </PhotoProvider>
-            <input type="file" multiple style={{ display: "none" }} accept=".jpg,.png" ref={mediaFileRef} onChange={handleFileSelect}/>
-            <Button className='upload-media' label='+' onClick={() => mediaFileRef.current.click()} color='blue-button'/>
         </div>
       </div>
       <div className='game-file'>
-        <PartHeading content='FILES(*)'/>   
+        <PartHeading content='Files(*)'/>   
         <input type="file" accept='.zip' style={{display:"none"}} ref={fileRef} onChange={handleGameUpload}  /> 
         <Button className='upload-button' label={fileName} onClick={() => fileRef.current.click()} color='blue-button'/>  
       </div>
       <div className='send-request-cancel'>
-        <Button className='cancel-button' label='CANCEL' onClick={handleCancel} color='grey-button'/>
-        <Button className='send-button' label='SEND REQUEST' isApprove={'true'} onClick={handleSubmit} color='blue-button'/>
+        <Button className='cancel-button' label='Cancel' onClick={handleCancel} color='grey-button'/>
+        <Button className='send-button' label='Send Request' isApprove={'true'} onClick={handleSubmit} color='blue-button'/>
       </div>
     </div>
     </>

@@ -18,6 +18,7 @@
   font-size: 24px;
   margin-bottom: 10px;
   color: #c7d5e0;
+  text-transform: uppercase;
 }
 
 .transaction-list-steam {
@@ -41,11 +42,13 @@
   width: 100%;
   border-collapse: collapse;
 }
-.transaction-th-id,
+
 .transaction-th-date,
 .transaction-th-item,
 .transaction-th-amount,
-.transaction-th-changes {
+.transaction-th-changes,
+.transaction-th-type,
+.transaction-th-detail {
   padding: 10px;
   text-align: left;
   color: #c7d5e0;
@@ -54,7 +57,8 @@
 }
 
 .transaction-th-amount,
-.transaction-th-changes {
+.transaction-th-changes,
+.transaction-th-detail {
   text-align: right;
 }
 
@@ -65,7 +69,7 @@
 .transaction-row-steam:last-child {
   border-bottom: none;
 }
-.transaction-td-id,
+
 .transaction-td-date,
 .transaction-td-item {
   padding: 10px;
@@ -76,13 +80,31 @@
 .transaction-td-amount {
   padding: 10px;
   font-size: 16px;
-  color: #ffffff;
+  color: #c7d5e0;
   text-align: right;
 }
 
 .transaction-td-changes {
   padding: 10px;
   font-size: 16px;
-  color: #ff4444;
+  color: #ff4444; /* Màu đỏ để chỉ tiền bị trừ */
   text-align: right;
+}
+
+.transaction-td-type {
+  padding: 10px;
+  font-size: 16px;
+  color: #c7d5e0;
+}
+
+.transaction-td-detail {
+  padding: 10px;
+  font-size: 16px;
+  color: #c7d5e0; /* Màu mặc định */
+  text-align: right;
+  cursor: pointer;
+}
+
+.transaction-td-detail:hover {
+  color: #66c0f4; /* Màu xanh khi trỏ vào */
 }

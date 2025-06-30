@@ -18,7 +18,7 @@ import { Navigation, Thumbs, Scrollbar } from 'swiper/modules';
 function DetailHeader({ game }) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const [mediaUrlArr, setMediaUrlArr] = useState([]);
-    const userId = localStorage.getItem("userId");
+    const CUR_USERID = localStorage.getItem("userId");
     const [gameInCart, setGameInCart] = useState(false);
     const [gameInLib, setGameInLib] = useState(false);
 
@@ -36,12 +36,18 @@ function DetailHeader({ game }) {
                 return Array.from(new Set(urls)); // Loại trùng
             });
 
-            checkGameInCart();
-            checkGameInLib();
+            if (CUR_USERID) {
+                checkGameInCart();
+                checkGameInLib();
+            }
         }
     }, [game])
 
     const addCartHandler = async () => {
+        if (!CUR_USERID) {
+            window.location.href = "/login";
+            return;
+        }
         try {
             const response = await axios.post(
                 //adjust add by Bathanh
@@ -52,7 +58,7 @@ function DetailHeader({ game }) {
             // @author Phan NT Son
             // Tạo thông báo khi người dùng thêm game vào giỏ hàng
             if (response.data.success) {
-                createNotification(userId, "Cart", `Game ${game.name} has been added to your cart.`);
+                createNotification(CUR_USERID, "Cart", `Game ${game.name} has been added to your cart.`);
                 alert("Game added to cart successfully!");
                 checkGameInCart();
                 checkGameInLib();
@@ -68,7 +74,7 @@ function DetailHeader({ game }) {
     };
 
     const checkGameInCart = () => {
-        axios.get(`http://localhost:8080/users/${userId}/cart/contains/${game.gameId}`)
+        axios.get(`http://localhost:8080/user/cart/contain/${game.gameId}`)
             .then(response => {
                 if (response.data === true) setGameInCart(true);
             })
@@ -79,13 +85,13 @@ function DetailHeader({ game }) {
     };
 
     const checkGameInLib = () => {
-        axios.get(`http://localhost:8080/users/${userId}/library/contains/${game.gameId}`)
+        axios.get(`http://localhost:8080/user/library/contain/${game.gameId}`)
             .then(response => {
                 if (response.data === true) setGameInLib(true);
             })
             .catch(error => {
-                console.error("Error checking cart:", error);
-                setGameInCart(false);
+                console.error("Error checking library:", error);
+                setGameInLib(false);
             });
     };
 
@@ -171,6 +177,7 @@ function DetailHeader({ game }) {
                     <div className="content-row mb-0">
                         <div className="game-tags">
                             {game.tags.map((tag) => (
+                                // Mỗi tag giờ là một Link trỏ đến trang game với query parameter
                                 <Link
                                     to={`/games?tags=${tag.tagId}`} // URL sẽ có dạng /games?tags=17
                                     key={tag.tagId}
@@ -193,6 +200,7 @@ function DetailHeader({ game }) {
                             ) : (
                                 <div className="price">Free to Play</div>
                             )}
+
                             {!gameInCart && !gameInLib ? (
                                 <div className="btn-add-to-cart" onClick={addCartHandler}>
                                     <a className="btn-green-ui">

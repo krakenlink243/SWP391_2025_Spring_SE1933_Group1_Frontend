@@ -1,0 +1,33 @@
+.current-email-display {
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  margin-bottom: 30px;
+  border: 1px solid #36495f;
+}
+
+.current-email-display p {
+  margin: 0;
+  font-size: 14px;
+  color: #acb2b8;
+}
+
+.current-email-display strong {
+  color: #fff;
+}
+
+/* Kế thừa các style chung từ EditProfilePage.css */
+/* Bạn không cần thêm lại các style cho .settings-section, .form-group, .form-actions, .save-btn,... */
+
+.feedback-error,
+.feedback-success {
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 15px;
+}
+.feedback-error {
+  color: #ff6b6b;
+}
+.feedback-success {
+  color: #66c0f4;
+}
