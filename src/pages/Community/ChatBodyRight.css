@@ -48,7 +48,10 @@
     position: relative;
     padding: 0 6px 14px 6px;
     word-break: break-word;
-    background: radial-gradient(ellipse farthest-corner at 50% 30%, #212329 0%, #1e2025 50%, #1c1d22 100%);
+    /* background: radial-gradient(ellipse farthest-corner at 50% 30%, #212329 0%, #1e2025 50%, #1c1d22 100%); */
+    background:
+        linear-gradient(rgba(30, 32, 37, 0.8), rgba(30, 32, 37, 0.8)),
+        url("https://cdnmedia.baotintuc.vn/Upload/DGCvMTLSo95Cq4TvfGr0A/files/2019/08/14-8/dhfpt.JPG");
     font-size: 14px;
 }
 
