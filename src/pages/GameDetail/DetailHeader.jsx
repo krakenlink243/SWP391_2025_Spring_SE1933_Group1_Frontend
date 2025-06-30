@@ -8,6 +8,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Thumbs, Scrollbar } from 'swiper/modules';
+import { useTranslation } from "react-i18next"; // Thêm useTranslation
 
 /**
  * @author Phan NT Son
@@ -21,6 +22,7 @@ function DetailHeader({ game }) {
     const CUR_USERID = localStorage.getItem("userId");
     const [gameInCart, setGameInCart] = useState(false);
     const [gameInLib, setGameInLib] = useState(false);
+    const { t } = useTranslation(); // Thêm hook useTranslation
 
     useEffect(() => {
         const extractMediaUrl = () => {
@@ -160,13 +162,13 @@ function DetailHeader({ game }) {
                         </div>
                     </div>
                     <div className="content-row">
-                        <strong className="info-label">RELEASE DATE:</strong>
+                        <strong className="info-label">{t("RELEASE DATE")}:</strong>
                         <span className="info-value">
                             {new Date(game.releaseDate).toLocaleDateString()}
                         </span>
                     </div>
                     <div className="content-row">
-                        <strong className="info-label">PUBLISHER:</strong>
+                        <strong className="info-label">{t("PUBLISHER")}:</strong>
                         <span className="info-value">
                             {game.publisher?.publisherName || "N/A"}
                         </span>
@@ -192,29 +194,29 @@ function DetailHeader({ game }) {
             </div>
             <div className="purchase-area my-3">
                 <div className="purchase-box">
-                    <h2>Buy {game.name}</h2>
+                    <h2>{t("Buy")} {game.name}</h2>
                     <div className="game-purchase-action-bg">
                         <div className="price-action">
                             {game.price > 0 ? (
                                 <div className="price">${game.price.toFixed(2)}</div>
                             ) : (
-                                <div className="price">Free to Play</div>
+                                <div className="price">{t("Free to Play")}</div>
                             )}
 
                             {!gameInCart && !gameInLib ? (
                                 <div className="btn-add-to-cart" onClick={addCartHandler}>
                                     <a className="btn-green-ui">
-                                        <span>Add to Cart</span>
+                                        <span>{t("Add to Cart")}</span>
                                     </a>
                                 </div>
                             ) : (
                                 <div className={`btn-add-to-cart`} onClick={() => window.location.href = `${gameInCart ? "/cart" : "/library"}`}>
                                     <a className="btn-blue-ui">
                                         {gameInLib && (
-                                            <span>Already in Library</span>
+                                            <span>{t("Already in Library")}</span>
                                         )}
                                         {gameInCart && !gameInLib && (
-                                            <span>Already in Cart</span>
+                                            <span>{t("Already in Cart")}</span>
                                         )}
                                     </a>
                                 </div>

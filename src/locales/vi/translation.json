@@ -39,6 +39,31 @@
   "Narrow by Tag":"Giới hạn bởi thể loại",
   "Search for tags":"Tìm kiếm theo thể loại",
   "Narrow by Publisher":"Giới hạn bởi nhà xuất bản",
-  "Search for publishers":"Tìm kiếm theo nhà xuất bản"
+  "Search for publishers":"Tìm kiếm theo nhà xuất bản",
+
+  "Trang 3":"/game/:gameId",
+  "RELEASE DATE":"NGÀY RA MẮT",
+  "PUBLISHER":"NHÀ XUẤT BẢN",
+  "Buy":"Mua",
+  "Free to Play":"Miễn Phí",
+  "Add to Cart":"Thêm vào giỏ hàng",
+  "Already in Cart":"Đã có trong giỏ hàng",
+  "Already in Library":"Đã có trong thư viện",
+  "ABOUT THIS GAME":"MIÊU TẢ VỀ GAME",
+  "SYSTEM REQUIREMENTS":"YÊU CẦU HỆ THỐNG",
+  "MINIMUM":"TỐI THIỂU",
+  "RECOMMENDED":"ĐỀ XUẤT",
+  "OS":"OS",
+  "Processor":"Bộ xử lý",
+  "Memory":"Bộ nhớ",
+  "Graphics":"Đồ họa",
+  "Storage":"Lưu trữ",
+  "Additional Notes":"Ghi chú bổ sung",
+  "CUSTOMER REVIEWS FOR ":"Đánh giá của khách về ",
+  "Write a review for ":"Viết đánh giá về ",
+  "Write your review here...":"Viết đánh giá ở đây...",
+  "Post Review":"Đăng bài đánh giá",
+  "Do you recommend this game?":"Bạn có đề xuất game này không?",
+  "No Reviews have been made.":"Chưa có bài đánh giá nào."
 
 }
