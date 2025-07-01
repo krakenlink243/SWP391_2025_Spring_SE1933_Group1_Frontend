@@ -8,6 +8,9 @@ import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Thumbs, Scrollbar } from 'swiper/modules';
+import CartPopup from "../../components/Popup/CartPopup";
+import { CartCountProvider } from "../../utils/TotalInCartContext";
+import { isTokenExpired } from "../../utils/validators";
 
 /**
  * @author Phan NT Son
@@ -21,6 +24,8 @@ function DetailHeader({ game }) {
     const CUR_USERID = localStorage.getItem("userId");
     const [gameInCart, setGameInCart] = useState(false);
     const [gameInLib, setGameInLib] = useState(false);
+    const [showPopup, setShowPopup] = useState(false);
+
 
     useEffect(() => {
         const extractMediaUrl = () => {
@@ -43,8 +48,10 @@ function DetailHeader({ game }) {
         }
     }, [game])
 
+
+
     const addCartHandler = async () => {
-        if (!CUR_USERID) {
+        if (!CUR_USERID || isTokenExpired()) {
             window.location.href = "/login";
             return;
         }
@@ -59,7 +66,7 @@ function DetailHeader({ game }) {
             // Tạo thông báo khi người dùng thêm game vào giỏ hàng
             if (response.data.success) {
                 createNotification(CUR_USERID, "Cart", `Game ${game.name} has been added to your cart.`);
-                alert("Game added to cart successfully!");
+                setShowPopup(game);
                 checkGameInCart();
                 checkGameInLib();
             } else {
@@ -76,7 +83,8 @@ function DetailHeader({ game }) {
     const checkGameInCart = () => {
         axios.get(`http://localhost:8080/user/cart/contain/${game.gameId}`)
             .then(response => {
-                if (response.data === true) setGameInCart(true);
+                if (response.data === true) setGameInCart(true)
+                else setGameInCart(false);
             })
             .catch(error => {
                 console.error("Error checking cart:", error);
@@ -95,10 +103,20 @@ function DetailHeader({ game }) {
             });
     };
 
-
-
     return (
         <div className="game-detail-header-container my-3">
+            {showPopup && (
+
+                <CartCountProvider>
+                    <CartPopup
+                        game={showPopup}
+                        mediaUrlArr={mediaUrlArr}
+                        onClose={() => setShowPopup(null)}
+                        onViewCart={() => window.location.href = "/cart"}
+                        onRemoveSuccess={() => checkGameInCart()}
+                    />
+                </CartCountProvider>
+            )}
             <h1 className="game-name">{game.name}</h1>
             <div className="content d-flex my-3">
                 <div className="left-col d-flex flex-column">
@@ -200,7 +218,6 @@ function DetailHeader({ game }) {
                             ) : (
                                 <div className="price">Free to Play</div>
                             )}
-
                             {!gameInCart && !gameInLib ? (
                                 <div className="btn-add-to-cart" onClick={addCartHandler}>
                                     <a className="btn-green-ui">

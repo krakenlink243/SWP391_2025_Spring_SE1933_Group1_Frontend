@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import './Cart.css';
+import { isTokenExpired } from '../../utils/validators';
 
 /**
  * @author BaThanh
@@ -11,6 +12,7 @@ import './Cart.css';
  */
 const userId = localStorage.getItem("userId");
 const username = localStorage.getItem('username');
+const CUR_TOKEN = localStorage.getItem('token');
 
 const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
 
@@ -32,15 +34,17 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
 
   // Fetch balance from API http://localhost:8080/user/wallet
   useEffect(() => {
-    axios.get('http://localhost:8080/user/wallet')
-      .then(response => {
-        console.log('Wallet API response:', response.data);
-        setBalance(Number(response.data) || 0);
-      })
-      .catch(error => {
-        console.error('Error fetching wallet balance:', error.message, error.response?.status, error.response?.data);
-        setBalance(0);
-      });
+    if (CUR_TOKEN && !isTokenExpired()) {
+      axios.get('http://localhost:8080/user/wallet')
+        .then(response => {
+          console.log('Wallet API response:', response.data);
+          setBalance(Number(response.data) || 0);
+        })
+        .catch(error => {
+          console.error('Error fetching wallet balance:', error.message, error.response?.status, error.response?.data);
+          setBalance(0);
+        });
+    }
   }, []);
 
   // Fetch cart từ backend
@@ -64,7 +68,9 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
   };
 
   useEffect(() => {
-    fetchCart();
+    if (CUR_TOKEN && !isTokenExpired()) {
+      fetchCart();
+    }
   }, []);
 
   const handleRemove = async (gameId) => {

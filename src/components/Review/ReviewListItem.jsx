@@ -29,12 +29,12 @@ function ReviewListItem({ review, game, CUR_USERID, setEditingId }) {
         <div className="time-posted-section w-100">
           Posted on {review.timeCreated}
         </div>
-        <div className={`content-section w-100 mb-2 ${contentH > 225 && revealAll == false ? "partical" : "full"}`} ref={contentSection}>
+        <pre className={`content-section w-100 mb-2 ${contentH > 225 && revealAll == false ? "partical" : "full"}`} ref={contentSection}>
           {review.reviewContent}
           {contentH > 225 && revealAll == false && (
             <div className={`gradient w-100`}></div>
           )}
-        </div>
+        </pre>
         {contentH > 225 && revealAll == false && (
           <div className="posted w-100">
             <div className="view-more-btn" onClick={() => setRevealAll(true)}>

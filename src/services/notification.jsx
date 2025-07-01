@@ -1,6 +1,8 @@
 import axios from "axios"
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
+import { createContext, useContext, useState, useEffect } from "react";
+import { isTokenExpired } from "../utils/validators";
 
 /**
  * @author Phan NT Son
@@ -23,49 +25,55 @@ export const createNotification = async (receiverId, type, message) => {
     }
 };
 
-/**
- * @author Phan NT Son
- * @description Subscribe to notification channel via websocket and receive notification object
- * @returns {Promise<Object>} - The notification object received from the server
- */
-let stompClient = null;
-let subscribed = false;
+const NotificationContext = createContext([]);
 
-export const connectSocketNotif = (onNotifReceived) => {
+export function NotificationProvider({ children }) {
+    const [notification, setNotification] = useState([]);
     const token = localStorage.getItem("token");
-    if (stompClient && stompClient.connected && subscribed) return;
-    stompClient = new Client({
-        webSocketFactory: () => new SockJS(`http://localhost:8080/ws-community?token=${token}`),
-        reconnectDelay: 5000,
-        heartbeatIncoming: 4000,
-        heartbeatOutgoing: 4000,
-        onConnect: () => {
-            if (!subscribed) {
-                stompClient.subscribe('/user/queue/notifications', (frame) => {
-                    const notif = JSON.parse(frame.body);
-                    onNotifReceived(notif);
-                }
-                );
-                subscribed = true;
-            }
 
-        },
-        onStompError: (err) => {
-            console.error('❌ STOMP error:', err);
-        },
-    });
 
-    stompClient.activate();
-};
 
-export const disconnectSocketNotif = () => {
-    if (stompClient && stompClient.connected) {
-        stompClient.deactivate().then(() => {
-            console.log("🛑 Socket disconnected");
-            subscribed = false; // ✅ reset để lần sau có thể subscribe lại
+    useEffect(() => {
+        if (!token || isTokenExpired()) {
+            return;
+        }
+
+        const client = new Client({
+            webSocketFactory: () => new SockJS(`http://localhost:8080/ws-community?token=${token}`),
+            reconnectDelay: 300,
+
         });
 
-    } else {
-        subscribed = false;
-    }
-};
+        client.onConnect = () => {
+            console.log("Connect to Socket Notification")
+
+            client.subscribe("/user/queue/notification.all", (frame) => {
+                const body = JSON.parse(frame.body);
+                if (Array.isArray(body)) {
+                    // initial full list
+                    console.log("Notif body: ", body);
+                    setNotification(body);
+                } else {
+                    // single new notification
+                    console.log("Notif body: ", body);
+                    setNotification(prev => [body, ...prev]);
+                }
+            });
+
+        };
+
+
+        client.activate();
+        return () => { client.deactivate(); };
+    }, [token]);
+
+    return (
+        <NotificationContext.Provider value={notification}>
+            {children}
+        </NotificationContext.Provider>
+    );
+}
+
+export function useNotifications() {
+    return useContext(NotificationContext);
+}
