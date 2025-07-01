@@ -255,9 +255,31 @@
     color: white !important;
   }
   .game-file progress{
+    height: 3px;
     width: 100%;
-    background-color: red;
+    appearance: none;
+    border-radius: 5px;
   }
+/* Chrome, Safari, Edge */
+progress::-webkit-progress-value {
+   background-image: linear-gradient(90deg, #007bff, #0056b3); /* Green fill */
+  border-radius: 5px;
+}
+
+progress::-webkit-progress-bar {
+  /* background-color: black; Light gray background */
+  border-radius: 5px;
+  
+}
+
+/* Firefox */
+progress::-moz-progress-bar {
+  background-color: #4caf50;
+}
+
+
+
+
 
 
 

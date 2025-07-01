@@ -70,6 +70,8 @@ function SendGameToAdmin() {
   const [files,setFiles] = useState([]);
   const [arr,setArr] = useState([]);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadSpeed, setUploadSpeed] = useState(0);       // KB/s
+  const [timeRemaining, setTimeRemaining] = useState(null);
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === 'price' && !validatePrice(value)) {
@@ -172,31 +174,49 @@ function SendGameToAdmin() {
   const handleGameUpload = async (e) => {
   const selectedFile = e.target.files[0];
   if (!selectedFile) return;
+
   await handleDelete();
   setUploadProgress(0);
+  setUploadSpeed(0);
+  setTimeRemaining(null);
+
   const form = new FormData();
   form.append('file', selectedFile);
 
-  // Close previous SSE connection if exists
+  const startTime = Date.now();
+
   if (eventSource) {
     eventSource.close();
   }
 
-  // Open new SSE connection
   const newEventSource = new EventSource('http://localhost:8080/request/progress');
   setEventSource(newEventSource);
 
   newEventSource.onmessage = (event) => {
     const data = event.data;
+
     if (!isNaN(data)) {
-      setUploadProgress(parseFloat(data));
+      const progress = parseFloat(data);
+      setUploadProgress(progress);
+
+      // Estimate speed and time from progress %
+      const elapsed = (Date.now() - startTime) / 1000;
+      const uploadedBytes = (selectedFile.size * progress) / 100;
+      const speedKBps = uploadedBytes / elapsed / 1024;
+      const remainingBytes = selectedFile.size - uploadedBytes;
+      const remainingTime = remainingBytes / (speedKBps * 1024);
+      const minutes = Math.floor(remainingTime / 60);
+      const seconds = Math.round(remainingTime % 60);
+
+      setUploadSpeed(speedKBps.toFixed(2));
+      setTimeRemaining(`${minutes}m ${seconds}s`);
     } else {
       console.log('SSE:', data);
     }
 
-    // Auto-close when upload completes
     if (data === 'Upload complete') {
       setUploadProgress(100);
+      setTimeRemaining(`0m 0s`);
       newEventSource.close();
     }
   };
@@ -212,6 +232,16 @@ function SendGameToAdmin() {
       form,
       {
         headers: { 'Content-Type': 'multipart/form-data' },
+        onUploadProgress: (event) => {
+          const elapsedTime = (Date.now() - startTime) / 1000;
+          const speedKBps = (event.loaded / elapsedTime) / 1024;
+          const remainingTime = (selectedFile.size - event.loaded) / (speedKBps * 1024);
+          const minutes = Math.floor(remainingTime / 60);
+          const seconds = Math.round(remainingTime % 60);
+
+          setUploadSpeed(speedKBps.toFixed(2));
+          setTimeRemaining(`${minutes}m ${seconds}s`);
+        },
       }
     );
 
@@ -336,7 +366,10 @@ function SendGameToAdmin() {
         {uploadProgress > 0 && uploadProgress < 100 && (
         <>
           <progress value={uploadProgress} max="100" />
-          <p>{uploadProgress.toFixed(2)}%</p>
+          <div>Speed: {uploadSpeed} KB/s</div>
+          <div>
+            Time Remaining: {timeRemaining ? timeRemaining : 'Calculating...'}
+          </div>
         </>
         )}
 
