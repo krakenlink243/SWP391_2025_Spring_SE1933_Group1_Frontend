@@ -1,0 +1,111 @@
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    font-family: "Motiva Sans", Arial, Helvetica, sans-serif;
+}
+
+.popup-box {
+    background: radial-gradient(circle at top left, rgba(74, 81, 92, 0.4) 0%, rgba(75, 81, 92, 0) 60%), #25282e;
+    user-select: none;
+    color: white;
+    padding: 24px;
+    width: 600px;
+    max-width: calc(100% - 48px);
+    box-shadow: 0 0 10px black;
+    animation: fadeIn 0.3s ease;
+}
+
+.popup-box h3 {
+    font-weight: 800;
+    font-size: 22px;
+    color: #fff;
+    margin-bottom: 25px;
+}
+
+.game-info {
+    display: flex;
+    flex-direction: row;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, .25);
+}
+
+.game-info img {
+    width: 200px;
+    height: 94px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.game-info .details {
+    width: calc(100% - 200px);
+}
+
+.details h4 {
+    font-size: 16px;
+    line-height: 20px;
+    color: #fff;
+    font-weight: 500;
+}
+
+.details p {
+    text-align: end;
+}
+
+.details #remove-opt {
+    color: #606f7f;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.discount {
+    color: #a4d007;
+}
+
+.popup-actions {
+    display: flex;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.popup-actions .popup-btn {
+    border: none;
+    cursor: pointer;
+    line-height: 32px;
+    color: #dfe3e6;
+    text-align: center;
+    border-radius: 2px;
+    width: 100%;
+    transition-property: opacity, background, color, box-shadow;
+    transition-duration: .2s;
+    transition-timing-function: ease-out;
+    background: #3d4450;
+    background-position: 99% 1%;
+    background-size: 300% 300%;
+    position: relative;
+}
+
+.popup-actions .popup-btn:hover {
+    background: #464d58;
+    color: #fff;
+
+}
+
+
+.popup-btn.view-cart {
+    background: linear-gradient(to right, #47bfff 0%, #1a44c2 60%);
+    background-position: 25%;
+    background-size: 330% 100%;
+}
+
+.popup-btn.view-cart:hover {
+    background: linear-gradient(to right, #47bfff 0%, #1a44c2 60%);
+    background-position: 0%;
+    background-size: 330% 100%;
+    color: #fff;
+}

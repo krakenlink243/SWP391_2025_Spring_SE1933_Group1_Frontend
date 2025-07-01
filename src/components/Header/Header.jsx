@@ -5,6 +5,8 @@ import NotificationBox from "../Notifications/NotificationBox";
 import UserDropBox from "./UserDropBox";
 import axios from "axios";
 import { useLocation } from "react-router";
+import { isTokenExpired } from "../../utils/validators";
+import { NotificationProvider } from "../../services/notification";
 
 /**
  * @author Origin belongs to TS Huy
@@ -23,9 +25,9 @@ const Header = forwardRef((props, ref) => {
     {
       index: 0, // STORE
       paths: [
-        "/", 
-        "/game", 
-        "/cart", 
+        "/",
+        "/game",
+        "/cart",
         "/library",
         "/account",
         "/account/wallet",
@@ -106,7 +108,7 @@ const Header = forwardRef((props, ref) => {
         .then((response) => setBalance(response.data))
         .catch((error) => alert(error));
     };
-    if (token) {
+    if (token && !isTokenExpired()) {
       getUserBalance();
     }
   }, []);
@@ -162,10 +164,15 @@ const Header = forwardRef((props, ref) => {
                 <div className="user-action-content">
 
                   <div className="w-25">
-                    <NotificationBox />
+                    <NotificationProvider>
+                      <NotificationBox />
+
+                    </NotificationProvider>
                   </div>
                   <div className="w-50 px-2 d-flex flex-row-reverse">
+
                     <UserDropBox userBalance={balance} />
+
                   </div>
                 </div>
                 <div className="user-wallet w-100">

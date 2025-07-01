@@ -3,7 +3,8 @@ import axios from "axios";
 import NotificationItem from "./NotificationItem";
 import "./NotificationList.css"
 import { Navigate } from "react-router-dom";
-import { connectSocketNotif, disconnectSocketNotif } from "../../services/notification";
+import {  useNotifications } from "../../services/notification";
+import { isTokenExpired } from "../../utils/validators";
 
 /**
  *
@@ -20,29 +21,28 @@ function NotificationList() {
   const CUR_AVATAR_URL = localStorage.getItem("avatarUrl");
   const CUR_USERNAME = localStorage.getItem("username");
 
+  const socketNotifications = useNotifications();
 
   useEffect(() => {
-    if (token) {
+    if (token && !isTokenExpired()) {
       getNotificationList();
     }
   }, [reloadSignal]);
 
   useEffect(() => {
-    const onNotifReceived = (notif) => {
-      setData(prev => {
-        if (prev.some(n => n.notifId === notif.notifId)) {
-          return prev;
-        }
-        return [notif, ...prev]; // Thêm mới vào đầu danh sách
-      });
-      setCountUnRead(prev => prev + 1); // Tăng số lượng chưa đọc
-    };
 
-    connectSocketNotif(onNotifReceived);
-    return () => {
-      disconnectSocketNotif();
-    };
-  }, []);
+    if (socketNotifications && Array.isArray(socketNotifications)) {
+      setData(prevData => {
+        const existingIds = new Set(prevData.map(n => n.notifId));
+        const newNotifs = socketNotifications.filter(n => !existingIds.has(n.notifId));
+        if (newNotifs.length === 0) return prevData;
+        const updatedData = [...newNotifs, ...prevData];
+        setCountUnRead(updatedData.filter(n => n.read === false).length);
+        setTypeList([...new Set(updatedData.map(n => n.notificationType))]);
+        return updatedData;
+      });
+    }
+  }, [socketNotifications])
 
 
   const reloadList = () => {
@@ -98,7 +98,7 @@ function NotificationList() {
     ? data
     : data.filter(n => selectedTypes.includes(n.notificationType));
 
-  if (!token) {
+  if (!token || isTokenExpired()) {
     return <Navigate to="/" replace />;
   } else {
     return (

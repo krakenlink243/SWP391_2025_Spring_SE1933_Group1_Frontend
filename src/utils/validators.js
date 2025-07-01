@@ -19,8 +19,8 @@ export const validatePrice = (value) => {
   return true;
 };
 export const validateMemory = (value) => {
-    const pattern = /^\d+(\.\d{1,2})?(GB|MB)$/i;
-    return pattern.test(value);
+  const pattern = /^\d+(\.\d{1,2})?(GB|MB)$/i;
+  return pattern.test(value);
 }
 export const validateEmail = (value) => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -35,7 +35,20 @@ export const trimValue = (value) => {
     .replace(/[ \t]+/g, ' '); // replace multiple spaces or tabs, not newlines
 };
 
-export const validateMedia = ([]) =>{
+export const validateMedia = ([]) => {
   console.log([].length)
   return [].length
 }
+
+export const isTokenExpired = () => {
+
+  const expDate = localStorage.getItem("expDate");
+  const currentTime = Math.floor(Date.now() / 1000);
+  if (expDate === null || expDate < currentTime) {
+    console.log("Token is outdate, clear storage");
+
+    return true;
+  }
+  console.log("Token is not outdate");
+  return false;
+};

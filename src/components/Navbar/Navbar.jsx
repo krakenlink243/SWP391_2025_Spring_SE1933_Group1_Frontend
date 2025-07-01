@@ -1,11 +1,8 @@
 import React, { forwardRef, useEffect, useState } from "react";
-import { FiSearch } from "react-icons/fi"; // Import icon search từ react-icons
 import "./Navbar.css"; // Hoặc Navbar.module.css nếu dùng CSS Modules
 import SearchBar from "../SearchBar/SearchBar"; // Import component SearchBar
 import { useNavigate } from 'react-router-dom';
-import { connectSocketNotif, disconnectSocketNotif } from "../../services/cartNotif";
-import axios from "axios";
-
+import { useCartItemsCount } from "../../utils/TotalInCartContext";
 /**
  * Origin @author: TS Huy
  * Refactor and re-design @author: Phan NT Son
@@ -13,32 +10,8 @@ import axios from "axios";
  */
 const Navbar = forwardRef((props, ref) => {
   const navigate = useNavigate();
-  const CUR_TOKEN = localStorage.getItem("token");
-  const [cartItemsCount, setCartItemsCount] = useState(0);
 
-  useEffect(() => {
-    if (CUR_TOKEN) {
-      getTotalItemsInCart();
-
-      connectSocketNotif((notif) => {
-        setCartItemsCount(notif);
-      }
-      );
-    }
-    return () => {
-      disconnectSocketNotif();
-    }
-  }, [])
-
-  const getTotalItemsInCart = () => {
-    axios.get("http://localhost:8080/user/cart")
-      .then((resp) => {
-        setCartItemsCount(resp.data.data.length);
-      })
-      .catch((err) => {
-        console.log("Error fetching in Navbar: " + err);
-      })
-  }
+  const cartItemsCount = useCartItemsCount();
 
   return (
     <div className="container-fluid store-header" role="navigation" ref={ref}>

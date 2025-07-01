@@ -58,8 +58,8 @@ import FeedbackHub from "./pages/FeedbackHub";
 import UserFeedback from "./pages/UserFeedback";
 import EmailSettings from "./components/EmailChange/EmailSettings";
 import { jwtDecode } from "jwt-decode";
-
-import AIGeneratorFrontend from "./pages/test"; // TEST
+import { isTokenExpired } from "./utils/validators";
+import { CartCountProvider } from "./utils/TotalInCartContext";
 
 function AppRoutes() {
   // Added by Phan NT Son 18-06-2025
@@ -87,7 +87,11 @@ function AppRoutes() {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    checkToken();
+
+    if (isTokenExpired()) {
+      localStorage.clear();
+    }
+
     const fetchCurrentUser = async () => {
       const token = localStorage.getItem("token");
       // Giả sử bạn có token
@@ -161,18 +165,6 @@ function AppRoutes() {
 
   //--!!
 
-  /**
-   * @author Phan NT Son
-   * @since 18-06-2025
-   */
-  const expDate = localStorage.getItem("expDate");
-  const checkToken = () => {
-    const currentTime = Math.floor(Date.now() / 1000);
-    if (expDate === null || expDate < currentTime) {
-      localStorage.clear();
-      return <Navigate to={"/"} replace />;
-    }
-  };
 
   return (
     <div className="app-wrapper">
@@ -190,7 +182,11 @@ function AppRoutes() {
           )}
           {!isNeedlessHeader && <Header ref={headerHeight} />}
 
-          {!isNeedlessNav && <Navbar ref={navHeight} />}
+          {!isNeedlessNav && (
+            <CartCountProvider>
+              <Navbar ref={navHeight} />
+            </CartCountProvider>
+          )}
           {/* --!! */}
 
           {/* Remove BrowserRouter by Phan NT Son */}

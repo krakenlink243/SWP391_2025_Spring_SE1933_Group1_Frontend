@@ -7,17 +7,33 @@ function ReviewUpdateForm({ originalReview, onReload, onCancel, gameId, userId }
     const [updateRecommended, setUpdateRecommended] = useState(originalReview.recommended);
 
     const handleUpdate = async () => {
-        if (!window.confirm('Are you sure you want to update this review?')) {
-            return;
+        if (!window.confirm('Are you sure you want to update this review?')) return;
+
+        try {
+            const resp = await axios.put(
+                `http://localhost:8080/review/update/${gameId}`,
+                {
+                    reviewContent: updateReviewContent,
+                    recommended: updateRecommended
+                }
+            );
+            console.log('Update response:', resp.data);
+            onReload();
+            onCancel();
+        } catch (error) {
+            if (error.response) {
+                const { status, data } = error.response;
+                if (status === 422) {
+                    alert(data || 'Your review contains inappropriate content.');
+                } else {
+                    alert('An error occurred: ' + (data || 'Unknown error.'));
+                }
+            } else {
+                alert('Network error. Please try again later.');
+            }
         }
-        const resp = await axios.put(`http://localhost:8080/review/update/${gameId}`, {
-            reviewContent: updateReviewContent,
-            recommended: updateRecommended,
-        });
-        console.log('Update response:', resp.data);
-        onReload();
-        onCancel();
     };
+
 
     const handleDelete = async () => {
         if (!window.confirm('Are you sure you want to delete this review?')) {

@@ -24,7 +24,18 @@ function ReviewForm({ onReload, game }) {
             setReviewContent('');
             return true;
         } catch (error) {
-            console.error('Error submitting review:', error);
+            if (error.response) {
+                const status = error.response.status;
+                const message = error.response.data;
+
+                if (status === 422) {
+                    alert(message || 'Your review contains inappropriate content.');
+                } else {
+                    alert('An error occurred: ' + (message || 'Unknown error.'));
+                }
+            } else {
+                alert('Network error. Please try again later.');
+            }
             return false;
         }
     };

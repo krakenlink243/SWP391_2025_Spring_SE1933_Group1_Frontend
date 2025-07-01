@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { connectSocketNotif, disconnectSocketNotif } from "../../services/notification";
+import { useNotifications } from "../../services/notification";
 import { FaBell } from 'react-icons/fa';
 import './NotificationBox.css';
 
 import NotificationBoxItem from "./NotificationBoxItem";
+import { isTokenExpired } from "../../utils/validators";
 
 /**
  * @author Phan NT Son
@@ -14,50 +15,23 @@ import NotificationBoxItem from "./NotificationBoxItem";
  */
 function NotificationBox() {
   const [data, setData] = useState([]);
-  const [unreadCount, setUnreadCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
-  const token = localStorage.getItem("token");
 
-  // Connect socket and constantly update the notification 
+  const socketNotifications = useNotifications();
+
   useEffect(() => {
+    console.log("Refresh notiflist");
+    setData(socketNotifications);
+  }, [socketNotifications]);
 
-    const onNotifReceived = (notif) => {
-      setData((prev) => {
-        // Check if notifId already exists
-        if (prev.some(n => n.notifId === notif.notifId)) {
-          return prev;
-        }
-        return [...prev, notif];
-      });
-    };
-
-    connectSocketNotif(onNotifReceived);
-
-    return () => {
-      disconnectSocketNotif();
-    }
-  }, []);
-
-
-
-  // Update the total unread notification
-  useEffect(() => {
-    const unread = data.filter((n) => !n.read).length;
-    setUnreadCount(unread);
-  }, [data]);
-
-  // Get list of Unread notif from DB when Token & pathname change
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      console.log("Token: " + token);
+    if (token && !isTokenExpired()) {
       getUnreadNotificationList();
     }
   }, []);
 
   const getUnreadNotificationList = () => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
     axios.get(`http://localhost:8080/notification/list/unread`)
       .then((response) => {
         setData(response.data);
@@ -76,13 +50,11 @@ function NotificationBox() {
         n.notifId === notifId ? { ...n, read: true } : n
       )
     );
-    console.log("NOTIF LIST: " + data);
-
   };
 
   return (
     <div className="notifbox-container">
-      <div className={`notifbox-bell ${unreadCount > 0 ? "notif" : ""}`} onClick={toggleOpenNotification}>
+      <div className={`notifbox-bell ${data.length > 0 ? "notif" : ""}`} onClick={toggleOpenNotification}>
         <FaBell />
       </div>
 
