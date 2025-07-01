@@ -14,6 +14,7 @@ import Select from 'react-select';
 function SendGameToAdmin() {
   const [fileName,setFileName] = useState('Upload');
   const [eventSource, setEventSource] = useState(null);
+  const [selectedTags,setSelectedTags] = useState([]);
   const tags = [
   { value: 18, label: 'Action' },
   { value: 17, label: 'Adventure' },
@@ -47,8 +48,6 @@ function SendGameToAdmin() {
   { value: 13, label: 'Surreal' },
   { value: 22, label: 'Survival' },
 ];
-
-
   const [formData,setFormData] = useState({
     gameName: '',
     price: '',
@@ -276,8 +275,11 @@ function SendGameToAdmin() {
     setFiles(prev => prev.filter((_, i) => i !== indexToRemove));
   };  
   const handleChangeTags = (e) => {
-    setFormData(prev => ({...prev,tags: e || []}));
+    const tagId = e.map((tag) => tag.value);
+    setFormData(prev => ({...prev,tags: tagId || []}));
     console.log(formData.tags)
+    setSelectedTags(prev => e);
+    console.log(selectedTags)
   };
 
 
@@ -299,7 +301,7 @@ function SendGameToAdmin() {
               <Select
                 options={tags}
                 isMulti
-                value={formData.tags}
+                value={selectedTags}
                 onChange={handleChangeTags}
                 closeMenuOnSelect={true}
                 hideSelectedOptions={true}
@@ -309,8 +311,6 @@ function SendGameToAdmin() {
                 // menuIsOpen={true}
               />
             </div>
-
-
         </div>
       </div>
       <div className='sys-req'>

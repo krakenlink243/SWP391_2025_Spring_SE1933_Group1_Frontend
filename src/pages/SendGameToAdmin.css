@@ -238,6 +238,7 @@
   .my-select__control,.my-select__menu,.my-select__menu-list {
   background-color: #1A1C1F !important; 
   color: white;
+  border: none !important;
   }
   .my-select__option--is-focused {
   background-color: transparent !important;
