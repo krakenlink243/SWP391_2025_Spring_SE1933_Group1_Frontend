@@ -12,7 +12,7 @@ function GameApprovePage() {
     const [isChecked,setIsChecked] = useState(false);
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/request/game/${page}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/game/${page}`);
         setLoadedRequest(response.data.content);
         console.log(response.data.content)
         setTotalPages(response.data.totalPages);
@@ -32,7 +32,7 @@ function GameApprovePage() {
     
       const handleApprove = async (requestId) => {
         try {
-          const response = await axios.patch(`http://localhost:8080/request/game/approve/${requestId}`);
+          const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/game/approve/${requestId}`);
           console.log("Approved request:", response.data);
           alert("Game Approved")
           fetchData();
@@ -42,7 +42,7 @@ function GameApprovePage() {
       };
       const handleDecline = async (requestId) =>{
         try {
-          const response = await axios.patch(`http://localhost:8080/request/game/reject/${requestId}`);
+          const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/game/reject/${requestId}`);
           console.log("Approved request:", response.data);
           alert("Game Declined")
           fetchData();
@@ -72,7 +72,7 @@ function GameApprovePage() {
         try {
             for (let i = 0; i < selectedRequests.length; i++) {
                 const requestId = selectedRequests[i];
-                const response = await axios.patch(`http://localhost:8080/request/game/approve/${requestId}`);
+                const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/game/approve/${requestId}`);
                 console.log(`Processed approve for request ID:`, requestId);
             }
             alert(`All selected requests have been approved`);
@@ -87,7 +87,7 @@ function GameApprovePage() {
         try {
             for (let i = 0; i < selectedRequests.length; i++) {
                 const requestId = selectedRequests[i];
-                const response = await axios.patch(`http://localhost:8080/request/game/reject/${requestId}`);
+                const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/game/reject/${requestId}`);
                 console.log(`Processed approve for request ID:`, requestId);
             }
             alert(`All selected requests have been declined`);

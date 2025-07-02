@@ -24,7 +24,7 @@ const RegisterEmail = () => {
     setLoading(true);
     try {
       const res = await axios.get(
-        "http://localhost:8080/api/auth/check-email",
+        `${import.meta.env.VITE_API_URL}/api/auth/check-email`,
         {
           params: { email },
         }

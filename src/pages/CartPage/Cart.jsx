@@ -30,9 +30,9 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
     gameName: "",
   });
 
-  // Fetch balance from API http://localhost:8080/user/wallet
+  // Fetch balance from API ${import.meta.env.VITE_API_URL}/user/wallet
   useEffect(() => {
-    axios.get('http://localhost:8080/user/wallet')
+    axios.get(`${import.meta.env.VITE_API_URL}/user/wallet`)
       .then(response => {
         console.log('Wallet API response:', response.data);
         setBalance(Number(response.data) || 0);
@@ -47,7 +47,7 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
   const fetchCart = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:8080/user/cart');
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/user/cart`);
       console.log('Cart API response:', response.data);
       const data = response.data;
       if (data.success && Array.isArray(data.data)) {
@@ -70,7 +70,7 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
   const handleRemove = async (gameId) => {
     setLoading(true);
     try {
-      await axios.delete(`http://localhost:8080/user/cart/remove?gameId=${gameId}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/user/cart/remove?gameId=${gameId}`);
       await fetchCart();
     } catch (error) {
       console.error('Error removing game:', error.message, error.response?.status, error.response?.data);
@@ -84,12 +84,12 @@ const Cart = ({ minHeight }) => { // Added bt Phan Nt Son 18-06-2025
     setLoading(true);
     try {
       const total = cartItems.reduce((sum, item) => sum + (item.price || 0), 0);
-      const response = await axios.post('http://localhost:8080/user/cart/checkout');
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/user/cart/checkout`);
       if (!response.data.success) throw new Error('Checkout failed');
       setResultMessage('Purchase successful!');
       setCartItems([]);
       await fetchCart();
-      const userRes = await axios.get('http://localhost:8080/user/wallet');
+      const userRes = await axios.get(`${import.meta.env.VITE_API_URL}/user/wallet`);
       console.log('Updated wallet response:', userRes.data);
       setBalance(Number(userRes.data) || 0);
     } catch (error) {

@@ -58,7 +58,7 @@ function NotificationBox() {
   const getUnreadNotificationList = () => {
     const token = localStorage.getItem("token");
     if (!token) return;
-    axios.get(`http://localhost:8080/notification/list/unread`)
+    axios.get(`${import.meta.env.VITE_API_URL}/notification/list/unread`)
       .then((response) => {
         setData(response.data);
       })

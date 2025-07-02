@@ -30,7 +30,7 @@ const PaymentResultPage = () => {
       setMessage("Your payment was successful!");
 
       axios.post(
-        `http://localhost:8080/user/wallet/add?amount=${
+        `${import.meta.env.VITE_API_URL}/user/wallet/add?amount=${
           params.get("vnp_Amount") / 2450000
         }`
       );

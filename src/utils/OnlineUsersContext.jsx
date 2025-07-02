@@ -16,7 +16,7 @@ export function OnlineUserProvider({ children }) {
         }
 
         const client = new Client({
-            webSocketFactory: () => new SockJS(`http://localhost:8080/ws-community?token=${token}`),
+            webSocketFactory: () => new SockJS(`${import.meta.env.VITE_API_URL}/ws-community?token=${token}`),
             reconnectDelay: 300,
 
         });

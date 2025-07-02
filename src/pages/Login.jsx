@@ -21,7 +21,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:8080/api/auth/login", {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
         username: username,
         password: password,
       });
@@ -62,7 +62,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/public/oauth2/login",
+        `${import.meta.env.VITE_API_URL}/api/public/oauth2/login`,
         { email, name }
       );
 
@@ -113,7 +113,7 @@ const Login = () => {
                 Log in
               </button>
 
-              <a href="http://localhost:8080/oauth2/authorization/google">
+              <a href={`${import.meta.env.VITE_API_URL}/oauth2/authorization/google`}>
                 <img src="/google-logo.jpg" alt="Google login" className="google-logo" />
               </a>
 

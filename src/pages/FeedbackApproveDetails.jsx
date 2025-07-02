@@ -21,7 +21,7 @@ function FeedbackApproveDetails() {
     useEffect(() => {
         async function fetchFeedbackDetails() {
             try {
-                const response = await axios.get(`http://localhost:8080/request/feedback/details/${feedbackId}`);
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/feedback/details/${feedbackId}`);
                 setFormData(response.data);
                 setArr(response.data.mediaUrls);
                 setUserName(response.data.userName);
@@ -37,7 +37,7 @@ function FeedbackApproveDetails() {
       if(answer.trim() !== ""){
         try {
           createNotification(senderId,"Feedback Answer","Answer for your feedback "+formData.subject+": " + answer)
-          const response = await axios.patch(`http://localhost:8080/request/feedback/approve/${feedbackId}`,{
+          const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/feedback/approve/${feedbackId}`,{
             response: trimValue(answer)
           });
           console.log("Approved request:", response.data)
@@ -51,7 +51,7 @@ function FeedbackApproveDetails() {
     }
     const handleDecline = async() =>{
       try {
-        const response = await axios.patch(`http://localhost:8080/request/feedback/reject/${feedbackId}`);
+        const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/feedback/reject/${feedbackId}`);
         console.log("Approved request:", response.data)
         fetchData();
       } catch (err) {

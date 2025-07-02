@@ -51,7 +51,7 @@ function DetailHeader({ game }) {
         try {
             const response = await axios.post(
                 //adjust add by Bathanh
-                `http://localhost:8080/user/cart/add?gameId=${game.gameId}`
+                `${import.meta.env.VITE_API_URL}/user/cart/add?gameId=${game.gameId}`
             );
             console.log("Add to cart response:", response.data);
 
@@ -74,7 +74,7 @@ function DetailHeader({ game }) {
     };
 
     const checkGameInCart = () => {
-        axios.get(`http://localhost:8080/user/cart/contain/${game.gameId}`)
+        axios.get(`${import.meta.env.VITE_API_URL}/user/cart/contain/${game.gameId}`)
             .then(response => {
                 if (response.data === true) setGameInCart(true);
             })
@@ -85,7 +85,7 @@ function DetailHeader({ game }) {
     };
 
     const checkGameInLib = () => {
-        axios.get(`http://localhost:8080/user/library/contain/${game.gameId}`)
+        axios.get(`${import.meta.env.VITE_API_URL}/user/library/contain/${game.gameId}`)
             .then(response => {
                 if (response.data === true) setGameInLib(true);
             })
