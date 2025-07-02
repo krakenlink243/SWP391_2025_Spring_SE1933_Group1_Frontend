@@ -10,7 +10,7 @@ import SockJS from 'sockjs-client';
 export const createNotification = async (receiverId, type, message) => {
     try {
         const response = await axios.post(
-            "http://localhost:8080/notification/create",
+            `${import.meta.env.VITE_API_URL}/notification/create`,
             {
                 receiverId: receiverId,
                 notificationType: type,
@@ -35,7 +35,7 @@ export const connectSocketNotif = (onNotifReceived) => {
     const token = localStorage.getItem("token");
     if (stompClient && stompClient.connected && subscribed) return;
     stompClient = new Client({
-        webSocketFactory: () => new SockJS(`http://localhost:8080/ws-community?token=${token}`),
+        webSocketFactory: () => new SockJS(`${import.meta.env.VITE_API_URL}/ws-community?token=${token}`),
         reconnectDelay: 5000,
         heartbeatIncoming: 4000,
         heartbeatOutgoing: 4000,

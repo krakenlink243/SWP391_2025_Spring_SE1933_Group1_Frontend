@@ -14,7 +14,7 @@ export const connectSocketNotif = (onNotifReceived) => {
     const token = localStorage.getItem("token");
     if (stompClient && stompClient.connected && subscribed) return;
     stompClient = new Client({
-        webSocketFactory: () => new SockJS(`http://localhost:8080/ws-community?token=${token}`),
+        webSocketFactory: () => new SockJS(`${import.meta.env.VITE_API_URL}/ws-community?token=${token}`),
         reconnectDelay: 5000,
         heartbeatIncoming: 4000,
         heartbeatOutgoing: 4000,

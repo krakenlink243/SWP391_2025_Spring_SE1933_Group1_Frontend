@@ -57,7 +57,7 @@ const ProfilePage = () => {
 
       try {
         const response = await axios.get(
-          `http://localhost:8080/user/profile/${userId}`
+          `${import.meta.env.VITE_API_URL}/user/profile/${userId}`
         );
         setProfileData(response.data);
       } catch (err) {

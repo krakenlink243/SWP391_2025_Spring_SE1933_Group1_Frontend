@@ -31,7 +31,7 @@ const Navbar = forwardRef((props, ref) => {
   }, [])
 
   const getTotalItemsInCart = () => {
-    axios.get("http://localhost:8080/user/cart")
+    axios.get(`${import.meta.env.VITE_API_URL}/user/cart`)
       .then((resp) => {
         setCartItemsCount(resp.data.data.length);
       })

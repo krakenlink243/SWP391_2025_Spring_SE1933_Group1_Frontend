@@ -24,7 +24,7 @@ const EmailSettings = ({ currentUser }) => {
     try {
       // SỬA LẠI: Thêm http:// và đường dẫn API đầy đủ
       const response = await axios.post(
-        "http://localhost:8080/user/request-change",
+        `${import.meta.env.VITE_API_URL}/user/request-change`,
         { newEmail }
       );
       setMessage(response.data.message);
@@ -45,7 +45,7 @@ const EmailSettings = ({ currentUser }) => {
     try {
       // SỬA LẠI: Thêm http:// và đường dẫn API đầy đủ
       const response = await axios.post(
-        "http://localhost:8080/user/confirm-change",
+        `${import.meta.env.VITE_API_URL}/user/confirm-change`,
         {
           newEmail,
           token: verificationCode,

@@ -67,14 +67,14 @@ function SendUserFeedback() {
             if(files.length > 0){
                 const uploadImage = new FormData();
                 files.forEach(file => uploadImage.append('files',file));
-                responseMedia = await axios.post('http://localhost:8080/request/image/upload',uploadImage,{
+                responseMedia = await axios.post(`${import.meta.env.VITE_API_URL}/request/image/upload`,uploadImage,{
                 header:{"Content-Type": "multipart/form-data"},
                 });
                 console.log(files.length)
                 console.log(responseMedia.data.imageUrls);
                 setFormData(prev => ({...prev,mediaUrls: responseMedia.data.imageUrls}));
             }
-            const response = await axios.post('http://localhost:8080/request/feedback/send',{...formData,mediaUrls: responseMedia?.data?.imageUrls || []
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/request/feedback/send`,{...formData,mediaUrls: responseMedia?.data?.imageUrls || []
             });
             console.log(response);
             alert(response.data.message);

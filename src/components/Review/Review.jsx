@@ -30,7 +30,7 @@ function Review({ game }) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/review/list/${game.gameId}`)
+      .get(`${import.meta.env.VITE_API_URL}/review/list/${game.gameId}`)
       .then((response) => {
         setReviewList(response.data);
         console.log(response.data);

@@ -135,7 +135,7 @@ const EditProfilePage = () => {
       }
       try {
         const response = await axios.get(
-          `http://localhost:8080/user/profile/${userId}`
+          `${import.meta.env.VITE_API_URL}/user/profile/${userId}`
         );
         setCurrentUser(response.data);
         const { profileName, country, dob, gender, summary } = response.data;
@@ -196,7 +196,7 @@ const EditProfilePage = () => {
     try {
       const userId = localStorage.getItem("userId");
       const response = await axios.put(
-        `http://localhost:8080/user/profile/${userId}/edit/info`,
+        `${import.meta.env.VITE_API_URL}/user/profile/${userId}/edit/info`,
         formData
       );
       setFormData(response.data);

@@ -8,7 +8,7 @@ function BlockedTab() {
     const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
 
     const getblockedList = () => {
-        axios.get("http://localhost:8080/user/blocked")
+        axios.get(`${import.meta.env.VITE_API_URL}/user/blocked`)
             .then((response) => { setBlockedList(response.data) })
             .catch((err) => { console.log("Error fetching friends list: " + err) })
     };

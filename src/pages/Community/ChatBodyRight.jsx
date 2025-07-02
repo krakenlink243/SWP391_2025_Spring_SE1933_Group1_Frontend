@@ -14,7 +14,7 @@ function ChatBodyRight({ friend }) {
 
 
     const loadConversation = () => {
-        axios.get(`http://localhost:8080/user/conversation/${friend.friendId}`)
+        axios.get(`${import.meta.env.VITE_API_URL}/user/conversation/${friend.friendId}`)
             .then((resp) => {
                 setConversation(resp.data);
             })

@@ -27,7 +27,7 @@ const GameDetail = () => {
         setLoading(true);
         setError(null);
         const response = await axios.get(
-          `http://localhost:8080/game/${gameId}`
+          `${import.meta.env.VITE_API_URL}/game/${gameId}`
         ); // Giả sử API endpoint của bạn là đây
         const data = response.data;
         setGame(data);
@@ -65,7 +65,7 @@ const GameDetail = () => {
     try {
       const response = await axios.post(
         //adjust add by Bathanh
-        `http://localhost:8080/users/${userId}/cart/add?gameId=${gameId}`
+        `${import.meta.env.VITE_API_URL}/users/${userId}/cart/add?gameId=${gameId}`
       );
       console.log("Add to cart response:", response.data);
 

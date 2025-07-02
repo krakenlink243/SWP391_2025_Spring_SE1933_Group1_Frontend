@@ -33,7 +33,7 @@ function ChatBodyLeft({ setCurFriendChat }) {
     }, [friendList, onlineUsers]);
 
     const getFriendList = () => {
-        axios.get("http://localhost:8080/user/friends")
+        axios.get(`${import.meta.env.VITE_API_URL}/user/friends`)
             .then((response) => { setFriendList(response.data) })
             .catch((err) => { console.log("Error fetching friends list: " + err) })
     };
