@@ -33,8 +33,8 @@ const GamesPage = () => {
     const fetchFilterData = async () => {
       try {
         const [tagsResponse, publishersResponse] = await Promise.all([
-          axios.get("http://localhost:8080/tags"),
-          axios.get("http://localhost:8080/publisher/list"),
+          axios.get(`${import.meta.env.VITE_API_URL}/tags`),
+          axios.get(`${import.meta.env.VITE_API_URL}/publisher/list`),
         ]);
         if (tagsResponse.data)
           setAllTags(
@@ -75,7 +75,7 @@ const GamesPage = () => {
     params.append("page", currentPage);
     params.append("size", GAMES_PER_PAGE);
 
-    const apiUrl = `http://localhost:8080/game?${params.toString()}`;
+    const apiUrl = `${import.meta.env.VITE_API_URL}/game?${params.toString()}`;
     console.log("Fetching games from:", apiUrl);
 
     try {

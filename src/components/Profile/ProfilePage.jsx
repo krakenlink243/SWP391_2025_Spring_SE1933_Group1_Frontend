@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import GameShowcase from "./GameShowCase";
+import GameShowcase from "./GameShowcase";
 import "./ProfilePage.css";
 
 // Tách ProfileHeader ra để dễ quản lý
@@ -57,7 +57,7 @@ const ProfilePage = () => {
 
       try {
         const response = await axios.get(
-          `http://localhost:8080/user/profile/${userId}`
+          `${import.meta.env.VITE_API_URL}/user/profile/${userId}`
         );
         setProfileData(response.data);
       } catch (err) {

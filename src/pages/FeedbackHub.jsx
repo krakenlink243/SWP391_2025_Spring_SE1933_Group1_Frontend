@@ -11,7 +11,7 @@ function FeedbackHub() {
     const [totalPages, setTotalPages] = useState(1);
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/request/feedback/user/${page}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/feedback/user/${page}`);
         setFeedbackItems(response.data.content);
         console.log(response.data.content)
         setTotalPages(response.data.totalPages);
@@ -32,7 +32,7 @@ function FeedbackHub() {
     const handleDeleteClick = async (feedbackId) => {
         if(window.confirm("Are you sure you want to delete this feedback?")){
             try {
-                await axios.delete(`http://localhost:8080/request/feedback/user/${feedbackId}`);
+                await axios.delete(`${import.meta.env.VITE_API_URL}/request/feedback/user/${feedbackId}`);
                 fetchData();
             } catch (error) {
                 console.error('Error deleting feedback:', error);

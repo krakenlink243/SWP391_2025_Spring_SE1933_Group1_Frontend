@@ -51,7 +51,7 @@ function NotificationList() {
 
   const getNotificationList = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/notification/list`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/notification/list`);
       const notifs = response.data || [];
 
       setData(notifs);
@@ -64,7 +64,7 @@ function NotificationList() {
 
   const handleMarkReadAll = async () => {
     try {
-      await axios.patch(`http://localhost:8080/notification/markreadall`);
+      await axios.patch(`${import.meta.env.VITE_API_URL}/notification/markreadall`);
       reloadList();
     } catch (error) {
       console.log("error mark read all: " + error);
@@ -74,7 +74,7 @@ function NotificationList() {
   const handleDeleteAll = () => {
     if (!window.confirm("Are you sure you want to delete all notifications?")) return;
     try {
-      axios.delete(`http://localhost:8080/notification/deleteall`)
+      axios.delete(`${import.meta.env.VITE_API_URL}/notification/deleteall`)
         .then((resp) => {
           reloadList();
         });

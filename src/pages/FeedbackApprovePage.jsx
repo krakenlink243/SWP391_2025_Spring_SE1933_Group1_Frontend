@@ -14,7 +14,7 @@ function FeedbackApprovePage() {
   const [isChecked, setIsChecked] = useState(false);
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/request/feedback/${page}`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/feedback/${page}`);
       setLoadedRequest(response.data.content);
       setTotalPages(response.data.totalPages);
       console.log(response.data.content);
@@ -36,7 +36,7 @@ function FeedbackApprovePage() {
     if (answer.trim() !== "") {
       try {
         createNotification(senderId, "Feedback Answer", "Answer for your feedback " + subject + ": " + answer)
-        const response = await axios.patch(`http://localhost:8080/request/feedback/approve/${requestId}`, {
+        const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/feedback/approve/${requestId}`, {
           response: trimValue(answer)
         });
         console.log("Approved request:", response.data)
@@ -50,7 +50,7 @@ function FeedbackApprovePage() {
   }
   const handleDecline = async (requestId) => {
     try {
-      const response = await axios.patch(`http://localhost:8080/request/feedback/reject/${requestId}`);
+      const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/feedback/reject/${requestId}`);
       console.log("Approved request:", response.data);
       alert("Feedback Dissmissed")
       fetchData();
@@ -80,7 +80,7 @@ function FeedbackApprovePage() {
     try {
       for (let i = 0; i < selectedRequests.length; i++) {
         const requestId = selectedRequests[i];
-        const response = await axios.patch(`http://localhost:8080/request/feedback/reject/${requestId}`);
+        const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/feedback/reject/${requestId}`);
         console.log(`Processed approve for request ID:`, requestId);
       }
       alert(`All selected feedback have been dissmiss`);

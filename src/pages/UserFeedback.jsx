@@ -19,7 +19,7 @@ function UserFeedback() {
     useEffect(() => {
         async function fetchFeedbackDetails() {
             try {
-                const response = await axios.get(`http://localhost:8080/request/feedback/user/details/${feedbackId}`);
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/feedback/user/details/${feedbackId}`);
                 setFormData(response.data);
                 setArr(response.data.mediaUrls);
                 setUserName(response.data.userName);
@@ -32,7 +32,7 @@ function UserFeedback() {
     const handleDeleteClick = async (feedbackId) => {
         if(window.confirm("Are you sure you want to delete this feedback?")){
             try {
-                await axios.delete(`http://localhost:8080/request/feedback/user/${feedbackId}`);
+                await axios.delete(`${import.meta.env.VITE_API_URL}/request/feedback/user/${feedbackId}`);
                 window.location.href=`/feedbackhub`;
             } catch (error) {
                 console.error('Error deleting feedback:', error);

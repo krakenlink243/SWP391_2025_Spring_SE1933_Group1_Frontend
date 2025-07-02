@@ -10,7 +10,7 @@ import "./NotificationList.css"
 function NotificationItem({ notification, onReload }) {
   const handleClick = () => {
     if (!notification.read) {
-      axios.patch(`http://localhost:8080/notification/markread/${notification.notifId}`)
+      axios.patch(`${import.meta.env.VITE_API_URL}/notification/markread/${notification.notifId}`)
         .then(() => {
           onReload();
         })
@@ -19,7 +19,7 @@ function NotificationItem({ notification, onReload }) {
   };
 
   const handleDelete = () => {
-    axios.delete(`http://localhost:8080/notification/delete/${notification.notifId}`)
+    axios.delete(`${import.meta.env.VITE_API_URL}/notification/delete/${notification.notifId}`)
       .then(() => {
         // Optionally, you can refresh the notification list or remove the item from the UI
         console.log("Notification deleted successfully");

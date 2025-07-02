@@ -104,7 +104,7 @@ const Header = forwardRef((props, ref) => {
   useEffect(() => {
     const getUserBalance = () => {
       axios
-        .get(`http://localhost:8080/user/wallet`)
+        .get(`${import.meta.env.VITE_API_URL}/user/wallet`)
         .then((response) => setBalance(response.data))
         .catch((error) => alert(error));
     };

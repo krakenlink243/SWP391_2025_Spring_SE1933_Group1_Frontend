@@ -29,7 +29,7 @@ function WalletPage() {
     }
     try {
       const response = await axios.post(
-        `http://localhost:8080/api/v1/payments/create-vnpay-payment?amount=${amount}`
+        `${import.meta.env.VITE_API_URL}/api/v1/payments/create-vnpay-payment?amount=${amount}`
       );
       const { paymentUrl } = response.data;
       if (paymentUrl) {
@@ -43,7 +43,7 @@ function WalletPage() {
 
   const getUserBalance = () => {
     axios
-      .get(`http://localhost:8080/user/wallet`)
+      .get(`${import.meta.env.VITE_API_URL}/user/wallet`)
       .then((response) => setBalance(response.data))
       .catch((error) => alert(error));
   };
