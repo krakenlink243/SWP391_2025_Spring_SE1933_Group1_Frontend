@@ -3,13 +3,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import GameShowcase from "./GameShowCase";
 import "./ProfilePage.css";
+import { useOnlineUsers } from "../../utils/OnlineUsersContext";
 
 // Tách ProfileHeader ra để dễ quản lý
 const ProfileHeader = ({ user, onEditClick }) => {
   const avatarUrl =
     user?.avatarUrl ||
     "https://avatars.steamstatic.com/b5bd56c1aa4644a474a2e4972be27ef9e82e517e_full.jpg";
-  const isOnline = user?.online || false; // Giả sử API trả về trạng thái online
+  const isOnline = useOnlineUsers; // Giả sử API trả về trạng thái online
 
   return (
     <div className="profile-header">
