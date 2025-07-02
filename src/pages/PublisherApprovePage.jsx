@@ -4,6 +4,8 @@ import { useState,useRef,useEffect } from'react'
 import axios from 'axios';
 import RequestItem from '../components/RequestItem/RequestItem'
 import './AdminDashboard/GameApprovePage.css'
+import { confirmAlert } from 'react-confirm-alert';
+import { createNotification } from '../services/notification';
 function PublisherApprovePage() {
     const [totalPages, setTotalPages] = useState(1);
     const [loadedRequest,setLoadedRequest] = useState([]);
@@ -30,6 +32,10 @@ function PublisherApprovePage() {
       }, [page]);
     
       const handleApprove = async (requestId) => {
+        const confirmApprove = window.confirm("Are you sure you want to approve this publisher?");
+        if (!confirmApprove) {
+          return;
+        }
         try {
           const response = await axios.patch(`http://localhost:8080/request/publisher/approve/${requestId}`);
           console.log("Approved request:", response.data);
@@ -39,16 +45,55 @@ function PublisherApprovePage() {
           console.error("Error approving request:", err);
         }
       };
-      const handleDecline = async (requestId) =>{
-        try {
-          const response = await axios.patch(`http://localhost:8080/request/publisher/reject/${requestId}`);
-          console.log("Approved request:", response.data);
-          alert("Publisher Declined")
-          fetchData();
-        } catch (err) {
-          console.error("Error approving request:", err);
-        }
-      }
+      const handleDecline = (requestId,userId,userName,publisherName) => {
+        let answer = '';
+
+        confirmAlert({
+          title: `Decline Publisher Request`,
+          customUI: ({ onClose }) => (
+            <div className="custom-ui">
+              <h2>Decline Publisher</h2>
+              <p>Answer for: {userName}</p>
+              <textarea
+                rows={5}
+                style={{ width: '100%', marginBottom: '1rem' }}
+                onChange={(e) => (answer = e.target.value)}
+                placeholder="Reason for declining..."
+              />
+              <button className="blue-button"
+                onClick={async () => {
+                  if (answer.trim() !== '') {
+                    try {
+                      // Send notification
+                      createNotification(
+                        userId,
+                        "Publisher Apply Response",
+                        `Answer for your publisher apply ${publisherName}: ${answer}`
+                      );
+
+                      // API call to reject request
+                      const response = await axios.patch(
+                        `http://localhost:8080/request/publisher/reject/${requestId}`
+                      );
+                      console.log("Declined request:", response.data);
+
+                      alert("Publisher Declined");
+                      fetchData(); // Refresh list
+                    } catch (err) {
+                      console.error("Error declining request:", err);
+                    }
+                    onClose();
+                  } else {
+                    alert("Please enter answer");
+                  }
+                }}
+              >
+                Submit
+              </button>
+            </div>
+          )
+        });
+      };
       const handleCheckChange = (requestId) => {
         setSelectedRequests((prev) =>
             prev.includes(requestId) 
@@ -67,7 +112,10 @@ function PublisherApprovePage() {
       console.log("Updated Tick Array:", selectedRequests);
       };
       const handleApproveSelected = async () => {
-        console.log("ook")
+        const confirmApprove = window.confirm("Are you sure you want to approve these publishers?");
+        if (!confirmApprove) {
+          return;
+        }
         try {
             for (let i = 0; i < selectedRequests.length; i++) {
                 const requestId = selectedRequests[i];
@@ -121,7 +169,6 @@ function PublisherApprovePage() {
           <div>Date</div>
           <div>
             <img src="/icons/Approve.png" alt="" onClick={handleApproveSelected} />
-            <img src="/icons/Decline.png" alt="" onClick={handleDeclineSelected} />
           </div>
         </div>
       ) : (<p>There is no one want to be publisher at this time🥹</p>)}
@@ -133,7 +180,7 @@ function PublisherApprovePage() {
         from={request.username}
         date={request.createdDate}
         onApprove={() => handleApprove(request.requestId)} 
-        onDecline={() => handleDecline(request.requestId)} 
+        onDecline={() => handleDecline(request.requestId,request.userId,request.username,request.publisherName)} 
         onCheckChange={handleCheckChange} 
         isTicked={selectedRequests.includes(request.requestId)}
         onClicked={() => handleRedirect(request.requestId)}

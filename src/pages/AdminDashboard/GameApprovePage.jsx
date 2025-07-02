@@ -4,6 +4,8 @@ import { useState,useRef,useEffect } from'react'
 import axios from 'axios';
 import RequestItem from '../../components/RequestItem/RequestItem'
 import './GameApprovePage.css'
+import { confirmAlert } from 'react-confirm-alert';
+import { createNotification } from '../../services/notification';
 function GameApprovePage() {
     const [totalPages, setTotalPages] = useState(1);
     const [loadedRequest,setLoadedRequest] = useState([]);
@@ -31,6 +33,10 @@ function GameApprovePage() {
       }, [page]);
     
       const handleApprove = async (requestId) => {
+        const confirmApprove = window.confirm("Are you sure you want to approve this game?");
+        if (!confirmApprove) {
+          return;
+        }
         try {
           const response = await axios.patch(`http://localhost:8080/request/game/approve/${requestId}`);
           console.log("Approved request:", response.data);
@@ -40,16 +46,54 @@ function GameApprovePage() {
           console.error("Error approving request:", err);
         }
       };
-      const handleDecline = async (requestId) =>{
-        try {
-          const response = await axios.patch(`http://localhost:8080/request/game/reject/${requestId}`);
-          console.log("Approved request:", response.data);
-          alert("Game Declined")
-          fetchData();
-        } catch (err) {
-          console.error("Error approving request:", err);
-        }
-      }
+      const handleDecline = (requestId,publisherName,publiserId,gameName) => {
+        let answer = '';
+
+        confirmAlert({
+          title: `Decline Game Request`,
+          customUI: ({ onClose }) => (
+            <div className="custom-ui">
+              <h2>Decline Game</h2>
+              <p>To:{publisherName}</p>
+              <textarea
+                rows={5}
+                style={{ width: '100%', marginBottom: '1rem' }}
+                onChange={(e) => (answer = e.target.value)}
+                placeholder="Reason for declining..."
+              />
+              <button className="blue-button"
+                onClick={async () => {
+                  if (answer.trim() !== '') {
+                    try {
+                      // Send notification
+                      createNotification(
+                        publiserId,
+                        "Game Approval Response",
+                        `Answer for ${gameName}: ${answer}`
+                      );
+                      // Reject the request via API
+                      const response = await axios.patch(
+                        `http://localhost:8080/request/game/reject/${requestId}`
+                      );
+                      console.log("Declined request:", response.data);
+                      alert("Game Declined");
+                      fetchData(); // Refresh UI
+                    } catch (err) {
+                      console.error("Error declining request:", err);
+                    }
+                    onClose();
+                  } else {
+                    alert("Please enter answer");
+                  }
+                }}
+              >
+                Submit
+              </button>
+            </div>
+          )
+        });
+      };
+
       const handleCheckChange = (requestId) => {
         setSelectedRequests((prev) =>
             prev.includes(requestId) 
@@ -69,6 +113,10 @@ function GameApprovePage() {
       };
       const handleApproveSelected = async () => {
         console.log("ook")
+        const confirmApprove = window.confirm("Are you sure you want to approve these selected games?");
+        if (!confirmApprove) {
+          return;
+        } 
         try {
             for (let i = 0; i < selectedRequests.length; i++) {
                 const requestId = selectedRequests[i];
@@ -124,7 +172,7 @@ function GameApprovePage() {
           <div>Date</div>
           <div>
             <img src="/icons/Approve.png" alt="" onClick={handleApproveSelected} />
-            <img src="/icons/Decline.png" alt="" onClick={handleDeclineSelected} />
+            {/* <img src="/icons/Decline.png" alt="" onClick={handleDeclineSelected} /> */}
           </div>
         </div>
       ) : (<p>There is no game pending for approve at this time</p>)}
@@ -136,7 +184,7 @@ function GameApprovePage() {
         from={request.publisherName}
         date={request.sendDate}
         onApprove={() => handleApprove(request.requestId)} 
-        onDecline={() => handleDecline(request.requestId)} 
+        onDecline={() => handleDecline(request.requestId,request.publisherName,request.publisherId,request.gameName)} 
         onCheckChange={handleCheckChange} 
         isTicked={selectedRequests.includes(request.requestId)}
         onClicked={() => handleRedirect(request.requestId)}

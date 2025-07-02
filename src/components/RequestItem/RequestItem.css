@@ -13,15 +13,17 @@
   }
   
   .request-name {
-    flex: 2; 
+    flex: 1.9; 
     color: #fff; 
     /* text-align: center; */
   }
   .from-user{
     flex: 1;
+    /* text-align: center; */
   }
   .feedback-date{
     flex: 1;
+    /* text-align: center; */
   }
   /* .request-item img:last-child {
     margin-left: auto; 

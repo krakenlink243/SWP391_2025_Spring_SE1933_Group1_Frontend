@@ -45,7 +45,7 @@ function FeedbackHub() {
             <h1>Feedback Hub</h1>
         </div>
         <div className='create-feedback-button'>
-            <Button label='Write new Feedback' color='blue-button' onClick={() => window.location.href = '/sendfeedback'}/>
+            <Button label='Write New Feedback' color='blue-button' onClick={() => window.location.href = '/sendfeedback'}/>
         </div>
         <div className='your-feedback'>
             <h2>Your Submitted Feedback</h2>

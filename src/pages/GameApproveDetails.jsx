@@ -11,6 +11,7 @@ import { PhotoProvider, PhotoView } from 'react-photo-view'
 import "react-photo-view/dist/react-photo-view.css";
 import { createNotification } from '../services/notification';
 import Select,{ components } from 'react-select'
+import { confirmAlert } from 'react-confirm-alert'
 function GameApproveDetails() {
   const gameId = useParams().gameId;
   const [downloadLink, setDownloadLink] = useState('');
@@ -110,21 +111,51 @@ function GameApproveDetails() {
       console.log(error);
     }
   }
-  const handleDecline = async () => {
-    const answer = window.prompt("Send answer to" + " " + formData.publisherName)
-    if (answer.trim() !== "") {
-      try {
-        createNotification(formData.publisherId, "Game Decline Response", "Answer for " + formData.gameName + ": " + answer)
-        const response = await axios.patch(`http://localhost:8080/request/game/reject/${gameId}`);
-        console.log("Approved request:", response.data)
-      } catch (err) {
-        console.error("Error approving request:", err);
-      }
-      window.location.href = '/aprrovegame'
-    } else {
-      alert('Please enter answer')
-    }
-  }
+  const handleDecline = () => {
+  let answer = '';
+
+  confirmAlert({
+    title: `Send answer to ${formData.publisherName}`,
+    customUI: ({ onClose }) => (
+      <div className="custom-ui">
+        <h2>Decline Game Request</h2>
+        <p>To: {formData.publisherName}</p>
+        <textarea
+          rows={5}
+          style={{ width: '100%', marginBottom: '1rem' }}
+          onChange={(e) => (answer = e.target.value)}
+          placeholder="Type your decline reason..."
+        />
+        <button className="blue-button"
+          onClick={async () => {
+            if (answer.trim() !== '') {
+              try {
+                createNotification(
+                  formData.publisherId,
+                  "Game Approval Response",
+                  `Answer for ${formData.gameName}: ${answer}`
+                );
+                const response = await axios.patch(
+                  `http://localhost:8080/request/game/reject/${gameId}`
+                );
+                console.log("Declined request:", response.data);
+                window.location.href = '/aprrovegame';
+              } catch (err) {
+                console.error("Error declining request:", err);
+              }
+              onClose();
+            } else {
+              alert('Please enter answer');
+            }
+          }}
+        >
+          Submit
+        </button>
+      </div>
+    )
+  });
+};
+
   const handleGetLinkDownload = async () => {
     try {
       const response = await axios.get(`http://localhost:8080/request/file/download/${formData.gameUrl}`);

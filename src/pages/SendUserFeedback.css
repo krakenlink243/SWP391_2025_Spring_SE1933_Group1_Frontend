@@ -5,6 +5,7 @@
 }
 .sendfeedback-container {
     width: 50%;
+    min-width: 800px;
     margin: 40px auto;
     padding: 30px;
     background: #23272B;
@@ -25,7 +26,7 @@
   }
   
   .feedback-content input[type="text"],
-  .feedback-content textarea {
+  .feedback-content textarea ,.custom-ui textarea {
     color: white;
   width: 100%;
   padding: 10px;
@@ -38,7 +39,7 @@
   }
   
   .feedback-content input:focus,
-  .feedback-content textarea:focus {
+  .feedback-content textarea:focus,.custom-ui textarea {
     outline: none;
   }
   
@@ -72,6 +73,25 @@
     justify-content: flex-end;
     gap: 15px;
     margin-top: 20px;
+  }
+
+  .react-confirm-alert-overlay {
+  background: rgba(0, 0, 0, 0.2) !important; /* semi-transparent dark overlay */
+  backdrop-filter: blur(5px);     /* applies the blur effect */
+  }
+
+  .custom-ui {
+    background: #25292E !important;
+    color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    min-width: 500px;
+    margin: auto;
+  }
+  .sendfeedback-container pre{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
   }
   
 
