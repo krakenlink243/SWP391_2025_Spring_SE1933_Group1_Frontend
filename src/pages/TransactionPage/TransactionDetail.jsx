@@ -46,7 +46,7 @@ const TransactionDetail = () => {
         </h2>
         <button
           className="back-button"
-          onClick={() => navigate("/transaction")}
+          onClick={() => navigate("/account/history")}
         >
           ⬅ Back to Transaction History
         </button>

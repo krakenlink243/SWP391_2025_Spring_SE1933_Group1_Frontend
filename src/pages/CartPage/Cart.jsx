@@ -5,7 +5,6 @@ import './Cart.css';
 import { isTokenExpired } from '../../utils/validators';
 
 const userId = localStorage.getItem("userId");
-const username = localStorage.getItem('username');
 const CUR_TOKEN = localStorage.getItem('token');
 
 const Cart = ({ minHeight }) => {
@@ -24,12 +23,6 @@ const Cart = ({ minHeight }) => {
     gameId: null,
     gameName: "",
   });
-
-  // Add Funds Modal State
-  const [showAddFundsModal, setShowAddFundsModal] = useState(false);
-  const [amountUsd, setAmountUsd] = useState(5);
-  const [bankCode, setBankCode] = useState("");
-  const [language, setLanguage] = useState("vn");
 
   useEffect(() => {
     if (CUR_TOKEN && !isTokenExpired()) {
@@ -55,7 +48,7 @@ const Cart = ({ minHeight }) => {
       } else {
         setCartItems([]);
       }
-    } catch {
+    } catch (error) {
       setCartItems([]);
     } finally {
       setLoading(false);
@@ -73,7 +66,9 @@ const Cart = ({ minHeight }) => {
     try {
       await axios.delete(`http://localhost:8080/user/cart/remove?gameId=${gameId}`);
       await fetchCart();
-    } catch { } finally {
+    } catch (error) {
+      console.error('Error removing game:', error);
+    } finally {
       setLoading(false);
     }
   };
@@ -89,10 +84,15 @@ const Cart = ({ minHeight }) => {
       await fetchCart();
       const userRes = await axios.get('http://localhost:8080/user/wallet');
       setBalance(Number(userRes.data) || 0);
+      setShowResultModal(true); // chỉ hiển thị modal khi thành công
     } catch (error) {
-      setResultMessage("Purchase failed!");
+      if (parseFloat(total) > balance) {
+        alert("Purchase failed. Please add more funds to your account balance.");
+        window.location.href = "/account";
+      } else {
+        alert("Purchase failed due to an unknown error.");
+      }
     } finally {
-      setShowResultModal(true);
       setLoading(false);
     }
   };
@@ -100,9 +100,11 @@ const Cart = ({ minHeight }) => {
   const openRemoveConfirm = (gameId, gameName) => {
     setRemoveConfirm({ show: true, gameId, gameName });
   };
+
   const closeRemoveConfirm = () => {
     setRemoveConfirm({ show: false, gameId: null, gameName: "" });
   };
+
   const confirmRemove = async () => {
     if (removeConfirm.gameId) {
       await handleRemove(removeConfirm.gameId);
@@ -110,16 +112,12 @@ const Cart = ({ minHeight }) => {
     closeRemoveConfirm();
   };
 
-  const total = cartItems
-    .reduce((sum, item) => sum + (item.price || 0), 0)
-    .toFixed(2);
+  const total = cartItems.reduce((sum, item) => sum + (item.price || 0), 0).toFixed(2);
 
   return (
     <div className="cart-steam-bg" style={{ minHeight: `${minHeight}px` }}>
       <div className="cart-main-steam">
-        <h2 className="cart-title-steam">
-          Your Shopping Cart
-        </h2>
+        <h2 className="cart-title-steam">Your Shopping Cart</h2>
         <div className="cart-list-steam">
           {loading ? (
             <div className="cart-loading">Loading...</div>
@@ -155,14 +153,12 @@ const Cart = ({ minHeight }) => {
                 </div>
               ))}
               <div className="cart-item-steam">
-                <div className="cart-item-image"></div>
+                <div className="cart-item-image" />
                 <div className="cart-item-title">Estimated total:</div>
                 <div className="cart-item-price-container">
                   <span className="cart-item-price">${total}</span>
                 </div>
-                <div className="cart-item-remove">
-                  <span className="cart-item-empty"></span>
-                </div>
+                <div className="cart-item-remove" />
               </div>
             </div>
           )}
@@ -171,16 +167,7 @@ const Cart = ({ minHeight }) => {
               <Link className="cart-btn-steam" to="/game">Continue Shopping</Link>
               <button
                 className="cart-btn-steam cart-btn-blue-steam"
-                onClick={() => {
-                  if (parseFloat(total) > balance) {
-                    const shortfall = parseFloat(total) - balance;
-                    setAmountUsd(shortfall < 5 ? 5 : parseFloat(shortfall.toFixed(2)));
-                    alert("Purchase failed. Please add more funds to your account balance.");
-                    setShowAddFundsModal(true);
-                  } else {
-                    setShowConfirmModal(true);
-                  }
-                }}
+                onClick={() => setShowConfirmModal(true)}
                 disabled={cartItems.length === 0 || loading}
               >
                 Purchase for Myself
@@ -209,7 +196,12 @@ const Cart = ({ minHeight }) => {
             <h3>Purchase Result</h3>
             <p>{resultMessage}</p>
             <div className="cart-modal-btns-steam">
-              <button onClick={() => setShowResultModal(false)} className="cart-btn-steam">OK</button>
+              <button
+                onClick={() => setShowResultModal(false)}
+                className="cart-btn-steam"
+              >
+                OK
+              </button>
             </div>
           </div>
         </div>
@@ -223,73 +215,6 @@ const Cart = ({ minHeight }) => {
             <div className="cart-modal-btns-steam">
               <button onClick={closeRemoveConfirm} className="cart-btn-steam">Cancel</button>
               <button onClick={confirmRemove} className="cart-btn-steam cart-btn-blue-steam" disabled={loading}>Remove</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {showAddFundsModal && (
-        <div className="cart-modal-steam">
-          <div className="cart-modal-content-steam">
-            <h2>Add Funds to Your Wallet</h2>
-            <div className="amount-options">
-              {[5, 10, 25, 50, 100].map((val) => (
-                <button key={val} onClick={() => setAmountUsd(val)}>${val.toFixed(2)}</button>
-              ))}
-            </div>
-            <input
-              type="number"
-              value={amountUsd}
-              onChange={(e) => setAmountUsd(Number(e.target.value))}
-              placeholder="Enter amount (USD)"
-              min="5"
-            />
-            <div className="form-group-modal">
-              <label htmlFor="bankCode">Bank (Optional)</label>
-              <select
-                id="bankCode"
-                value={bankCode}
-                onChange={(e) => setBankCode(e.target.value)}
-              >
-                <option value="">Select a bank...</option>
-                <option value="NCB">NCB (Recommended)</option>
-                <option value="VNBANK">Ngân hàng Nội địa</option>
-                <option value="VnPayQR">VNPAYQR</option>
-                <option value="VISA">VISA</option>
-              </select>
-            </div>
-            <div className="cart-modal-btns-steam">
-              <button
-                onClick={async () => {
-                  if (amountUsd < 5) {
-                    alert("Minimum funding amount is $5.");
-                    return;
-                  }
-                  try {
-                    const params = { amount: amountUsd, language };
-                    if (bankCode) params.bankCode = bankCode;
-
-                    const res = await axios.post(
-                      `http://localhost:8080/api/v1/payments/create-vnpay-payment`,
-                      null,
-                      { params }
-                    );
-                    if (res.data?.paymentUrl) {
-                      window.location.href = res.data.paymentUrl;
-                    } else {
-                      alert("Could not create payment link.");
-                    }
-                  } catch (err) {
-                    alert("Error creating payment link.");
-                  }
-                }}
-                className="cart-btn-steam cart-btn-blue-steam"
-              >
-                Add Funds
-              </button>
-              <button onClick={() => setShowAddFundsModal(false)} className="cart-btn-steam">
-                Cancel
-              </button>
             </div>
           </div>
         </div>

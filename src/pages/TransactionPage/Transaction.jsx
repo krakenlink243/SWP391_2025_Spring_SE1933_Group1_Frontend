@@ -49,7 +49,7 @@ const Transaction = () => {
 
   const handleDetailClick = (transactionId) => {
     console.log(`Detail clicked for transaction ID: ${transactionId}`);
-    window.location.href = `/transaction/detail/${transactionId}`;
+    window.location.href = `/account/history/detail/${transactionId}`;
   };
 
   return (
