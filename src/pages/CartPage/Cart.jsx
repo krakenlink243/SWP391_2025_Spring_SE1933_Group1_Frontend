@@ -26,7 +26,7 @@ const Cart = ({ minHeight }) => {
 
   useEffect(() => {
     if (CUR_TOKEN && !isTokenExpired()) {
-      axios.get('http://localhost:8080/user/wallet')
+      axios.get(`${import.meta.env.VITE_API_URL}/user/wallet`)
         .then(response => {
           console.log('Wallet API response:', response.data);
           setBalance(Number(response.data) || 0);
@@ -41,7 +41,7 @@ const Cart = ({ minHeight }) => {
   const fetchCart = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:8080/user/cart');
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/user/cart`);
       const data = response.data;
       if (data.success && Array.isArray(data.data)) {
         setCartItems(data.data);
@@ -64,7 +64,7 @@ const Cart = ({ minHeight }) => {
   const handleRemove = async (gameId) => {
     setLoading(true);
     try {
-      await axios.delete(`http://localhost:8080/user/cart/remove?gameId=${gameId}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/user/cart/remove?gameId=${gameId}`);
       await fetchCart();
     } catch (error) {
       console.error('Error removing game:', error);
@@ -77,12 +77,12 @@ const Cart = ({ minHeight }) => {
     setShowConfirmModal(false);
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:8080/user/cart/checkout');
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/user/cart/checkout`);
       if (!response.data.success) throw new Error('Purchase failed!');
       setResultMessage('Purchase successful!');
       setCartItems([]);
       await fetchCart();
-      const userRes = await axios.get('http://localhost:8080/user/wallet');
+      const userRes = await axios.get(`${import.meta.env.VITE_API_URL}/user/wallet`);
       setBalance(Number(userRes.data) || 0);
       setShowResultModal(true); // chỉ hiển thị modal khi thành công
     } catch (error) {

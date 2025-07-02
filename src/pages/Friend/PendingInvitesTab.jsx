@@ -11,12 +11,12 @@ function PendingInvitesTab() {
 
     useEffect(() => {
         const getReceivedInvites = () => {
-            axios.get("http://localhost:8080/user/pendinginvite/receive")
+            axios.get(`${import.meta.env.VITE_API_URL}/user/pendinginvite/receive`)
                 .then((response) => { setReceivedInvites(response.data) })
                 .catch((err) => { console.log("Error get received Invites: " + err) });
         }
         const getSentInvites = () => {
-            axios.get("http://localhost:8080/user/pendinginvite/init")
+            axios.get(`${import.meta.env.VITE_API_URL}/user/pendinginvite/init`)
                 .then((response) => { setSentInvites(response.data) })
                 .catch((err) => { console.log("Error get received Invites: " + err) });
 
@@ -26,7 +26,7 @@ function PendingInvitesTab() {
     }, [])
 
     const handleAccept = (friendId) => {
-        axios.patch(`http://localhost:8080/user/acceptinvite/${friendId}`)
+        axios.patch(`${import.meta.env.VITE_API_URL}/user/acceptinvite/${friendId}`)
             .then((resp) => {
                 setReceivedInvites(prev => prev.filter(inv => inv.invitorId !== friendId));
                 createNotification(friendId, "Comunity", `${CUR_USERNAME} has accepted your invites`)
@@ -35,7 +35,7 @@ function PendingInvitesTab() {
     };
 
     const handleBlock = (friendId) => {
-        axios.patch(`http://localhost:8080/user/blockinvite/${friendId}`)
+        axios.patch(`${import.meta.env.VITE_API_URL}/user/blockinvite/${friendId}`)
             .then((resp) => {
                 setReceivedInvites(prev => prev.filter(inv => inv.invitorId !== friendId));
             })
@@ -43,7 +43,7 @@ function PendingInvitesTab() {
     };
 
     const handleDecline = (friendId) => {
-        axios.delete(`http://localhost:8080/user/declineinvite/${friendId}`)
+        axios.delete(`${import.meta.env.VITE_API_URL}/user/declineinvite/${friendId}`)
             .then((resp) => {
                 setReceivedInvites(prev => prev.filter(inv => inv.invitorId !== friendId));
             })
@@ -51,7 +51,7 @@ function PendingInvitesTab() {
     };
 
     const handleCancel = (friendId) => {
-        axios.delete(`http://localhost:8080/user/declineinvite/${friendId}`)
+        axios.delete(`${import.meta.env.VITE_API_URL}/user/declineinvite/${friendId}`)
             .then((resp) => {
                 setSentInvites(prev => prev.filter(inv => inv.invitorId !== friendId));
             })

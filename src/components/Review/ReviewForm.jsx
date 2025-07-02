@@ -16,7 +16,7 @@ function ReviewForm({ onReload, game }) {
         }
         try {
             console.log('recommended:', recommended);
-            const response = await axios.post(`http://localhost:8080/review/post`, {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/review/post`, {
                 recommended: recommended,
                 reviewContent: reviewContent,
                 gameId: game.gameId,

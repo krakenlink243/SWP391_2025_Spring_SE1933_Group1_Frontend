@@ -16,7 +16,7 @@ const TransactionDetail = () => {
   useEffect(() => {
     const fetchTransactionDetail = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/user/transaction/detail/${transactionId}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/user/transaction/detail/${transactionId}`);
         if (res.data.success) {
           setTransaction(res.data.data);
         }

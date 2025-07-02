@@ -134,13 +134,13 @@ function SendGameToAdmin() {
     try{
       const uploadImage = new FormData();
       files.forEach(file => uploadImage.append('files',file));
-      const responseMedia = await axios.post('http://localhost:8080/request/image/upload',uploadImage,{
+      const responseMedia = await axios.post(`${import.meta.env.VITE_API_URL}/request/image/upload`,uploadImage,{
         header:{"Content-Type": "multipart/form-data"},
       });
       console.log(files.length)
       console.log(responseMedia.data.imageUrls);
       setFormData(prev => ({...prev,mediaUrls: responseMedia.data.imageUrls}));
-      const response = await axios.post('http://localhost:8080/request/game/add',{...formData,mediaUrls: responseMedia.data.imageUrls});
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/request/game/add`,{...formData,mediaUrls: responseMedia.data.imageUrls});
       console.log(response);
       alert(response.data.message);
       window.location.href="/";
@@ -164,7 +164,7 @@ function SendGameToAdmin() {
       if(formData.gameUrl === ""){
         return;
       }
-      const response = await axios.delete(`http://localhost:8080/request/file/delete/${formData.gameUrl}`);
+      const response = await axios.delete(`${import.meta.env.VITE_API_URL}/request/file/delete/${formData.gameUrl}`);
       console.log(response.data.message);
     } catch (error) {
       console.log(error);
@@ -188,7 +188,7 @@ function SendGameToAdmin() {
     eventSource.close();
   }
 
-  const newEventSource = new EventSource('http://localhost:8080/request/progress');
+  const newEventSource = new EventSource(`${import.meta.env.VITE_API_URL}/request/progress`);
   setEventSource(newEventSource);
 
   newEventSource.onmessage = (event) => {
@@ -227,7 +227,7 @@ function SendGameToAdmin() {
 
   try {
     const response = await axios.post(
-      'http://localhost:8080/request/file/upload',
+      `${import.meta.env.VITE_API_URL}/request/file/upload`,
       form,
       {
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -259,7 +259,7 @@ function SendGameToAdmin() {
   const normalizeValue = async (e) => {
     const { name, value } = e.target;
     if(name ==='gameName'){
-    const response = await axios.get(`http://localhost:8080/request/game/exist/check`,{params: { gameName: value }});
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/game/exist/check`,{params: { gameName: value }});
     console.log(response.data.message)
     console.log(response.data.debug)
       if(response.data.message === true){
