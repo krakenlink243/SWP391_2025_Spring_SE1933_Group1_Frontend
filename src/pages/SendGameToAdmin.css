@@ -238,6 +238,7 @@
   .my-select__control,.my-select__menu,.my-select__menu-list {
   background-color: #1A1C1F !important; 
   color: white;
+  border: none !important;
   }
   .my-select__option--is-focused {
   background-color: transparent !important;
@@ -251,6 +252,35 @@
   .my-select__multi-value__label{
     color: white !important;
   }
+  .my-select__input{
+    color: white !important;
+  }
+  .game-file progress{
+    height: 3px;
+    width: 100%;
+    appearance: none;
+    border-radius: 5px;
+  }
+/* Chrome, Safari, Edge */
+progress::-webkit-progress-value {
+   background-image: linear-gradient(90deg, #007bff, #0056b3); /* Green fill */
+  border-radius: 5px;
+}
+
+progress::-webkit-progress-bar {
+  /* background-color: black; Light gray background */
+  border-radius: 5px;
+  
+}
+
+/* Firefox */
+progress::-moz-progress-bar {
+  background-color: #4caf50;
+}
+
+
+
+
 
 
 
