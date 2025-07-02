@@ -60,7 +60,7 @@ import EmailSettings from "./components/EmailChange/EmailSettings";
 import { jwtDecode } from "jwt-decode";
 import { isTokenExpired } from "./utils/validators";
 import { CartCountProvider } from "./utils/TotalInCartContext";
-import SendGameToAdmin from "./pages/SendGametoAdmin";
+import SendGametoAdmin from "./pages/SendGametoAdmin";
 import AIGeneratorFrontend from "./pages/test"; // TEST
 
 function AppRoutes() {
