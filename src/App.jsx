@@ -204,14 +204,25 @@ function AppRoutes() {
             <Route path="/sendgame" element={<RequestAddGame />}></Route>
             {/* hoangvq */}
             <Route path="/login" element={<LoginF />} />
-            <Route path="/forgot-password" element={<ForgotPasswordRequest />} />
+            <Route
+              path="/forgot-password"
+              element={<ForgotPasswordRequest />}
+            />
             <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/oauth2/callback" element={<OAuth2RedirectHandler />} /> {/* Added by Loc Phan */}
+            <Route
+              path="/oauth2/callback"
+              element={<OAuth2RedirectHandler />}
+            />{" "}
+            {/* Added by Loc Phan */}
             <Route path="/register" element={<RegisterF />} />
-            <Route path="/verify-email" element={<VerifyEmail />} /> {/* Added by Loc Phan */}
+            <Route path="/verify-email" element={<VerifyEmail />} />{" "}
+            {/* Added by Loc Phan */}
             <Route path="/register-details" element={<RegisterDetailsF />} />
             <Route path="/account/history" element={<Transaction />} />
-            <Route path="/account/history/detail/:transactionId" element={<TransactionDetail />} />
+            <Route
+              path="/account/history/detail/:transactionId"
+              element={<TransactionDetail />}
+            />
             <Route
               path="/cart"
               element={<Cart minHeight={calculatedHeight} />}
@@ -255,6 +266,7 @@ function AppRoutes() {
             <Route path="/feedbackhub" element={<FeeedbackHub />}></Route>
             {/* hoangvq */}
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/profile/:userId" element={<ProfilePage />} />
             {/* Added by TSHUY */}
             {/* TSHUY */}
             <Route

@@ -1,16 +1,21 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import GameShowcase from "./GameShowcase";
 import "./ProfilePage.css";
 import { useOnlineUsers } from "../../utils/OnlineUsersContext";
 
-// Tách ProfileHeader ra để dễ quản lý
-const ProfileHeader = ({ user, onEditClick }) => {
+const ProfileHeader = ({
+  user,
+  isOwnProfile,
+  onEditClick,
+  onMessageClick,
+  onAddFriendClick,
+}) => {
   const avatarUrl =
     user?.avatarUrl ||
     "https://avatars.steamstatic.com/b5bd56c1aa4644a474a2e4972be27ef9e82e517e_full.jpg";
-  const isOnline = useOnlineUsers; // Giả sử API trả về trạng thái online
+  const isOnline = useOnlineUsers || false;
 
   return (
     <div className="profile-header">
@@ -29,10 +34,25 @@ const ProfileHeader = ({ user, onEditClick }) => {
             <p className="country">{user?.country || "Location not set"}</p>
           </div>
         </div>
+
         <div className="profile-actions">
-          <button className="action-btn primary" onClick={onEditClick}>
-            Edit Profile
-          </button>
+          {/* === LOGIC HIỂN THỊ CÓ ĐIỀU KIỆN === */}
+          {isOwnProfile ? (
+            // Nếu là trang của mình -> Hiển thị nút Edit
+            <button className="action-btn primary" onClick={onEditClick}>
+              Edit Profile
+            </button>
+          ) : (
+            // Nếu là trang của người khác -> Hiển thị các nút tương tác
+            <>
+              <button className="action-btn secondary" onClick={onMessageClick}>
+                Message
+              </button>
+              <button className="action-btn primary" onClick={onAddFriendClick}>
+                Add Friend
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -40,25 +60,41 @@ const ProfileHeader = ({ user, onEditClick }) => {
 };
 
 const ProfilePage = () => {
+  // Lấy ID của profile đang được xem từ URL (ví dụ: /profile/123)
+  const { userId: profileId } = useParams();
   const navigate = useNavigate();
+
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Lấy ID của người dùng đang đăng nhập từ localStorage
+  const loggedInUserId = localStorage.getItem("userId");
+
+  // So sánh để biết đây có phải là trang của chính mình không
+  // Cần chuyển cả hai sang kiểu số để so sánh chính xác
+  const isOwnProfile =
+    loggedInUserId && parseInt(loggedInUserId, 10) === parseInt(profileId, 10);
+
   useEffect(() => {
+    // Nếu không có ID trên URL, chuyển hướng đến trang profile của người dùng đang đăng nhập
+    if (!profileId && loggedInUserId) {
+      navigate(`/profile/${loggedInUserId}`, { replace: true });
+      return;
+    }
+    // Nếu không có ID nào cả (cả trên URL và localStorage), báo lỗi
+    if (!profileId) {
+      setLoading(false);
+      setError("No profile to display. Please log in or specify a user ID.");
+      return;
+    }
+
     const fetchUserData = async () => {
       setLoading(true);
-      const userId = localStorage.getItem("userId");
-
-      if (!userId) {
-        setError("User ID not found in localStorage. Please login again.");
-        setLoading(false);
-        return;
-      }
-
       try {
+        // Luôn fetch dữ liệu của profileId trên URL
         const response = await axios.get(
-          `http://localhost:8080/user/profile/${userId}`
+          `http://localhost:8080/user/profile/${profileId}`
         );
         setProfileData(response.data);
       } catch (err) {
@@ -70,12 +106,26 @@ const ProfilePage = () => {
     };
 
     fetchUserData();
-  }, []); // Dependency rỗng để chỉ chạy 1 lần
+  }, [profileId, loggedInUserId, navigate]); // Chạy lại khi ID trên URL thay đổi
 
+  // === CÁC HÀM XỬ LÝ SỰ KIỆN ===
   const handleEditRedirect = () => {
-    if (profileData?.userId) {
+    if (isOwnProfile) {
       navigate(`/profile/${profileData.userId}/edit/info`);
     }
+  };
+
+  const handleSendMessage = () => {
+    navigate("/chat");
+  };
+
+  const handleAddFriend = () => {
+    axios.post(`http://localhost:8080/user/sendinvite/${profileData.userId}`);
+    alert(
+      `Friend request sent to ${
+        profileData.profileName || profileData.username
+      }.`
+    );
   };
 
   if (loading)
@@ -90,10 +140,14 @@ const ProfilePage = () => {
         <video src="/videos/Sequence 01.mp4" autoPlay loop muted></video>
       </div>
       <div className="profile-content">
-        <ProfileHeader user={profileData} onEditClick={handleEditRedirect} />
-
+        <ProfileHeader
+          user={profileData}
+          isOwnProfile={isOwnProfile}
+          onEditClick={handleEditRedirect}
+          onMessageClick={handleSendMessage}
+          onAddFriendClick={handleAddFriend}
+        />
         <div className="profile-main">
-          {/* === CỘT TRÁI === */}
           <div className="profile-left">
             <GameShowcase
               userId={profileData.userId}
@@ -107,8 +161,6 @@ const ProfilePage = () => {
               </p>
             </div>
           </div>
-
-          {/* === CỘT PHẢI === */}
           <div className="profile-right">
             <div className="profile-details section-box">
               <ul className="details-list">
