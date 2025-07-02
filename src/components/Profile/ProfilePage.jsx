@@ -120,7 +120,7 @@ const ProfilePage = () => {
   };
 
   const handleAddFriend = () => {
-    axios.post(`http://localhost:8080/user/sendinvite/${profileData.userId}`);
+    axios.post(`${import.meta.env.VITE_API_URL}/user/sendinvite/${profileData.userId}`);
     alert(
       `Friend request sent to ${
         profileData.profileName || profileData.username
