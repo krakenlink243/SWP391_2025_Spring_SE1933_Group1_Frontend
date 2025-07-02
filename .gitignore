@@ -26,5 +26,4 @@ public/videos/Sequence 01.mp4
 public/videos/Sequence 01.mp4
 public/videos/Sequence 01.mp4
 
-.env.production
-.env.development
+.env*
