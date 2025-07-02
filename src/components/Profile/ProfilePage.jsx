@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import GameShowcase from "./GameShowCase";
+import GameShowcase from "./GameShowcase";
 import "./ProfilePage.css";
 import { useOnlineUsers } from "../../utils/OnlineUsersContext";
 
