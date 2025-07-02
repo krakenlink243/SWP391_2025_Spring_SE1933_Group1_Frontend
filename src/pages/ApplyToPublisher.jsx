@@ -169,8 +169,6 @@ function ApplyToPublisher() {
 ) : (
   <Button label="+" color="grey-button" />
 )}
-
-
           </div>
         )}
         </ImageUploading>
@@ -180,5 +178,4 @@ function ApplyToPublisher() {
     </>
   )
 }
-
 export default ApplyToPublisher

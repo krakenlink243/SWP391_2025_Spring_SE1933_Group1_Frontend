@@ -57,22 +57,16 @@ const handleAnswer = () => {
   confirmAlert({
     title: `Send answer to ${userName}`,
     customUI: ({ onClose }) => (
-      <div className="custom-ui" style={{
-        background: '#fff',
-        padding: '2rem',
-        borderRadius: '8px',
-        boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
-        maxWidth: '400px',
-        margin: 'auto'
-      }}>
-        <h2>Answer for: {formData.subject}</h2>
+      <div className="custom-ui">
+        <h2>Answer Feedback</h2>
+        <p>Answer for: {userName}</p>
         <textarea
           rows={5}
           style={{ width: '100%', marginBottom: '1rem' }}
           onChange={(e) => (answer = e.target.value)}
           placeholder="Type your answer here..."
         />
-        <button
+        <button className='blue-button'
           onClick={async () => {
             if (answer.trim() !== '') {
               try {
@@ -104,8 +98,12 @@ const handleAnswer = () => {
       }
       try {
         const response = await axios.patch(`http://localhost:8080/request/feedback/reject/${feedbackId}`);
-        console.log("Approved request:", response.data)
-        fetchData();
+        console.log("Approved request:", response.data);
+        createNotification(
+          senderId,
+          "Feedback Answer",
+          `Your feedback ${formData.subject} has been dissmissed`
+        )
       } catch (err) {
         console.error("Error approving request:", err);
       }

@@ -1,7 +1,7 @@
 //@author: Vu Hoang
 import React from 'react'
 import './RequestItem.css'
-function RequestItem({requestName,from,date,onApprove,onDecline,onCheckChange,requestId,isTicked,onClicked}) {
+function RequestItem({requestName,from,date,onApprove,onDecline,onCheckChange,requestId,isTicked,onClicked,reverseButton}) {
 
   return (
     <div className='request-item'>
@@ -13,8 +13,17 @@ function RequestItem({requestName,from,date,onApprove,onDecline,onCheckChange,re
       <div style={{cursor:"pointer"}} className='request-name' onClick={onClicked}>{requestName} </div>
       <div className='from-user'>{from}</div>
       <div className='feedback-date'>{date}</div>
-      <img src="/icons/Approve.png" alt="" onClick={onApprove}/>
-      <img src="/icons/Decline.png" alt="" onClick={onDecline} />
+      {reverseButton ? (
+        <>
+          <img src="/icons/Approve.png" alt="" onClick={onApprove} />
+          <img src="/icons/Decline.png" alt="" onClick={onDecline} />
+        </>
+      ) : (
+        <>
+          <img src="/icons/Decline.png" alt="" onClick={onDecline} />
+          <img src="/icons/Approve.png" alt="" onClick={onApprove} />
+        </>
+      )}
     </div>
   )
 }

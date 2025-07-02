@@ -9,6 +9,7 @@ import ImageUploading from 'react-images-uploading'
 import './ApplyToPublisher.css'
 import axios from 'axios'
 import { createNotification } from '../services/notification'
+import { confirmAlert } from 'react-confirm-alert'
 function PublisherApproveDetails() {
   const publisherId = useParams().publisherId
   const [formData,setFormData] = useState(
@@ -20,6 +21,7 @@ function PublisherApproveDetails() {
       country:"",
       imageUrl:"",
       userId:"",
+      userName:"",
     }
   )
   const fetchData = async () => {
@@ -47,21 +49,51 @@ function PublisherApproveDetails() {
       console.error("Error approving request:", err);
     }
   };
-  const handleDecline = async (requestId) =>{
-    const answer = window.prompt("Send answer to" + " " + formData.legalName + publisherId)
-      if(answer.trim() !== ""){
-        try {
-          createNotification(formData.userId,"Publisher Apply Response","Answer for your publisher apply "+formData.publisherName+": " + answer)
-          const response = await axios.patch(`http://localhost:8080/request/publisher/reject/${requestId}`);
-          console.log("Approved request:", response.data)
-        } catch (err) {
-          console.error("Error approving request:", err);
-        }
-        window.location.href=`/approvepublisher`
-      }else{
-        alert('Please enter answer')
-      }
-  }
+  const handleDecline = (requestId) => {
+  let answer = '';
+
+  confirmAlert({
+    title: `Send answer to ${formData.legalName} (${publisherId})`,
+    customUI: ({ onClose }) => (
+      <div className="custom-ui">
+        <h2>Decline Publisher Request</h2>
+        <p>Answer for: {formData.userName}</p>
+        <textarea
+          rows={5}
+          style={{ width: '100%', marginBottom: '1rem' }}
+          onChange={(e) => (answer = e.target.value)}
+          placeholder="Type your decline reason..."
+        />
+        <button className="blue-button"
+          onClick={async () => {
+            if (answer.trim() !== '') {
+              try {
+                createNotification(
+                  formData.userId,
+                  "Publisher Apply Response",
+                  `Answer for your publisher apply ${formData.publisherName}: ${answer}`
+                );
+                const response = await axios.patch(
+                  `http://localhost:8080/request/publisher/reject/${requestId}`
+                );
+                console.log("Declined request:", response.data);
+                window.location.href = '/approvepublisher';
+              } catch (err) {
+                console.error("Error declining request:", err);
+              }
+              onClose();
+            } else {
+              alert('Please enter answer');
+            }
+          }}
+        >
+          Submit
+        </button>
+      </div>
+    )
+  });
+};
+
   return (
     <>
     <div className='apply-publisher-title'>

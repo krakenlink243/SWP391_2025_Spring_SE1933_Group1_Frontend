@@ -6,6 +6,7 @@ import RequestItem from '../components/RequestItem/RequestItem'
 import './AdminDashboard/GameApprovePage.css'
 import { createNotification } from '../services/notification';
 import { trimValue } from '../utils/validators';
+import { confirmAlert } from 'react-confirm-alert';
 function FeedbackApprovePage() {
   const [totalPages, setTotalPages] = useState(1);
   const [loadedRequest, setLoadedRequest] = useState([]);
@@ -25,33 +26,68 @@ function FeedbackApprovePage() {
   const handlePageClick = (pageNumber) => {
     setPage(pageNumber);
   };
-
-
   useEffect(() => {
     fetchData();
   }, [page]);
 
-  const handleApprove = async (requestId, userName, subject, senderId) => {
-    const answer = window.prompt("Send answer to" + " " + userName)
-    if (answer.trim() !== "") {
-      try {
-        createNotification(senderId, "Feedback Answer", "Answer for your feedback " + subject + ": " + answer)
-        const response = await axios.patch(`http://localhost:8080/request/feedback/approve/${requestId}`, {
-          response: trimValue(answer)
-        });
-        console.log("Approved request:", response.data)
-        fetchData();
-      } catch (err) {
-        console.error("Error approving request:", err);
-      }
-    } else {
-      alert('Please enter answer')
+  const handleApprove = (requestId, userName, subject, senderId) => {
+    let answer = '';
+
+    confirmAlert({
+      title: `Send answer to ${userName}`,
+      customUI: ({ onClose }) => (
+        <div className="custom-ui">
+          <h2>Answer Feedback</h2>
+          <p>Answer for: {userName}</p>
+          <textarea
+            rows={5}
+            style={{ width: '100%', marginBottom: '1rem' }}
+            onChange={(e) => (answer = e.target.value)}
+            placeholder="Type your response..."
+          />
+          <button className="blue-button"
+            onClick={async () => {
+              if (answer.trim() !== '') {
+                try {
+                  createNotification(
+                    senderId,
+                    "Feedback Answer",
+                    `Answer for your feedback ${subject}: ${answer}`
+                  )
+                  const response = await axios.patch(
+                    `http://localhost:8080/request/feedback/approve/${requestId}`,
+                    { response: trimValue(answer) }
+                  );
+                  console.log("Approved request:", response.data);
+                  fetchData(); // Refresh UI
+                } catch (err) {
+                  console.error("Error approving request:", err);
+                }
+                onClose();
+              } else {
+                alert("Please enter answer");
+              }
+            }}
+          >
+            Submit
+          </button>
+        </div>
+      )
+    });
+  };
+  const handleDecline = async (requestId, subject, senderId) => {
+    const confirmDecline = window.confirm("Are you sure you want to decline this feedback?");
+    if (!confirmDecline) {
+      return;
     }
-  }
-  const handleDecline = async (requestId) => {
     try {
       const response = await axios.patch(`http://localhost:8080/request/feedback/reject/${requestId}`);
       console.log("Approved request:", response.data);
+      createNotification(
+                    senderId,
+                    "Feedback Answer",
+                    `Your feedback ${subject} has been dissmissed`
+                  )
       alert("Feedback Dissmissed")
       fetchData();
     } catch (err) {
@@ -76,7 +112,10 @@ function FeedbackApprovePage() {
     console.log("Updated Tick Array:", selectedRequests);
   };
   const handleDeclineSelected = async () => {
-    console.log("ook")
+    const confirmDecline = window.confirm("Are you sure you want to dissmiss all selected feedback?");
+    if (!confirmDecline) {
+      return;
+    }
     try {
       for (let i = 0; i < selectedRequests.length; i++) {
         const requestId = selectedRequests[i];
@@ -127,10 +166,11 @@ function FeedbackApprovePage() {
           from={request.userName}
           date={request.createdDate}
           onApprove={() => handleApprove(request.requestId, request.userName, request.subject, request.userId)}
-          onDecline={() => handleDecline(request.requestId)}
+          onDecline={() => handleDecline(request.requestId, request.subject, request.userId)}
           onCheckChange={handleCheckChange}
           isTicked={selectedRequests.includes(request.requestId)}
           onClicked={() => handleRedirect(request.requestId)}
+          reverseButton={"true"}
         />
       ))}
       <div className="pagination-controls">
