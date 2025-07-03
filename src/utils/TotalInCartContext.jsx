@@ -17,7 +17,7 @@ export function CartCountProvider({ children }) {
             return;
         }
 
-        axios.get(`${import.meta.env.VITE_API_URL}/user/cart`)
+        axios.get("http://localhost:8080/user/cart")
             .then((resp) => {
                 setCartItemsCount(resp.data.data.length);
             })
@@ -26,7 +26,7 @@ export function CartCountProvider({ children }) {
             })
 
         const client = new Client({
-            webSocketFactory: () => new SockJS(`${import.meta.env.VITE_API_URL}/ws-community?token=${token}`),
+            webSocketFactory: () => new SockJS(`http://localhost:8080/ws-community?token=${token}`),
             reconnectDelay: 300,
 
         });

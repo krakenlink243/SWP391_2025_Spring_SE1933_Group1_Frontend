@@ -39,7 +39,7 @@ const RegisterDetails = () => {
       }
 
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/check-username`, {
+        const res = await axios.get("http://localhost:8080/api/auth/check-username", {
           params: { username: value },
         });
         setUsernameAvailable(res.data.available);

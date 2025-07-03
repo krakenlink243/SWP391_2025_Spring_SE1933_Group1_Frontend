@@ -74,7 +74,7 @@ function PublisherApproveDetails() {
                   `Answer for your publisher apply ${formData.publisherName}: ${answer}`
                 );
                 const response = await axios.patch(
-                  `${import.meta.env.VITE_API_URL}/request/publisher/reject/${requestId}`
+                  `http://localhost:8080/request/publisher/reject/${requestId}`
                 );
                 console.log("Declined request:", response.data);
                 window.location.href = '/approvepublisher';
