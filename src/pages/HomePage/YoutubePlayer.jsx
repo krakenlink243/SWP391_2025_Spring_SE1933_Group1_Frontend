@@ -1,5 +1,5 @@
 import React from "react";
-import "./YouTubePlayer.css"; // File CSS riêng cho component này
+import "./YoutubePlayer.css"; // File CSS riêng cho component này
 
 const YouTubePlayer = ({ videoId, title }) => {
   if (!videoId) {
