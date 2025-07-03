@@ -43,6 +43,7 @@ function ForgotPasswordRequest() {
     <main className="support-form">
       <h1 className="form-title">Support</h1>
       <form className="form-container" onSubmit={handleSubmit}>
+        {message && <p className="message">{message}</p>}
         <div>
           <label htmlFor="username" className="form-label username-label">
             Username

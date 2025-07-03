@@ -97,6 +97,8 @@ const AccountDetailsPage = () => {
             <h3>CONTACT INFO</h3>
             <p>Email address: {account?.email}</p>
             <a href="change-email">Manage email preferences</a>
+            <br/>
+            <a href="change-password">Change password</a>
           </section>
         </main>
       </div>
