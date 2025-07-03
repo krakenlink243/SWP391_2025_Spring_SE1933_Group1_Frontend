@@ -174,7 +174,7 @@ function SendGameToAdmin() {
   const selectedFile = e.target.files[0];
   if (!selectedFile) return;
 
-  await handleDelete();
+  await handleDelete(); // Your existing delete logic
   setUploadProgress(0);
   setUploadSpeed(0);
   setTimeRemaining(null);
@@ -184,6 +184,7 @@ function SendGameToAdmin() {
 
   const startTime = Date.now();
 
+  // Initialize SSE
   if (eventSource) {
     eventSource.close();
   }
@@ -195,12 +196,12 @@ function SendGameToAdmin() {
     const data = event.data;
 
     if (!isNaN(data)) {
-      const progress = parseFloat(data);
-      setUploadProgress(progress);
+      const backendProgress = parseFloat(data); // 0–100 from SSE
+      const combinedProgress = 50 + backendProgress / 2; // merge phase 2 (50–100)
+      setUploadProgress(combinedProgress);
 
-      // Estimate speed and time from progress %
       const elapsed = (Date.now() - startTime) / 1000;
-      const uploadedBytes = (selectedFile.size * progress) / 100;
+      const uploadedBytes = (selectedFile.size * combinedProgress) / 100;
       const speedKBps = uploadedBytes / elapsed / 1024;
       const remainingBytes = selectedFile.size - uploadedBytes;
       const remainingTime = remainingBytes / (speedKBps * 1024);
@@ -232,6 +233,9 @@ function SendGameToAdmin() {
       {
         headers: { 'Content-Type': 'multipart/form-data' },
         onUploadProgress: (event) => {
+          const percent = (event.loaded / event.total) * 50; // phase 1 (0–50%)
+          setUploadProgress(percent);
+
           const elapsedTime = (Date.now() - startTime) / 1000;
           const speedKBps = (event.loaded / elapsedTime) / 1024;
           const remainingTime = (selectedFile.size - event.loaded) / (speedKBps * 1024);
@@ -252,6 +256,8 @@ function SendGameToAdmin() {
     newEventSource.close();
   }
 };
+
+
   const handleCancel = async() =>{
       await handleDelete();
       window.location.href="/"
@@ -364,16 +370,14 @@ function SendGameToAdmin() {
         <input type="file" accept='.zip' style={{display:"none"}} ref={fileRef} onChange={handleGameUpload}  /> 
         <Button className='upload-button' label={fileName} onClick={() => fileRef.current.click()} color='blue-button'/>  
         {uploadProgress > 0 && uploadProgress < 100 && (
-        <>
-          <progress value={uploadProgress} max="100" />
-          <div>Speed: {uploadSpeed} KB/s</div>
-          <div>
-            Time Remaining: {timeRemaining ? timeRemaining : 'Calculating...'}
-          </div>
-        </>
+          <>
+            <progress value={uploadProgress} max="100" />
+            <div>Speed: {uploadSpeed} KB/s</div>
+            <div>
+              Time Remaining: {timeRemaining ? timeRemaining : 'Calculating...'}
+            </div>
+          </>
         )}
-
-
       </div>
       <div className='send-request-cancel'>
         <Button className='cancel-button' label='Cancel' onClick={handleCancel} color='grey-button'/>
