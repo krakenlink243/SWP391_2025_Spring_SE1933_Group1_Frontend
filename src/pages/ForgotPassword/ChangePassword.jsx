@@ -52,7 +52,7 @@ const ChangePassword = () => {
 
     return (
         <div className="change-password-container">
-            <h2>Change Password</h2>
+            <h2 style={{ color: 'white' }}>Change Password</h2>
             {message && <p style={{ color: 'red' }}>{message}</p>}
 
             {step === 1 && (
@@ -78,7 +78,7 @@ const ChangePassword = () => {
                         <tbody>
                             <tr>
                                 <td>
-                                    <label htmlFor="otp">OTP:</label>
+                                    <label style={{ color: 'white' }} htmlFor="otp">OTP:</label>
                                 </td>
                                 <td>
                                     <input
@@ -94,7 +94,7 @@ const ChangePassword = () => {
 
                             <tr>
                                 <td>
-                                    <label htmlFor="newPassword">New Password:</label>
+                                    <label style={{ color: 'white' }} htmlFor="newPassword">New Password:</label>
                                 </td>
                                 <td>
                                     <input
@@ -110,7 +110,7 @@ const ChangePassword = () => {
 
                             <tr>
                                 <td>
-                                    <label htmlFor="confirmPassword">Confirm New Password:</label>
+                                    <label style={{ color: 'white' }} htmlFor="confirmPassword">Confirm New Password:</label>
                                 </td>
                                 <td>
                                     <input
