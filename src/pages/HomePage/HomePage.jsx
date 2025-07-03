@@ -4,17 +4,16 @@ import { useEffect } from "react";
 // import HeroCarousel from "../components/HomePage/HeroCarousel";
 
 import "./HomePage.css";
-import YouTubePlayer from "./YouTubePlayer";
 
 import BrowseByTag from "./BrowseByTag";
-import BrowseByPublisher from "./BrowseByPublisher";
 /**
  * Origin belongs to @author TS Huy
- * Remake by Phan NT Son
+ * Remake by Phan NT Son 
  * @since 14-06-2025
- * @returns
+ * @returns 
  */
 const HomePage = () => {
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -30,7 +29,7 @@ const HomePage = () => {
             alt="Top Promo Banner"
           >
             <source
-              src="https://shared.fastly.steamstatic.com/store_item_assets/steam/clusters/sale_summer2025/36a01fe4331ab0ca600ff205/webm_page_bg_english.webm?t=1750963512"
+              src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/clusters/frontpage/e605d9023731d9b5b9ec448e/webm_page_bg_vietnamese.webm?t=1748898349"
               type="video/webm"
             />
           </video>
@@ -39,19 +38,11 @@ const HomePage = () => {
           <div className="col-lg-2"></div>
           <div className="col-lg-8">
             <BrowseByTag />
-            <div>
-              <div className="video-section">
-                <h2 className="section-title">Featured Video</h2>
-                <YouTubePlayer
-                  videoId="EFf1AWnZVW0"
-                  title="Featured Gameplay"
-                />
-              </div>
-            </div>
-            <BrowseByPublisher />
+
           </div>
         </div>
-        <div className="row"></div>
+        <div className="row">
+        </div>
       </div>
     </div>
   );
