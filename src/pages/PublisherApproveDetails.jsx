@@ -26,7 +26,7 @@ function PublisherApproveDetails() {
   )
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/request/publisher/details/${publisherId}`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/publisher/details/${publisherId}`);
       setFormData(response.data);
     } catch (error) {
       console.error("Error fetching publisher data:", error);
@@ -41,7 +41,7 @@ function PublisherApproveDetails() {
       return;
     }
     try {
-      const response = await axios.patch(`http://localhost:8080/request/publisher/approve/${requestId}`);
+      const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/publisher/approve/${requestId}`);
       console.log("Approved request:", response.data);
       alert("Publisher Approved")
       window.location.href=`/approvepublisher/`
@@ -74,7 +74,7 @@ function PublisherApproveDetails() {
                   `Answer for your publisher apply ${formData.publisherName}: ${answer}`
                 );
                 const response = await axios.patch(
-                  `http://localhost:8080/request/publisher/reject/${requestId}`
+                  `${import.meta.env.VITE_API_URL}/request/publisher/reject/${requestId}`
                 );
                 console.log("Declined request:", response.data);
                 window.location.href = '/approvepublisher';

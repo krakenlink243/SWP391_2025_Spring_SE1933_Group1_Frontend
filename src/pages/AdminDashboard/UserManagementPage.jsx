@@ -17,7 +17,7 @@ function UserManagementPage() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/admin/banned-users/${page}`);
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/admin/banned-users/${page}`);
             setLoadedRequest(response.data.content);
             setTotalPages(response.data.totalPages);
             console.log(response.data);

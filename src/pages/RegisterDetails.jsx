@@ -39,7 +39,7 @@ const RegisterDetails = () => {
       }
 
       try {
-        const res = await axios.get("http://localhost:8080/api/auth/check-username", {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/check-username`, {
           params: { username: value },
         });
         setUsernameAvailable(res.data.available);
@@ -77,7 +77,7 @@ const RegisterDetails = () => {
         country: formData.country,
       };
 
-      const response = await axios.post('http://localhost:8080/api/auth/register', fullData);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, fullData);
       setMessage('Registration successful!');
       console.log(response.data);
 

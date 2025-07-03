@@ -13,7 +13,7 @@ function NotificationBoxItem({ notification, markRead }) {
 
     const handleClick = () => {
         if (!read) {
-            axios.patch(`http://localhost:8080/notification/markread/${notification.notifId}`)
+            axios.patch(`${import.meta.env.VITE_API_URL}/notification/markread/${notification.notifId}`)
                 .then(() => {
                     setRead(true);
                     markRead(notification.notifId);

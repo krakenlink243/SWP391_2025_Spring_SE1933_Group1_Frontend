@@ -35,7 +35,7 @@ function ReviewButtons({ reivewHelpful, reivewNotHelpful, authorId, game }) {
 
     const checkUserOption = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/review/${game.gameId}/${authorId}/check`);
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/review/${game.gameId}/${authorId}/check`);
             const result = response.data;
             setUserOption(result === 1 ? 1 : result === -1 ? -1 : 0);
         } catch (error) {
@@ -50,9 +50,9 @@ function ReviewButtons({ reivewHelpful, reivewNotHelpful, authorId, game }) {
         }
 
         const PATHS = {
-            HELPFUL: "http://localhost:8080/review/vote/helpful",
-            NOT_HELPFUL: "http://localhost:8080/review/vote/unhelpful",
-            CLEAN: "http://localhost:8080/review/vote/clean"
+            HELPFUL: `${import.meta.env.VITE_API_URL}/review/vote/helpful`,
+            NOT_HELPFUL: `${import.meta.env.VITE_API_URL}/review/vote/unhelpful`,
+            CLEAN: `${import.meta.env.VITE_API_URL}/review/vote/clean`
         };
 
 

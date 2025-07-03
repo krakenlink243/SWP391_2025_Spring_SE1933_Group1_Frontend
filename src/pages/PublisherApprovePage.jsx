@@ -14,7 +14,7 @@ function PublisherApprovePage() {
     const [isChecked,setIsChecked] = useState(false);
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/request/publisher/${page}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/publisher/${page}`);
         setLoadedRequest(response.data.content);
         setTotalPages(response.data.totalPages);
         console.log(response.data);
@@ -37,7 +37,7 @@ function PublisherApprovePage() {
           return;
         }
         try {
-          const response = await axios.patch(`http://localhost:8080/request/publisher/approve/${requestId}`);
+          const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/publisher/approve/${requestId}`);
           console.log("Approved request:", response.data);
           alert("Publisher Approved")
           fetchData();
@@ -73,7 +73,7 @@ function PublisherApprovePage() {
 
                       // API call to reject request
                       const response = await axios.patch(
-                        `http://localhost:8080/request/publisher/reject/${requestId}`
+                        `${import.meta.env.VITE_API_URL}/request/publisher/reject/${requestId}`
                       );
                       console.log("Declined request:", response.data);
 
@@ -119,7 +119,7 @@ function PublisherApprovePage() {
         try {
             for (let i = 0; i < selectedRequests.length; i++) {
                 const requestId = selectedRequests[i];
-                const response = await axios.patch(`http://localhost:8080/request/publisher/approve/${requestId}`);
+                const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/publisher/approve/${requestId}`);
                 console.log(`Processed approve for request ID:`, requestId);
             }
             alert(`All selected publishers have been approved`);
@@ -134,7 +134,7 @@ function PublisherApprovePage() {
         try {
             for (let i = 0; i < selectedRequests.length; i++) {
                 const requestId = selectedRequests[i];
-                const response = await axios.patch(`http://localhost:8080/request/publisher/reject/${requestId}`);
+                const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/publisher/reject/${requestId}`);
                 console.log(`Processed approve for request ID:`, requestId);
             }
             alert(`All selected publishers have been declined`);

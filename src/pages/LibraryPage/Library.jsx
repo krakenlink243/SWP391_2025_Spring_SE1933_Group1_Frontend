@@ -23,7 +23,7 @@ const Library = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:8080/user/library")
+      .get(`${import.meta.env.VITE_API_URL}/user/library`)
       .then((res) => {
         setGames(
           (res.data.content || []).map((item) => ({

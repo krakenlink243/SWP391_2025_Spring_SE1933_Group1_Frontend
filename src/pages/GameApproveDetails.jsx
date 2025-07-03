@@ -71,13 +71,13 @@ function GameApproveDetails() {
   useEffect(() => {
     const getGameDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/request/game/details/${gameId}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/game/details/${gameId}`);
         console.log(response.data);
         setFormData(response.data);
         // Get download link after formData is updated
         if (response.data.gameUrl) {
           try {
-            const downloadResponse = await axios.get(`http://localhost:8080/request/file/download/${response.data.gameUrl}`);
+            const downloadResponse = await axios.get(`${import.meta.env.VITE_API_URL}/request/file/download/${response.data.gameUrl}`);
             console.log(downloadResponse.data);
             setDownloadLink(downloadResponse.data);
           } catch (error) {
@@ -103,7 +103,7 @@ function GameApproveDetails() {
       return;
     }
     try {
-      const response = await axios.patch(`http://localhost:8080/request/game/approve/${gameId}`);
+      const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/game/approve/${gameId}`);
       console.log(response.data);
       alert("Game Approved");
       window.location.href = '/aprrovegame'
@@ -136,7 +136,7 @@ function GameApproveDetails() {
                   `Answer for ${formData.gameName}: ${answer}`
                 );
                 const response = await axios.patch(
-                  `http://localhost:8080/request/game/reject/${gameId}`
+                  `${import.meta.env.VITE_API_URL}/request/game/reject/${gameId}`
                 );
                 console.log("Declined request:", response.data);
                 window.location.href = '/aprrovegame';
@@ -158,7 +158,7 @@ function GameApproveDetails() {
 
   const handleGetLinkDownload = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/request/file/download/${formData.gameUrl}`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/file/download/${formData.gameUrl}`);
       console.log(response.data);
       setDownloadLink(response.data);
     } catch (error) {

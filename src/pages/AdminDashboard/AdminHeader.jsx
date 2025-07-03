@@ -26,7 +26,7 @@ const AdminHeader = forwardRef(({ currentTab, changeToTab }, ref) => {
     useEffect(() => {
         const userId = localStorage.getItem("userId");
         const getUserBalance = () => {
-            axios.get(`http://localhost:8080/user/wallet`)
+            axios.get(`${import.meta.env.VITE_API_URL}/user/wallet`)
                 .then((response) => setBalance(response.data))
                 .catch((error) => alert(error));
         };
