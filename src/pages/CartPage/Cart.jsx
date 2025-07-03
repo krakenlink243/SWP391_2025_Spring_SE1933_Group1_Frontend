@@ -99,7 +99,7 @@ const Cart = ({ minHeight }) => {
           language: "en",
         };
         const response = await axios.post(
-          `http://localhost:8080/api/v1/payments/create-vnpay-payment`,
+          `${import.meta.env.VITE_API_URL}/api/v1/payments/create-vnpay-payment`,
           null,
           { params: params }
         );

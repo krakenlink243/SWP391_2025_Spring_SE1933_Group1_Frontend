@@ -15,7 +15,7 @@ function BrowseByPublisher() {
 
   const getPublishersList = async () => {
     try {
-      const resp = await axios.get("http://localhost:8080/publisher/list");
+      const resp = await axios.get(`${import.meta.env.VITE_API_URL}/publisher/list`);
       setData(resp.data);
       console.log(resp.data);
     } catch (error) {
