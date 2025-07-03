@@ -50,7 +50,7 @@ const GameDetail = () => {
       <div className="error-message">Error fetching game details: {error}</div>
     );
   if (!game) return <div className="not-found-message">Game not found.</div>;
-
+    
   return (
 
     /**
