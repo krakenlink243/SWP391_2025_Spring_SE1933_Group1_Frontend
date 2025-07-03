@@ -49,7 +49,6 @@ function PublisherApproveDetails() {
       console.error("Error approving request:", err);
     }
   };
-<<<<<<< HEAD
   const handleDecline = (requestId) => {
   let answer = '';
 
@@ -95,23 +94,6 @@ function PublisherApproveDetails() {
   });
 };
 
-=======
-  const handleDecline = async (requestId) =>{
-    const answer = window.prompt("Send answer to" + " " + formData.legalName + publisherId)
-      if(answer.trim() !== ""){
-        try {
-          createNotification(formData.userId,"Publisher Apply Response","Answer for your publisher apply "+formData.publisherName+": " + answer)
-          const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/publisher/reject/${requestId}`);
-          console.log("Approved request:", response.data)
-        } catch (err) {
-          console.error("Error approving request:", err);
-        }
-        window.location.href=`/approvepublisher`
-      }else{
-        alert('Please enter answer')
-      }
-  }
->>>>>>> main
   return (
     <>
     <div className='apply-publisher-title'>
