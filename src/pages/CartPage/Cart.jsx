@@ -87,8 +87,19 @@ const Cart = ({ minHeight }) => {
       setShowResultModal(true); // chỉ hiển thị modal khi thành công
     } catch (error) {
       if (parseFloat(total) > balance) {
-        alert("Purchase failed. Please add more funds to your account balance.");
-        window.location.href = "/account";
+        const params = {
+          amount: total,
+          language: "en",
+        };
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/api/v1/payments/create-vnpay-payment`,
+          null,
+          { params: params }
+        );
+        const { paymentUrl } = response.data;
+        if (paymentUrl) {
+          window.location.href = paymentUrl; // Chuyển hướng đến cổng thanh toán
+        }
       } else {
         alert("Purchase failed due to an unknown error.");
       }
