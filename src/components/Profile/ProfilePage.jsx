@@ -94,7 +94,7 @@ const ProfilePage = () => {
       try {
         // Luôn fetch dữ liệu của profileId trên URL
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/user/profile/${userId}`
+          `${import.meta.env.VITE_API_URL}/user/profile/${profileId}`
         );
         setProfileData(response.data);
       } catch (err) {
@@ -120,7 +120,9 @@ const ProfilePage = () => {
   };
 
   const handleAddFriend = () => {
-    axios.post(`${import.meta.env.VITE_API_URL}/user/sendinvite/${profileData.userId}`);
+    axios.post(
+      `${import.meta.env.VITE_API_URL}/user/sendinvite/${profileData.userId}`
+    );
     alert(
       `Friend request sent to ${
         profileData.profileName || profileData.username
