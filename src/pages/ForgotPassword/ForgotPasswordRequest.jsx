@@ -21,7 +21,8 @@ function ForgotPasswordRequest() {
     }
 
     try {
-      const response = await axios.post("http://localhost:8080/api/password/request", {
+  
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/password/request`, {
         username,
         email,
       });
