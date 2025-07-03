@@ -81,7 +81,7 @@ const EmailSettings = ({ currentUser }) => {
 
       {step === 1 && (
         <form onSubmit={handleRequestChange}>
-          <h3>Change Email Address</h3>
+          <h3 className="changeEmail">Change Email Address</h3>
           <div className="form-group">
             <label htmlFor="newEmail">New Email Address</label>
             <input
