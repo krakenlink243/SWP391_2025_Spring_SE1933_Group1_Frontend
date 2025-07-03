@@ -23,6 +23,7 @@ import Login from "./pages/Login";
 import RegisterEmail from "./pages/RegisterEmail";
 import VerifyEmail from "./pages/VerifyEmail"; // Added by Loc Phan
 import ForgotPasswordRequest from "./pages/ForgotPassword/ForgotPasswordRequest"; // Added by Loc Phan
+import ChangePassword from "./pages/ForgotPassword/ChangePassword"; // Added by Loc Phan
 import RegisterDetails from "./pages/RegisterDetails";
 import GameApprrovePage from "./pages/AdminDashboard/GameApprovePage";
 import GameApproveDetails from "./pages/GameApproveDetails";
@@ -209,6 +210,7 @@ function AppRoutes() {
             <Route path="/login" element={<LoginF />} />
             <Route path="/forgot-password" element={<ForgotPasswordRequest />} />
             <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/change-password" element={<ChangePassword />} /> {/* Added by Loc Phan */}
             <Route path="/oauth2/callback" element={<OAuth2RedirectHandler />} /> {/* Added by Loc Phan */}
             <Route path="/register" element={<RegisterF />} />
             <Route path="/verify-email" element={<VerifyEmail />} /> {/* Added by Loc Phan */}
