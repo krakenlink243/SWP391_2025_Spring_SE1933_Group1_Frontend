@@ -97,7 +97,12 @@ function DetailHeader({ game }) {
             });
     };
 
-
+    window.googleTranslateElementInit = () => {
+      new window.google.translate.TranslateElement(
+        { pageLanguage: 'en', layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE },
+        'google_translate_element'
+      );
+    };
 
     return (
         <div className="game-detail-header-container my-3">
@@ -123,6 +128,7 @@ function DetailHeader({ game }) {
                             ))}
                         </Swiper>
                     </div>
+                    <div id="google_translate_element"></div>
 
                     {/** 2) Thumbnail strip **/}
                     <div className="highlight-strip">

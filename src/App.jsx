@@ -1,5 +1,4 @@
-import React from "react";
-// Son Added useLocation
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -8,9 +7,8 @@ import {
   Link,
   useLocation,
   Navigate,
-} from "react-router-dom"; // Import các component của router
-import { useState, useEffect, loadingState, useRef, useMemo } from "react"; // Import useState và useEffect từ React
-import axios from "axios"; // Import axios để thực hiện các yêu cầu HTTP
+} from "react-router-dom";
+import axios from "axios";
 import "./App.css";
 
 import Header from "./components/Header/Header";
@@ -18,21 +16,21 @@ import Navbar from "./components/Navbar/Navbar";
 import GameDetail from "./pages/GameDetail/GameDetail";
 import HomePage from "./pages/HomePage/HomePage";
 import SendGametoAdmin from "./pages/SendGametoAdmin";
-import OAuth2RedirectHandler from "./pages/OAuth2RedirectHandler"; // Added by Loc Phan
+import OAuth2RedirectHandler from "./pages/OAuth2RedirectHandler";
 import Login from "./pages/Login";
 import RegisterEmail from "./pages/RegisterEmail";
-import VerifyEmail from "./pages/VerifyEmail"; // Added by Loc Phan
-import ForgotPasswordRequest from "./pages/ForgotPassword/ForgotPasswordRequest"; // Added by Loc Phan
+import VerifyEmail from "./pages/VerifyEmail";
+import ForgotPasswordRequest from "./pages/ForgotPassword/ForgotPasswordRequest";
 import RegisterDetails from "./pages/RegisterDetails";
 import GameApprrovePage from "./pages/AdminDashboard/GameApprovePage";
 import GameApproveDetails from "./pages/GameApproveDetails";
 import Transaction from "./pages/TransactionPage/Transaction";
 import TransactionDetail from "./pages/TransactionPage/TransactionDetail";
 import Cart from "./pages/CartPage/Cart";
-import SplashScreen from "./components/SplashScreen/SplashScreen"; // Import SplashScreen component
+import SplashScreen from "./components/SplashScreen/SplashScreen";
 import NotificationList from "./pages/NotificationPage/NotificationList";
 import GamesPage from "./components/GamesPage/GamesPage";
-import AdminDashboard from "./pages/AdminDashboard/AdminDashboard"; // Added by Phan NT Son
+import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 import ApplyToPublisher from "./pages/ApplyToPublisher";
 import PublisherApprovePage from "./pages/PublisherApprovePage";
 import PublisherApproveDetails from "./pages/PublisherApproveDetails";
@@ -44,11 +42,11 @@ import SendUserFeedback from "./pages/SendUserFeedback";
 import Library from "./pages/LibraryPage/Library";
 import WalletPage from "./pages/WalletPage/WalletPage";
 import AvatarSettings from "./components/Profile/AvatarSettings/AvatarSettings";
-import ChatPage from "./pages/Community/ChatPage"; // Added by Phan NT Son
-import ChatHeader from "./pages/Community/ChatHeader"; // Added by Phan NT Son
-import AccountDetailsPage from "./components/AccountDetail/AccountDetailsPage"; // Added by TSHuy
-import PaymentResultPage from "./components/Payment/PaymentResultPage"; // Added by TSHuy
-import FriendsPage from "./pages/Friend/FriendsPage"; // Added by Phan NT Son
+import ChatPage from "./pages/Community/ChatPage";
+import ChatHeader from "./pages/Community/ChatHeader";
+import AccountDetailsPage from "./components/AccountDetail/AccountDetailsPage";
+import PaymentResultPage from "./components/Payment/PaymentResultPage";
+import FriendsPage from "./pages/Friend/FriendsPage";
 import ResetPassword from "./pages/ForgotPassword/ResetPassword";
 import { OnlineUserProvider } from "./utils/OnlineUsersContext";
 
@@ -59,10 +57,9 @@ import UserFeedback from "./pages/UserFeedback";
 import EmailSettings from "./components/EmailChange/EmailSettings";
 import { jwtDecode } from "jwt-decode";
 
-import AIGeneratorFrontend from "./pages/test"; // TEST
+import AIGeneratorFrontend from "./pages/test";
 
 function AppRoutes() {
-  // Added by Phan NT Son 18-06-2025
   const headerHeight = useRef(null);
   const navHeight = useRef(null);
   const footerHeight = useRef(null);
@@ -71,26 +68,21 @@ function AppRoutes() {
 
   const calMinimumHeight = () => {
     const windowHeight = window.innerHeight;
-    const headerH = headerHeight.current
-      ? headerHeight.current.offsetHeight
-      : 0;
+    const headerH = headerHeight.current ? headerHeight.current.offsetHeight : 0;
     const navH = navHeight.current ? navHeight.current.offsetHeight : 0;
     const footH = footerHeight.current ? footerHeight.current.offsetHeight : 0;
     console.log("headerH:", headerH, "navH:", navH, "footH:", footH);
 
     setCalculatedHeight(windowHeight - headerH - navH - footH);
   };
-  // --!!
 
-  // Renamed by Phan NT Son
-  console.log("App component is rendering..."); // DEBUG: Kiểm tra xem component có render không
+  console.log("App component is rendering...");
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     checkToken();
     const fetchCurrentUser = async () => {
       const token = localStorage.getItem("token");
-      // Giả sử bạn có token
       if (token) {
         try {
           const userId = localStorage.getItem("userId");
@@ -100,7 +92,6 @@ function AppRoutes() {
           setCurrentUser(response.data);
         } catch (error) {
           console.error("Failed to fetch current user", error);
-          // Xử lý lỗi, có thể đăng xuất người dùng
         }
       }
       setLoading(false);
@@ -109,8 +100,6 @@ function AppRoutes() {
     fetchCurrentUser();
   }, []);
 
-  // Added by Phan NT Son
-  // Set up axios interceptor to include token in headers
   axios.interceptors.request.use((config) => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -119,9 +108,6 @@ function AppRoutes() {
     return config;
   });
 
-  /**
-   * @author Phan NT Son
-   */
   const location = useLocation();
   const currentPath = location.pathname;
   const needlessNavPath = [
@@ -133,7 +119,7 @@ function AppRoutes() {
     "/login",
     "/register",
     "/library",
-    "/notifications"
+    "/notifications",
   ];
   const needlessHeaderPath = ["/admin", "/chat"];
   const needlessFooterPath = ["/admin", "/chat"];
@@ -159,28 +145,33 @@ function AppRoutes() {
     [currentPath]
   );
 
-  //--!!
-
-  /**
-   * @author Phan NT Son
-   * @since 18-06-2025
-   */
   const expDate = localStorage.getItem("expDate");
   const checkToken = () => {
     const currentTime = Math.floor(Date.now() / 1000);
     if (expDate === null || expDate < currentTime) {
       localStorage.clear();
-      return <Navigate to={"/"} replace />;
+      return <Navigate to="/" replace />;
     }
   };
 
+  // Thêm Google Translate Element
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    script.async = true;
+    document.body.appendChild(script);
+
+    
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
   return (
     <div className="app-wrapper">
-      {" "}
       <div className={`app-container`}>
         <div className={`main-app-content`}>
-          {/* START FROM HERE */}
-          {/* Adjusted by Phan NT Son */}
           {isAddminPath && (
             <AdminHeader
               currentTab={adminTab}
@@ -189,45 +180,40 @@ function AppRoutes() {
             />
           )}
           {!isNeedlessHeader && <Header ref={headerHeight} />}
-
+          
           {!isNeedlessNav && <Navbar ref={navHeight} />}
-          {/* --!! */}
-
-          {/* Remove BrowserRouter by Phan NT Son */}
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/game/:gameId" element={<Detail />} />
             <Route path="/game" element={<List />}></Route>
-            {/* hoangvq */}
             <Route path="/aprrovegame" element={<AprroveF />}></Route>
             <Route
               path="/aprrovegame/:gameId"
               element={<ApproveDetailsF />}
             ></Route>
             <Route path="/sendgame" element={<RequestAddGame />}></Route>
-            {/* hoangvq */}
             <Route path="/login" element={<LoginF />} />
             <Route path="/forgot-password" element={<ForgotPasswordRequest />} />
             <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/oauth2/callback" element={<OAuth2RedirectHandler />} /> {/* Added by Loc Phan */}
+            <Route path="/oauth2/callback" element={<OAuth2RedirectHandler />} />
             <Route path="/register" element={<RegisterF />} />
-            <Route path="/verify-email" element={<VerifyEmail />} /> {/* Added by Loc Phan */}
+            <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/register-details" element={<RegisterDetailsF />} />
             <Route path="/account/history" element={<Transaction />} />
-            <Route path="/account/history/detail/:transactionId" element={<TransactionDetail />} />
+            <Route
+              path="/account/history/detail/:transactionId"
+              element={<TransactionDetail />}
+            />
             <Route
               path="/cart"
               element={<Cart minHeight={calculatedHeight} />}
             />
             <Route path="/library" element={<Library />} />
-            {/*adjusted by Bathanh - 15/6/2025 2:03PM */}
             <Route
               path="/notifications"
               element={<NotifPage minimumHeight={calculatedHeight} />}
             />
-            <Route path="/admin" element={<AdminDashboard tab={adminTab} />} />{" "}
-            {/* Added by Phan NT Son */}
-            {/* hoangvq */}
+            <Route path="/admin" element={<AdminDashboard tab={adminTab} />} />
             <Route
               path="/sendpublisher"
               element={
@@ -256,10 +242,7 @@ function AppRoutes() {
               element={<UserFeedbackDetails />}
             ></Route>
             <Route path="/feedbackhub" element={<FeeedbackHub />}></Route>
-            {/* hoangvq */}
             <Route path="/profile" element={<ProfilePage />} />
-            {/* Added by TSHUY */}
-            {/* TSHUY */}
             <Route
               path="/profile/:userId/edit/info"
               element={<EditProfilePage />}
@@ -268,8 +251,6 @@ function AppRoutes() {
               path="/profile/:userId/edit/avatar"
               element={<AvatarSettings />}
             />
-            {/* Added by TSHUY */}
-            {/* Notmebro */}
             <Route path="/account/wallet" element={<Wallet />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/account" element={<AccountDetailsPage />} />
@@ -283,12 +264,14 @@ function AppRoutes() {
               element={<EmailSettings currentUser={currentUser} />}
             />
           </Routes>
+          {/* Thêm phần tử cho Google Translate Widget */}
         </div>
         {!isNeedlessFooter && <Footer ref={footerHeight} />}
       </div>
     </div>
   );
 }
+
 function AprroveF() {
   return <GameApprrovePage />;
 }
@@ -329,17 +312,8 @@ function RegisterDetailsF() {
   return <RegisterDetails />;
 }
 function RequestAddGame() {
-  return (
-    <div>
-      <SendGameToAdmin />
-    </div>
-  );
+  return <div><SendGameToAdmin /></div>;
 }
-/**
- * Adjust by @author Phan NT Son
- * @since 17-06-2025
- * @returns
- */
 function List() {
   return (
     <div className="container-fluid">
@@ -352,11 +326,6 @@ function List() {
     </div>
   );
 }
-/**
- * @author Phan NT Son
- * @since 15-06-2025
- * @returns
- */
 function Detail() {
   return <GameDetail />;
 }
@@ -374,7 +343,6 @@ function NotFound() {
 function Home() {
   return <HomePage />;
 }
-
 function Wallet() {
   return (
     <div className="container-fluid">
@@ -385,7 +353,6 @@ function Wallet() {
     </div>
   );
 }
-
 function NotifPage({ minimumHeight }) {
   return (
     <div
@@ -399,25 +366,9 @@ function NotifPage({ minimumHeight }) {
     </div>
   );
 }
-
-/**
- * @author Phan NT Son
- * @since 22-06-2025
- * @returns
- */
 function Chat() {
-  return (
-    <div>
-      <ChatPage />
-    </div>
-  );
+  return <div><ChatPage /></div>;
 }
-
-/**
- * @author Phan NT Son
- * @since 23-06-2025
- * @returns
- */
 function Friends({ minimumHeight }) {
   return (
     <div
