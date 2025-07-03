@@ -4,7 +4,7 @@ import { useEffect } from "react";
 // import HeroCarousel from "../components/HomePage/HeroCarousel";
 
 import "./HomePage.css";
-import YouTubePlayer from "./YouTubePlayer";
+import YouTubePlayer from "./YoutubePlayer";
 
 import BrowseByTag from "./BrowseByTag";
 import BrowseByPublisher from "./BrowseByPublisher";
