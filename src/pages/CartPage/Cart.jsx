@@ -7,7 +7,7 @@ import { isTokenExpired } from '../../utils/validators';
 const userId = localStorage.getItem("userId");
 const CUR_TOKEN = localStorage.getItem('token');
 
-const Cart = ({ minHeight }) => {
+const Cart = () => {
   if (!userId) {
     window.location.href = "/";
   }
@@ -126,7 +126,7 @@ const Cart = ({ minHeight }) => {
   const total = cartItems.reduce((sum, item) => sum + (item.price || 0), 0).toFixed(2);
 
   return (
-    <div className="cart-steam-bg" style={{ minHeight: `${minHeight}px` }}>
+    <div className="cart-steam-bg h-100">
       <div className="cart-main-steam">
         <h2 className="cart-title-steam">Your Shopping Cart</h2>
         <div className="cart-list-steam">

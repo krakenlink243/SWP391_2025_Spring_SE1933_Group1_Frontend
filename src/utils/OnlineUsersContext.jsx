@@ -33,7 +33,7 @@ export function OnlineUserProvider({ children }) {
                 setOnlineUsers(JSON.parse(frame.body));
             });
 
-            client.publish({ destination: "/app/online" });
+            // client.publish({ destination: "/app/online" });
         };
 
 

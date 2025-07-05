@@ -144,7 +144,7 @@ const Header = forwardRef((props, ref) => {
 
           <a className={`header-nav-item ${isActive(3) ? "active" : ""}`} href={token && '/chat'}>{token ? "CHAT" : "ABOUT"}</a>
           {role != 'Admin' && <a className={`header-nav-item ${isActive(4) ? "active" : ""}`} href="/feedbackhub">Support</a>}
-          {role === 'Admin' && <a className={`header-nav-item ${isActive(5) ? "active" : ""}`} href="/aprrovegame">ADMIN TOOLS</a>}
+          {role === 'Admin' && <a className={`header-nav-item ${isActive(5) ? "active" : ""}`} href="/admin">ADMIN TOOLS</a>}
         </div>
         <div className={`header-user-action col-lg-${section[3]}`}>
           {!token ? (

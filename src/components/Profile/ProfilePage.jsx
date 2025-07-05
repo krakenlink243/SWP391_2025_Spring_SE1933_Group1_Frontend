@@ -94,7 +94,7 @@ const ProfilePage = () => {
       try {
         // Luôn fetch dữ liệu của profileId trên URL
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/user/profile/${userId}`
+          `${import.meta.env.VITE_API_URL}/user/profile/${profileId}`
         );
         setProfileData(response.data);
       } catch (err) {
