@@ -7,6 +7,7 @@ import axios from "axios";
 import { useLocation } from "react-router";
 import { isTokenExpired } from "../../utils/validators";
 import { NotificationProvider } from "../../services/notification";
+import { Link } from "react-router-dom";
 
 /**
  * @author Origin belongs to TS Huy
@@ -121,40 +122,43 @@ const Header = forwardRef((props, ref) => {
         <div
           className={`header-logo col-lg-${section[1]} align-content-center`}
         >
-          <a href="/">
+          <Link to={"/"}>
             <img
               src="/logo_steam.svg"
               alt="Steam Logo"
               className="logo w-100"
             />
-          </a>
+          </Link>
         </div>
         <div className={`header-nav col-lg-${section[2]}`}>
-          <a className={`header-nav-item ${isActive(0) ? "active" : ""}`} href="/">STORE</a>
-          <a className={`header-nav-item ${isActive(1) ? "active" : ""}`} href="#">COMMUNITY</a>
+          <Link className={`header-nav-item ${isActive(0) ? "active" : ""}`} to="/">
+            STORE
+          </Link>
+          <Link className={`header-nav-item ${isActive(1) ? "active" : ""}`} to={"#"} >
+            COMMUNITY
+          </Link>
+          
           {username && (
             <div className="nav-user-dropdown-wrapper">
-              <a className={`header-nav-item ${isActive(2) ? "active" : ""}`} href="/profile">{username}</a>
+              <Link className={`header-nav-item ${isActive(2) ? "active" : ""}`} to="/profile">{username}</Link>
               <div className="nav-box-dropdown">
-                <a className="submenuitem" href="/profile">Profile</a>
-                <a className="submenuitem" href="/profile/friends">Friends</a>
+                <Link className="submenuitem" to="/profile">Profile</Link>
+                <Link className="submenuitem" to="/profile/friends">Friends</Link>
               </div>
             </div>
           )}
 
-          <a className={`header-nav-item ${isActive(3) ? "active" : ""}`} href={token && '/chat'}>{token ? "CHAT" : "ABOUT"}</a>
-          {role != 'Admin' && <a className={`header-nav-item ${isActive(4) ? "active" : ""}`} href="/feedbackhub">Support</a>}
-          {role === 'Admin' && <a className={`header-nav-item ${isActive(5) ? "active" : ""}`} href="/admin">ADMIN TOOLS</a>}
+          <Link className={`header-nav-item ${isActive(3) ? "active" : ""}`} to={token ? '/chat' : '#'}>{token ? "CHAT" : "ABOUT"}</Link>
+          {role != 'Admin' && <Link className={`header-nav-item ${isActive(4) ? "active" : ""}`} to="/feedbackhub">Support</Link>}
+          {role === 'Admin' && <Link className={`header-nav-item ${isActive(5) ? "active" : ""}`} to="/admin">ADMIN TOOLS</Link>}
         </div>
         <div className={`header-user-action col-lg-${section[3]}`}>
           {!token ? (
             <>
               <div className="header-user-action-content d-flex flex-column align-items-end w-100 p-2">
                 <div className="user-action-content">
-                  <a href="/login" className="border-end">
-                    Login
-                  </a>
-                  <a href="/register">Register</a>
+                  <Link className="border-end" to="/login">Login</Link>
+                  <Link to="/register">Register</Link>
                 </div>
               </div>
             </>
@@ -183,7 +187,7 @@ const Header = forwardRef((props, ref) => {
                 </div>
               </div>
               <div className="header-user-action-icon w-25">
-                <a href="/profile"><img src={localStorage.getItem("avatarUrl")}></img></a>
+                <Link to="/profile"><img src={localStorage.getItem("avatarUrl")}></img></Link>
               </div>
             </>
           )}

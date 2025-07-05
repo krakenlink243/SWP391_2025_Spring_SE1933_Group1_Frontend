@@ -3,13 +3,17 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import './Cart.css';
 import { isTokenExpired } from '../../utils/validators';
+import { useNavigate } from 'react-router-dom';
 
 const userId = localStorage.getItem("userId");
 const CUR_TOKEN = localStorage.getItem('token');
 
 const Cart = () => {
+
+  const navigate = useNavigate();
+
   if (!userId) {
-    window.location.href = "/";
+    navigate("/");
   }
 
   const [cartItems, setCartItems] = useState([]);
@@ -98,7 +102,7 @@ const Cart = () => {
         );
         const { paymentUrl } = response.data;
         if (paymentUrl) {
-          window.location.href = paymentUrl; // Chuyển hướng đến cổng thanh toán
+          navigate(paymentUrl);
         }
       } else {
         alert("Purchase failed due to an unknown error.");

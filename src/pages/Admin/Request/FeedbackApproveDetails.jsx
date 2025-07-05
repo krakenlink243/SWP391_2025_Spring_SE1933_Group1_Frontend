@@ -9,6 +9,8 @@ import { createNotification } from '../../../services/notification'
 import { trimValue } from '../../../utils/validators'
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Required for default styles
+import { useNavigate } from 'react-router-dom'
+
 function FeedbackApproveDetails() {
   const feedbackId = useParams().feedbackId;
   const [senderId, setSenderId] = useState("");
@@ -20,6 +22,8 @@ function FeedbackApproveDetails() {
     mediaUrls: [],
     response: ""
   });
+  const navigate = useNavigate();
+
   useEffect(() => {
     async function fetchFeedbackDetails() {
       try {
@@ -75,7 +79,7 @@ function FeedbackApproveDetails() {
                     response: trimValue(answer)
                   });
                   console.log('Approved request:', response.data);
-                  window.location.href = '/approvefeedback';
+                  navigate('/approvefeedback');
                 } catch (err) {
                   console.error('Error approving request:', err);
                 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Library.css";
 import { useNavigate } from "react-router-dom";
+import { isTokenExpired } from "../../utils/validators";
 
 const sortOptions = [
   { value: "az", label: "A-Z" },
@@ -36,8 +37,8 @@ const Library = () => {
       .catch(() => setLoading(false));
   }, []);
 
-  if (!token) {
-    window.location.href = "/";
+  if (!token || isTokenExpired()) {
+    navigate("/");
     return null;
   }
 

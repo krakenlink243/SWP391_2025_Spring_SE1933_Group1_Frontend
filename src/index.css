@@ -1,4 +1,4 @@
-html,
+/* html,
 body,
 #root,
 .app-container {
@@ -94,13 +94,16 @@ footer {
   background: transparent;
 }
 
-/*
-Removed @media by Phan NT Son - disable light mode prefrence based on user brower
-*/
+  */
+
+a {
+  font-weight: 500;
+  text-decoration: inherit;
+}
 
 body::selection {
   background: #54a5d4;
   text-shadow: 1px 1px 2px #000000aa;
   color: #fff;
 
-}
+} 

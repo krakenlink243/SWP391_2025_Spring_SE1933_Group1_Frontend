@@ -4,6 +4,7 @@ import { OnlineUserProvider } from "./utils/OnlineUsersContext";
 import { CartCountProvider } from "./utils/TotalInCartContext";
 import { AppProvider } from "./context/AppContext";
 import axios from "axios";
+import './App.css';
 
 // Layouts
 import MainLayout from "./layouts/MainLayout";

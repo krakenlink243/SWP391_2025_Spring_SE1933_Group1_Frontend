@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./AccountDetailsPage.css";
+import { useNavigate, Link } from "react-router-dom";
 
 const AccountDetailsPage = () => {
   const [account, setAccount] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   // === STATE CHO MODAL NẠP TIỀN (BẰNG USD) ===
   const [amountUsd, setAmountUsd] = useState(5); // Số tiền nạp mặc định là $5
@@ -50,7 +52,7 @@ const AccountDetailsPage = () => {
 
       const { paymentUrl } = response.data;
       if (paymentUrl) {
-        window.location.href = paymentUrl; // Chuyển hướng đến cổng thanh toán
+        navigate(paymentUrl); // Chuyển hướng đến cổng thanh toán
       }
     } catch (error) {
       console.error("Failed to create payment URL:", error);
@@ -64,10 +66,10 @@ const AccountDetailsPage = () => {
     <div className="account-details-page">
       <div className="account-main-content">
         <aside className="account-sidebar">
-          <a href="#" className="active">
+          <Link to="#" className="active">
             Account details
-          </a>
-          <a href="#">Store preferences</a>
+          </Link>
+          <Link to="#">Store preferences</Link>
         </aside>
 
         <main className="account-info-panel">
@@ -90,15 +92,15 @@ const AccountDetailsPage = () => {
               >
                 Add funds to your Wallet
               </button>
-              <a href="/account/history">View purchase history</a>
+              <Link to="/account/history">View purchase history</Link>
             </div>
           </section>
           <section className="info-section contact-info">
             <h3>CONTACT INFO</h3>
             <p>Email address: {account?.email}</p>
-            <a href="change-email">Manage email preferences</a>
-            <br/>
-            <a href="change-password">Change password</a>
+            <Link to="change-email">Manage email preferences</Link>
+            <br />
+            <Link to="change-password">Change password</Link>
           </section>
         </main>
       </div>

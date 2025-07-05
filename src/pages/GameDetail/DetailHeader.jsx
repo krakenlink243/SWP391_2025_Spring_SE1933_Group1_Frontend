@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, Link } from "react-router-dom"; // Thêm Link cho breadcrumb
+import { useParams, Link, useNavigate } from "react-router-dom"; // Thêm Link cho breadcrumb
 import { createNotification } from "../../services/notification";
 import 'swiper/css';
 import 'swiper/css/thumbs';
@@ -27,7 +27,7 @@ function DetailHeader({ game }) {
     const [gameInLib, setGameInLib] = useState(false);
     const { t } = useTranslation(); // Thêm hook useTranslation
     const [showPopup, setShowPopup] = useState(false);
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         const extractMediaUrl = () => {
@@ -54,8 +54,7 @@ function DetailHeader({ game }) {
 
     const addCartHandler = async () => {
         if (!CUR_USERID || isTokenExpired()) {
-            window.location.href = "/login";
-            return;
+            navigate("/login");
         }
         try {
             const response = await axios.post(
@@ -114,7 +113,7 @@ function DetailHeader({ game }) {
                         game={showPopup}
                         mediaUrlArr={mediaUrlArr}
                         onClose={() => setShowPopup(null)}
-                        onViewCart={() => window.location.href = "/cart"}
+                        onViewCart={() => navigate("/cart")}
                         onRemoveSuccess={() => checkGameInCart()}
                     />
                 </CartCountProvider>
@@ -227,7 +226,7 @@ function DetailHeader({ game }) {
                                     </a>
                                 </div>
                             ) : (
-                                <div className={`btn-add-to-cart`} onClick={() => window.location.href = `${gameInCart ? "/cart" : "/library"}`}>
+                                <div className={`btn-add-to-cart`} onClick={() => navigate(`${gameInCart ? "/cart" : "/library"}`)}>
                                     <a className="btn-blue-ui">
                                         {gameInLib && (
                                             <span>{t("Already in Library")}</span>
