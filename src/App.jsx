@@ -9,7 +9,6 @@ import axios from "axios";
 import MainLayout from "./layouts/MainLayout";
 import AdminLayout from "./layouts/AdminLayout";
 import ChatLayout from "./layouts/ChatLayout";
-import AuthLayout from "./layouts/AuthLayout";
 
 // Pages
 import HomePage from "./pages/HomePage/HomePage";
@@ -30,6 +29,7 @@ import EditProfilePage from "./components/Profile/EditProfilePage";
 import AvatarSettings from "./components/Profile/AvatarSettings/AvatarSettings";
 import AccountDetailsPage from "./components/AccountDetail/AccountDetailsPage";
 import EmailSettings from "./components/EmailChange/EmailSettings";
+import ChangePassword from "./pages/ForgotPassword/ChangePassword";
 
 // Admin pages
 import AdminDashboard from "./pages/Admin/AdminDashboard";
@@ -63,8 +63,7 @@ import RequestSection from "./pages/Admin/Request/RequestSection";
 import ErrorPage from "./pages/ErrorPage";
 function AppRoutes() {
 
-  // Renamed by Phan NT Son
-  console.log("App component is rendering..."); // DEBUG: Kiểm tra xem component có render không
+  console.log("App component is rendering...");
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -75,7 +74,6 @@ function AppRoutes() {
 
     const fetchCurrentUser = async () => {
       const token = localStorage.getItem("token");
-      // Giả sử bạn có token
       if (token) {
         try {
           const userId = localStorage.getItem("userId");
@@ -85,7 +83,6 @@ function AppRoutes() {
           setCurrentUser(response.data);
         } catch (error) {
           console.error("Failed to fetch current user", error);
-          // Xử lý lỗi, có thể đăng xuất người dùng
         }
       }
       setLoading(false);
@@ -94,8 +91,6 @@ function AppRoutes() {
     fetchCurrentUser();
   }, []);
 
-  // Added by Phan NT Son
-  // Set up axios interceptor to include token in headers
   axios.interceptors.request.use((config) => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -111,18 +106,9 @@ function AppRoutes() {
 
 
         <Routes>
-          <Route path="/sendgame" element={<RequestAddGame />}></Route>
           {/* hoangvq */}
-          <Route path="/login" element={<LoginF />} />
-          <Route
-            path="/forgot-password"
-            element={<ForgotPasswordRequest />}
-          />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/oauth2/callback" element={<OAuth2RedirectHandler />} />
           {/* Added by Loc Phan */}
           {/* Added by Loc Phan */}
-          <Route path="/register-details" element={<RegisterDetailsF />} />
 
 
           <Route path="*" element={<ErrorPage />} />
@@ -165,6 +151,13 @@ function AppRoutes() {
             <Route path="feedbackhub/:feedbackId" element={<UserFeedbackDetails />} />
             <Route path="/account/history/detail/:transactionId" element={<TransactionDetail />} />
             <Route path="/register" element={<RegisterF />} />
+            <Route path="/register-details" element={<RegisterDetailsF />} />
+            <Route path="/login" element={<LoginF />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/forgot-password" element={<ForgotPasswordRequest />} />
+            <Route path="/change-password" element={<ChangePassword />} />
+            <Route path="/sendgame" element={<RequestAddGame />}></Route>
+            <Route path="/oauth2/callback" element={<OAuth2RedirectHandler />} />
 
           </Route>
 
@@ -213,17 +206,8 @@ function RegisterDetailsF() {
   return <RegisterDetails />;
 }
 function RequestAddGame() {
-  return (
-    <div>
-      <SendGameToAdmin />
-    </div>
-  );
+  return <div><SendGameToAdmin /></div>;
 }
-/**
- * Adjust by @author Phan NT Son
- * @since 17-06-2025
- * @returns
- */
 function List() {
   return (
     <div className="container-fluid">
@@ -236,11 +220,6 @@ function List() {
     </div>
   );
 }
-/**
- * @author Phan NT Son
- * @since 15-06-2025
- * @returns
- */
 function Detail() {
   return <GameDetail />;
 }
@@ -258,7 +237,6 @@ function NotFound() {
 function Home() {
   return <HomePage />;
 }
-
 function Wallet() {
   return (
     <div className="container-fluid">

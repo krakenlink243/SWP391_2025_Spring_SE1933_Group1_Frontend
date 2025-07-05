@@ -15,9 +15,10 @@
   "Labs": "Labs",
   "search": "search",
 
-  "trang 1": "/",
-  "BROWSE BY CATEGORY": "BROWSE BY CATEGORY",
+  "trang 1": "/components/AccountDetailPage",
 
+  
+  "BROWSE BY CATEGORY": "BROWSE BY CATEGORY",
   "trang 2": "/game",
   "Sort by": "Sort by",
   "Name (A-Z)":"Name (A-Z)",
@@ -64,5 +65,11 @@
   "Write your review here...":"Write your review here...",
   "Post Review":"Post review",
   "Do you recommend this game?":"Do you recommend this game?",
-  "No Reviews have been made.":"No Reviews have been made."
+  "No Reviews have been made.":"No Reviews have been made.",
+
+
+  "Trang dich cac line xu ly ngoai le":"exception",
+    "AccountDetailsPage":"alert",
+      "Minimum funding amount is $5.":"Minimum funding amount is $5."
+
 }
