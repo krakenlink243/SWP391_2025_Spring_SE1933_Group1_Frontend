@@ -25,7 +25,7 @@ const GameDetail = () => {
         setLoading(true);
         setError(null);
         const response = await axios.get(
-          `http://localhost:8080/game/detail/${gameId}`
+          `${import.meta.env.VITE_API_URL}/game/detail/${gameId}`
         ); // Giả sử API endpoint của bạn là đây
         const data = response.data;
         setGame(data);
@@ -50,7 +50,7 @@ const GameDetail = () => {
       <div className="error-message">Error fetching game details: {error}</div>
     );
   if (!game) return <div className="not-found-message">Game not found.</div>;
-
+    
   return (
 
     /**

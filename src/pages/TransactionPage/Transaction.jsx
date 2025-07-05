@@ -23,7 +23,7 @@ const Transaction = () => {
   const fetchTransactions = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:8080/user/transaction');
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/user/transaction`);
       console.log('Transactions API response:', response.data);
       let transactions = response.data.data || [];
 

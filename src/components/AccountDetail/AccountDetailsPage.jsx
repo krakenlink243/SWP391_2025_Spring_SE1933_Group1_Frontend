@@ -17,7 +17,7 @@ const AccountDetailsPage = () => {
     const userId = localStorage.getItem("userId");
     if (userId) {
       axios
-        .get(`http://localhost:8080/user/profile/${userId}`)
+        .get(`${import.meta.env.VITE_API_URL}/user/profile/${userId}`)
         .then((res) => setAccount(res.data))
         .catch((err) => console.error(err))
         .finally(() => setLoading(false));
@@ -43,7 +43,7 @@ const AccountDetailsPage = () => {
       }
 
       const response = await axios.post(
-        `http://localhost:8080/api/v1/payments/create-vnpay-payment`,
+        `${import.meta.env.VITE_API_URL}/api/v1/payments/create-vnpay-payment`,
         null,
         { params: params }
       );
@@ -97,8 +97,6 @@ const AccountDetailsPage = () => {
             <h3>CONTACT INFO</h3>
             <p>Email address: {account?.email}</p>
             <a href="change-email">Manage email preferences</a>
-            <br/>
-            <a href="change-password">Change password</a>
           </section>
         </main>
       </div>

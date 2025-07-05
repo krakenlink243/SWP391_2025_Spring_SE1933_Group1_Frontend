@@ -15,7 +15,7 @@
   "Labs": "Phòng thí nghiệm",
   "search": "tìm kiếm",
 
-  "trang 1": "/",
+  "trang 1": "/components/AccountDetailPage",
   "BROWSE BY CATEGORY": "TÌM THEO DANH MỤC",
 
   "trang 2": "/game",
@@ -64,6 +64,8 @@
   "Write your review here...":"Viết đánh giá ở đây...",
   "Post Review":"Đăng bài đánh giá",
   "Do you recommend this game?":"Bạn có đề xuất game này không?",
-  "No Reviews have been made.":"Chưa có bài đánh giá nào."
+  "No Reviews have been made.":"Chưa có bài đánh giá nào.",
+
+  "Trang dich cac line xu ly ngoai le":""
 
 }

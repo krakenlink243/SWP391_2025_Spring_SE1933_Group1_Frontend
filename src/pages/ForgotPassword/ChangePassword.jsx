@@ -21,7 +21,7 @@ const ChangePassword = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            await axios.post('http://localhost:8080/api/password/change/request', {
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/password/change/request`, {
                 username: form.username,
                 email: form.email,
             });
@@ -37,7 +37,7 @@ const ChangePassword = () => {
     const confirmPasswordChange = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:8080/api/password/change/confirm', {
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/password/change/confirm`, {
                 username: form.username,
                 otp: form.otp,
                 newPassword: form.newPassword,
@@ -52,7 +52,7 @@ const ChangePassword = () => {
 
     return (
         <div className="change-password-container">
-            <h2>Change Password</h2>
+            <h2 style={{ color: 'white' }}>Change Password</h2>
             {message && <p style={{ color: 'red' }}>{message}</p>}
 
             {step === 1 && (
@@ -78,7 +78,7 @@ const ChangePassword = () => {
                         <tbody>
                             <tr>
                                 <td>
-                                    <label htmlFor="otp">OTP:</label>
+                                    <label style={{ color: 'white' }} htmlFor="otp">OTP:</label>
                                 </td>
                                 <td>
                                     <input
@@ -94,7 +94,7 @@ const ChangePassword = () => {
 
                             <tr>
                                 <td>
-                                    <label htmlFor="newPassword">New Password:</label>
+                                    <label style={{ color: 'white' }} htmlFor="newPassword">New Password:</label>
                                 </td>
                                 <td>
                                     <input
@@ -110,7 +110,7 @@ const ChangePassword = () => {
 
                             <tr>
                                 <td>
-                                    <label htmlFor="confirmPassword">Confirm New Password:</label>
+                                    <label style={{ color: 'white' }} htmlFor="confirmPassword">Confirm New Password:</label>
                                 </td>
                                 <td>
                                     <input

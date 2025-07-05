@@ -19,13 +19,13 @@ function AddFriendTab() {
 
 
     const getFriendList = () => {
-        axios.get("http://localhost:8080/user/friends")
+        axios.get(`${import.meta.env.VITE_API_URL}/user/friends`)
             .then((response) => { setFriendList(response.data) })
             .catch((err) => { console.log("Error fetching friends list: " + err) })
     };
 
     const getSentInvitesList = () => {
-        axios.get("http://localhost:8080/user/pendinginvite/init")
+        axios.get(`${import.meta.env.VITE_API_URL}/user/pendinginvite/init`)
             .then((response) => { setSentInvitesList(response.data) })
             .catch((err) => { console.log("Error get received Invites: " + err) });
 
@@ -33,13 +33,13 @@ function AddFriendTab() {
 
 
     const getBlockList = () => {
-        axios.get("http://localhost:8080/user/blocked")
+        axios.get(`${import.meta.env.VITE_API_URL}/user/blocked`)
             .then((response) => { setBlockList(response.data) })
             .catch((err) => { console.log("Error get block list: " + err) });
     }
 
     const handleSendInvite = (friendId) => {
-        axios.post(`http://localhost:8080/user/sendinvite/${friendId}`)
+        axios.post(`${import.meta.env.VITE_API_URL}/user/sendinvite/${friendId}`)
             .then((response) => {
                 createNotification(friendId, "Friend", `${curUsername} send you an invite`);
                 setSentInvitesList(prev => [...prev, { receiverId: friendId }]);
@@ -52,7 +52,7 @@ function AddFriendTab() {
             setSearchResult(null);
         }
 
-        axios.get(`http://localhost:8080/user/find/${friendId}`)
+        axios.get(`${import.meta.env.VITE_API_URL}/user/find/${friendId}`)
             .then((resp) => { setSearchResult(resp.data) })
             .catch(() => {
                 setSearchResult(null);

@@ -16,7 +16,7 @@ function BrowseByTag() {
 
     const getTagsList = async () => {
         try {
-            const resp = await axios.get("http://localhost:8080/tags");
+            const resp = await axios.get(`${import.meta.env.VITE_API_URL}/tags`);
             setData(resp.data);
         } catch (error) {
             console.log(error)
