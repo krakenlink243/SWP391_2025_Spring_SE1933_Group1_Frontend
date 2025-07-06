@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 import { isTokenExpired } from '../utils/validators';
-import socketService from '../services/SocketService';
+import SocketService from '../services/SocketService';
 import axios from 'axios';
 import { useAuth } from './AuthContext';
 
@@ -24,7 +24,7 @@ export function AppProvider({ children }) {
         if (!CUR_TOKEN || isTokenExpired())
             return;
 
-        socketService.connect(CUR_TOKEN, () => {
+        SocketService.connect(CUR_TOKEN, () => {
             // Initial User wallet balance
             axios.get(`${import.meta.env.VITE_API_URL}/user/wallet`)
                 .then((response) => { setWalletBalance(response.data) })
@@ -42,7 +42,7 @@ export function AppProvider({ children }) {
 
 
 
-            socketService.subscribe('/user/queue/notification.unread', data => {
+            SocketService.subscribe('/user/queue/notification.unread', data => {
                 if (Array.isArray(data)) {
                     // initial full list
                     setNotifications(data);
@@ -52,22 +52,22 @@ export function AppProvider({ children }) {
                 }
             })
 
-            socketService.subscribe('/user/queue/wallet.balance', data => {
+            SocketService.subscribe('/user/queue/wallet.balance', data => {
                 setWalletBalance(data);
             })
 
             // Nhận online list ban đầu
-            socketService.subscribe('/app/online', (data) => {
+            SocketService.subscribe('/app/online', (data) => {
                 setOnlineUsers(data);
             });
 
             // Nhận cập nhật online theo thời gian thực
-            socketService.subscribe('/topic/online', (data) => {
+            SocketService.subscribe('/topic/online', (data) => {
                 setOnlineUsers(data);
             });
 
             // Đăng ký kênh nhận tổng số Item trong Cart nếu có add thêm
-            socketService.subscribe('/user/queue/cart.count', (data) => {
+            SocketService.subscribe('/user/queue/cart.count', (data) => {
                 console.log("New cart count:", data, "Old:", cartTotal);
                 setCartTotal(data);
             });
@@ -76,11 +76,11 @@ export function AppProvider({ children }) {
 
 
         return () => {
-            socketService.unsubscribe('/user/queue/notification.all');
-            socketService.unsubscribe('/user/queue/wallet.balance');
-            socketService.unsubscribe('/app/online');
-            socketService.unsubscribe('/topic/online');
-            socketService.unsubscribe('/queue/cart.count');
+            SocketService.unsubscribe('/user/queue/notification.all');
+            SocketService.unsubscribe('/user/queue/wallet.balance');
+            SocketService.unsubscribe('/app/online');
+            SocketService.unsubscribe('/topic/online');
+            SocketService.unsubscribe('/queue/cart.count');
         };
     }, [CUR_TOKEN]);
 
