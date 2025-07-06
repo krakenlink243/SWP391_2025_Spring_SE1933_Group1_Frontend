@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNotifications } from "../../services/notification";
 import { FaBell } from 'react-icons/fa';
 import './NotificationBox.css';
 import { useNavigate } from "react-router-dom";
 import NotificationBoxItem from "./NotificationBoxItem";
-import { isTokenExpired } from "../../utils/validators";
+import { useUnreadNotifications } from "../../hooks/useUnreadNotifications";
 
 /**
  * @author Phan NT Son
@@ -16,28 +15,15 @@ import { isTokenExpired } from "../../utils/validators";
 function NotificationBox() {
   const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const socketNotifications = useNotifications();
+  const CUR_TOKEN = localStorage.getItem("token");
+  const socketNotifications = useUnreadNotifications(CUR_TOKEN);
   const navigate = useNavigate();
 
   useEffect(() => {
     console.log("Refresh notiflist");
     setData(socketNotifications);
   }, [socketNotifications]);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token && !isTokenExpired()) {
-      getUnreadNotificationList();
-    }
-  }, []);
-
-  const getUnreadNotificationList = () => {
-    axios.get(`${import.meta.env.VITE_API_URL}/notification/list/unread`)
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => console.error("Error fetching notifications:", error));
-  }
+ 
 
   // Open notif box
   const toggleOpenNotification = () => {

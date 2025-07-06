@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import GameShowcase from "./GameShowcase";
 import "./ProfilePage.css";
-import { useOnlineUsers } from "../../utils/OnlineUsersContext";
+import { AppContext } from "../../context/AppContext";
 
 const ProfileHeader = ({
   user,
@@ -15,7 +15,10 @@ const ProfileHeader = ({
   const avatarUrl =
     user?.avatarUrl ||
     "https://avatars.steamstatic.com/b5bd56c1aa4644a474a2e4972be27ef9e82e517e_full.jpg";
-  const isOnline = useOnlineUsers || false;
+
+  const { onlineUsers } = useContext(AppContext);
+
+  const isOnline = onlineUsers;
 
   return (
     <div className="profile-header">
@@ -124,8 +127,7 @@ const ProfilePage = () => {
       `${import.meta.env.VITE_API_URL}/user/sendinvite/${profileData.userId}`
     );
     alert(
-      `Friend request sent to ${
-        profileData.profileName || profileData.username
+      `Friend request sent to ${profileData.profileName || profileData.username
       }.`
     );
   };

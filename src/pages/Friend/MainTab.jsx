@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import './MainTab.css'
-import { useOnlineUsers } from "../../utils/OnlineUsersContext";
+import { AppContext } from "../../context/AppContext";
 
 function MainTab({ setCurTab }) {
     const [friendList, setFriendList] = useState([]);
-    const onlineUsers = useOnlineUsers();
+    // Get from context ↓
+    const { onlineUsers: online } = useContext(AppContext);
+    const onlineUsers = online;
     const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
 
     const getFriendList = () => {

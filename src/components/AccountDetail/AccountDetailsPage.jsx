@@ -52,7 +52,8 @@ const AccountDetailsPage = () => {
 
       const { paymentUrl } = response.data;
       if (paymentUrl) {
-        navigate(paymentUrl); // Chuyển hướng đến cổng thanh toán
+        // navigate(paymentUrl); // Chuyển hướng đến cổng thanh toán
+        window.location.href = paymentUrl;
       }
     } catch (error) {
       console.error("Failed to create payment URL:", error);
@@ -98,9 +99,9 @@ const AccountDetailsPage = () => {
           <section className="info-section contact-info">
             <h3>CONTACT INFO</h3>
             <p>Email address: {account?.email}</p>
-            <Link to="change-email">Manage email preferences</Link>
+            <Link to="/change-email">Manage email preferences</Link>
             <br />
-            <Link to="change-password">Change password</Link>
+            <Link to="/change-password">Change password</Link>
           </section>
         </main>
       </div>

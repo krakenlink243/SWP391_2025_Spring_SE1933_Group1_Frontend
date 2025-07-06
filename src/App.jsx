@@ -1,8 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Outlet, useLocation, Navigate } from "react-router-dom";
-import { OnlineUserProvider } from "./utils/OnlineUsersContext";
-import { CartCountProvider } from "./utils/TotalInCartContext";
 import { AppProvider } from "./context/AppContext";
+import { AuthProvider } from "./context/AuthContext";
 import axios from "axios";
 import './App.css';
 
@@ -75,7 +74,7 @@ function AppRoutes() {
 
     const fetchCurrentUser = async () => {
       const token = localStorage.getItem("token");
-      if (token) {
+      if (token && !isTokenExpired()) {
         try {
           const userId = localStorage.getItem("userId");
           const response = await axios.get(
@@ -105,13 +104,9 @@ function AppRoutes() {
     <div className={`app-container`}>
       <div className={`main-app-content`}>
 
-
         <Routes>
-          {/* hoangvq */}
-          {/* Added by Loc Phan */}
-          {/* Added by Loc Phan */}
 
-
+          {/* 404 - Error page */}
           <Route path="*" element={<ErrorPage />} />
 
           {/* Main user area */}
@@ -288,10 +283,12 @@ function FriendsPageContainer() {
 
 export default function App() {
   return (
-    <OnlineUserProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
-    </OnlineUserProvider>
+    <AuthProvider>
+      <AppProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </AppProvider>
+    </AuthProvider>
   );
 }

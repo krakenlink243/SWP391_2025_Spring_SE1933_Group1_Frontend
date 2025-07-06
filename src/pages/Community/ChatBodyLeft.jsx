@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
-import { useOnlineUsers } from "../../utils/OnlineUsersContext";
+import { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
 import './ChatBodyLeft.css';
+import { AppContext } from "../../context/AppContext";
 
 function ChatBodyLeft({ setCurFriendChat }) {
     const avatarUrl = localStorage.getItem("avatarUrl");
@@ -13,8 +13,11 @@ function ChatBodyLeft({ setCurFriendChat }) {
     const footerH = useRef(null);
     const [listH, setListH] = useState("100%");
     const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
+    
+    // Get from context ↓
+    const { onlineUsers: online } = useContext(AppContext);
 
-    const onlineUsers = useOnlineUsers();
+    const onlineUsers = online;
 
 
     useEffect(() => {

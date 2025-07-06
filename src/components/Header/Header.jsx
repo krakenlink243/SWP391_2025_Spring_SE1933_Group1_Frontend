@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef } from "react";
+import React, { useState, useEffect, forwardRef, useContext } from "react";
 import "./Header.css"; // Or use CSS Modules: import styles from './Header.module.css';
 // Added by Phan NT Son
 import NotificationBox from "../Notifications/NotificationBox";
@@ -6,8 +6,8 @@ import UserDropBox from "./UserDropBox";
 import axios from "axios";
 import { useLocation } from "react-router";
 import { isTokenExpired } from "../../utils/validators";
-import { NotificationProvider } from "../../services/notification";
 import { Link } from "react-router-dom";
+import { AppContext } from "../../context/AppContext";
 
 /**
  * @author Origin belongs to TS Huy
@@ -101,18 +101,7 @@ const Header = forwardRef((props, ref) => {
    *create a separate api for wallet balance
    * @returns user balance
    */
-  const [balance, setBalance] = useState(0);
-  useEffect(() => {
-    const getUserBalance = () => {
-      axios
-        .get(`${import.meta.env.VITE_API_URL}/user/wallet`)
-        .then((response) => setBalance(response.data))
-        .catch((error) => alert(error));
-    };
-    if (token && !isTokenExpired()) {
-      getUserBalance();
-    }
-  }, []);
+  const { walletBalance } = useContext(AppContext);
 
 
   return (
@@ -137,7 +126,7 @@ const Header = forwardRef((props, ref) => {
           <Link className={`header-nav-item ${isActive(1) ? "active" : ""}`} to={"#"} >
             COMMUNITY
           </Link>
-          
+
           {username && (
             <div className="nav-user-dropdown-wrapper">
               <Link className={`header-nav-item ${isActive(2) ? "active" : ""}`} to="/profile">{username}</Link>
@@ -168,19 +157,16 @@ const Header = forwardRef((props, ref) => {
                 <div className="user-action-content">
 
                   <div className="w-25">
-                    <NotificationProvider>
-                      <NotificationBox />
-
-                    </NotificationProvider>
+                    <NotificationBox />
                   </div>
                   <div className="w-50 px-2 d-flex flex-row-reverse">
 
-                    <UserDropBox userBalance={balance} />
+                    <UserDropBox userBalance={walletBalance} />
 
                   </div>
                 </div>
                 <div className="user-wallet w-100">
-                  {balance.toLocaleString("en-US", {
+                  {walletBalance.toLocaleString("en-US", {
                     style: "currency",
                     currency: "USD",
                   })}

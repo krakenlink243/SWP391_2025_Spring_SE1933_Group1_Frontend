@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import NotificationItem from "./NotificationItem";
 import "./NotificationList.css"
 import { Navigate, useNavigate } from "react-router-dom";
-import { useNotifications } from "../../services/notification";
 import { isTokenExpired } from "../../utils/validators";
+import { AppContext } from "../../context/AppContext";
 
 /**
  *
@@ -19,7 +19,9 @@ function NotificationList() {
   const token = localStorage.getItem("token");
   const CUR_AVATAR_URL = localStorage.getItem("avatarUrl");
   const CUR_USERNAME = localStorage.getItem("username");
-  const socketNotifications = useNotifications();
+  // Get from context ↓
+  const { notification } = useContext(AppContext);
+  const socketNotifications = notification;
   const navigate = useNavigate();
 
   useEffect(() => {

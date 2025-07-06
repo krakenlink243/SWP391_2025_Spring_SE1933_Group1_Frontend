@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, Link, useNavigate } from "react-router-dom"; // Thêm Link cho breadcrumb
-import { createNotification } from "../../services/notification";
 import 'swiper/css';
 import 'swiper/css/thumbs';
 import 'swiper/css/navigation';
@@ -10,7 +9,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Thumbs, Scrollbar } from 'swiper/modules';
 import { useTranslation } from "react-i18next"; // Thêm useTranslation
 import CartPopup from "../../components/Popup/CartPopup";
-import { CartCountProvider } from "../../utils/TotalInCartContext";
 import { isTokenExpired } from "../../utils/validators";
 
 /**
@@ -66,7 +64,6 @@ function DetailHeader({ game }) {
             // @author Phan NT Son
             // Tạo thông báo khi người dùng thêm game vào giỏ hàng
             if (response.data.success) {
-                createNotification(CUR_USERID, "Cart", `Game ${game.name} has been added to your cart.`);
                 setShowPopup(game);
                 checkGameInCart();
                 checkGameInLib();
@@ -108,15 +105,13 @@ function DetailHeader({ game }) {
         <div className="game-detail-header-container my-3">
             {showPopup && (
 
-                <CartCountProvider>
-                    <CartPopup
-                        game={showPopup}
-                        mediaUrlArr={mediaUrlArr}
-                        onClose={() => setShowPopup(null)}
-                        onViewCart={() => navigate("/cart")}
-                        onRemoveSuccess={() => checkGameInCart()}
-                    />
-                </CartCountProvider>
+                <CartPopup
+                    game={showPopup}
+                    mediaUrlArr={mediaUrlArr}
+                    onClose={() => setShowPopup(null)}
+                    onViewCart={() => navigate("/cart")}
+                    onRemoveSuccess={() => checkGameInCart()}
+                />
             )}
             <h1 className="game-name">{game.name}</h1>
             <div className="content d-flex my-3">

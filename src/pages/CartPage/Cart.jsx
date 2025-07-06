@@ -4,17 +4,14 @@ import { Link } from "react-router-dom";
 import './Cart.css';
 import { isTokenExpired } from '../../utils/validators';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
-const userId = localStorage.getItem("userId");
-const CUR_TOKEN = localStorage.getItem('token');
 
 const Cart = () => {
-
+  const { token: CUR_TOKEN } = useAuth();
   const navigate = useNavigate();
 
-  if (!userId) {
-    navigate("/");
-  }
+
 
   const [cartItems, setCartItems] = useState([]);
   const [balance, setBalance] = useState(0);
@@ -27,20 +24,6 @@ const Cart = () => {
     gameId: null,
     gameName: "",
   });
-
-  useEffect(() => {
-    if (CUR_TOKEN && !isTokenExpired()) {
-      axios.get(`${import.meta.env.VITE_API_URL}/user/wallet`)
-        .then(response => {
-          console.log('Wallet API response:', response.data);
-          setBalance(Number(response.data) || 0);
-        })
-        .catch(error => {
-          console.error('Error fetching wallet balance:', error.message, error.response?.status, error.response?.data);
-          setBalance(0);
-        });
-    }
-  }, []);
 
   const fetchCart = async () => {
     setLoading(true);
@@ -64,6 +47,12 @@ const Cart = () => {
       fetchCart();
     }
   }, []);
+
+  useEffect(() => {
+    if (!CUR_TOKEN || isTokenExpired()) {
+      navigate("/");
+    }
+  }, [])
 
   const handleRemove = async (gameId) => {
     setLoading(true);
