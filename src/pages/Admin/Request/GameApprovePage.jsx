@@ -2,11 +2,11 @@
 import React from 'react'
 import { useState,useRef,useEffect } from'react'
 import axios from 'axios';
-import RequestItem from '../components/RequestItem/RequestItem'
-import './AdminDashboard/GameApprovePage.css'
+import RequestItem from '../../../components/RequestItem/RequestItem'
+import './GameApprovePage.css'
 import { confirmAlert } from 'react-confirm-alert';
-import { createNotification } from '../services/notification';
-function PublisherApprovePage() {
+import { createNotification } from '../../../services/notification';
+function GameApprovePage() {
     const [totalPages, setTotalPages] = useState(1);
     const [loadedRequest,setLoadedRequest] = useState([]);
     const [page, setPage] = useState(0);
@@ -14,8 +14,9 @@ function PublisherApprovePage() {
     const [isChecked,setIsChecked] = useState(false);
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/publisher/${page}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/game/${page}`);
         setLoadedRequest(response.data.content);
+        console.log(response.data.content)
         setTotalPages(response.data.totalPages);
         console.log(response.data);
       } catch (err) {
@@ -32,28 +33,28 @@ function PublisherApprovePage() {
       }, [page]);
     
       const handleApprove = async (requestId) => {
-        const confirmApprove = window.confirm("Are you sure you want to approve this publisher?");
+        const confirmApprove = window.confirm("Are you sure you want to approve this game?");
         if (!confirmApprove) {
           return;
         }
         try {
-          const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/publisher/approve/${requestId}`);
+          const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/game/approve/${requestId}`);
           console.log("Approved request:", response.data);
-          alert("Publisher Approved")
+          alert("Game Approved")
           fetchData();
         } catch (err) {
           console.error("Error approving request:", err);
         }
       };
-      const handleDecline = (requestId,userId,userName,publisherName) => {
+      const handleDecline = (requestId,publisherName,publiserId,gameName) => {
         let answer = '';
 
         confirmAlert({
-          title: `Decline Publisher Request`,
+          title: `Decline Game Request`,
           customUI: ({ onClose }) => (
             <div className="custom-ui">
-              <h2>Decline Publisher</h2>
-              <p>Answer for: {userName}</p>
+              <h2>Decline Game</h2>
+              <p>To:{publisherName}</p>
               <textarea
                 rows={5}
                 style={{ width: '100%', marginBottom: '1rem' }}
@@ -66,19 +67,17 @@ function PublisherApprovePage() {
                     try {
                       // Send notification
                       createNotification(
-                        userId,
-                        "Publisher Apply Response",
-                        `Answer for your publisher apply ${publisherName}: ${answer}`
+                        publiserId,
+                        "Game Approval Response",
+                        `Answer for ${gameName}: ${answer}`
                       );
-
-                      // API call to reject request
+                      // Reject the request via API
                       const response = await axios.patch(
-                        `${import.meta.env.VITE_API_URL}/request/publisher/reject/${requestId}`
+                        `${import.meta.env.VITE_API_URL}/request/game/reject/${requestId}`
                       );
                       console.log("Declined request:", response.data);
-
-                      alert("Publisher Declined");
-                      fetchData(); // Refresh list
+                      alert("Game Declined");
+                      fetchData(); // Refresh UI
                     } catch (err) {
                       console.error("Error declining request:", err);
                     }
@@ -94,6 +93,7 @@ function PublisherApprovePage() {
           )
         });
       };
+
       const handleCheckChange = (requestId) => {
         setSelectedRequests((prev) =>
             prev.includes(requestId) 
@@ -112,17 +112,18 @@ function PublisherApprovePage() {
       console.log("Updated Tick Array:", selectedRequests);
       };
       const handleApproveSelected = async () => {
-        const confirmApprove = window.confirm("Are you sure you want to approve these publishers?");
+        console.log("ook")
+        const confirmApprove = window.confirm("Are you sure you want to approve these selected games?");
         if (!confirmApprove) {
           return;
-        }
+        } 
         try {
             for (let i = 0; i < selectedRequests.length; i++) {
                 const requestId = selectedRequests[i];
-                const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/publisher/approve/${requestId}`);
+                const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/game/approve/${requestId}`);
                 console.log(`Processed approve for request ID:`, requestId);
             }
-            alert(`All selected publishers have been approved`);
+            alert(`All selected requests have been approved`);
             setSelectedRequests([]); // Clear selection after processing
             fetchData(); // Refresh data
         } catch (err) {
@@ -134,10 +135,10 @@ function PublisherApprovePage() {
         try {
             for (let i = 0; i < selectedRequests.length; i++) {
                 const requestId = selectedRequests[i];
-                const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/publisher/reject/${requestId}`);
+                const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/game/reject/${requestId}`);
                 console.log(`Processed approve for request ID:`, requestId);
             }
-            alert(`All selected publishers have been declined`);
+            alert(`All selected requests have been declined`);
             setSelectedRequests([]);
             fetchData();
         } catch (err) {
@@ -145,18 +146,14 @@ function PublisherApprovePage() {
         }
       };
       const handleRedirect = (requestId) =>{
-        window.location.href=`/approvepublisher/${requestId}`
+        
+        // Adjust by Phan NT Son - fix redirect URL
+        window.location.href=`/aprrovegame/${requestId}` 
       }
   
 
   return (
     <div className='game-approve-container'>
-      <div>
-        <div style={{cursor:"pointer"}} onClick={()=>{window.location.href=`/aprrovegame`}}>Game Request</div>
-        <div style={{cursor:"pointer",textDecoration:"underline",textUnderlineOffset:"5px"}} onClick={()=>{window.location.href=`/approvepublisher`}}>Publisher Request</div>
-        <div style={{cursor:"pointer"}} onClick={()=>{window.location.href=``}}>Review Report</div>
-        <div style={{cursor:"pointer"}} onClick={()=>{window.location.href=`/approvefeedback`}}>Feedback</div>
-      </div>
       {loadedRequest.length > 0 ? (
         <div className='request-items' style={{ backgroundColor: "#1B2838" }}>
           <img
@@ -164,23 +161,24 @@ function PublisherApprovePage() {
             alt="Checkbox"
             onClick={handleTick}
           />
-          <div>Publisher Name</div>
+          <div>Game Title</div>
           <div>From</div>
           <div>Date</div>
           <div>
             <img src="/icons/Approve.png" alt="" onClick={handleApproveSelected} />
+            {/* <img src="/icons/Decline.png" alt="" onClick={handleDeclineSelected} /> */}
           </div>
         </div>
-      ) : (<p>There is no one want to be publisher at this time🥹</p>)}
+      ) : (<p>There is no game pending for approve at this time</p>)}
       {loadedRequest.map((request) => (
       <RequestItem 
         key={request.requestId} 
         requestId={request.requestId}
-        requestName={request.publisherName} 
-        from={request.username}
-        date={request.createdDate}
+        requestName={request.gameName} 
+        from={request.publisherName}
+        date={request.sendDate}
         onApprove={() => handleApprove(request.requestId)} 
-        onDecline={() => handleDecline(request.requestId,request.userId,request.username,request.publisherName)} 
+        onDecline={() => handleDecline(request.requestId,request.publisherName,request.publisherId,request.gameName)} 
         onCheckChange={handleCheckChange} 
         isTicked={selectedRequests.includes(request.requestId)}
         onClicked={() => handleRedirect(request.requestId)}
@@ -201,4 +199,4 @@ function PublisherApprovePage() {
   )
 }
 
-export default PublisherApprovePage
+export default GameApprovePage

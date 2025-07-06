@@ -46,7 +46,6 @@ export const isTokenExpired = () => {
   const currentTime = Math.floor(Date.now() / 1000);
   if (expDate === null || expDate < currentTime) {
     console.log("Token is outdate, clear storage");
-
     return true;
   }
   console.log("Token is not outdate");

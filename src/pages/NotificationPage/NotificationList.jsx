@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import NotificationItem from "./NotificationItem";
 import "./NotificationList.css"
-import { Navigate } from "react-router-dom";
-import {  useNotifications } from "../../services/notification";
+import { Navigate, useNavigate } from "react-router-dom";
 import { isTokenExpired } from "../../utils/validators";
+import { AppContext } from "../../context/AppContext";
 
 /**
  *
@@ -16,12 +16,13 @@ function NotificationList() {
   const [countUnRead, setCountUnRead] = useState(0);
   const [typeList, setTypeList] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
-
   const token = localStorage.getItem("token");
   const CUR_AVATAR_URL = localStorage.getItem("avatarUrl");
   const CUR_USERNAME = localStorage.getItem("username");
-
-  const socketNotifications = useNotifications();
+  // Get from context ↓
+  const { notification } = useContext(AppContext);
+  const socketNotifications = notification;
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (token && !isTokenExpired()) {
@@ -104,7 +105,7 @@ function NotificationList() {
     return (
       <div className="notiflist-container col-lg-8 d-flex align-items-start flex-column py-5 text-white">
         <div className="user-header d-flex flex-row align-items-center">
-          <img src={CUR_AVATAR_URL} alt="avatar" className="avatar" onClick={() => window.location.href = "/profile"} />
+          <img src={CUR_AVATAR_URL} alt="avatar" className="avatar" onClick={() => navigate("/profile")} />
           <a className="username" href="/profile">{CUR_USERNAME}</a>
         </div>
         {data.length > 0 ? (

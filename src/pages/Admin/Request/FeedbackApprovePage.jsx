@@ -2,10 +2,10 @@
 import React from 'react'
 import { useState, useRef, useEffect } from 'react'
 import axios from 'axios';
-import RequestItem from '../components/RequestItem/RequestItem'
-import './AdminDashboard/GameApprovePage.css'
-import { createNotification } from '../services/notification';
-import { trimValue } from '../utils/validators';
+import RequestItem from '../../../components/RequestItem/RequestItem'
+import './GameApprovePage.css'
+import { createNotification } from '../../../services/notification';
+import { trimValue } from '../../../utils/validators';
 import { confirmAlert } from 'react-confirm-alert';
 function FeedbackApprovePage() {
   const [totalPages, setTotalPages] = useState(1);
@@ -136,12 +136,6 @@ function FeedbackApprovePage() {
 
   return (
     <div className='game-approve-container'>
-      <div>
-        <div style={{ cursor: "pointer" }} onClick={() => { window.location.href = `/aprrovegame` }}>Game Request</div>
-        <div style={{ cursor: "pointer" }} onClick={() => { window.location.href = `/approvepublisher` }}>Publisher Request</div>
-        <div style={{ cursor: "pointer" }} onClick={() => { window.location.href = `` }}>Review Report</div>
-        <div style={{ cursor: "pointer", textDecoration: "underline", textUnderlineOffset: "5px" }} onClick={() => { window.location.href = `/approvefeedback` }}>Feedback</div>
-      </div>
       {loadedRequest.length > 0 ? (
         <div className='request-items' style={{ backgroundColor: "#1B2838" }}>
           <img

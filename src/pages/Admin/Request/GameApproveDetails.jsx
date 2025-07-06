@@ -3,13 +3,13 @@ import React, { useEffect } from 'react'
 import { useState, useRef } from 'react'
 import gameicon from '../assets/gameicon.png'
 import './SendGameToAdmin.css'
-import PartHeading from '../components/PartHeading/PartHeading'
-import Button from '../components/Button/Button'
+import PartHeading from '../../../components/PartHeading/PartHeading'
+import Button from '../../../components/Button/Button'
 import axios from 'axios'
 import { useParams } from 'react-router'
 import { PhotoProvider, PhotoView } from 'react-photo-view'
 import "react-photo-view/dist/react-photo-view.css";
-import { createNotification } from '../services/notification';
+import { createNotification } from '../../../services/notification';
 import Select,{ components } from 'react-select'
 import { confirmAlert } from 'react-confirm-alert'
 function GameApproveDetails() {

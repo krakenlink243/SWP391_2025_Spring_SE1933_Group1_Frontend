@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, Link } from "react-router-dom"; // Thêm Link cho breadcrumb
-import { createNotification } from "../../services/notification";
+import { useParams, Link, useNavigate } from "react-router-dom"; // Thêm Link cho breadcrumb
 import 'swiper/css';
 import 'swiper/css/thumbs';
 import 'swiper/css/navigation';
@@ -10,7 +9,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Thumbs, Scrollbar } from 'swiper/modules';
 import { useTranslation } from "react-i18next"; // Thêm useTranslation
 import CartPopup from "../../components/Popup/CartPopup";
-import { CartCountProvider } from "../../utils/TotalInCartContext";
 import { isTokenExpired } from "../../utils/validators";
 
 /**
@@ -27,7 +25,7 @@ function DetailHeader({ game }) {
     const [gameInLib, setGameInLib] = useState(false);
     const { t } = useTranslation(); // Thêm hook useTranslation
     const [showPopup, setShowPopup] = useState(false);
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         const extractMediaUrl = () => {
@@ -54,8 +52,7 @@ function DetailHeader({ game }) {
 
     const addCartHandler = async () => {
         if (!CUR_USERID || isTokenExpired()) {
-            window.location.href = "/login";
-            return;
+            navigate("/login");
         }
         try {
             const response = await axios.post(
@@ -67,7 +64,6 @@ function DetailHeader({ game }) {
             // @author Phan NT Son
             // Tạo thông báo khi người dùng thêm game vào giỏ hàng
             if (response.data.success) {
-                createNotification(CUR_USERID, "Cart", `Game ${game.name} has been added to your cart.`);
                 setShowPopup(game);
                 checkGameInCart();
                 checkGameInLib();
@@ -109,15 +105,13 @@ function DetailHeader({ game }) {
         <div className="game-detail-header-container my-3">
             {showPopup && (
 
-                <CartCountProvider>
-                    <CartPopup
-                        game={showPopup}
-                        mediaUrlArr={mediaUrlArr}
-                        onClose={() => setShowPopup(null)}
-                        onViewCart={() => window.location.href = "/cart"}
-                        onRemoveSuccess={() => checkGameInCart()}
-                    />
-                </CartCountProvider>
+                <CartPopup
+                    game={showPopup}
+                    mediaUrlArr={mediaUrlArr}
+                    onClose={() => setShowPopup(null)}
+                    onViewCart={() => navigate("/cart")}
+                    onRemoveSuccess={() => checkGameInCart()}
+                />
             )}
             <h1 className="game-name">{game.name}</h1>
             <div className="content d-flex my-3">
@@ -227,7 +221,7 @@ function DetailHeader({ game }) {
                                     </a>
                                 </div>
                             ) : (
-                                <div className={`btn-add-to-cart`} onClick={() => window.location.href = `${gameInCart ? "/cart" : "/library"}`}>
+                                <div className={`btn-add-to-cart`} onClick={() => navigate(`${gameInCart ? "/cart" : "/library"}`)}>
                                     <a className="btn-blue-ui">
                                         {gameInLib && (
                                             <span>{t("Already in Library")}</span>
