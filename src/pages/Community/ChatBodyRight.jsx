@@ -1,59 +1,21 @@
-import axios from "axios";
-import { sendMessage, connectSocket, disconnectSocket } from "../../services/chatSocketService";
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 import './ChatBodyRight.css'
 import ChatHistory from "./ChatHistory";
+import { useAuth } from "../../context/AuthContext";
+import { useChat } from "../../hooks/useChat";
 
 function ChatBodyRight({ friend }) {
 
     const [input, setInput] = useState("");
-    const [messages, setMessages] = useState([]);
-    const [conversation, setConversation] = useState();
-    const historyRef = useRef(null);
     const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
-
-
-    const loadConversation = () => {
-        axios.get(`${import.meta.env.VITE_API_URL}/user/conversation/${friend.friendId}`)
-            .then((resp) => {
-                setConversation(resp.data);
-            })
-            .catch((err) => { console.log("Error load conversation: " + err) })
-    }
-
-    useEffect(() => {
-        if (friend) {
-            loadConversation();
-        }
-    }, [friend]);
-
-    useEffect(() => {
-
-        connectSocket((message) => {
-            setMessages(prev => [...prev, message]);
-        });
-
-        // Optional cleanup
-        return () => {
-            disconnectSocket();
-        };
-    }, []);
-
-    useEffect(() => {
-        const container = historyRef.current;
-        if (!container) return;
-        // Scroll to very bottom
-        container.scrollTop = container.scrollHeight;
-    }, [
-        messages,                         // new live messages
-        conversation?.messages?.length    // newly loaded past messages
-    ]);
+    const CUR_TOKEN = useAuth();
+    const friendId = friend?.friendId;
+    const { messages, conversation, sendMessages } = useChat(CUR_TOKEN, friendId);
 
 
     const handleSend = () => {
         if (input.trim() === "") return;
-        sendMessage(conversation.conversationId, currentUser, friend.friendName, input);
-        setMessages(prev => [...prev, { senderUsername: currentUser, content: input, sentAt: new Date().toISOString() }]);
+        sendMessages(conversation.conversationId, currentUser, friend.friendName, input);
         setInput("");
     };
 
@@ -88,7 +50,7 @@ function ChatBodyRight({ friend }) {
                         </div>
                         <div className="padder-top"></div>
                     </div>
-                    <div className="chat-history-scroll" style={{ height: "85%" }} ref={historyRef}>
+                    <div className="chat-history-scroll" style={{ height: "85%" }}>
                         <ChatHistory
                             pastMessages={conversation?.messages || []}
                             liveMessages={messages}

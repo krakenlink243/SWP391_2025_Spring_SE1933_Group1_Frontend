@@ -64,6 +64,17 @@ class SocketService {
         this.client = null;
         this.subscriptions = {};
     }
+
+    publish(destination, payload) {
+        if (!this.client || !this.client.connected) {
+            console.warn('[Chat] Websocket is not connected yet.');
+        }
+
+        this.client.publish({
+            destination,
+            body: JSON.stringify(payload)
+        });
+    }
 }
 
 export default new SocketService();

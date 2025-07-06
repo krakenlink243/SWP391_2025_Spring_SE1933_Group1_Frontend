@@ -45,9 +45,9 @@ export const isTokenExpired = () => {
   const expDate = localStorage.getItem("expDate");
   const currentTime = Math.floor(Date.now() / 1000);
   if (expDate === null || expDate < currentTime) {
-    console.log("Token is outdate, clear storage");
+    // console.log("Token is outdate, clear storage");
     return true;
   }
-  console.log("Token is not outdate");
+  // console.log("Token is not outdate");
   return false;
 };

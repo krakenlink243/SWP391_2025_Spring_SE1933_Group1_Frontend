@@ -60,7 +60,7 @@ const GamesPage = () => {
 
     if (filters.searchTerm) params.append("searchTerm", filters.searchTerm);
     if (filters.maxPrice < 60) params.append("maxPrice", filters.maxPrice);
-    console.log("Gia", filters.maxPrice);
+    // console.log("Gia", filters.maxPrice);
     if (filters.selectedTagIds.size > 0)
       params.append("tags", Array.from(filters.selectedTagIds).join(","));
     if (filters.selectedPublisherIds.size > 0)
@@ -76,7 +76,7 @@ const GamesPage = () => {
     params.append("size", GAMES_PER_PAGE);
 
     const apiUrl = `${import.meta.env.VITE_API_URL}/game?${params.toString()}`;
-    console.log("Fetching games from:", apiUrl);
+    // console.log("Fetching games from:", apiUrl);
 
     try {
       const response = await axios.get(apiUrl);

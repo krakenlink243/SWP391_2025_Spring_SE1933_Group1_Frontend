@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import GameShowcase from "./GameShowcase";
 import "./ProfilePage.css";
 import { AppContext } from "../../context/AppContext";
+import { useAuth } from "../../context/AuthContext";
+import { isTokenExpired } from "../../utils/validators";
 
 const ProfileHeader = ({
   user,
@@ -18,7 +20,22 @@ const ProfileHeader = ({
 
   const { onlineUsers } = useContext(AppContext);
 
-  const isOnline = onlineUsers;
+  const isOnline = onlineUsers.includes(user.username);
+
+  const [friendList, setFriendList] = useState([]);
+
+  const getFriendList = () => {
+    axios.get(`${import.meta.env.VITE_API_URL}/user/friends`)
+      .then((response) => { setFriendList(response.data) })
+      .catch((err) => { console.log("Error fetching friends list: " + err) })
+  };
+
+  const CUR_TOKEN = useAuth();
+  useEffect(() => {
+    if (CUR_TOKEN && !isTokenExpired()) {
+      getFriendList();
+    }
+  }, [])
 
   return (
     <div className="profile-header">
@@ -39,21 +56,21 @@ const ProfileHeader = ({
         </div>
 
         <div className="profile-actions">
-          {/* === LOGIC HIỂN THỊ CÓ ĐIỀU KIỆN === */}
           {isOwnProfile ? (
-            // Nếu là trang của mình -> Hiển thị nút Edit
             <button className="action-btn primary" onClick={onEditClick}>
               Edit Profile
             </button>
           ) : (
-            // Nếu là trang của người khác -> Hiển thị các nút tương tác
             <>
-              <button className="action-btn secondary" onClick={onMessageClick}>
-                Message
-              </button>
-              <button className="action-btn primary" onClick={onAddFriendClick}>
-                Add Friend
-              </button>
+              {friendList.some(friend => friend.friendName === user.username) ? (
+                <button className="action-btn secondary" onClick={onMessageClick}>
+                  Message
+                </button>
+              ) : (
+                <button className="action-btn primary" onClick={onAddFriendClick}>
+                  Add Friend
+                </button>
+              )}
             </>
           )}
         </div>

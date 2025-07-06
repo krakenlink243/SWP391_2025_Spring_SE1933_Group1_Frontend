@@ -63,7 +63,7 @@ import RequestSection from "./pages/Admin/Request/RequestSection";
 import ErrorPage from "./pages/ErrorPage";
 function AppRoutes() {
 
-  console.log("App component is rendering...");
+  // console.log("App component is rendering...");
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {

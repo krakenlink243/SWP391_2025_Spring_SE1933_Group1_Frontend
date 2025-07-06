@@ -53,6 +53,7 @@ function DetailHeader({ game }) {
     const addCartHandler = async () => {
         if (!CUR_USERID || isTokenExpired()) {
             navigate("/login");
+            return;
         }
         try {
             const response = await axios.post(

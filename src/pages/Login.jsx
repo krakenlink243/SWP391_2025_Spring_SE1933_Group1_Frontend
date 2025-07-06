@@ -93,11 +93,11 @@ const Login = () => {
   return (
     <div className="login-container">
       <main>
-        <section class="form-section">
-          <h1 class="form-title">Log in</h1>
-          <form onSubmit={handleLogin} class="form">
+        <section className="form-section">
+          <h1 className="form-title">Log in</h1>
+          <form onSubmit={handleLogin} className="form">
             {message && <p className="message">{message}</p>}
-            <label htmlFor="username" class="form-label">
+            <label htmlFor="username" className="form-label">
               Log in with username
             </label>
             <input
@@ -106,11 +106,11 @@ const Login = () => {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              class="form-input"
+              className="form-input"
               required
             />
 
-            <label htmlFor="password" class="form-label password">
+            <label htmlFor="password" className="form-label password">
               Password
             </label>
             <input
@@ -119,12 +119,12 @@ const Login = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              class="form-input"
+              className="form-input"
               required
             />
 
-            <div class="submit-container">
-              <button type="submit" class="submit-button">
+            <div className="submit-container">
+              <button type="submit" className="submit-button">
                 Log in
               </button>
               <Link to={"/forgot-password"} className="forgot-password-link">
