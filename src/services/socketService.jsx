@@ -1,7 +1,7 @@
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { isTokenExpired } from '../utils/validators';
-
+import React from 'react';
 
 class SocketService {
     constructor() {
