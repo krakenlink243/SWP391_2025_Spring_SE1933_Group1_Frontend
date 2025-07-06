@@ -66,11 +66,7 @@ const Header = forwardRef((props, ref) => {
     {
       index: 5, // ADMIN
       paths: [
-        "/admin",
-        "/aprrovegame",
-        "/aprrovegame/:gameId",
-        "/approvepublisher",
-        "/approvepublisher/:publisherId"
+        "/admin"
       ],
     },
   ];

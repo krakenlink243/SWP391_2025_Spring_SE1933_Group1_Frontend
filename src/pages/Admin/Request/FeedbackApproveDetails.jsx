@@ -12,7 +12,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Required for defaul
 import { useNavigate } from 'react-router-dom'
 
 function FeedbackApproveDetails() {
-  const feedbackId = useParams().feedbackId;
+  const feedbackId = useParams().requestId;
   const [senderId, setSenderId] = useState("");
   const [arr, setArr] = useState([]);
   const [userName, setUserName] = useState("");
@@ -79,7 +79,7 @@ function FeedbackApproveDetails() {
                     response: trimValue(answer)
                   });
                   console.log('Approved request:', response.data);
-                  navigate('/approvefeedback');
+                  navigate('/admin/request/feedback');
                 } catch (err) {
                   console.error('Error approving request:', err);
                 }
@@ -111,7 +111,7 @@ function FeedbackApproveDetails() {
     } catch (err) {
       console.error("Error approving request:", err);
     }
-    window.location.href = `/approvefeedback`
+    navigate('/admin/request/feedback');
   }
   return (
     <div className='sendfeedback-container'>

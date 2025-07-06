@@ -7,12 +7,16 @@ import './GameApprovePage.css'
 import { createNotification } from '../../../services/notification';
 import { trimValue } from '../../../utils/validators';
 import { confirmAlert } from 'react-confirm-alert';
+import { useNavigate } from 'react-router-dom';
+
 function FeedbackApprovePage() {
   const [totalPages, setTotalPages] = useState(1);
   const [loadedRequest, setLoadedRequest] = useState([]);
   const [page, setPage] = useState(0);
   const [selectedRequests, setSelectedRequests] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
+  const navigate = useNavigate();
+
   const fetchData = async () => {
     try {
       const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/feedback/${page}`);
@@ -84,10 +88,10 @@ function FeedbackApprovePage() {
       const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/feedback/reject/${requestId}`);
       console.log("Approved request:", response.data);
       createNotification(
-                    senderId,
-                    "Feedback Answer",
-                    `Your feedback ${subject} has been dissmissed`
-                  )
+        senderId,
+        "Feedback Answer",
+        `Your feedback ${subject} has been dissmissed`
+      )
       alert("Feedback Dissmissed")
       fetchData();
     } catch (err) {
@@ -130,7 +134,7 @@ function FeedbackApprovePage() {
     }
   };
   const handleRedirect = (requestId) => {
-    window.location.href = `/approvefeedback/${requestId}`
+    navigate(`detail/${requestId}`);
   }
 
 

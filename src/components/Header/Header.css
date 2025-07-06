@@ -33,6 +33,11 @@
   transition: color 0.2s ease-in-out;
 }
 
+.header-nav-item.active{
+  color: #1a9fff;
+  text-decoration: underline;
+}
+
 .header-nav a:hover {
   color: #ffffff;
   /* Sáng hơn khi hover */

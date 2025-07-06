@@ -1,8 +1,12 @@
+import { useRef } from "react";
 import { Outlet } from "react-router-dom";
-import AdminHeader from "../pages/Admin/AdminHeader";
 import { Link } from "react-router-dom";
+import Header from "../components/Header/Header";
+import './AdminLayout.css';
 
 export default function AdminLayout() {
+
+    const headerRef = useRef(null);
 
     const items = [
         { title: "Dashboard", url: "/admin/" },
@@ -12,16 +16,19 @@ export default function AdminLayout() {
 
     return (
         <div className="admin-layout">
-            <AdminHeader />
-            <div className="admin-container d-flex flex-row h-100">
+            <Header ref={headerRef} />
+            <div
+                className="admin-container d-flex flex-row h-100"
+                style={{
+                    minHeight: `calc(100vh - ${headerRef.current ? headerRef.current.offsetHeight : 0}px)`
+                }}
+            >
                 <div className="left-col d-flex flex-column w-25">
-                    {
-                        items.map((item, idx) => (
-                            <Link key={idx} to={item.url} className="admin-menu-item">
-                                {item.title}
-                            </Link>
-                        ))
-                    }
+                    {items.map((item, idx) => (
+                        <Link key={idx} to={item.url} className="admin-menu-item">
+                            {item.title}
+                        </Link>
+                    ))}
                 </div>
                 <div className="right-col w-75">
                     <Outlet />

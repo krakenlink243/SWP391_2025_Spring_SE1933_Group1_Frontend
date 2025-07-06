@@ -9,8 +9,8 @@ function AdminDashboard({ tab }) {
         return <Navigate to="/" replace />;
     } else {
         return (
-            <div>
-
+            <div className='d-flex flex-column align-items-center justify-content-center text-white h-100 w-100'>
+                <h1>DASHBOARD CONTENT HERE</h1>
             </div>
         )
     }

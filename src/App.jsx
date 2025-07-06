@@ -33,10 +33,9 @@ import ChangePassword from "./pages/ForgotPassword/ChangePassword";
 
 // Admin pages
 import AdminDashboard from "./pages/Admin/AdminDashboard";
-import PublisherApprovePage from "./pages/Admin/Request/PublisherApprovePage";
 import PublisherApproveDetails from "./pages/Admin/Request/PublisherApproveDetails";
-import FeedbackApprovePage from "./pages/Admin/Request/FeedbackApprovePage";
 import FeedbackApproveDetails from "./pages/Admin/Request/FeedbackApproveDetails";
+import GameApproveDetails from "./pages/Admin/Request/GameApproveDetails";
 import FeedbackHub from "./pages/FeedbackHub";
 
 // Community
@@ -160,7 +159,11 @@ function AppRoutes() {
           {/* Admin area */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
-            <Route path="request" element={<RequestSection />} />
+            <Route path="request/:tab?" element={<RequestSection />} />
+            <Route path="request/publisher/detail/:requestId" element={<PublisherApproveDetails />} />
+            <Route path="request/feedback/detail/:requestId" element={<FeedbackApproveDetails />} />
+            <Route path="request/game/detail/:gameId" element={<GameApproveDetails />} />
+
           </Route>
 
         </Routes>
@@ -173,21 +176,7 @@ function AppRoutes() {
 function SendPublisher() {
   return <ApplyToPublisher publisherId={localStorage.getItem("userId")} />;
 }
-function ApprovePublisher() {
-  return <PublisherApprovePage />;
-}
-function ApprovePublisherDetails() {
-  return <PublisherApproveDetails />;
-}
-function SendFeedback() {
-  return <SendUserFeedback />;
-}
-function ApproveFeedback() {
-  return <FeedbackApprovePage />;
-}
-function ApproveFeedbackDetails() {
-  return <FeedbackApproveDetails />;
-}
+
 function UserFeedbackDetails() {
   return <UserFeedback />;
 }
