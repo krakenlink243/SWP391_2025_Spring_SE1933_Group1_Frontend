@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./YoutubePlayer.css"; // Assuming you have some styles for the player
 const YouTubePlayer = ({ videoId, title }) => {
   if (!videoId) {
     return <div>Video ID is missing.</div>;

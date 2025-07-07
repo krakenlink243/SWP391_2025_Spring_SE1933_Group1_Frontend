@@ -5,16 +5,16 @@ import { useEffect } from "react";
 
 import "./HomePage.css";
 import YoutubePlayer from "./YoutubePlayer";
-
+import BrowseByPublisher from "./BrowseByPublisher";
 import BrowseByTag from "./BrowseByTag";
 /**
  * Origin belongs to @author TS Huy
- * Remake by Phan NT Son 
+ * Remake by Phan NT Son
+ * Edited by TS Huy 7/7/2025
  * @since 14-06-2025
- * @returns 
+ * @returns
  */
 const HomePage = () => {
-
   return (
     <div className="container-fluid">
       <div className="row">
@@ -26,11 +26,11 @@ const HomePage = () => {
             playsInline
             preload="none"
             id="top-promo-video"
-            className="w-100"
+            className="topbanner"
             alt="Top Promo Banner"
           >
             <source
-              src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/clusters/frontpage/e605d9023731d9b5b9ec448e/webm_page_bg_vietnamese.webm?t=1748898349"
+              src="https://shared.fastly.steamstatic.com/store_item_assets/steam/clusters/sale_summer2025/36a01fe4331ab0ca600ff205/webm_page_bg_english.webm?t=1750963512"
               type="video/webm"
             />
           </video>
@@ -39,11 +39,19 @@ const HomePage = () => {
           <div className="col-lg-2"></div>
           <div className="col-lg-8">
             <BrowseByTag />
-
+            <div>
+              <div className="video-section">
+                <h2 className="section-title">Featured Video</h2>
+                <YoutubePlayer
+                  videoId="EFf1AWnZVW0"
+                  title="Featured Gameplay"
+                />
+              </div>
+            </div>
+            <BrowseByPublisher />
           </div>
         </div>
-        <div className="row">
-        </div>
+        <div className="row"></div>
       </div>
     </div>
   );

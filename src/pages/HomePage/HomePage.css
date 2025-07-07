@@ -7,7 +7,19 @@
 .homepage-content {
   width: 100%;
 }
-
+.section-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+.topbanner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  display: block;
+  
+}
 .top-promo-banner,
 .bottom-promo-banner {
   margin-bottom: 20px;
@@ -33,7 +45,6 @@
   gap: 20px;
   min-width: 0; /* Quan trọng để flexbox không bị tràn */
 }
-
 
 .fullscreen-video {
   margin-left: 50%;
