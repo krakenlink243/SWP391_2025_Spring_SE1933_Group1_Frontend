@@ -1,0 +1,93 @@
+import { createContext, useEffect, useState } from 'react';
+import { isTokenExpired } from '../utils/validators';
+import SocketService from '../services/SocketService';
+import axios from 'axios';
+import { useAuth } from './AuthContext';
+
+export const AppContext = createContext({
+    notification: [],
+    walletBallance: 0,
+    cartTotal: 0,
+    onlineUsers: []
+})
+
+export function AppProvider({ children }) {
+    const [notifications, setNotifications] = useState([]);
+    const [walletBalance, setWalletBalance] = useState(0);
+    const [onlineUsers, setOnlineUsers] = useState([]);
+    const [cartTotal, setCartTotal] = useState(0);
+
+    // const [CUR_TOKEN, setCUR_TOKEN] = useState(localStorage.getItem("token"));
+    const { token: CUR_TOKEN } = useAuth();
+
+    useEffect(() => {
+        if (!CUR_TOKEN || isTokenExpired())
+            return;
+
+        SocketService.connect(CUR_TOKEN, () => {
+            // Initial User wallet balance
+            axios.get(`${import.meta.env.VITE_API_URL}/user/wallet`)
+                .then((response) => { setWalletBalance(response.data) })
+                .catch((error) => { console.log("Error fetching account balance: ", error) });
+
+            // Initial Notifications 
+            axios.get(`${import.meta.env.VITE_API_URL}/notification/list`)
+                .then((response) => { setNotifications(response.data) })
+                .catch((err) => { console.log("Error initial Notifications: ", err) });
+
+
+            axios.get(`${import.meta.env.VITE_API_URL}/user/cart/total`)
+                .then((response) => { setCartTotal(response.data.data) })
+                .catch((err) => { console.log("Error intial Cart total: ", err) });
+
+
+
+            SocketService.subscribe('/user/queue/notification.unread', data => {
+                if (Array.isArray(data)) {
+                    // initial full list
+                    setNotifications(data);
+                } else {
+                    // single new notification
+                    setNotifications(prev => [data, ...prev]);
+                }
+            })
+
+            SocketService.subscribe('/user/queue/wallet.balance', data => {
+                setWalletBalance(data);
+            })
+
+            // Nhận online list ban đầu
+            SocketService.subscribe('/app/online', (data) => {
+                setOnlineUsers(data);
+            });
+
+            // Nhận cập nhật online theo thời gian thực
+            SocketService.subscribe('/topic/online', (data) => {
+                setOnlineUsers(data);
+            });
+
+            // Đăng ký kênh nhận tổng số Item trong Cart nếu có add thêm
+            SocketService.subscribe('/user/queue/cart.count', (data) => {
+                console.log("New cart count:", data, "Old:", cartTotal);
+                setCartTotal(data);
+            });
+        });
+
+
+
+        return () => {
+            SocketService.unsubscribe('/user/queue/notification.all');
+            SocketService.unsubscribe('/user/queue/wallet.balance');
+            SocketService.unsubscribe('/app/online');
+            SocketService.unsubscribe('/topic/online');
+            SocketService.unsubscribe('/queue/cart.count');
+        };
+    }, [CUR_TOKEN]);
+
+
+    return (
+        <AppContext.Provider value={{ notifications, walletBalance, cartTotal, onlineUsers }}>
+            {children}
+        </AppContext.Provider>
+    );
+}

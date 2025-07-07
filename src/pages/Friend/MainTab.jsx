@@ -1,12 +1,17 @@
-import { useState, useEffect } from "react";
+
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import './MainTab.css'
-import { useOnlineUsers } from "../../utils/OnlineUsersContext";
+import { AppContext } from "../../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 function MainTab({ setCurTab }) {
     const [friendList, setFriendList] = useState([]);
-    const onlineUsers = useOnlineUsers();
+    // Get from context ↓
+    const { onlineUsers: online } = useContext(AppContext);
+    const onlineUsers = online;
     const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
+    const navigate = useNavigate();
 
     const getFriendList = () => {
         axios.get(`${import.meta.env.VITE_API_URL}/user/friends`)
@@ -42,7 +47,11 @@ function MainTab({ setCurTab }) {
                 {friendList.length == 0 && <div>You have no friends</div>}
                 {
                     friendList.map((friend, idx) => (
-                        <div key={friend.friendId} className={`friend-item d-flex flex-row align-items-center ${isOnline(friend.friendName) ? "online" : "offline"}`}>
+                        <div
+                            key={friend.friendId}
+                            className={`friend-item d-flex flex-row align-items-center ${isOnline(friend.friendName) ? "online" : "offline"}`}
+                            onClick={() => navigate(`/profile/${friend.friendId}`)}
+                        >
                             <div className="friend-avatar">
                                 <img
                                     src={friend.friendAvatarUrl ? friend.friendAvatarUrl : UNKNOW_AVATAR_URL}
@@ -51,7 +60,6 @@ function MainTab({ setCurTab }) {
                             </div>
                             <div className={`spacer`}></div>
                             <div className="friend-name">{friend.friendName}</div>
-
                         </div>
                     ))
                 }

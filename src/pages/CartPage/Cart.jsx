@@ -3,14 +3,15 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import './Cart.css';
 import { isTokenExpired } from '../../utils/validators';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
-const userId = localStorage.getItem("userId");
-const CUR_TOKEN = localStorage.getItem('token');
 
-const Cart = ({ minHeight }) => {
-  if (!userId) {
-    window.location.href = "/";
-  }
+const Cart = () => {
+  const { token: CUR_TOKEN } = useAuth();
+  const navigate = useNavigate();
+
+
 
   const [cartItems, setCartItems] = useState([]);
   const [balance, setBalance] = useState(0);
@@ -23,20 +24,6 @@ const Cart = ({ minHeight }) => {
     gameId: null,
     gameName: "",
   });
-
-  useEffect(() => {
-    if (CUR_TOKEN && !isTokenExpired()) {
-      axios.get(`${import.meta.env.VITE_API_URL}/user/wallet`)
-        .then(response => {
-          console.log('Wallet API response:', response.data);
-          setBalance(Number(response.data) || 0);
-        })
-        .catch(error => {
-          console.error('Error fetching wallet balance:', error.message, error.response?.status, error.response?.data);
-          setBalance(0);
-        });
-    }
-  }, []);
 
   const fetchCart = async () => {
     setLoading(true);
@@ -60,6 +47,12 @@ const Cart = ({ minHeight }) => {
       fetchCart();
     }
   }, []);
+
+  useEffect(() => {
+    if (!CUR_TOKEN || isTokenExpired()) {
+      navigate("/");
+    }
+  }, [])
 
   const handleRemove = async (gameId) => {
     setLoading(true);
@@ -98,7 +91,7 @@ const Cart = ({ minHeight }) => {
         );
         const { paymentUrl } = response.data;
         if (paymentUrl) {
-          window.location.href = paymentUrl; // Chuyển hướng đến cổng thanh toán
+          navigate(paymentUrl);
         }
       } else {
         alert("Purchase failed due to an unknown error.");
@@ -126,7 +119,7 @@ const Cart = ({ minHeight }) => {
   const total = cartItems.reduce((sum, item) => sum + (item.price || 0), 0).toFixed(2);
 
   return (
-    <div className="cart-steam-bg" style={{ minHeight: `${minHeight}px` }}>
+    <div className="cart-steam-bg h-100">
       <div className="cart-main-steam">
         <h2 className="cart-title-steam">Your Shopping Cart</h2>
         <div className="cart-list-steam">

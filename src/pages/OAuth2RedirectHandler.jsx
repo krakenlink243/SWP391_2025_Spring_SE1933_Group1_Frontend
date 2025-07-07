@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 /**
  * @author Loc Phan
@@ -15,39 +16,40 @@ const OAuth2RedirectHandler = () => {
   // const navigate = useNavigate();
   const location = useLocation();
 
-  
+
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const token = params.get("token");
+    const navigate = useNavigate();
 
     if (token) {
       try {
         localStorage.setItem("token", token);
         console.log("Saved token:", token);
-  
+
         const decoded = jwtDecode(token);
         const userId = decoded.userId;
         const role = decoded.role;
         const username = decoded.sub;
-  
+
         localStorage.setItem("userId", userId);
         localStorage.setItem("role", role);
         localStorage.setItem("username", username);
-  
+
         // Redirect and clean up token from URL
-        window.location.href = "/";
+        navigate("/");
         // navigate("/", { replace: true }); // Redirect after saving
       } catch (err) {
         console.error("Error handling OAuth2 token:", err);
       }
-      
-      } else {
-        window.location.href = "/login";
-      }
+
+    } else {
+      navigate("/login");
+    }
   }, []);
   const params = new URLSearchParams(location.search);
-const token = params.get("token");
-console.log("Token from URL:", token);
+  const token = params.get("token");
+  console.log("Token from URL:", token);
   return <p>Logging in via Google...</p>;
 };
 

@@ -1,14 +1,15 @@
-import { useCartItemsCount } from '../../utils/TotalInCartContext';
+import { useContext } from 'react';
 import './CartPopup.css';
 import axios from 'axios';
+import { AppContext } from '../../context/AppContext';
 
 function CartPopup({ game, mediaUrlArr, onClose, onViewCart, onRemoveSuccess }) {
 
-    const totalInCartCount = useCartItemsCount();
+    const { cartTotal } = useContext(AppContext);
 
     const handleRemove = async (gameId) => {
         try {
-            await axios.delete(`http://localhost:8080/user/cart/remove?gameId=${gameId}`);
+            await axios.delete(`${import.meta.env.VITE_API_URL}/user/cart/remove?gameId=${gameId}`);
             onRemoveSuccess();
             onClose(); // đóng popup
 
@@ -37,7 +38,7 @@ function CartPopup({ game, mediaUrlArr, onClose, onViewCart, onRemoveSuccess }) 
                     {/* <button onClick={onClose}>Continue Shopping</button>
                     <button className="view-cart" onClick={onViewCart}>View My Cart</button> */}
                     <div className='popup-btn' onClick={onClose}>Continue Shopping</div>
-                    <div className='popup-btn view-cart' onClick={onViewCart}>View My Cart ({totalInCartCount})</div>
+                    <div className='popup-btn view-cart' onClick={onViewCart}>View My Cart ({cartTotal})</div>
                 </div>
             </div>
         </div>

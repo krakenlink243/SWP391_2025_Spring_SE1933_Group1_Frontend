@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import GameShowcase from "./GameShowcase";
 import "./ProfilePage.css";
-import { useOnlineUsers } from "../../utils/OnlineUsersContext";
+import { AppContext } from "../../context/AppContext";
+import { useAuth } from "../../context/AuthContext";
+import { isTokenExpired } from "../../utils/validators";
 
 const ProfileHeader = ({
   user,
@@ -15,7 +17,25 @@ const ProfileHeader = ({
   const avatarUrl =
     user?.avatarUrl ||
     "https://avatars.steamstatic.com/b5bd56c1aa4644a474a2e4972be27ef9e82e517e_full.jpg";
-  const isOnline = useOnlineUsers || false;
+
+  const { onlineUsers } = useContext(AppContext);
+
+  const isOnline = onlineUsers.includes(user.username);
+
+  const [friendList, setFriendList] = useState([]);
+
+  const getFriendList = () => {
+    axios.get(`${import.meta.env.VITE_API_URL}/user/friends`)
+      .then((response) => { setFriendList(response.data) })
+      .catch((err) => { console.log("Error fetching friends list: " + err) })
+  };
+
+  const CUR_TOKEN = useAuth();
+  useEffect(() => {
+    if (CUR_TOKEN && !isTokenExpired()) {
+      getFriendList();
+    }
+  }, [])
 
   return (
     <div className="profile-header">
@@ -36,21 +56,21 @@ const ProfileHeader = ({
         </div>
 
         <div className="profile-actions">
-          {/* === LOGIC HIỂN THỊ CÓ ĐIỀU KIỆN === */}
           {isOwnProfile ? (
-            // Nếu là trang của mình -> Hiển thị nút Edit
             <button className="action-btn primary" onClick={onEditClick}>
               Edit Profile
             </button>
           ) : (
-            // Nếu là trang của người khác -> Hiển thị các nút tương tác
             <>
-              <button className="action-btn secondary" onClick={onMessageClick}>
-                Message
-              </button>
-              <button className="action-btn primary" onClick={onAddFriendClick}>
-                Add Friend
-              </button>
+              {friendList.some(friend => friend.friendName === user.username) ? (
+                <button className="action-btn secondary" onClick={onMessageClick}>
+                  Message
+                </button>
+              ) : (
+                <button className="action-btn primary" onClick={onAddFriendClick}>
+                  Add Friend
+                </button>
+              )}
             </>
           )}
         </div>
@@ -94,7 +114,7 @@ const ProfilePage = () => {
       try {
         // Luôn fetch dữ liệu của profileId trên URL
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/user/profile/${userId}`
+          `${import.meta.env.VITE_API_URL}/user/profile/${profileId}`
         );
         setProfileData(response.data);
       } catch (err) {
@@ -120,10 +140,11 @@ const ProfilePage = () => {
   };
 
   const handleAddFriend = () => {
-    axios.post(`http://localhost:8080/user/sendinvite/${profileData.userId}`);
+    axios.post(
+      `${import.meta.env.VITE_API_URL}/user/sendinvite/${profileData.userId}`
+    );
     alert(
-      `Friend request sent to ${
-        profileData.profileName || profileData.username
+      `Friend request sent to ${profileData.profileName || profileData.username
       }.`
     );
   };

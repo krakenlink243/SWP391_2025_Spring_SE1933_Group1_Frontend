@@ -4,16 +4,17 @@ import axios from "axios";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import "./Login.css";
 import { jwtDecode } from "jwt-decode";
-import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
-import { useNavigate} from "react-router-dom";
+import { Navigate, useNavigate, useLocation, Link } from 'react-router-dom';
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const location = useLocation();
+  const navigate = useNavigate();
+  const { setToken } = useAuth();
 
   useEffect(() => {
     if (location.state?.fromRegister) {
@@ -41,9 +42,10 @@ const Login = () => {
       setMessage("Login successful!");
 
       // Added by Phan NT Son
-      localStorage.setItem("token", res.data.token);
+      // localStorage.setItem("token", res.data.token);
+      setToken(res.data.token);
       let decodedToken = null;
-      const token = localStorage.getItem("token");
+      const token = res.data.token;
       decodedToken = jwtDecode(token);
 
       const expireDate = decodedToken.exp;
@@ -91,11 +93,11 @@ const Login = () => {
   return (
     <div className="login-container">
       <main>
-        <section class="form-section">
-          <h1 class="form-title">Log in</h1>
-          <form onSubmit={handleLogin} class="form">
+        <section className="form-section">
+          <h1 className="form-title">Log in</h1>
+          <form onSubmit={handleLogin} className="form">
             {message && <p className="message">{message}</p>}
-            <label htmlFor="username" class="form-label">
+            <label htmlFor="username" className="form-label">
               Log in with username
             </label>
             <input
@@ -104,11 +106,11 @@ const Login = () => {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              class="form-input"
+              className="form-input"
               required
             />
 
-            <label htmlFor="password" class="form-label password">
+            <label htmlFor="password" className="form-label password">
               Password
             </label>
             <input
@@ -117,20 +119,21 @@ const Login = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              class="form-input"
+              className="form-input"
               required
             />
 
-            <div class="submit-container">
-              <button type="submit" class="submit-button">
+            <div className="submit-container">
+              <button type="submit" className="submit-button">
                 Log in
               </button>
-              <a href="/forgot-password" class="forgot-password-link">
+              <Link to={"/forgot-password"} className="forgot-password-link">
                 Forgot password?
-              </a>
-              <a href={`${import.meta.env.VITE_API_URL}/oauth2/authorization/google`}>
+              </Link>
+
+              <Link to={`${import.meta.env.VITE_API_URL}/oauth2/authorization/google`}>
                 <img src="/google-logo.jpg" alt="Google login" className="google-logo" />
-              </a>
+              </Link>
 
               {/* <div className="google-login">
                   <GoogleLogin

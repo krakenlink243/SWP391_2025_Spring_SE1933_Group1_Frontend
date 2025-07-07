@@ -1,23 +1,26 @@
 //@author: Vu Hoang
 import React, { useEffect } from 'react'
 import { useState, useRef } from 'react'
-import gameicon from '../assets/gameicon.png'
-import './SendGameToAdmin.css'
-import PartHeading from '../components/PartHeading/PartHeading'
-import Button from '../components/Button/Button'
+import gameicon from '../../../assets/gameicon.png';
+import '../../SendGameToAdmin.css'
+import PartHeading from '../../../components/PartHeading/PartHeading'
+import Button from '../../../components/Button/Button'
 import axios from 'axios'
 import { useParams } from 'react-router'
 import { PhotoProvider, PhotoView } from 'react-photo-view'
 import "react-photo-view/dist/react-photo-view.css";
-import { createNotification } from '../services/notification';
-import Select,{ components } from 'react-select'
+import { createNotification } from '../../../services/notification';
+import Select, { components } from 'react-select'
 import { confirmAlert } from 'react-confirm-alert'
+import { useNavigate } from 'react-router-dom';
+
 function GameApproveDetails() {
-  const gameId = useParams().gameId;
+  const gameId = useParams().requestId;
   const [downloadLink, setDownloadLink] = useState('');
   const DropdownIndicator = () => null; // No dropdown arrow
   const MultiValueRemove = () => null; // No × icon on tags
   const IndicatorSeparator = () => null;
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     gameName: '',
     price: '',
@@ -36,38 +39,38 @@ function GameApproveDetails() {
     publisherId: ''
   })
   const tags = [
-  { value: 18, label: 'Action' },
-  { value: 17, label: 'Adventure' },
-  { value: 29, label: 'Anime' },
-  { value: 31, label: 'Casual' },
-  { value: 12, label: 'Choices Matter' },
-  { value: 4, label: 'Classic' },
-  { value: 27, label: 'Co-op' },
-  { value: 23, label: 'Crafting' },
-  { value: 15, label: 'Exploration' },
-  { value: 20, label: 'Fantasy' },
-  { value: 28, label: 'FPS' },
-  { value: 16, label: 'Free to Play' },
-  { value: 10, label: 'Great Soundtrack' },
-  { value: 3, label: 'Historical' },
-  { value: 14, label: 'Horror' },
-  { value: 8, label: 'Indie' },
-  { value: 6, label: 'Multiplayer' },
-  { value: 19, label: 'Open World' },
-  { value: 11, label: 'Pixel Graphics' },
-  { value: 25, label: 'Platformer' },
-  { value: 26, label: 'Puzzle' },
-  { value: 30, label: 'Racing' },
-  { value: 7, label: 'RPG' },
-  { value: 1, label: 'RTS' },
-  { value: 21, label: 'Sci-fi' },
-  { value: 24, label: 'Simulation' },
-  { value: 5, label: 'Singleplayer' },
-  { value: 9, label: 'Story Rich' },
-  { value: 2, label: 'Strategy' },
-  { value: 13, label: 'Surreal' },
-  { value: 22, label: 'Survival' },
-];
+    { value: 18, label: 'Action' },
+    { value: 17, label: 'Adventure' },
+    { value: 29, label: 'Anime' },
+    { value: 31, label: 'Casual' },
+    { value: 12, label: 'Choices Matter' },
+    { value: 4, label: 'Classic' },
+    { value: 27, label: 'Co-op' },
+    { value: 23, label: 'Crafting' },
+    { value: 15, label: 'Exploration' },
+    { value: 20, label: 'Fantasy' },
+    { value: 28, label: 'FPS' },
+    { value: 16, label: 'Free to Play' },
+    { value: 10, label: 'Great Soundtrack' },
+    { value: 3, label: 'Historical' },
+    { value: 14, label: 'Horror' },
+    { value: 8, label: 'Indie' },
+    { value: 6, label: 'Multiplayer' },
+    { value: 19, label: 'Open World' },
+    { value: 11, label: 'Pixel Graphics' },
+    { value: 25, label: 'Platformer' },
+    { value: 26, label: 'Puzzle' },
+    { value: 30, label: 'Racing' },
+    { value: 7, label: 'RPG' },
+    { value: 1, label: 'RTS' },
+    { value: 21, label: 'Sci-fi' },
+    { value: 24, label: 'Simulation' },
+    { value: 5, label: 'Singleplayer' },
+    { value: 9, label: 'Story Rich' },
+    { value: 2, label: 'Strategy' },
+    { value: 13, label: 'Surreal' },
+    { value: 22, label: 'Survival' },
+  ];
   useEffect(() => {
     const getGameDetails = async () => {
       try {
@@ -89,11 +92,11 @@ function GameApproveDetails() {
       }
     }
     getGameDetails();
-    
+
   }, [])
   useEffect(() => {
-    const tagLabels =formData.tags.map(
-    (val) => tags.find((tag) => tag.value === val)?.label || `Unknown (${val})`
+    const tagLabels = formData.tags.map(
+      (val) => tags.find((tag) => tag.value === val)?.label || `Unknown (${val})`
     );
     console.log(tagLabels);
   }, [formData.tags]);
@@ -106,55 +109,55 @@ function GameApproveDetails() {
       const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/game/approve/${gameId}`);
       console.log(response.data);
       alert("Game Approved");
-      window.location.href = '/aprrovegame'
+      navigate("/admin/request/game");
     } catch (error) {
       console.log(error);
     }
   }
   const handleDecline = () => {
-  let answer = '';
+    let answer = '';
 
-  confirmAlert({
-    title: `Send answer to ${formData.publisherName}`,
-    customUI: ({ onClose }) => (
-      <div className="custom-ui">
-        <h2>Decline Game Request</h2>
-        <p>To: {formData.publisherName}</p>
-        <textarea
-          rows={5}
-          style={{ width: '100%', marginBottom: '1rem' }}
-          onChange={(e) => (answer = e.target.value)}
-          placeholder="Type your decline reason..."
-        />
-        <button className="blue-button"
-          onClick={async () => {
-            if (answer.trim() !== '') {
-              try {
-                createNotification(
-                  formData.publisherId,
-                  "Game Approval Response",
-                  `Answer for ${formData.gameName}: ${answer}`
-                );
-                const response = await axios.patch(
-                  `${import.meta.env.VITE_API_URL}/request/game/reject/${gameId}`
-                );
-                console.log("Declined request:", response.data);
-                window.location.href = '/aprrovegame';
-              } catch (err) {
-                console.error("Error declining request:", err);
+    confirmAlert({
+      title: `Send answer to ${formData.publisherName}`,
+      customUI: ({ onClose }) => (
+        <div className="custom-ui">
+          <h2>Decline Game Request</h2>
+          <p>To: {formData.publisherName}</p>
+          <textarea
+            rows={5}
+            style={{ width: '100%', marginBottom: '1rem' }}
+            onChange={(e) => (answer = e.target.value)}
+            placeholder="Type your decline reason..."
+          />
+          <button className="blue-button"
+            onClick={async () => {
+              if (answer.trim() !== '') {
+                try {
+                  createNotification(
+                    formData.publisherId,
+                    "Game Approval Response",
+                    `Answer for ${formData.gameName}: ${answer}`
+                  );
+                  const response = await axios.patch(
+                    `${import.meta.env.VITE_API_URL}/request/game/reject/${gameId}`
+                  );
+                  console.log("Declined request:", response.data);
+                  navigate("/admin/request/game");
+                } catch (err) {
+                  console.error("Error declining request:", err);
+                }
+                onClose();
+              } else {
+                alert('Please enter answer');
               }
-              onClose();
-            } else {
-              alert('Please enter answer');
-            }
-          }}
-        >
-          Submit
-        </button>
-      </div>
-    )
-  });
-};
+            }}
+          >
+            Submit
+          </button>
+        </div>
+      )
+    });
+  };
 
   const handleGetLinkDownload = async () => {
     try {
@@ -188,7 +191,7 @@ function GameApproveDetails() {
                 options={tags}
                 value={tags.filter(tag => formData.tags.includes(tag.value))}
                 classNamePrefix="my-select"
-                components={{DropdownIndicator,MultiValueRemove,IndicatorSeparator}}
+                components={{ DropdownIndicator, MultiValueRemove, IndicatorSeparator }}
               />
             </div>
           </div>

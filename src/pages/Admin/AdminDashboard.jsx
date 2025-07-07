@@ -1,5 +1,3 @@
-import GameApprovePage from "./GameApprovePage";
-import UserManagementPage from "./UserManagementPage";
 import { Navigate } from 'react-router-dom';
 /**
  * @author Phan NT Son
@@ -11,10 +9,9 @@ function AdminDashboard({ tab }) {
         return <Navigate to="/" replace />;
     } else {
         return (
-            <>
-                {tab === "Request Management" && <GameApprovePage />}
-                {tab === "User Management" && <UserManagementPage />}
-            </>
+            <div className='d-flex flex-column align-items-center justify-content-center text-white h-100 w-100'>
+                <h1>DASHBOARD CONTENT HERE</h1>
+            </div>
         )
     }
 
