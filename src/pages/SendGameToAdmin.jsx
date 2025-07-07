@@ -175,20 +175,21 @@ function SendGameToAdmin() {
     }
   }
   const handleGameUpload = async (e) => {
-    const selectedFile = e.target.files[0];
-    if (!selectedFile) return;
+  const selectedFile = e.target.files[0];
+  if (!selectedFile) return;
 
-  await handleDelete(); // Your existing delete logic
+  await handleDelete(); // 🧹 Clear existing file/data
   setUploadProgress(0);
   setUploadSpeed(0);
   setTimeRemaining(null);
 
-    const form = new FormData();
-    form.append('file', selectedFile);
+  const form = new FormData();
+  form.append('file', selectedFile);
 
-    const startTime = Date.now();
+  const phaseOneStartTime = Date.now(); // ⏱️ Phase 1 timer
+  let phaseTwoStartTime = null; // ⏱️ Will be set when Phase 2 begins
 
-  // Initialize SSE
+  // 🔁 Close old SSE (if any)
   if (eventSource) {
     eventSource.close();
   }
@@ -196,16 +197,23 @@ function SendGameToAdmin() {
   const newEventSource = new EventSource(`${import.meta.env.VITE_API_URL}/request/progress`);
   setEventSource(newEventSource);
 
+  // 📡 Listen to backend progress updates (Phase 2)
   newEventSource.onmessage = (event) => {
     const data = event.data;
 
     if (!isNaN(data)) {
-      const backendProgress = parseFloat(data); // 0–100 from SSE
-      const combinedProgress = 50 + backendProgress / 2; // merge phase 2 (50–100)
+      const backendProgress = parseFloat(data);
+      const combinedProgress = 50 + backendProgress / 2; // Merge Phase 2
       setUploadProgress(combinedProgress);
 
-      const elapsed = (Date.now() - startTime) / 1000;
-      const uploadedBytes = (selectedFile.size * combinedProgress) / 100;
+      // ⏱️ Start Phase 2 timer once
+      if (!phaseTwoStartTime) {
+        phaseTwoStartTime = Date.now();
+      }
+
+      // 🧮 Speed & ETA for Phase 2
+      const elapsed = (Date.now() - phaseTwoStartTime) / 1000;
+      const uploadedBytes = (selectedFile.size * backendProgress / 100);
       const speedKBps = uploadedBytes / elapsed / 1024;
       const remainingBytes = selectedFile.size - uploadedBytes;
       const remainingTime = remainingBytes / (speedKBps * 1024);
@@ -214,50 +222,53 @@ function SendGameToAdmin() {
 
       setUploadSpeed(speedKBps.toFixed(2));
       setTimeRemaining(`${minutes}m ${seconds}s`);
-    } else {
-      console.log('SSE:', data);
     }
-     if (data === 'Upload complete') {
+
+    if (data === 'Upload complete') {
       setUploadProgress(100);
       setTimeRemaining(`0m 0s`);
       newEventSource.close();
     }
-  }
-
-    newEventSource.onerror = () => {
-      console.warn('SSE connection error.');
-      newEventSource.close();
-    };
-
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/request/file/upload`,
-        form,
-        {
-          headers: { 'Content-Type': 'multipart/form-data' },
-          onUploadProgress: (event) => {
-            const percent = (event.loaded / event.total) * 50; // phase 1 (0–50%)
-            setUploadProgress(percent);
-            const elapsedTime = (Date.now() - startTime) / 1000;
-            const speedKBps = (event.loaded / elapsedTime) / 1024;
-            const remainingTime = (selectedFile.size - event.loaded) / (speedKBps * 1024);
-            const minutes = Math.floor(remainingTime / 60);
-            const seconds = Math.round(remainingTime % 60);
-
-            setUploadSpeed(speedKBps.toFixed(2));
-            setTimeRemaining(`${minutes}m ${seconds}s`);
-          },
-        }
-      );
-
-      console.log('Uploaded:', response.data.fileId);
-      setFormData((prev) => ({ ...prev, gameUrl: response.data.fileId }));
-      setFileName(response.data.fileName);
-    } catch (error) {
-      console.log('Upload failed:', error);
-      newEventSource.close();
-    }
   };
+
+  // ❌ Handle SSE failure
+  newEventSource.onerror = () => {
+    console.warn('SSE connection error.');
+    newEventSource.close();
+  };
+
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/request/file/upload`,
+      form,
+      {
+        headers: { 'Content-Type': 'multipart/form-data' },
+        onUploadProgress: (event) => {
+          // 📦 Phase 1 progress (uploading file)
+          const percent = (event.loaded / event.total) * 50;
+          setUploadProgress(percent);
+
+          const elapsed = (Date.now() - phaseOneStartTime) / 1000;
+          const speedKBps = (event.loaded / elapsed) / 1024;
+          const remainingTime = (selectedFile.size - event.loaded) / (speedKBps * 1024);
+          const minutes = Math.floor(remainingTime / 60);
+          const seconds = Math.round(remainingTime % 60);
+
+          setUploadSpeed(speedKBps.toFixed(2));
+          setTimeRemaining(`${minutes}m ${seconds}s`);
+        },
+      }
+    );
+
+    // ✅ Response from backend after upload
+    console.log('Uploaded:', response.data.fileId);
+    setFormData((prev) => ({ ...prev, gameUrl: response.data.fileId }));
+    setFileName(response.data.fileName);
+  } catch (error) {
+    console.log('Upload failed:', error);
+    newEventSource.close();
+  }
+};
   const handleCancel = async () => {
     await handleDelete();
     navigate("/");
