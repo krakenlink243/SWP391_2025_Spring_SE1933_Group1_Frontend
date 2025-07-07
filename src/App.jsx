@@ -162,7 +162,7 @@ function AppRoutes() {
             <Route path="request/:tab?" element={<RequestSection />} />
             <Route path="request/publisher/detail/:requestId" element={<PublisherApproveDetails />} />
             <Route path="request/feedback/detail/:requestId" element={<FeedbackApproveDetails />} />
-            <Route path="request/game/detail/:gameId" element={<GameApproveDetails />} />
+            <Route path="request/game/detail/:requestId" element={<GameApproveDetails />} />
 
           </Route>
 
