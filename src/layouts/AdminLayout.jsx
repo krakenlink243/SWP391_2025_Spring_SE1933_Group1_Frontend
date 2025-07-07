@@ -10,7 +10,7 @@ export default function AdminLayout() {
 
     const items = [
         { title: "Dashboard", url: "/admin/" },
-        { title: "Request", url: "/admin/request" },
+        { title: "Request", url: "/admin/request/game" },
         { title: "Ban Users", url: "" }
     ]
 
@@ -18,9 +18,9 @@ export default function AdminLayout() {
         <div className="admin-layout">
             <Header ref={headerRef} />
             <div
-                className="admin-container d-flex flex-row h-100"
+                className="admin-container d-flex flex-row"
                 style={{
-                    minHeight: `calc(100vh - ${headerRef.current ? headerRef.current.offsetHeight : 0}px)`
+                    height: `calc(100vh - ${headerRef.current ? headerRef.current.offsetHeight : 0}px)`
                 }}
             >
                 <div className="left-col d-flex flex-column w-25">

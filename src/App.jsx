@@ -151,7 +151,6 @@ function AppRoutes() {
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/forgot-password" element={<ForgotPasswordRequest />} />
             <Route path="/change-password" element={<ChangePassword />} />
-            <Route path="/sendgame" element={<RequestAddGame />}></Route>
             <Route path="/oauth2/callback" element={<OAuth2RedirectHandler />} />
 
           </Route>

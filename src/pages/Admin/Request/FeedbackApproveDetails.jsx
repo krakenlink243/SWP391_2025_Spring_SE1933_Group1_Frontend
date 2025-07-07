@@ -136,8 +136,8 @@ function FeedbackApproveDetails() {
         </PhotoProvider>
       </div>
       <div className='feedback-button'>
+        <Button label="Dismiss" color='red-button' onClick={handleDecline} />
         <Button label="Answer" color='blue-button' onClick={handleAnswer} />
-        <Button label="Decline" color='grey-button' onClick={handleDecline} />
       </div>
     </div>
   )

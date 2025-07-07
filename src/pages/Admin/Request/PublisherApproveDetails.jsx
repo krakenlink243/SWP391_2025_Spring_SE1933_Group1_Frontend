@@ -115,8 +115,8 @@ function PublisherApproveDetails() {
             Country
             <input type="text" name="country" id="" value={formData.country} readOnly />
             <div className="publisher-button">
-              <Button label="Decline" color="grey-button" onClick={() => handleDecline(publisherId)} />
-              <Button label="Approve" color="blue-button" onClick={() => handleApprove(publisherId)} />
+              <Button label="Decline" color="red-button" onClick={() => handleDecline(publisherId)} />
+              <Button label="Approve" color="green-button" onClick={() => handleApprove(publisherId)} />
             </div>
           </div>
           <div className="publisher-image">

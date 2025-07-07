@@ -109,7 +109,7 @@ function SendUserFeedback() {
             </div>
             <div className='inner-image'>
                 <input type="file" multiple style={{ display: "none" }} accept=".jpg,.png" ref={mediaFileRef} onChange={handleFileSelect} />
-                <Button className='upload-media' label='+' onClick={() => mediaFileRef.current.click()} color='gray-button' />
+                <Button className='upload-media' label='+' onClick={() => mediaFileRef.current.click()} color='grey-button' />
                 <PhotoProvider>
                     {arr.map((item, index) => (
                         <div className='image-wrapper' key={index}>

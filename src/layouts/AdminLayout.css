@@ -8,3 +8,8 @@
     flex: 1;
     
 }
+
+.admin-container .right-col{
+    max-height: 100%;
+    overflow-y: auto;
+}

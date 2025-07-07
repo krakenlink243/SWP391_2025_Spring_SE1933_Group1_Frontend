@@ -8,27 +8,36 @@ import axios from "axios";
 import DetailHeader from "./DetailHeader";
 import DetailBody from "./DetailBody";
 import DetailSystem from "./DetailSystem";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 // add by Bathanh
 const userId = localStorage.getItem("userId");
 
+const isStale = (timestamp) => {
+  const TEN_MINUTES = 10 * 60 * 1000;
+  return Date.now() - timestamp > TEN_MINUTES;
+};
 
 const GameDetail = () => {
   const { gameId } = useParams();
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [cachedGameDetail, setCachedGameDetail] = useLocalStorage(`gameDetail_${gameId}`, null);
 
   useEffect(() => {
     const fetchGameDetails = async () => {
       try {
         setLoading(true);
         setError(null);
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/game/detail/${gameId}`
-        ); // Giả sử API endpoint của bạn là đây
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/game/detail/${gameId}`);
         const data = response.data;
+
         setGame(data);
+        setCachedGameDetail({
+          timestamp: Date.now(),
+          data
+        })
 
       } catch (e) {
         console.error("Failed to fetch game details:", e);
@@ -38,7 +47,10 @@ const GameDetail = () => {
       }
     };
 
-    if (gameId) {
+    if (cachedGameDetail?.data && !isStale(cachedGameDetail.timestamp)) {
+      setGame(cachedGameDetail.data);
+      setLoading(false);
+    } else if (gameId) {
       fetchGameDetails();
     }
   }, [gameId]);
@@ -50,7 +62,7 @@ const GameDetail = () => {
       <div className="error-message">Error fetching game details: {error}</div>
     );
   if (!game) return <div className="not-found-message">Game not found.</div>;
-    
+
   return (
 
     /**
