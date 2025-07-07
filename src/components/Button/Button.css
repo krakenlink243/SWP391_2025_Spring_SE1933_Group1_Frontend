@@ -1,43 +1,51 @@
 @font-face {
-  font-family: 'Motiva Sans';
-  src: url('/src/assets/fonts/MotivaSansRegular.woff.ttf') format('truetype');
+  font-family: "Motiva Sans";
+  src: url("/src/assets/fonts/MotivaSansRegular.woff.ttf") format("truetype");
 }
-  body {
-    font-family: 'Motiva Sans';
-    font-size: 14px;
-  }
-  .blue-button {
-    background: linear-gradient(90deg, #007bff, #0056b3); /* Gradient from light to dark blue */
-    color: white;
-    padding: 10px 50px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  .blue-button:hover {
-    background: linear-gradient(90deg, #0056b3, #003f7f); /* Darker gradient on hover */
-  }
+body {
+  font-family: "Motiva Sans";
+  font-size: 14px;
+}
+.blue-button {
+  background: linear-gradient(
+    90deg,
+    #007bff,
+    #0056b3
+  ); /* Gradient from light to dark blue */
+  color: white;
+  padding: 10px 50px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
 
-  .grey-button {
-    background: #3D4450; /* Gradient from light to dark blue */
-    color: white;
-    padding: 10px 50px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
+.blue-button:hover {
+  background: linear-gradient(
+    90deg,
+    #0056b3,
+    #003f7f
+  ); /* Darker gradient on hover */
+}
 
- .grey-button:hover {
-    background: #2c313a; /* Darker gradient on hover */
- }
+.grey-button {
+  background: #3d4450; /* Gradient from light to dark blue */
+  color: white;
+  padding: 10px 50px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.grey-button:hover {
+  background: #2c313a; /* Darker gradient on hover */
+}
 
 /*
 Added by Phan NT Son
 */
- .red-button {
+.red-button {
   background: linear-gradient(90deg, #dc3545, #b52a37); /* đỏ tươi -> đỏ đậm */
   color: white;
   padding: 10px 50px;
@@ -52,7 +60,11 @@ Added by Phan NT Son
 }
 
 .green-button {
-  background: linear-gradient(90deg, #28a745, #218838); /* xanh lá tươi -> đậm */
+  background: linear-gradient(
+    90deg,
+    #28a745,
+    #218838
+  ); /* xanh lá tươi -> đậm */
   color: white;
   padding: 10px 50px;
   border: none;
@@ -64,5 +76,3 @@ Added by Phan NT Son
 .green-button:hover {
   background: linear-gradient(90deg, #218838, #1e7e34); /* hover xanh đậm hơn */
 }
-
-  
