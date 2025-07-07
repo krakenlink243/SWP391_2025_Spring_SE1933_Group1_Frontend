@@ -178,7 +178,7 @@ function SendGameToAdmin() {
   const selectedFile = e.target.files[0];
   if (!selectedFile) return;
 
-  await handleDelete(); // 🧹 Clear existing file/data
+  await handleDelete();
   setUploadProgress(0);
   setUploadSpeed(0);
   setTimeRemaining(null);
@@ -186,10 +186,9 @@ function SendGameToAdmin() {
   const form = new FormData();
   form.append('file', selectedFile);
 
-  const phaseOneStartTime = Date.now(); // ⏱️ Phase 1 timer
-  let phaseTwoStartTime = null; // ⏱️ Will be set when Phase 2 begins
+  const virtualSize = selectedFile.size * 2; // simulate upload + backend
+  const startTime = Date.now();
 
-  // 🔁 Close old SSE (if any)
   if (eventSource) {
     eventSource.close();
   }
@@ -197,31 +196,27 @@ function SendGameToAdmin() {
   const newEventSource = new EventSource(`${import.meta.env.VITE_API_URL}/request/progress`);
   setEventSource(newEventSource);
 
-  // 📡 Listen to backend progress updates (Phase 2)
   newEventSource.onmessage = (event) => {
     const data = event.data;
 
     if (!isNaN(data)) {
-      const backendProgress = parseFloat(data);
-      const combinedProgress = 50 + backendProgress / 2; // Merge Phase 2
+      const backendProgress = parseFloat(data); // 0–100
+      const combinedProgress = 50 + backendProgress / 2;
       setUploadProgress(combinedProgress);
 
-      // ⏱️ Start Phase 2 timer once
-      if (!phaseTwoStartTime) {
-        phaseTwoStartTime = Date.now();
-      }
-
-      // 🧮 Speed & ETA for Phase 2
-      const elapsed = (Date.now() - phaseTwoStartTime) / 1000;
-      const uploadedBytes = (selectedFile.size * backendProgress / 100);
+      // 📡 Unified timing logic
+      const elapsed = (Date.now() - startTime) / 1000;
+      const uploadedBytes = (virtualSize * combinedProgress) / 100;
       const speedKBps = uploadedBytes / elapsed / 1024;
-      const remainingBytes = selectedFile.size - uploadedBytes;
+      const remainingBytes = virtualSize - uploadedBytes;
       const remainingTime = remainingBytes / (speedKBps * 1024);
       const minutes = Math.floor(remainingTime / 60);
       const seconds = Math.round(remainingTime % 60);
 
       setUploadSpeed(speedKBps.toFixed(2));
       setTimeRemaining(`${minutes}m ${seconds}s`);
+    } else {
+      console.log('SSE:', data);
     }
 
     if (data === 'Upload complete') {
@@ -231,7 +226,6 @@ function SendGameToAdmin() {
     }
   };
 
-  // ❌ Handle SSE failure
   newEventSource.onerror = () => {
     console.warn('SSE connection error.');
     newEventSource.close();
@@ -244,13 +238,14 @@ function SendGameToAdmin() {
       {
         headers: { 'Content-Type': 'multipart/form-data' },
         onUploadProgress: (event) => {
-          // 📦 Phase 1 progress (uploading file)
-          const percent = (event.loaded / event.total) * 50;
+          const percent = (event.loaded / selectedFile.size) * 50;
           setUploadProgress(percent);
 
-          const elapsed = (Date.now() - phaseOneStartTime) / 1000;
-          const speedKBps = (event.loaded / elapsed) / 1024;
-          const remainingTime = (selectedFile.size - event.loaded) / (speedKBps * 1024);
+          const elapsed = (Date.now() - startTime) / 1000;
+          const uploadedBytes = (virtualSize * percent) / 100;
+          const speedKBps = uploadedBytes / elapsed / 1024;
+          const remainingBytes = virtualSize - uploadedBytes;
+          const remainingTime = remainingBytes / (speedKBps * 1024);
           const minutes = Math.floor(remainingTime / 60);
           const seconds = Math.round(remainingTime % 60);
 
@@ -260,7 +255,6 @@ function SendGameToAdmin() {
       }
     );
 
-    // ✅ Response from backend after upload
     console.log('Uploaded:', response.data.fileId);
     setFormData((prev) => ({ ...prev, gameUrl: response.data.fileId }));
     setFileName(response.data.fileName);
