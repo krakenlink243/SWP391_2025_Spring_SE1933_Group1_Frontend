@@ -57,7 +57,7 @@ export default function ChatHistory({ pastMessages, liveMessages, friend }) {
                             <div className="sender-small-profile">
                                 <div className="h-100">
                                     <img src={group.senderName === friend.friendName ?
-                                        (friend.friendAvatar ? friend.friendAvatar : UNKNOW_AVATAR_URL)
+                                        (friend.friendAvatarUrl ? friend.friendAvatarUrl : UNKNOW_AVATAR_URL)
                                         :
                                         CUR_USER_AVATAR}></img>
                                 </div>
