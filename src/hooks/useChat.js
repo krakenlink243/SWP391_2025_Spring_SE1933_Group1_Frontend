@@ -47,10 +47,6 @@ export function useChat(token, friendId, friendName) {
             content: content
         })
 
-        setMessages(prev => [
-            ...prev,
-            { senderUsername: sender, content, sentAt: new Date().toISOString() }
-        ]);
     }
 
     return { messages, conversation, sendMessages };
