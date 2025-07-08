@@ -10,12 +10,13 @@ function ChatBodyRight({ friend }) {
     const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
     const CUR_TOKEN = useAuth();
     const friendId = friend?.friendId;
-    const { messages, conversation, sendMessages } = useChat(CUR_TOKEN, friendId);
+    const friendName = friend?.friendName;
+    const { messages, conversation, sendMessages } = useChat(CUR_TOKEN, friendId, friendName);
 
 
     const handleSend = () => {
         if (input.trim() === "") return;
-        sendMessages(conversation.conversationId, currentUser, friend.friendName, input);
+        sendMessages(conversation.conversationId, currentUser, friendName, input);
         setInput("");
     };
 
