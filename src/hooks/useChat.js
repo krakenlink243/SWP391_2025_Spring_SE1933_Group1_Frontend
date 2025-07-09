@@ -3,14 +3,14 @@ import { isTokenExpired } from "../utils/validators";
 import SocketService from "../services/SocketService";
 import axios from "axios";
 
-export function useChat(token, friendId) {
+export function useChat(token, friendId, friendName) {
     const [messages, setMessages] = useState([]);
     const [conversation, setConversation] = useState();
 
     useEffect(() => {
         if (!token || isTokenExpired() || !friendId) return;
 
-        const channel = '/user/queue/messages';
+        const channel = `/user/queue/messages/${friendName}`;
 
         let mounted = true;
 
@@ -47,10 +47,6 @@ export function useChat(token, friendId) {
             content: content
         })
 
-        setMessages(prev => [
-            ...prev,
-            { senderUsername: sender, content, sentAt: new Date().toISOString() }
-        ]);
     }
 
     return { messages, conversation, sendMessages };

@@ -1,23 +1,32 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import "./BrowseByTag.css";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 /**
  * @author Phan NT Son
  * @returns 
  */
 function BrowseByTag() {
+
     const [data, setData] = useState([]);
+    const [cachedTags, setCachedTags] = useLocalStorage('tags', []);
 
     useEffect(() => {
+
+        if (cachedTags.length) setData(cachedTags);
+
         getTagsList();
     }, []);
 
 
     const getTagsList = async () => {
         try {
-            const resp = await axios.get(`${import.meta.env.VITE_API_URL}/tags`);
-            setData(resp.data);
+            await axios.get(`${import.meta.env.VITE_API_URL}/tags`)
+                .then((response) => {
+                    setData(response.data);
+                    setCachedTags(response.data);
+                });
         } catch (error) {
             console.log(error)
         }
