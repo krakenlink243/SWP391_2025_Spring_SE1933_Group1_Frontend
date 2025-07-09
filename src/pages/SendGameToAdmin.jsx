@@ -1,7 +1,6 @@
 //@author: Vu Hoang
 import React from 'react'
 import { useState, useRef, useEffect } from 'react'
-import gameicon from '../assets/gameicon.png'
 import './SendGameToAdmin.css'
 import PartHeading from '../components/PartHeading/PartHeading'
 import Button from '../components/Button/Button'
@@ -11,10 +10,10 @@ import { PhotoProvider, PhotoView } from 'react-photo-view'
 import "react-photo-view/dist/react-photo-view.css";
 import Select from 'react-select';
 import { useNavigate } from 'react-router-dom'
-
+import ReactCrop from 'react-image-crop'
+import 'react-image-crop/dist/ReactCrop.css';
 function SendGameToAdmin() {
   const [fileName, setFileName] = useState('Upload');
-  const [eventSource, setEventSource] = useState(null);
   const [selectedTags, setSelectedTags] = useState([]);
   const tags = [
     { value: 18, label: 'Action' },
@@ -63,10 +62,24 @@ function SendGameToAdmin() {
     mediaUrls: [],
     tags: [],
     gameUrl: '',
+    iconUrl:''
   })
   const fileRef = useRef(null);
   const mediaFileRef = useRef(null);
-  const inputRef = useRef(null);
+  // const inputRef = useRef(null);
+  const fileInputRef = useRef();
+  const [imageSrc, setImageSrc] = useState(null);
+  const [crop, setCrop] = useState({
+  unit: '%',
+  x: 25,
+  y: 25,
+  width: 50,
+  height: 50,
+});
+  const [completedCrop, setCompletedCrop] = useState(null);
+  const [croppedFile, setCroppedFile] = useState(null);
+  const imgRef = useRef();
+  const [croppedUrl, setCroppedUrl] = useState(null);
   const [files, setFiles] = useState([]);
   const [arr, setArr] = useState([]);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -129,7 +142,7 @@ function SendGameToAdmin() {
   }
   const handleSubmit = async () => {
     for (const key in formData) {
-      if (!validateEmty(formData.memory) || !validateEmty(formData.processor) || !validateEmty(formData.storage) || !validateEmty(formData.graphics) || !validateEmty(formData.shortDescription) || !validateEmty(formData.fullDescription) || !validateEmty(formData.gameName) || !validateEmty(formData.price) || !validateEmty(formData.os) || !validateEmty(formData.gameUrl) || !validateEmty(arr)) {
+      if (!validateEmty(formData.memory) || !validateEmty(formData.processor) || !validateEmty(formData.storage) || !validateEmty(formData.graphics) || !validateEmty(formData.shortDescription) || !validateEmty(formData.fullDescription) || !validateEmty(formData.gameName) || !validateEmty(formData.price) || !validateEmty(formData.os) || !validateEmty(formData.gameUrl) || !validateEmty(arr) ||!croppedUrl) {
         alert(`Please fill in the required field.`);
         return;
       }
@@ -141,10 +154,12 @@ function SendGameToAdmin() {
       const responseMedia = await axios.post(`${import.meta.env.VITE_API_URL}/request/image/upload`, uploadImage, {
         header: { "Content-Type": "multipart/form-data" },
       });
-      console.log(files.length)
-      console.log(responseMedia.data.imageUrls);
-      setFormData(prev => ({ ...prev, mediaUrls: responseMedia.data.imageUrls }));
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/request/game/add`, { ...formData, mediaUrls: responseMedia.data.imageUrls });
+      const croppedUpload = new FormData();
+      croppedUpload.append('files', croppedFile);
+      const croppedResponse = await axios.post(`${import.meta.env.VITE_API_URL}/request/image/upload`, croppedUpload, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/request/game/add`, { ...formData, mediaUrls: responseMedia.data.imageUrls,iconUrl: croppedResponse.data.imageUrls[0] });
       console.log(response);
       alert(response.data.message);
       navigate("/");
@@ -174,95 +189,78 @@ function SendGameToAdmin() {
       console.log(error);
     }
   }
+
   const handleGameUpload = async (e) => {
-  const selectedFile = e.target.files[0];
-  if (!selectedFile) return;
+    const selectedFile = e.target.files[0];
+    if (!selectedFile) return;
 
-  await handleDelete();
-  setUploadProgress(0);
-  setUploadSpeed(0);
-  setTimeRemaining(null);
+    await handleDelete();
+    setUploadProgress(0);
+    setUploadSpeed(0);
+    setTimeRemaining(null);
 
-  const form = new FormData();
-  form.append('file', selectedFile);
+    const startTime = Date.now();
 
-  const virtualSize = selectedFile.size * 2; // simulate upload + backend
-  const startTime = Date.now();
+    try {
+      // 🔐 Step 1: Get presigned upload URL + fileId + fileName
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/request/file/upload`,
+        new URLSearchParams({
+          fileName: selectedFile.name,
+          contentType: selectedFile.type
+        })
+      );
 
-  if (eventSource) {
-    eventSource.close();
-  }
+      const { uploadUrl, fileId, fileName } = response.data;
 
-  const newEventSource = new EventSource(`${import.meta.env.VITE_API_URL}/request/progress`);
-  setEventSource(newEventSource);
+      // 🚀 Step 2: Upload to R2 directly using XMLHttpRequest
+      const xhr = new XMLHttpRequest();
+      xhr.open("PUT", uploadUrl, true);
+      xhr.setRequestHeader("Content-Type", selectedFile.type);
 
-  newEventSource.onmessage = (event) => {
-    const data = event.data;
+      xhr.upload.onprogress = (event) => {
+        const percent = (event.loaded / selectedFile.size) * 100;
+        setUploadProgress(percent);
 
-    if (!isNaN(data)) {
-      const backendProgress = parseFloat(data); // 0–100
-      const combinedProgress = 50 + backendProgress / 2;
-      setUploadProgress(combinedProgress);
+        const elapsed = (Date.now() - startTime) / 1000;
+        const speedKBps = (event.loaded / elapsed) / 1024;
+        const remainingBytes = selectedFile.size - event.loaded;
+        const remainingTime = remainingBytes / (speedKBps * 1024);
+        const minutes = Math.floor(remainingTime / 60);
+        const seconds = Math.round(remainingTime % 60);
 
-      // 📡 Unified timing logic
-      const elapsed = (Date.now() - startTime) / 1000;
-      const uploadedBytes = (virtualSize * combinedProgress) / 100;
-      const speedKBps = uploadedBytes / elapsed / 1024;
-      const remainingBytes = virtualSize - uploadedBytes;
-      const remainingTime = remainingBytes / (speedKBps * 1024);
-      const minutes = Math.floor(remainingTime / 60);
-      const seconds = Math.round(remainingTime % 60);
+        setUploadSpeed(speedKBps.toFixed(2));
+        setTimeRemaining(`${minutes}m ${seconds}s`);
+      };
 
-      setUploadSpeed(speedKBps.toFixed(2));
-      setTimeRemaining(`${minutes}m ${seconds}s`);
-    } else {
-      console.log('SSE:', data);
-    }
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          setUploadProgress(100);
+          setTimeRemaining(`0m 0s`);
 
-    if (data === 'Upload complete') {
-      setUploadProgress(100);
-      setTimeRemaining(`0m 0s`);
-      newEventSource.close();
+          setFormData((prev) => ({
+            ...prev,
+            gameUrl: fileId
+          }));
+
+          setFileName(fileName);
+          console.log("Uploaded successfully:", { fileId, fileName });
+        } else {
+          console.error("Upload failed with status:", xhr.status);
+        }
+      };
+
+      xhr.onerror = () => {
+        console.error("Upload failed due to network or CORS.");
+      };
+
+      xhr.send(selectedFile);
+    } catch (error) {
+      console.error("Upload setup failed:", error);
     }
   };
 
-  newEventSource.onerror = () => {
-    console.warn('SSE connection error.');
-    newEventSource.close();
-  };
 
-  try {
-    const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/request/file/upload`,
-      form,
-      {
-        headers: { 'Content-Type': 'multipart/form-data' },
-        onUploadProgress: (event) => {
-          const percent = (event.loaded / selectedFile.size) * 50;
-          setUploadProgress(percent);
-
-          const elapsed = (Date.now() - startTime) / 1000;
-          const uploadedBytes = (virtualSize * percent) / 100;
-          const speedKBps = uploadedBytes / elapsed / 1024;
-          const remainingBytes = virtualSize - uploadedBytes;
-          const remainingTime = remainingBytes / (speedKBps * 1024);
-          const minutes = Math.floor(remainingTime / 60);
-          const seconds = Math.round(remainingTime % 60);
-
-          setUploadSpeed(speedKBps.toFixed(2));
-          setTimeRemaining(`${minutes}m ${seconds}s`);
-        },
-      }
-    );
-
-    console.log('Uploaded:', response.data.fileId);
-    setFormData((prev) => ({ ...prev, gameUrl: response.data.fileId }));
-    setFileName(response.data.fileName);
-  } catch (error) {
-    console.log('Upload failed:', error);
-    newEventSource.close();
-  }
-};
   const handleCancel = async () => {
     await handleDelete();
     navigate("/");
@@ -292,14 +290,105 @@ function SendGameToAdmin() {
     setSelectedTags(prev => e);
     console.log(selectedTags)
   };
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const src = URL.createObjectURL(file);
+    setImageSrc(src);
+    setCroppedUrl(null); // clear old result
+  };
+  const confirmCrop = () => {
+    const canvas = document.createElement('canvas');
+    const image = imgRef.current;
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
 
+    canvas.width = completedCrop.width;
+    canvas.height = completedCrop.height;
 
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(
+      image,
+      completedCrop.x * scaleX,
+      completedCrop.y * scaleY,
+      completedCrop.width * scaleX,
+      completedCrop.height * scaleY,
+      0,
+      0,
+      completedCrop.width,
+      completedCrop.height
+    );
+
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+
+      const previewUrl = URL.createObjectURL(blob);
+      setCroppedUrl(previewUrl);
+      setImageSrc(null); // Hide cropper
+
+      const file = new File([blob], 'cropped.jpg', { type: 'image/jpeg' });
+      setCroppedFile(file); 
+    }, 'image/jpeg');
+  };
   return (
     <>
-      <div className='form-border'>
+      <div className='form-border' style={{width:'60%',marginTop:'5%',marginBottom:'5%'}}>
         <h1 >Game Application</h1>
         <div className='game-mandatory-information'>
-          <img className='game-avatar' src={gameicon} alt="" />
+          <div className='game-icon'style={{margin:'0 auto'}}>
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              style={{ display: 'none' }}
+              onChange={handleImageChange}
+            />
+
+            {/* Show "+" button only when no image is loaded or already cropped */}
+            {!imageSrc && !croppedUrl && (
+              <Button
+                label="+"
+                color="grey-button"
+                onClick={() => fileInputRef.current.click()}
+              />
+            )}
+
+            {/* Show crop UI when an image is selected */}
+            {imageSrc && (
+              <div >
+                <ReactCrop
+                  crop={crop}
+                  onChange={(c) => setCrop(c)}
+                  onComplete={(c) => setCompletedCrop(c)}
+                  aspect={1}
+                >
+                  <img
+                    src={imageSrc}
+                    onLoad={(e) => {
+                      imgRef.current = e.currentTarget;
+                      onImageLoad?.(e); // optional: center crop
+                    }}
+                    alt="Crop me"
+                  />
+                </ReactCrop>
+                <br />
+                <button onClick={confirmCrop}>Confirm Crop</button>
+              </div>
+            )}
+
+            {/* Show final cropped image */}
+            {croppedUrl && (
+              <img
+                className='final-cropped'
+                src={croppedUrl}
+                alt="Final result"
+                style={{ cursor: 'pointer', maxWidth: '250px' }}
+                onClick={() => fileInputRef.current.click()} // click to restart flow
+              />
+            )}
+          </div>
+          {!(imageSrc && !croppedUrl) && (
+
           <div className='name-price'>
             Name(*)
             <input type="text" name="gameName" id="" value={formData.gameName} onChange={handleChange} onBlur={normalizeValue} />
@@ -323,6 +412,7 @@ function SendGameToAdmin() {
               />
             </div>
           </div>
+          )}
         </div>
         <div className='sys-req'>
           <PartHeading content='System Requirements' />

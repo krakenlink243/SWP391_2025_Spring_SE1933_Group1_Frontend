@@ -1,7 +1,6 @@
 //@author: Vu Hoang
 import React, { useEffect } from 'react'
 import { useState, useRef } from 'react'
-import gameicon from '../../../assets/gameicon.png';
 import '../../SendGameToAdmin.css'
 import PartHeading from '../../../components/PartHeading/PartHeading'
 import Button from '../../../components/Button/Button'
@@ -36,7 +35,8 @@ function GameApproveDetails() {
     tags: [],
     gameUrl: '',
     publisherName: '',
-    publisherId: ''
+    publisherId: '',
+    iconUrl:''
   })
   const tags = [
     { value: 18, label: 'Action' },
@@ -175,13 +175,13 @@ function GameApproveDetails() {
       <div className='form-border'>
         <h1 >{formData.publisherName}'s  Game Application</h1>
         <div className='game-mandatory-information'>
-          <img className='game-avatar' src={gameicon} alt="" />
+          <img className='game-avatar' src={formData.iconUrl} alt="" />
           <div className='name-price'>
             Name(*)
             <input type="text" name="gameName" id="" value={formData.gameName} readOnly />
             Price(*)
             <div>
-              $ <input type="text" name="price" id="" value={formData.price} readOnly />
+              <input type="text" name="price" id="" value={'$'+formData.price} readOnly />
             </div>
             Tags(*)
             <div className="tag-selector">

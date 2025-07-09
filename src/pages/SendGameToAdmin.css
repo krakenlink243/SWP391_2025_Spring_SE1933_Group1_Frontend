@@ -33,25 +33,40 @@
 .game-mandatory-information {
   display: flex;
   align-items: center;
-  gap: 15%;
+  gap: 20%;
   /* Increased space even more */
 }
-
-.game-avatar {
+/* .game-mandatory-information img {
   margin-left: 10%;
-  margin-top: 30px;
   width: 30%;
-  /* Bigger image */
   height: 30%;
   border-radius: 15px;
+} */
+ .game-mandatory-information .final-cropped {
+  margin-left: 40%;
+  width: 15vw;
+  border-radius: 15px;
 }
-
+.game-mandatory-information .game-icon .grey-button{
+  width: 15vw !important;
+  margin-left: 40%;
+  border-radius: 15px;
+  border: 2px dashed #ccc;
+  background: #3D4450;
+  align-self: stretch;
+  aspect-ratio: 1/1;
+  width: 100%;
+}
+.game-mandatory-information .game-avatar{
+  width: 20vw !important;
+  margin-left: 10%;
+  border-radius: 15px;
+}
 .name-price {
   display: flex;
   width: 80%;
   flex-direction: column;
   gap: 8px;
-  /* Reduced space between labels and input boxes */
 }
 
 .name-price input {
@@ -172,7 +187,7 @@
   margin-right: 10px;
 }
 
-.inner-image button:hover {
+.inner-image button:hover,.game-mandatory-information button:hover {
   background: #2c313a;
 }
 
@@ -287,3 +302,4 @@ progress::-webkit-progress-bar {
 progress::-moz-progress-bar {
   background-color: #4caf50;
 }
+
