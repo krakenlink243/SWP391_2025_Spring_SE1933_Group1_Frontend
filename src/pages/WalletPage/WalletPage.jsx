@@ -31,11 +31,13 @@ function WalletPage() {
     }
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/v1/payments/create-vnpay-payment?amount=${amount}`
+        `${
+          import.meta.env.VITE_API_URL
+        }/api/v1/payments/create-vnpay-payment?amount=${amount}`
       );
       const { paymentUrl } = response.data;
       if (paymentUrl) {
-        navigate(paymentUrl);
+        window.location.href = paymentUrl;
       }
     } catch (error) {
       console.error("Failed to create payment URL:", error);
