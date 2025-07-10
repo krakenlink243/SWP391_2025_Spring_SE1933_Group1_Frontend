@@ -39,7 +39,8 @@ const RegisterDetails = () => {
       }
 
       try {
-        const res = await axios.get("http://localhost:8080/api/auth/check-username", {
+
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/check-username`, {
           params: { username: value },
         });
         setUsernameAvailable(res.data.available);
@@ -95,7 +96,7 @@ const RegisterDetails = () => {
         <form className="form" onSubmit={handleSubmit}>
           <h1 className="form-title">CREATE YOUR ACCOUNT</h1>
           {message && <p className="message">{message}</p>}
-          
+
           <div className="form-group">
             <label className="form-label" htmlFor="username">Steam Account Name</label>
             <input

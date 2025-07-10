@@ -21,7 +21,7 @@ function ForgotPasswordRequest() {
     }
 
     try {
-      const response = await axios.post("http://localhost:8080/api/password/request", {
+      const response = await axios.post(`/api/password/request`, {
         username,
         email,
       });

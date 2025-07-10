@@ -34,7 +34,7 @@ const RegisterEmail = () => {
         setMessage("Email already in use.");
         return;
       }
-      await axios.post("http://localhost:8080/api/auth/send-verification-otp", { email });
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/send-verification-otp`, { email });
       navigate("/verify-email", { state: { email } });
     } catch (err) {
       console.error(err);
@@ -92,7 +92,7 @@ const RegisterEmail = () => {
           </button>
         </form>
       </main>
-      
+
     </div>
   );
 };
