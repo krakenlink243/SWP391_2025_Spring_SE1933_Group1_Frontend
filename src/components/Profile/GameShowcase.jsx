@@ -106,11 +106,13 @@ const GameShowcase = ({ userId, gameCount }) => {
                 className="showcase-item"
                 title={game.name}
               >
-                <img
-                  src={imageUrl}
-                  alt={game.name}
-                  className="showcase-item-image"
-                />
+                <div className="media-with-caption">
+                  <img
+                    src={imageUrl}
+                    alt={game.name}
+                    className="showcase-item-image"
+                  />
+                </div>
                 <h4 className="showcase-item-title">{game.name}</h4>
               </Link>
             );

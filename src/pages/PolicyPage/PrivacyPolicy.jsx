@@ -27,7 +27,17 @@ export function PrivacyPolicy() {
                     <h2>5. Data Removal</h2>
                     <p>If you'd like your data removed, contact us and we will delete it manually.</p>
 
-                    <p>Contact: <a href="mailto:example@studyproject.dev">example@studyproject.dev</a></p>
+                    <h2>6. Cookies and Local Storage</h2>
+                    <p>
+                        We use browser local storage to manage user sessions and preferences. No tracking or third-party cookies are used.
+                    </p>
+
+                    <p>
+                        While we take basic precautions, this project does not use HTTPS in all deployments, and stored data may not be encrypted. Use it at your own risk.
+                    </p>
+
+
+                    <p>Contact: <a href="mailto:5fcl.system@gmail.com">5fcl.system@gmail.com</a></p>
                 </div>
                 <div className='spacer col-lg-2'></div>
             </div>

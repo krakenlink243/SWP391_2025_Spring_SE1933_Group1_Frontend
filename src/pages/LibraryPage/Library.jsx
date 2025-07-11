@@ -117,15 +117,17 @@ const Library = () => {
                 onClick={() => navigate(`/game/${game.gameId}`)}
               >
                 <div className="library-game-image-container">
-                  <img
-                    className="library-game-image"
-                    src={
-                      game.media && game.media.length > 0
-                        ? game.media[0].url
-                        : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcIgF8vDI5cJMjYmRzfS3rOUWA-M9kw0iWRQ&s"
-                    }
-                    alt={game.name}
-                  />
+                  <div className="media-with-caption">
+                    <img
+                      className="library-game-image"
+                      src={
+                        game.media && game.media.length > 0
+                          ? game.media[0].url
+                          : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcIgF8vDI5cJMjYmRzfS3rOUWA-M9kw0iWRQ&s"
+                      }
+                      alt={game.name}
+                    />
+                  </div>
                 </div>
                 <div className="library-game-name">{game.name}</div>
                 <div className="library-game-played-time">

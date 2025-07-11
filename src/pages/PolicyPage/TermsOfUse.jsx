@@ -26,7 +26,19 @@ export function TermsOfUse() {
                     <h2>5. Responsible Usage</h2>
                     <p>By using this website, you agree to use it responsibly and not to misrepresent it as a real product.</p>
 
-                    <p>For questions, contact us at: <a href="mailto:example@studyproject.dev">example@studyproject.dev</a></p>
+                    <h2>6. Disclaimer</h2>
+                    <p>
+                        This website is a student project created for educational demonstration only. It does not offer real products or services.
+                        All actions simulated on this website, including purchases or account creation, are fictitious and not tied to any real business or transaction.
+                    </p>
+
+                    <h2>7. Changes to Terms</h2>
+                    <p>
+                        We may update these terms at any time without notice. Continued usage of the website implies acceptance of the latest version.
+                    </p>
+
+
+                    <p>For questions, contact us at: <a href="mailto:5fcl.system@gmail.com">5fcl.system@gmail.com</a></p>
                 </div>
                 <div className="spacer col-lg-2"></div>
             </div>

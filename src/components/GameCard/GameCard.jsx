@@ -7,11 +7,14 @@ const GameCard = ({ game }) => {
   const formattedDate = `${date.getDate()} ${date.toLocaleString("en-US", { month: "short" })}, ${date.getFullYear()}`;
   return (
     <div className="game-card d-flex align-items-center">
-      <img
-        src={game.imageUrl || "https://via.placeholder.com/150"}
-        alt={game.title}
-        className="game-card-thumbnail"
-      />
+      <div className="media-with-caption">
+        <img
+          src={game.imageUrl || "https://via.placeholder.com/150"}
+          alt={game.title}
+          className="game-card-thumbnail"
+        />
+      </div>
+
       <div className="game-card-info d-flex flex-row align-items-center mx-2">
         <h3 className="game-card-title w-50">{game.title}</h3>
         <div className="game-card-date w-25">

@@ -132,11 +132,13 @@ const Cart = () => {
               {cartItems.map((item) => (
                 <div className="cart-item-steam" key={item.id}>
                   <div className="cart-item-image">
-                    <img
-                      className="library-game-image"
-                      src={item.imageUrl || "https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg"}
-                      alt={item.title || 'Unnamed Game'}
-                    />
+                    <div className='media-with-caption'>
+                      <img
+                        className="library-game-image"
+                        src={item.imageUrl || "https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg"}
+                        alt={item.title || 'Unnamed Game'}
+                      />
+                    </div>
                   </div>
                   <div className="cart-item-title">{item.title || 'Unnamed Game'}</div>
                   <div className="cart-item-price-container">

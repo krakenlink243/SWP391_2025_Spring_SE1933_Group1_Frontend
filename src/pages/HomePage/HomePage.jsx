@@ -19,21 +19,23 @@ const HomePage = () => {
     <div className="container-fluid">
       <div className="row">
         <div className="banner">
-          <video
-            loop
-            autoPlay
-            muted
-            playsInline
-            preload="none"
-            id="top-promo-video"
-            className="topbanner"
-            alt="Top Promo Banner"
-          >
-            <source
-              src="https://shared.fastly.steamstatic.com/store_item_assets/steam/clusters/sale_summer2025/36a01fe4331ab0ca600ff205/webm_page_bg_english.webm?t=1750963512"
-              type="video/webm"
-            />
-          </video>
+          <div className="media-with-caption">
+            <video
+              loop
+              autoPlay
+              muted
+              playsInline
+              preload="none"
+              id="top-promo-video"
+              className="topbanner"
+              alt="Top Promo Banner"
+            >
+              <source
+                src="https://shared.fastly.steamstatic.com/store_item_assets/steam/clusters/sale_summer2025/36a01fe4331ab0ca600ff205/webm_page_bg_english.webm?t=1750963512"
+                type="video/webm"
+              />
+            </video>
+          </div>
         </div>
         <div className="row">
           <div className="col-lg-2"></div>

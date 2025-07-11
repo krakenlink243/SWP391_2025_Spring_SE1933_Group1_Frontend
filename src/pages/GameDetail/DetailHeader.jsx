@@ -128,9 +128,15 @@ function DetailHeader({ game }) {
                         >
                             {mediaUrlArr.map((url, i) => (
                                 <SwiperSlide key={i}>
-                                    {url.endsWith('.mp4')
-                                        ? <video src={url} controls style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                        : <img src={url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    {url.endsWith('.mp4') ? (
+                                        <div className="media-with-caption">
+                                            <video src={url} controls style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        </div>
+                                    ) : (
+                                        <div className="media-with-caption">
+                                            <img src={url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        </div>
+                                    )
                                     }
                                 </SwiperSlide>
                             ))}
@@ -152,7 +158,9 @@ function DetailHeader({ game }) {
                         >
                             {mediaUrlArr.map((url, i) => (
                                 <SwiperSlide key={i} style={{ cursor: 'pointer' }}>
-                                    <img src={url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    <div className="media-with-caption">
+                                        <img src={url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    </div>
                                 </SwiperSlide>
                             ))}
 
@@ -162,11 +170,13 @@ function DetailHeader({ game }) {
                 <div className="right-col d-flex flex-column align-items-start justify-content-between">
                     <div className="content-row mt-0">
                         <div className="gameHeaderImgCtn w-100">
-                            <img
-                                // src={coverImageUrl}
-                                src={mediaUrlArr[0]}
-                                alt="Game cover"
-                            />
+                            <div className="media-with-caption">
+                                <img
+                                    // src={coverImageUrl}
+                                    src={mediaUrlArr[0]}
+                                    alt="Game cover"
+                                />
+                            </div>
                         </div>
                     </div>
                     <div className="content-row">

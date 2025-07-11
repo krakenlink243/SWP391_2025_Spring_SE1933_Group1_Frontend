@@ -26,7 +26,9 @@ function CartPopup({ game, mediaUrlArr, onClose, onViewCart, onRemoveSuccess }) 
             <div className="popup-box">
                 <h3>Added to your cart!</h3>
                 <div className="game-info">
-                    <img src={mediaUrlArr[0]} alt={game.name} />
+                    <div className='media-with-caption'>
+                        <img src={mediaUrlArr[0]} alt={game.name} />
+                    </div>
                     <div className="details d-flex flex-column">
                         <h4>{game.name}</h4>
                         <p>Price: <b>{game.price.toFixed(2)}</b>  </p>
