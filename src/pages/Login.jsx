@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import "./Login.css";
-import { jwtDecode } from "jwt-decode";
 import { useEffect } from 'react';
 import { Navigate, useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from "../context/AuthContext";
@@ -39,25 +38,7 @@ const Login = () => {
         password: password,
       });
 
-      setMessage("Login successful!");
-
-      // Added by Phan NT Son
-      // localStorage.setItem("token", res.data.token);
       setToken(res.data.token);
-      let decodedToken = null;
-      const token = res.data.token;
-      decodedToken = jwtDecode(token);
-
-      const expireDate = decodedToken.exp;
-      const userId = decodedToken.userId;
-      const role = decodedToken.role;
-      const avatarUrl = decodedToken.avatarUrl;
-
-      localStorage.setItem("username", username);
-      localStorage.setItem("userId", userId);
-      localStorage.setItem("role", role);
-      localStorage.setItem("expDate", expireDate);
-      localStorage.setItem("avatarUrl", avatarUrl);
 
       return <Navigate to="/" replace />;
 
@@ -94,34 +75,38 @@ const Login = () => {
     <div className="login-container">
       <main>
         <section className="form-section">
-          <h1 className="form-title">Log in</h1>
+          <h1 className="form-title">Sign in</h1>
           <form onSubmit={handleLogin} className="form">
             {message && <p className="message">{message}</p>}
-            <label htmlFor="username" className="form-label">
-              Log in with username
-            </label>
-            <input
-              id="username"
-              name="username"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="form-input"
-              required
-            />
+            <div className="form-item">
+              <label htmlFor="username" className="form-label username">
+                Sign in with username
+              </label>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="form-input"
+                required
+              />
+            </div>
 
-            <label htmlFor="password" className="form-label password">
-              Password
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="form-input"
-              required
-            />
+            <div className="form-item">
+              <label htmlFor="password" className="form-label">
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="form-input"
+                required
+              />
+            </div>
 
             <div className="submit-container">
               <button type="submit" className="submit-button">

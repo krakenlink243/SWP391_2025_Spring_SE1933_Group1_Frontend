@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import "./Library.css";
 import { useNavigate } from "react-router-dom";
 import { isTokenExpired } from "../../utils/validators";
+import { useAuth } from "../../context/AuthContext";
+import { AppContext } from "../../context/AppContext";
 
 const sortOptions = [
   { value: "az", label: "A-Z" },
@@ -11,31 +13,31 @@ const sortOptions = [
   { value: "priceHighLow", label: "Price (High to Low)" },
 ];
 
-const token = localStorage.getItem("token");
-const username = localStorage.getItem("username");
+
 
 const Library = () => {
+
+  const { token } = useAuth();
+  const username = localStorage.getItem("username");
   const navigate = useNavigate();
-
-  const [games, setGames] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState("az");
+  const { library, libraryLoading } = useContext(AppContext);
 
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/user/library`)
-      .then((res) => {
-        setGames(
-          (res.data.content || []).map((item) => ({
-            ...item.gameDetail,
-            playtimeInMillis: item.playtimeInMillis,
-          }))
-        );
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   axios
+  //     .get(`${import.meta.env.VITE_API_URL}/user/library`)
+  //     .then((res) => {
+  //       setGames(
+  //         (res.data.content || []).map((item) => ({
+  //           ...item.gameDetail,
+  //           playtimeInMillis: item.playtimeInMillis,
+  //         }))
+  //       );
+  //       setLoading(false);
+  //     })
+  //     .catch(() => setLoading(false));
+  // }, []);
 
   if (!token || isTokenExpired()) {
     navigate("/");
@@ -43,7 +45,7 @@ const Library = () => {
   }
 
   const getSortedGames = () => {
-    const sorted = [...games];
+    const sorted = [...library];
     switch (sortBy) {
       case "az":
         sorted.sort((a, b) => a.name.localeCompare(b.name));
@@ -66,7 +68,7 @@ const Library = () => {
   return (
     <div className="library-layout">
       <div className="library-sidebar">
-        <div className="library-sidebar-title">All Games ({games.length})</div>
+        <div className="library-sidebar-title">All Games ({library.length})</div>
         <ul className="library-game-list">
           {getSortedGames().map((game) => (
             <li
@@ -100,9 +102,9 @@ const Library = () => {
             ))}
           </select>
         </div>
-        {loading ? (
+        {libraryLoading ? (
           <div className="library-loading">Loading...</div>
-        ) : games.length === 0 ? (
+        ) : library.length === 0 ? (
           <div className="library-empty">
             You have not purchased any games yet.
           </div>

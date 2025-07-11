@@ -44,7 +44,7 @@ function ReviewButtons({ reivewHelpful, reivewNotHelpful, authorId, game }) {
 
     const handleVote = (isHelpful) => {
         if (!CUR_USERNAME) {
-            navigate("login");
+            navigate("/login");
             return;
         }
 

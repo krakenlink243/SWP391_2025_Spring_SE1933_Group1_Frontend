@@ -1,25 +1,46 @@
+import { jwtDecode } from 'jwt-decode';
 import { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext({
   token: null,
-  setToken: () => {},
-  logout: () => {}
+  user: null,
+  setToken: () => { },
+  logout: () => { }
 });
 
 export const AuthProvider = ({ children }) => {
   const [token, setTokenState] = useState(() => localStorage.getItem("token"));
+  const [user, setUser] = useState(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+    try {
+      return jwtDecode(token);
+    } catch {
+      return null;
+    }
+  })
 
   const setToken = (newToken) => {
-    localStorage.setItem("token", newToken);
-    setTokenState(newToken);
+    try {
+      const decoded = jwtDecode(newToken);
+      localStorage.setItem("token", newToken);
+      localStorage.setItem("expDate", decoded.exp);
+      localStorage.setItem("username", decoded.sub || decoded.username);
+      localStorage.setItem("userId", decoded.userId);
+      localStorage.setItem("role", decoded.role);
+      localStorage.setItem("avatarUrl", decoded.avatarUrl || "");
+      setUser(decoded);
+      setTokenState(newToken);
+    } catch (err) {
+      console.error("Invalid token", err);
+      logout();
+    }
   };
 
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    localStorage.removeItem("role");
-    localStorage.removeItem("expDate");
+    localStorage.clear();
     setTokenState(null);
+    setUser(null);
   };
 
   // Auto logout nếu token hết hạn (optional)
@@ -34,7 +55,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ token, setToken, logout }}>
+    <AuthContext.Provider value={{ token, setToken, logout, user }}>
       {children}
     </AuthContext.Provider>
   );

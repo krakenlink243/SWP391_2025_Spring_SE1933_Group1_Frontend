@@ -98,10 +98,8 @@ function Review({ game }) {
     <div className="review-container w-100">
       <h2>CUSTOMER REVIEWS FOR {game.name}</h2>
       <div className="line-seperate w-100"></div>
-      {/* {!isHavingReview && (
-      )} */}
 
-      {!isHavingReview && (
+      {CUR_USERID && !isHavingReview && (
         <ReviewForm
           onReload={triggerReload}
           game={game} />

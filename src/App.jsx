@@ -17,6 +17,9 @@ import GamesPage from "./components/GamesPage/GamesPage";
 import Cart from "./pages/CartPage/Cart";
 import WalletPage from "./pages/WalletPage/WalletPage";
 import PaymentResultPage from "./components/Payment/PaymentResultPage";
+import { Contact } from "./pages/PolicyPage/Contact";
+import { PrivacyPolicy } from "./pages/PolicyPage/PrivacyPolicy";
+import { TermsOfUse } from "./pages/PolicyPage/TermsOfUse";
 
 // Profile & User Pages
 import Transaction from "./pages/TransactionPage/Transaction";
@@ -56,10 +59,12 @@ import SendUserFeedback from "./pages/SendUserFeedback";
 import ApplyToPublisher from "./pages/ApplyToPublisher";
 import ProfileLayout from "./layouts/ProfileLayout";
 import UserFeedback from "./pages/UserFeedback";
+import LegalPopup from "./components/Popup/LegalPopup";
 
 import { isTokenExpired } from "./utils/validators";
 import RequestSection from "./pages/Admin/Request/RequestSection";
 import ErrorPage from "./pages/ErrorPage";
+
 function AppRoutes() {
 
   // console.log("App component is rendering...");
@@ -102,6 +107,7 @@ function AppRoutes() {
   return (
     <div className={`app-container`}>
       <div className={`main-app-content`}>
+        <LegalPopup />
 
         <Routes>
 
@@ -116,6 +122,9 @@ function AppRoutes() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/account/wallet" element={<Wallet />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route path="/terms-of-use" element={<TermsOfUse />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/contact" element={<Contact />} />
 
             {/* fallback */}
           </Route>
@@ -181,7 +190,17 @@ function UserFeedbackDetails() {
 }
 
 function LoginF() {
-  return <Login />;
+  return (
+    <div className="container-fluid py-3">
+      <div className="row">
+        <div className="spacer col-lg-4"></div>
+        <div className="col-lg-4">
+          <Login />
+        </div>
+        <div className="spacer col-lg-4"></div>
+      </div>
+    </div>
+  );
 }
 function RegisterF() {
   return <RegisterEmail />;
@@ -204,23 +223,8 @@ function List() {
     </div>
   );
 }
-function Detail() {
-  return <GameDetail />;
-}
-function NotFound() {
-  return (
-    <div className="app-container">
-      <div className="page-content-constrained-wrapper">
-        <h1>404 - Not Found</h1>
-        <p>The page you are looking for does not exist.</p>
-        <Link to="/">Go back to Home</Link>
-      </div>
-    </div>
-  );
-}
-function Home() {
-  return <HomePage />;
-}
+
+
 function Wallet() {
   return (
     <div className="container-fluid">

@@ -16,6 +16,8 @@ export function AppProvider({ children }) {
     const [walletBalance, setWalletBalance] = useState(0);
     const [onlineUsers, setOnlineUsers] = useState([]);
     const [cartTotal, setCartTotal] = useState(0);
+    const [library, setLibrary] = useState([]);
+    const [libraryLoading, setLibraryLoading] = useState(true);
 
     // const [CUR_TOKEN, setCUR_TOKEN] = useState(localStorage.getItem("token"));
     const { token: CUR_TOKEN } = useAuth();
@@ -35,11 +37,24 @@ export function AppProvider({ children }) {
                 .then((response) => { setNotifications(response.data) })
                 .catch((err) => { console.log("Error initial Notifications: ", err) });
 
-
+            // Initial Cart Total
             axios.get(`${import.meta.env.VITE_API_URL}/user/cart/total`)
                 .then((response) => { setCartTotal(response.data.data) })
                 .catch((err) => { console.log("Error intial Cart total: ", err) });
 
+            // Initial Library
+            axios.get(`${import.meta.env.VITE_API_URL}/user/library`)
+                .then((response) => {
+                    const mapped = (response.data.content || []).map((item) => ({
+                        ...item.gameDetail,
+                        playtimeInMillis: item.playtimeInMillis,
+                    }));
+                    setLibrary(mapped);
+                })
+                .catch((error) => { console.log("Error fetching library:", error) })
+                .finally(() => {
+                    setLibraryLoading(false);
+                })
 
 
             SocketService.subscribe('/user/queue/notification.unread', data => {
@@ -68,8 +83,23 @@ export function AppProvider({ children }) {
 
             // Đăng ký kênh nhận tổng số Item trong Cart nếu có add thêm
             SocketService.subscribe('/user/queue/cart.count', (data) => {
-                console.log("New cart count:", data, "Old:", cartTotal);
                 setCartTotal(data);
+            });
+
+            SocketService.subscribe('/user/queue/library.added', (newGame) => {
+                // map the DTO into the same shape your old .get() handler used:
+                const mapped = {
+                    ...newGame.gameDetail,
+                    playtimeInMillis: newGame.playtimeInMillis
+                };
+
+                setLibrary(prev => {
+                    // avoid duplicates
+                    if (prev.some(g => g.gameId === mapped.gameId)) {
+                        return prev;
+                    }
+                    return [...prev, mapped];
+                });
             });
         });
 
@@ -81,12 +111,21 @@ export function AppProvider({ children }) {
             SocketService.unsubscribe('/app/online');
             SocketService.unsubscribe('/topic/online');
             SocketService.unsubscribe('/queue/cart.count');
+            SocketService.unsubscribe('/user/queue/library.added');
         };
     }, [CUR_TOKEN]);
 
 
     return (
-        <AppContext.Provider value={{ notifications, walletBalance, cartTotal, onlineUsers }}>
+        <AppContext.Provider
+            value={{
+                notifications,
+                walletBalance,
+                cartTotal,
+                onlineUsers,
+                library,
+                libraryLoading
+            }}>
             {children}
         </AppContext.Provider>
     );
