@@ -121,7 +121,6 @@ function AppRoutes() {
             <Route path="/game/:gameId" element={<GameDetail />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/account/wallet" element={<Wallet />} />
-            <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/terms-of-use" element={<TermsOfUse />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/contact" element={<Contact />} />
@@ -161,6 +160,7 @@ function AppRoutes() {
             <Route path="/forgot-password" element={<ForgotPasswordRequest />} />
             <Route path="/change-password" element={<ChangePassword />} />
             <Route path="/oauth2/callback" element={<OAuth2RedirectHandler />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
 
           </Route>
 
@@ -191,7 +191,12 @@ function UserFeedbackDetails() {
 
 function LoginF() {
   return (
-    <div className="container-fluid py-3">
+    <div className="container-fluid py-3"
+      style={{
+        background: "radial-gradient(rgba(24, 26, 33, 0) 0%, #181A21 100%) fixed no-repeat, url(https://cdnphoto.dantri.com.vn/4ydXR7ZhWF5ViH60xAFvBolm3JQ=/2021/02/01/khu-cach-ly-dai-hoc-fpt-13-1612154602281.jpg) center center no-repeat, #181A21"
+      }}
+
+    >
       <div className="row">
         <div className="spacer col-lg-4"></div>
         <div className="col-lg-4">

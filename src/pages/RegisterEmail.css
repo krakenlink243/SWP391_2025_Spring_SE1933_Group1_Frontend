@@ -1,60 +1,79 @@
-.brand {
-  font-weight: 800;
-  color: #cfd2d6;
-  font-size: 1.125rem;
-  user-select: none;
+.register-container {
+  background: linear-gradient(to right, rgb(0 0 0 / 50%) 0%, #000000bd 100%), url(https://cdnphoto.dantri.com.vn/4ydXR7ZhWF5ViH60xAFvBolm3JQ=/2021/02/01/khu-cach-ly-dai-hoc-fpt-13-1612154602281.jpg) center center / cover no-repeat;
+
 }
 
+.register-container .main-content {}
 
-.form {
+.register-container .form {
+  padding: 50px;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  padding-top: 5;
-  margin-top: 5rem;
-  max-width: 28rem;
+  gap: 15px;
+  width: 100%;
+  background-color: #12151d;
+}
+
+.register-container .form-title {
+  text-transform: uppercase;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-size: 34px;
+  color: #ffffff;
+  margin-bottom: 30px;
+  font-weight: 200;
+  letter-spacing: 2px;
   width: 100%;
 }
 
-.form-title {
-  color: #ffffff;
-  font-size: 1.25rem;
-  font-weight: 400;
-  margin-bottom: 1.5rem;
-  user-select: none;
-}
-
-.form-group {
+.register-container .form-group {
   display: flex;
   flex-direction: column;
-  color: #8a8f98;
-  font-size: 0.75rem;
+  width: 292px;
 }
 
-.form-label {
-  margin-bottom: 0.25rem;
+.register-container .form-label {
+  font-size: 14px;
+  color: #b8b6b4;
+  vertical-align: top;
+  padding: 0;
+  margin: 0;
 }
 
-.form-input {
-  background-color: #2a2e38;
-  border: 1px solid transparent;
-  border-radius: 0.25rem;
-  padding: 0.5rem 0.75rem;
-  color: #ffffff;
+.register-container .form-input {
+  background: #32353C;
+  border-radius: 3px;
+  color: #E9E9E9;
+  padding: 8px 6px;
+  display: block;
+  box-shadow: none;
+  border: none;
+  width: 100%;
+  transition: border ease-in-out .5s;
+  font-family: "Motiva Sans", Sans-serif;
+  font-weight: normal;
 }
 
-.form-input::placeholder {
-  color: #8a8f98;
-}
-
-.form-input:focus {
+.register-container .form-input:focus {
   outline: none;
   border-color: #0a7fff;
 }
 
-.checkbox-group span {
+.register-container .checkbox-group span {
+  font-size: 14px;
+  color: #b8b6b4;
+  vertical-align: top;
+}
+
+.register-container .checkbox-group a {
   color: #ffffff;
 }
-.message {
+
+.register-container .checkbox-group a:hover {
+  color: #66c0f4;
+  text-decoration: none;
+}
+
+
+.register-container .message {
   color: red;
 }

@@ -6,7 +6,9 @@
 
 
 /* Main content styles */
-.login-container main {}
+.login-container {
+  
+}
 
 .login-container .form-section {}
 
@@ -28,6 +30,7 @@
 .login-container .form .form-item {
   display: flex;
   flex-direction: column;
+  margin: 20px 0;
 }
 
 
@@ -37,6 +40,8 @@
   text-transform: uppercase;
   letter-spacing: .02em;
   user-select: none;
+  padding: 0;
+  margin: 0;
 }
 
 .login-container .form-label.username {

@@ -2,6 +2,7 @@ import React, { forwardRef } from "react"; // Added forwardRef by Phan NT Son 18
 import "./Footer.css";
 import { useNavigate } from "react-router-dom";
 
+
 const Footer = forwardRef((props, ref) => { //Added forwardRef by Phan NT Son 18-06-2025
 
   const navigate = useNavigate();
@@ -11,11 +12,11 @@ const Footer = forwardRef((props, ref) => { //Added forwardRef by Phan NT Son 18
       <div className="row">
         <div className="spacer col-lg-2"></div>
         <div className="main-content col-lg-8 d-flex flex-column gap-2 justify-content-center align-items-center">
-          <div className="left-col footer-logo">
-            <img src="#" onClick={() => navigate("/")}></img>
+          <div className="footer-logo">
+            <img src={`Centurion.svg`} onClick={() => navigate("/")}></img>
           </div>
-          <div className="right-col d-flex flex-column align-items-center gap-2">
-            <div>© 2025 StudySteam | Educational Project</div>
+          <div className="d-flex flex-column align-items-center gap-2">
+            <div>© 2025 Centurion Legion | Educational Project</div>
             <div className="d-flex flex-row gap-5">
               <div onClick={() => navigate("/terms-of-use")} className="policy-nav" >Terms of use</div>
               <div onClick={() => navigate("/privacy-policy")} className="policy-nav">Privacy policy</div>

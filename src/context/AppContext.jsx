@@ -86,7 +86,7 @@ export function AppProvider({ children }) {
                 setCartTotal(data);
             });
 
-            SocketService.subscribe('/user/queue/library.added', (newGame) => {
+            SocketService.subscribe('/user/queue/libraryItem.added', (newGame) => {
                 // map the DTO into the same shape your old .get() handler used:
                 const mapped = {
                     ...newGame.gameDetail,

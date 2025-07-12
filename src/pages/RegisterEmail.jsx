@@ -1,6 +1,6 @@
 import "./RegisterEmail.css";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const RegisterEmail = () => {
@@ -45,53 +45,47 @@ const RegisterEmail = () => {
   };
 
   return (
-    <div className="app-container">
-      {/* <header className="header">
-          <div className="logo"></div>
-          <div className="brand">STEAMCL</div>
-          <nav className="nav">
-            <a href="#" className="nav-link active">STORE</a>
-            <a href="#" className="nav-link">COMMUNITY</a>
-            <a href="#" className="nav-link">ABOUT</a>
-            <a href="#" className="nav-link">SUPPORT</a>
-          </nav>
-      </header> */}
-      <main className="main">
-        <form className="form" onSubmit={handleSubmit}>
-          <h1 className="form-title">CREATE YOUR ACCOUNT</h1>
-          {message && <p className="message">{message}</p>}
-          <div className="form-group">
-            <label htmlFor="email" className="form-label">
-              Email address
+    <div className="register-container container-fluid py-5">
+      <div className="row">
+        <div className="spacer col-lg-3"></div>
+        <div className="main-content col-lg-6">
+          <form className="form" onSubmit={handleSubmit}>
+            <h1 className="form-title">CREATE YOUR ACCOUNT</h1>
+            {message && <p className="message">{message}</p>}
+            <div className="form-group">
+              <label htmlFor="email" className="form-label">
+                Email address
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="form-input"
+                required
+              />
+            </div>
+            <label htmlFor="age" className="checkbox-group">
+              <input
+                id="age"
+                type="checkbox"
+                className="checkbox-input"
+                required
+              />
+              <span>
+                I'm 13 years old or older and agree with Centurion <Link to={`/terms-of-use`} >Terms of use</Link>
+                {" "}and <Link to={`/privacy-policy`}>Privacy policy</Link>.
+              </span>
             </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="form-input"
-              placeholder="Email address"
-              required
-            />
-          </div>
-          <label htmlFor="age" className="checkbox-group">
-            <input
-              id="age"
-              type="checkbox"
-              className="checkbox-input"
-              required
-            />
-            <span>
-              I'm 13 years old or older and agree with policies and SteamCL
-              security policy
-            </span>
-          </label>
-          <button type="submit" className="submit-button" disabled={loading}>
-            {loading ? "Checking..." : "Continue"}
-          </button>
-        </form>
-      </main>
+            <button type="submit" className="submit-button" disabled={loading}>
+              {loading ? "Checking..." : "Continue"}
+            </button>
+          </form>
+
+        </div>
+        <div className="spacer col-lg-3"></div>
+      </div>
 
     </div>
   );

@@ -23,22 +23,6 @@ const Library = () => {
   const [sortBy, setSortBy] = useState("az");
   const { library, libraryLoading } = useContext(AppContext);
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   axios
-  //     .get(`${import.meta.env.VITE_API_URL}/user/library`)
-  //     .then((res) => {
-  //       setGames(
-  //         (res.data.content || []).map((item) => ({
-  //           ...item.gameDetail,
-  //           playtimeInMillis: item.playtimeInMillis,
-  //         }))
-  //       );
-  //       setLoading(false);
-  //     })
-  //     .catch(() => setLoading(false));
-  // }, []);
-
   if (!token || isTokenExpired()) {
     navigate("/");
     return null;

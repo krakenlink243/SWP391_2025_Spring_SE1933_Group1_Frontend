@@ -6,6 +6,11 @@
   line-height: 1.5;
 }
 
+.steam-footer .footer-logo img{
+  height: 100%;
+  width: 100%;
+}
+
 .steam-footer .policy-nav:hover {
   cursor: pointer;
   color: #ffffff;

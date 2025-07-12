@@ -75,8 +75,8 @@ const Login = () => {
     <div className="login-container">
       <main>
         <section className="form-section">
-          <h1 className="form-title">Sign in</h1>
           <form onSubmit={handleLogin} className="form">
+            <h1 className="form-title">Sign in</h1>
             {message && <p className="message">{message}</p>}
             <div className="form-item">
               <label htmlFor="username" className="form-label username">
