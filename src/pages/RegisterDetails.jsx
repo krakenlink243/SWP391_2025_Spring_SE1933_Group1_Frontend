@@ -91,76 +91,85 @@ const RegisterDetails = () => {
   };
 
   return (
-    <div className="register-detail-container">
-      <form className="form" onSubmit={handleSubmit}>
-        <h1 className="form-title">CREATE YOUR ACCOUNT</h1>
-        {message && <p className="message">{message}</p>}
+    <div className="register-detail-container container-fluid py-5">
+      <div className='row'>
+        <div className='spacer col-lg-3'></div>
+        <div className='main-content col-lg-6 p-3'>
+          <form className="form" onSubmit={handleSubmit}>
+            <h1 className="form-title">Create Your Account</h1>
+            {message && <p className="message">{message}</p>}
 
-        <div className="form-group">
-          <label className="form-label" htmlFor="username">Steam Account Name</label>
-          <input
-            id="username"
-            name="username"
-            type="text"
-            value={formData.username}
-            onChange={handleChange}
-            className="form-input"
-            required
-          />
-          {formData.username && usernameAvailable === false && (
-            <p className="message-error">Username already taken.</p>
-          )}
-          {formData.username && usernameAvailable === true && (
-            <p className="message-success">Username is available.</p>
-          )}
+            <div className="form-group">
+              <label className="form-label" htmlFor="username">Steam Account Name</label>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                value={formData.username}
+                onChange={handleChange}
+                className="form-input"
+                required
+              />
+              {formData.username && usernameAvailable === false && (
+                <p className="message-error">Username already taken.</p>
+              )}
+              {formData.username && usernameAvailable === true && (
+                <p className="message-success">Username is available.</p>
+              )}
+            </div>
+
+            <div className="form-group">
+              <label className="form-label" htmlFor="password">Choose Password</label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="form-input"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label className="form-label" htmlFor="confirmPassword">Confirm Password</label>
+              <input
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className="form-input"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label className="form-label" htmlFor="country">Country</label>
+              <select
+                id="country"
+                name="country"
+                className="form-select custom-select-arrow"
+                value={formData.country}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select a country</option>
+                <option value="Vietnam">Vietnam</option>
+                <option value="United States">United States</option>
+              </select>
+            </div>
+
+            <div className='w-100 d-flex justify-content-center'>
+              <button type="submit" className="submit-button">
+                Continue
+              </button>
+            </div>
+          </form>
         </div>
+        <div className='spacer col-lg-3'></div>
+      </div>
 
-        <div className="form-group">
-          <label className="form-label" htmlFor="password">Choose Password</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            className="form-input"
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label className="form-label" htmlFor="confirmPassword">Confirm Password</label>
-          <input
-            id="confirmPassword"
-            name="confirmPassword"
-            type="password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            className="form-input"
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label className="form-label" htmlFor="country">Country</label>
-          <select
-            id="country"
-            name="country"
-            className="form-select"
-            value={formData.country}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select a country</option>
-            <option value="Vietnam">Vietnam</option>
-            <option value="United States">United States</option>
-          </select>
-        </div>
-
-        <button type="submit" className="submit-button">
-          Continue
-        </button>
-      </form>
     </div>
   );
 };

@@ -48,12 +48,12 @@ const VerifyEmailOtp = () => {
   };
 
   return (
-    <main className='verify-container container-fluid'>
+    <main className='verify-container container-fluid py-5 h-100'>
       <div className='row'>
         <div className='spacer col-lg-3'></div>
-        <div className='main-content col-lg-6'>
+        <div className='main-content col-lg-6 h-100'>
           <h1 className="verify-title">Verify Your Email</h1>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className='d-flex flex-column justify-content-center align-items-start'>
             {message && (<p className="message-text">{message}</p>)}
             <label htmlFor="otp" className="otp-label">
               OTP Code

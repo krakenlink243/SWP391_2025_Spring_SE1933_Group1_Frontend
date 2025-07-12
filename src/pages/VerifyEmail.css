@@ -1,3 +1,6 @@
+.verify-container {
+}
+
 .verify-container .verify-title {
   color: white;
   font-weight: 800;
@@ -7,16 +10,15 @@
   /* mb-6 = 24px */
 }
 
+
 .verify-container .otp-label {
   display: block;
-  font-size: 0.625rem;
   font-weight: 700;
   color: white;
   margin-bottom: 0.25rem;
 }
 
 .verify-container .otp-input {
-  width: 100%;
   background-color: #e8f0fe;
   height: 2.25rem;
   padding-left: 0.75rem;
@@ -31,7 +33,7 @@
   height: 2.25rem;
   background: linear-gradient(to right, #00b0ff, #3a5aff);
   color: white;
-  font-size: 0.875rem;  
+  font-size: 0.875rem;
 }
 
 .verify-container .message-text {
