@@ -33,7 +33,7 @@
   transition: color 0.2s ease-in-out;
 }
 
-.header-nav-item.active{
+.header-nav-item.active {
   color: #1a9fff;
   text-decoration: underline;
 }
@@ -55,7 +55,7 @@
   top: 100%;
   left: 0;
   z-index: 11;
-  background: #3D4450;
+  background: #3d4450;
   box-shadow: 3px 3px 5px -3px #000;
   text-align: left;
 }
@@ -78,7 +78,6 @@
   color: #171a21;
 }
 
-
 .header-user-action {
   display: flex;
   align-items: start;
@@ -91,7 +90,6 @@
   text-align: center;
   justify-content: end;
 }
-
 
 .user-action-content a {
   /* Nếu bạn dùng link cho login/register */
@@ -110,7 +108,7 @@
 
 .user-wallet {
   text-align: end;
-  padding-right: calc(.5rem + 14px);
+  padding-right: calc(0.5rem + 14px);
 }
 
 .header-user-action-icon img {

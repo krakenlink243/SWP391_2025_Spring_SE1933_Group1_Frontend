@@ -25,14 +25,7 @@ const Header = forwardRef((props, ref) => {
   const activePathMap = [
     {
       index: 0, // STORE
-      paths: [
-        "/",
-        "/game",
-        "/cart",
-        "/library",
-        "/account",
-        "/account/wallet",
-      ],
+      paths: ["/", "/game", "/cart", "/library", "/account", "/account/wallet"],
     },
     {
       index: 1, // COMMUNITY
@@ -45,7 +38,7 @@ const Header = forwardRef((props, ref) => {
         "/profile/friends",
         "/profile/:userId/edit/info",
         "/profile/:userId/edit/avatar",
-        "/notifications"
+        "/notifications",
       ],
     },
     {
@@ -60,14 +53,12 @@ const Header = forwardRef((props, ref) => {
         "/feedbackhub/:feedbackId",
         "/sendfeedback",
         "/approvefeedback",
-        "/approvefeedback/:feedbackId"
+        "/approvefeedback/:feedbackId",
       ],
     },
     {
       index: 5, // ADMIN
-      paths: [
-        "/admin"
-      ],
+      paths: ["/admin"],
     },
   ];
 
@@ -89,8 +80,6 @@ const Header = forwardRef((props, ref) => {
 
   const isActive = (index) => currentIndex === index;
 
-
-
   /**
    * @author Bathanh
    *add methods allows to get user balance from backend
@@ -98,7 +87,6 @@ const Header = forwardRef((props, ref) => {
    * @returns user balance
    */
   const { walletBalance } = useContext(AppContext);
-
 
   return (
     <div className="container-fluid" ref={ref}>
@@ -109,40 +97,76 @@ const Header = forwardRef((props, ref) => {
         >
           <Link to={"/"}>
             <img
-              src="/logo_steam.svg"
-              alt="Steam Logo"
+              src="/Centurion.svg"
+              alt="Centurion Logo"
               className="logo w-100"
             />
           </Link>
         </div>
         <div className={`header-nav col-lg-${section[2]}`}>
-          <Link className={`header-nav-item ${isActive(0) ? "active" : ""}`} to="/">
+          <Link
+            className={`header-nav-item ${isActive(0) ? "active" : ""}`}
+            to="/"
+          >
             STORE
           </Link>
-          <Link className={`header-nav-item ${isActive(1) ? "active" : ""}`} to={"#"} >
+          <Link
+            className={`header-nav-item ${isActive(1) ? "active" : ""}`}
+            to={"#"}
+          >
             COMMUNITY
           </Link>
 
           {username && (
             <div className="nav-user-dropdown-wrapper">
-              <Link className={`header-nav-item ${isActive(2) ? "active" : ""}`} to="/profile">{username}</Link>
+              <Link
+                className={`header-nav-item ${isActive(2) ? "active" : ""}`}
+                to="/profile"
+              >
+                {username}
+              </Link>
               <div className="nav-box-dropdown">
-                <Link className="submenuitem" to="/profile">Profile</Link>
-                <Link className="submenuitem" to="/profile/friends">Friends</Link>
+                <Link className="submenuitem" to="/profile">
+                  Profile
+                </Link>
+                <Link className="submenuitem" to="/profile/friends">
+                  Friends
+                </Link>
               </div>
             </div>
           )}
 
-          <Link className={`header-nav-item ${isActive(3) ? "active" : ""}`} to={token ? '/chat' : '#'}>{token ? "CHAT" : "ABOUT"}</Link>
-          {role != 'Admin' && <Link className={`header-nav-item ${isActive(4) ? "active" : ""}`} to="/feedbackhub">Support</Link>}
-          {role === 'Admin' && <Link className={`header-nav-item ${isActive(5) ? "active" : ""}`} to="/admin">ADMIN TOOLS</Link>}
+          <Link
+            className={`header-nav-item ${isActive(3) ? "active" : ""}`}
+            to={token ? "/chat" : "#"}
+          >
+            {token ? "CHAT" : "ABOUT"}
+          </Link>
+          {role != "Admin" && (
+            <Link
+              className={`header-nav-item ${isActive(4) ? "active" : ""}`}
+              to="/feedbackhub"
+            >
+              Support
+            </Link>
+          )}
+          {role === "Admin" && (
+            <Link
+              className={`header-nav-item ${isActive(5) ? "active" : ""}`}
+              to="/admin"
+            >
+              ADMIN TOOLS
+            </Link>
+          )}
         </div>
         <div className={`header-user-action col-lg-${section[3]}`}>
           {!token ? (
             <>
               <div className="header-user-action-content d-flex flex-column align-items-end w-100 p-2">
                 <div className="user-action-content">
-                  <Link className="border-end" to="/login">Login</Link>
+                  <Link className="border-end" to="/login">
+                    Login
+                  </Link>
                   <Link to="/register">Register</Link>
                 </div>
               </div>
@@ -151,14 +175,11 @@ const Header = forwardRef((props, ref) => {
             <>
               <div className="header-user-action-content d-flex flex-column align-items-end w-75 gap-2">
                 <div className="user-action-content">
-
                   <div className="w-25">
                     <NotificationBox />
                   </div>
                   <div className="w-50 px-2 d-flex flex-row-reverse">
-
                     <UserDropBox userBalance={walletBalance} />
-
                   </div>
                 </div>
                 <div className="user-wallet w-100">
@@ -169,7 +190,9 @@ const Header = forwardRef((props, ref) => {
                 </div>
               </div>
               <div className="header-user-action-icon w-25">
-                <Link to="/profile"><img src={localStorage.getItem("avatarUrl")}></img></Link>
+                <Link to="/profile">
+                  <img src={localStorage.getItem("avatarUrl")}></img>
+                </Link>
               </div>
             </>
           )}
