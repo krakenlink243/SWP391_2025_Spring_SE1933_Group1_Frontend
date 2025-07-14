@@ -96,7 +96,6 @@ const GamesPage = () => {
     const params = new URLSearchParams();
     if (filters.searchTerm) params.append("searchTerm", filters.searchTerm);
     if (filters.maxPrice < 60) params.append("maxPrice", filters.maxPrice);
-    // console.log("Gia", filters.maxPrice);
     if (filters.selectedTagIds.size > 0)
       params.append("tags", Array.from(filters.selectedTagIds).join(","));
     if (filters.selectedPublisherIds.size > 0)
@@ -112,21 +111,6 @@ const GamesPage = () => {
     params.append("size", GAMES_PER_PAGE);
 
     const apiUrl = `${import.meta.env.VITE_API_URL}/game?${params.toString()}`;
-    // console.log("Fetching games from:", apiUrl);
-
-    // try {
-    //   const response = await axios.get(apiUrl);
-    //   const pageData = response.data;
-    //   setGames(pageData.content || []);
-    //   setTotalPages(pageData.totalPages || 0);
-    //   setTotalGames(pageData.totalElements || 0);
-    // } catch (e) {
-    //   console.error("Failed to fetch games:", e);
-    //   setError(e.message);
-    //   setGames([]);
-    // } finally {
-    //   setLoading(false);
-    // }
 
     // 4: Delayed fresh fetch to update cache silently
     setTimeout(async () => {

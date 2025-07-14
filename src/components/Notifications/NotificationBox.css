@@ -6,7 +6,7 @@
 
 }
 
-.notifbox-bell {
+.notifbox-container .notifbox-bell {
   position: relative;
   cursor: pointer;
   font-size: 14px;
@@ -14,16 +14,16 @@
   background-color: #1b2838;
 }
 
-.notifbox-bell:hover {
+.notifbox-container .notifbox-bell:hover {
   color: white;
 }
 
-.notifbox-bell.notif {
+.notifbox-container .notifbox-bell.notif {
   background-color: #5c7e10;
   color: #fff;
 }
 
-.notifbox-bell.notif:hover {
+.notifbox-container .notifbox-bell.notif:hover {
   background-color: #7ea64b;
   transition-property: background;
   transition-duration: 250ms;
@@ -33,7 +33,7 @@
 
 */
 
-.notifbox-badge {
+.notifbox-container .notifbox-badge {
   position: absolute;
   top: -5px;
   right: -6px;
@@ -46,11 +46,11 @@
   height: 15px;
 }
 
-.notifbox-box {
+.notifbox-container .notifbox-box {
   display: none;
 }
 
-.notifbox-box.active {
+.notifbox-container .notifbox-box.active {
   display: block;
   transition: all 0.4s ease-in-out;
   position: absolute;
@@ -64,24 +64,24 @@
   visibility: visible;
 }
 
-.notifbox-header {
+.notifbox-container .notifbox-header {
   height: 30px;
 
 }
 
-.notifbox-title {
+.notifbox-container .notifbox-title {
   font-weight: bold;
   margin: 0;
   font-size: 16px;
 }
 
-.notfif-button {
+.notifbox-container .notfif-button {
   background-color: #454953;
-  border-radius: 0px;
   font-size: smaller;
+  border: none;
 }
 
-.notifbox-list {
+.notifbox-container .notifbox-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -89,18 +89,18 @@
   overflow-y: auto;
 }
 
-.notifbox-list::-webkit-scrollbar {
+.notifbox-container .notifbox-list::-webkit-scrollbar {
   display: none;
 }
 
 
-.notifbox-item {
+.notifbox-container .notifbox-item {
   position: relative;
   background: linear-gradient(144deg, rgb(84 96 112), rgb(23 23 23));
   overflow: hidden;
 }
 
-.notifbox-item::before {
+.notifbox-container .notifbox-item::before {
   content: '';
   position: absolute;
   top: 0;
@@ -113,13 +113,13 @@
   z-index: 12;
 }
 
-.notifbox-item:hover::before {
+.notifbox-container .notifbox-item:hover::before {
   opacity: 1;
 }
 
 
 
-.notifbox-dot {
+.notifbox-container .notifbox-dot {
   background-color: #66c0f4;
   width: 10px;
   height: 10px;
@@ -129,7 +129,7 @@
   position: absolute;
 }
 
-.notifbox-empty {
+.notifbox-container .notifbox-empty {
   text-align: center;
   color: #8899aa;
   padding: 15px;

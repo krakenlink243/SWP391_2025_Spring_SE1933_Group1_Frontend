@@ -11,13 +11,19 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
+.game-card-thumbnail-wrapper {
+  width: 120px;
+  height: 100%;
+}
+
+
 .game-card-thumbnail {
   width: 120px;
   object-fit: cover;
 }
 
 .game-card-info{
-  width: calc(100% - 120px);
+  width: calc(100% - 120px - .5rem - .5rem);
 }
 
 .game-card-title {

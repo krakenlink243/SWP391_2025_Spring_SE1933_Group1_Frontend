@@ -1,29 +1,24 @@
 .account-details-page {
     color: #c7d5e0;
-    width: 100%;
-    margin: 40px auto;
-    padding: 0 20px;
     font-family: Arial, Helvetica, sans-serif;
     box-sizing: border-box;
 }
 
-.account-info-panel {
+.account-details-page .account-info-panel {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-.account-main-content {
+.account-details-page .account-main-content {
     display: flex;
     flex-direction: row;
     gap: 30px;
     width: 100%;
-    max-width: 1200px;
-    margin: auto;
 }
 
 /* ---- SIDEBAR ---- */
-.account-sidebar {
+.account-details-page .account-sidebar {
     width: 220px;
     flex-shrink: 0;
     background-color: #2a475e;
@@ -32,7 +27,7 @@
     box-sizing: border-box;
 }
 
-.account-sidebar a {
+.account-details-page .account-sidebar a {
     display: block;
     padding: 10px;
     text-decoration: none;
@@ -42,22 +37,22 @@
     font-size: 14px;
 }
 
-.account-sidebar a:hover {
+.account-details-page .account-sidebar a:hover {
     background-color: #3b5f7e;
 }
 
-.account-sidebar a.active {
+.account-details-page .account-sidebar a.active {
     background-color: #5b9ace;
     color: #fff;
 }
 
 /* ---- MAIN PANEL ---- */
-.account-info-panel {
+.account-details-page .account-info-panel {
     flex: 1 1 auto;
     min-width: 0;
 }
 
-.account-info-panel h1 {
+.account-details-page .account-info-panel h1 {
     font-size: 26px;
     font-weight: 300;
     color: #fff;
@@ -66,7 +61,7 @@
     padding-bottom: 15px;
 }
 
-.info-section {
+.account-details-page .info-section {
     background-color: #2a475e;
     padding: 20px;
     border-radius: 4px;
@@ -76,13 +71,13 @@
     box-sizing: border-box;
 }
 
-.purchase-history {
+.account-details-page .purchase-history {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
 }
 
-.info-section h3 {
+.account-details-page .info-section h3 {
     margin: 0 0 15px 0;
     color: #66c0f4;
     font-size: 16px;
@@ -90,7 +85,7 @@
     text-transform: uppercase;
 }
 
-.wallet-balance {
+.account-details-page .wallet-balance {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -101,31 +96,31 @@
     flex-wrap: wrap;
 }
 
-.wallet-balance span {
+.account-details-page .wallet-balance span {
     font-size: 14px;
     color: #acb2b8;
 }
 
-.wallet-balance strong {
+.account-details-page .wallet-balance strong {
     font-size: 20px;
     color: #fff;
 }
 
-.action-links {
+.account-details-page .action-links {
     display: flex;
     flex-direction: column;
     gap: 10px;
     width: auto;
 }
 
-.action-links .action-btn,
-.action-links a {
+.account-details-page .action-links .action-btn,
+.account-details-page .action-links a {
     color: #66c0f4;
     text-decoration: none;
     font-size: 14px;
 }
 
-.action-links .action-btn {
+.account-details-page .action-links .action-btn {
     background: none;
     border: none;
     padding: 0;
@@ -133,19 +128,28 @@
     cursor: pointer;
 }
 
-.action-links a:hover,
-.action-links .action-btn:hover {
+.account-details-page .action-links a:hover,
+.account-details-page .action-links .action-btn:hover {
     color: #fff;
 }
 
-.contact-info p {
+.account-details-page .contact-info p {
     margin: 0;
     font-size: 14px;
     color: #acb2b8;
 }
 
+.account-details-page .contact-info a {
+    color: #66c0f4;
+}
+
+.account-details-page .contact-info a:hover {
+    color: white;
+}
+
+
 /* ---- MODAL ---- */
-.modal-overlay {
+.account-details-page .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -160,7 +164,7 @@
     box-sizing: border-box;
 }
 
-.modal-content {
+.account-details-page .modal-content {
     background-color: #1b2838;
     padding: 30px;
     border-radius: 5px;
@@ -171,14 +175,14 @@
     box-sizing: border-box;
 }
 
-.modal-content h2 {
+.account-details-page .modal-content h2 {
     margin: 0 0 25px 0;
     text-align: center;
     color: #fff;
     font-weight: 300;
 }
 
-.amount-options {
+.account-details-page .amount-options {
     display: flex;
     justify-content: center;
     gap: 15px;
@@ -186,7 +190,7 @@
     flex-wrap: wrap;
 }
 
-.amount-options button {
+.account-details-page .amount-options button {
     background-color: #2a475e;
     border: 1px solid #3b5f7e;
     color: #c7d5e0;
@@ -196,12 +200,12 @@
     transition: all 0.2s;
 }
 
-.amount-options button:hover {
+.account-details-page .amount-options button:hover {
     background-color: #3b5f7e;
     border-color: #66c0f4;
 }
 
-.modal-content input[type="number"] {
+.account-details-page .modal-content input[type="number"] {
     width: 100%;
     padding: 12px;
     background-color: #111a24;
@@ -214,27 +218,28 @@
     margin-bottom: 25px;
 }
 
-.modal-actions {
+.account-details-page .modal-actions {
     display: flex;
     justify-content: flex-end;
     gap: 15px;
     flex-wrap: wrap;
 }
+
 /* ... các style cũ ... */
 
 /* Style cho các group trong modal */
-.form-group-modal {
+.account-details-page .form-group-modal {
     margin-bottom: 20px;
-  }
-  
-  .form-group-modal label {
+}
+
+.account-details-page .form-group-modal label {
     display: block;
     font-size: 14px;
     color: #acb2b8;
     margin-bottom: 8px;
-  }
-  
-  .form-group-modal select {
+}
+
+.account-details-page .form-group-modal select {
     width: 100%;
     padding: 12px;
     background-color: #111a24;
@@ -243,4 +248,4 @@
     font-size: 16px;
     box-sizing: border-box;
     border-radius: 3px;
-  }
+}

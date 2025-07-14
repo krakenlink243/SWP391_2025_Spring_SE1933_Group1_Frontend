@@ -22,11 +22,13 @@ function ReviewForm({ onReload, game }) {
                 gameId: game.gameId,
             });
             setReviewContent('');
+            console.log(response);
             return true;
         } catch (error) {
+
             if (error.response) {
                 const status = error.response.status;
-                const message = error.response.data;
+                const message = error.response.data.message;
 
                 if (status === 422) {
                     alert(message || 'Your review contains inappropriate content.');

@@ -28,7 +28,7 @@ function UserDropBox({ userBalance }) {
           View my profile
         </Link>
         <Link className="dropdown-item" to="/account">
-          Account details: <span style={{ color: "#4cb4ff" }}>{username}</span>
+          Account details: <span className="item-username" >{username}</span>
         </Link>
         <Link className="dropdown-item" to="/library">
           Library

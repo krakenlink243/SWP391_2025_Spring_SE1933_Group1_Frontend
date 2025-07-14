@@ -5,7 +5,6 @@ import NotificationBox from "../Notifications/NotificationBox";
 import UserDropBox from "./UserDropBox";
 import axios from "axios";
 import { useLocation } from "react-router";
-import { isTokenExpired } from "../../utils/validators";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 

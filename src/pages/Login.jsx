@@ -10,16 +10,19 @@ import { useAuth } from "../context/AuthContext";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState({ content: "", type: "" });
   const location = useLocation();
   const navigate = useNavigate();
   const { setToken } = useAuth();
 
   useEffect(() => {
     if (location.state?.fromRegister) {
-      setMessage('Registration successful!');
+      setMessage({
+        content: 'Registration successful!',
+        type: "success"
+      });
       // Clear the message after a few seconds
-      const timer = setTimeout(() => setMessage(''), 5000);
+      const timer = setTimeout(() => setMessage({ content: "", type: "" }), 5000);
       return () => clearTimeout(timer);
     }
   }, [location.state]);
@@ -46,7 +49,10 @@ const Login = () => {
       // Optionally redirect or store auth token here
     } catch (err) {
       console.error(err);
-      setMessage("Invalid username or password");
+      setMessage({
+        content: "Invalid username or password",
+        type: "error",
+      });
     }
   };
 
@@ -77,7 +83,6 @@ const Login = () => {
         <section className="form-section">
           <form onSubmit={handleLogin} className="form">
             <h1 className="form-title">Sign in</h1>
-            {message && <p className="message">{message}</p>}
             <div className="form-item">
               <label htmlFor="username" className="form-label username">
                 Sign in with username
@@ -91,6 +96,8 @@ const Login = () => {
                 className="form-input"
                 required
               />
+              {message && <div className={`message ${message.type === "success" ? "success-message" : "error-message"}`}>{message.content}</div>}
+
             </div>
 
             <div className="form-item">

@@ -1,14 +1,20 @@
 /* Header styles */
-
 .login-container .message {
+  position: absolute;
+  bottom: -20px;
+}
+
+.login-container .success-message {
   color: greenyellow;
+}
+
+.login-container .error-message {
+  color: red;
 }
 
 
 /* Main content styles */
-.login-container {
-  
-}
+.login-container {}
 
 .login-container .form-section {}
 
@@ -25,12 +31,14 @@
   padding: 50px;
   padding-left: 30px;
   margin: 0;
+  position: relative;
 }
 
 .login-container .form .form-item {
   display: flex;
   flex-direction: column;
   margin: 20px 0;
+  position: relative;
 }
 
 

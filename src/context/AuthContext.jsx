@@ -41,6 +41,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.clear();
     setTokenState(null);
     setUser(null);
+    window.location.href = "/";
   };
 
   // Auto logout nếu token hết hạn (optional)
