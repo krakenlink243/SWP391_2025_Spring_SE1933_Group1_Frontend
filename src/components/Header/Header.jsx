@@ -21,6 +21,16 @@ const Header = forwardRef((props, ref) => {
   const location = useLocation();
   const CUR_PATHNAME = location.pathname;
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const activePathMap = [
     {
       index: 0, // STORE
@@ -92,7 +102,7 @@ const Header = forwardRef((props, ref) => {
       <div className="header row">
         <div className={`col-lg-${section[0]}`}></div>
         <div
-          className={`header-logo col-lg-${section[1]} align-content-center`}
+          className={`header-logo col-sm-4 col-lg-${section[1]} align-content-center`}
         >
           <Link to={"/"}>
             <img
