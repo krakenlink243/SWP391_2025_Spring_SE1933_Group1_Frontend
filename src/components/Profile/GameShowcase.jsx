@@ -35,6 +35,8 @@ const GameShowcase = ({ userId, gameCount }) => {
   const [totalPages, setTotalPages] = useState(0);
   const [totalGames, setTotalGames] = useState(0);
   const GAMES_PER_PAGE = 6;
+  const CUR_USERID = localStorage.getItem("userId");
+
 
   const fetchLibraryPage = useCallback(async () => {
     if (!userId) return;
@@ -75,9 +77,12 @@ const GameShowcase = ({ userId, gameCount }) => {
         <h3>
           Games <span>({totalGames})</span>
         </h3>
-        <Link to={`/library`} className="view-all-link">
-          View All
-        </Link>
+        {CUR_USERID == userId && (
+          <Link to={`/library`} className="view-all-link">
+            View All
+          </Link>
+        )
+        }
       </div>
       <div className="showcase-list">
         {loading ? (
@@ -106,12 +111,14 @@ const GameShowcase = ({ userId, gameCount }) => {
                 className="showcase-item"
                 title={game.name}
               >
-                <div className="media-with-caption">
-                  <img
-                    src={imageUrl}
-                    alt={game.name}
-                    className="showcase-item-image"
-                  />
+                <div>
+                  <div className="media-with-caption">
+                    <img
+                      src={imageUrl}
+                      alt={game.name}
+                      className="showcase-item-image"
+                    />
+                  </div>
                 </div>
                 <h4 className="showcase-item-title">{game.name}</h4>
               </Link>

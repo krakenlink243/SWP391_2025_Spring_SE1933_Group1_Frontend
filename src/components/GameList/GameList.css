@@ -8,15 +8,15 @@
   width: 100%;
 }
 
-.loading-message,
-.error-message,
-.no-games-message {
+.games-container .loading-message,
+.games-container .error-message,
+.games-container .no-games-message {
   padding: 20px;
   text-align: center;
   font-size: 1.2em;
   color: #c7d5e0; /* Màu chữ sáng */
 }
 
-.message-error {
+.games-container .message-error {
   color: #ff6b6b; /* Màu đỏ cho lỗi */
 }

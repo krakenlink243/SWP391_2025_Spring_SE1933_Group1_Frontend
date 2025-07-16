@@ -9,7 +9,7 @@
     border-radius: 3px;
 }
 
-.search-input {
+.search-bar-form .search-input {
     flex-grow: 1;
     /* Cho phép input co giãn */
     font-size: 14px;
@@ -21,16 +21,16 @@
     max-width: calc(100% - 35px);
 }
 
-.search-input::placeholder {
+.search-bar-form .search-input::placeholder {
     color: #c7d5e0;
     opacity: 0.6;
 }
 
-.search-input:focus {
+.search-bar-form .search-input:focus {
     outline: none;
 }
 
-.search-button {
+.search-bar-form .search-button {
     background: #5b9ace;
     /* Màu xanh sáng cho nút */
     padding: 0;
@@ -41,17 +41,17 @@
     /* Bo góc phải */
     width: 35px;
     height: 35px;
-    
+    border: none;
 }
 
-.search-button svg {
+.search-bar-form .search-button svg {
     color: #e0e0e0;
     width: 16px;
     height: 16px;
 }
 
 /* === STYLING CHO DROPDOWN GỢI Ý MỚI === */
-.suggestions-dropdown {
+.search-bar-form .suggestions-dropdown {
     position: absolute;
     top: 105%;
     left: 0;
@@ -64,7 +64,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-.suggestion-item {
+.search-bar-form .suggestion-item {
     display: flex;
     /* Dùng flexbox để xếp ảnh và text cạnh nhau */
     align-items: center;
@@ -74,16 +74,16 @@
     border-bottom: 1px solid #4a4a4a;
 }
 
-.suggestion-item:last-child {
+.search-bar-form .suggestion-item:last-child {
     border-bottom: none;
 }
 
-.suggestion-item:hover {
+.search-bar-form .suggestion-item:hover {
     background-color: #5b9ace;
     /* Màu highlight khi hover */
 }
 
-.suggestion-image {
+.search-bar-form .suggestion-image {
     width: 120px;
     /* Chiều rộng cố định cho ảnh */
     height: 45px;
@@ -92,14 +92,14 @@
     margin-right: 10px;
 }
 
-.suggestion-text-content {
+.search-bar-form .suggestion-text-content {
     display: flex;
     flex-direction: column;
     /* Xếp title và price theo chiều dọc */
     justify-content: center;
 }
 
-.suggestion-title {
+.search-bar-form .suggestion-title {
     font-size: 14px;
     color: #e0e0e0;
 }
@@ -109,8 +109,8 @@
     color: #acb2b8;
 }
 
-.suggestion-item.loading,
-.suggestion-item.no-results {
+.search-bar-form .suggestion-item.loading,
+.search-bar-form .suggestion-item.no-results {
     justify-content: center;
     padding: 15px;
     font-style: italic;

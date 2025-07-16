@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Transaction.css';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 /**
  * @author BaThanh
@@ -9,13 +10,13 @@ import { useNavigate } from 'react-router-dom';
  * @param {*} param0 
  * @returns 
  */
-const userId = localStorage.getItem("userId");
 const username = localStorage.getItem('username');
 
 const Transaction = () => {
   const navigate = useNavigate();
 
-  if (!userId) {
+  const { token } = useAuth();
+  if (!token) {
     navigate("/");
   }
 

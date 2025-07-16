@@ -34,11 +34,6 @@ const Navbar = forwardRef((props, ref) => {
               <div className="store-nav-bg">
                 <div className="store-nav">
                   <div className="tab" onClick={() => navigate("/game")}><span className="pulldown"><a>Your Store</a></span></div>
-                  <div className="tab"><span className="pulldown"><a>New & Noteworthy</a></span></div>
-                  <div className="tab"><span className="pulldown"><a>Categories</a></span></div>
-                  <div className="tab"><span className="pulldown"><a>Points Shop</a></span></div>
-                  <div className="tab"><span className="pulldown"><a>News</a></span></div>
-                  <div className="tab"><span className="pulldown"><a>Labs</a></span></div>
                   <div className="search-flex-spacer"></div>
                   <div className="search-area">
                     <SearchBar />

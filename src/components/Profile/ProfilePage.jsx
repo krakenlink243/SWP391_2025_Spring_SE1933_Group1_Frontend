@@ -156,47 +156,54 @@ const ProfilePage = () => {
     return <div className="profile-page-status">Profile not found.</div>;
 
   return (
-    <div className="profile-page">
-      <div className="dynamic-background">
-        <video src="/videos/Sequence 01.mp4" autoPlay loop muted></video>
-      </div>
-      <div className="profile-content">
-        <ProfileHeader
-          user={profileData}
-          isOwnProfile={isOwnProfile}
-          onEditClick={handleEditRedirect}
-          onMessageClick={handleSendMessage}
-          onAddFriendClick={handleAddFriend}
-        />
-        <div className="profile-main">
-          <div className="profile-left">
-            <GameShowcase
-              userId={profileData.userId}
-              gameCount={profileData.totalGames || 0}
+    <div className="profile-page container-fluid">
+      <div className="row">
+        <div className="dynamic-background">
+          <video src="/FckyouPewDiePie.mp" autoPlay loop muted></video>
+        </div>
+        <div className="spacer col-lg-2"></div>
+        <div className="main-content col-lg-8">
+          <div className="profile-content">
+            <ProfileHeader
+              user={profileData}
+              isOwnProfile={isOwnProfile}
+              onEditClick={handleEditRedirect}
+              onMessageClick={handleSendMessage}
+              onAddFriendClick={handleAddFriend}
             />
-            <div className="profile-bio section-box">
-              <h3>Bio</h3>
-              <p>
-                {profileData.summary ||
-                  "This user has not written a summary yet."}
-              </p>
-            </div>
-          </div>
-          <div className="profile-right">
-            <div className="profile-details section-box">
-              <ul className="details-list">
-                <li>
-                  Games <span>{profileData.totalGames ?? "N/A"}</span>
-                </li>
-                <li>
-                  Reviews <span>{profileData.reviewCount ?? "N/A"}</span>
-                </li>
-                <li>Inventory</li>
-              </ul>
+            <div className="profile-main">
+              <div className="profile-left">
+                <GameShowcase
+                  userId={profileData.userId}
+                  gameCount={profileData.totalGames || 0}
+                />
+                <div className="profile-bio section-box">
+                  <h3>Bio</h3>
+                  <p>
+                    {profileData.summary ||
+                      "This user has not written a summary yet."}
+                  </p>
+                </div>
+              </div>
+              <div className="profile-right">
+                <div className="profile-details section-box">
+                  <ul className="details-list">
+                    <li>
+                      Games <span>{profileData.totalGames ?? "N/A"}</span>
+                    </li>
+                    <li>
+                      Reviews <span>{profileData.reviewCount ?? "N/A"}</span>
+                    </li>
+                    <li>Inventory</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        <div className="spacer col-lg-2"></div>
       </div>
+
     </div>
   );
 };

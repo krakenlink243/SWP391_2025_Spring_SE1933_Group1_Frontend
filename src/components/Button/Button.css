@@ -76,3 +76,59 @@ Added by Phan NT Son
 .green-button:hover {
   background: linear-gradient(90deg, #218838, #1e7e34); /* hover xanh đậm hơn */
 }
+
+.white-button {
+  background: white;
+  color: black;
+  padding: 10px 50px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.white-button:hover {
+  background: #f0f0f0;
+}
+
+.white-grey-button {
+  background: #f8f9fa; /* trắng xám */
+  color: #212529;
+  padding: 10px 50px;
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.white-grey-button:hover {
+  background: #e2e6ea;
+}
+
+.gradient-blue-button {
+  background: linear-gradient(to right, #3ea6ff 5%, #2563eb 95%);
+  color: white;
+  padding: 10px 50px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.gradient-blue-button:hover {
+  opacity: 0.9;
+}
+
+.gradient-green-button {
+  background: linear-gradient(to right, #75b022 5%, #588a1b 95%);
+  color: white;
+  padding: 10px 50px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.gradient-green-button:hover {
+  opacity: 0.9;
+}
