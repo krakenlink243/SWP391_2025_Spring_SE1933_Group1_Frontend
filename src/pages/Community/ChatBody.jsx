@@ -6,25 +6,27 @@ import './ChatBody.css';
 
 function ChatBody({ bodyH }) {
 
-    const [curFriendChat, setCurFriendChat] = useState(null);
+    const [curChat, setCurChat] = useState(null);
 
     useEffect(() => {
 
-        Split(['#left-pane', '#right-pane'], {
+        const split = Split(['#left-pane', '#right-pane'], {
             sizes: [20, 80],
             minSize: 200,
             maxSize: [440, Infinity],
             gutterSize: 5,
             direction: 'horizontal',
         });
+
+        return () => split.destroy()
     }, [])
     return (
         <div className="chat-main split d-flex flex-row p-0" style={{ height: `${bodyH}px` }}>
             <ChatBodyLeft
-                setCurFriendChat={setCurFriendChat}
+                setCurChat={setCurChat}
             />
             <ChatBodyRight
-                friend={curFriendChat}
+                curChat={curChat}
             />
 
         </div>

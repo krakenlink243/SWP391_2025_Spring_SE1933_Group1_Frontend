@@ -4,23 +4,32 @@ import ChatHistory from "./ChatHistory";
 import { useAuth } from "../../context/AuthContext";
 import { useChat } from "../../hooks/useChat";
 
-function ChatBodyRight({ friend }) {
+function ChatBodyRight({ curChat }) {
 
     const [input, setInput] = useState("");
     const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
     const CUR_TOKEN = useAuth();
-    const friendId = friend?.friendId;
-    const friendName = friend?.friendName;
-    const { messages, conversation, sendMessages } = useChat(CUR_TOKEN, friendId, friendName);
+    const currentUser = localStorage.getItem("username");
 
+    const {
+        messages,
+        conversation,   // only for friend chat
+        sendMessages,
+    } = curChat && curChat.type === 'group'
+            ? useGroupChat(CUR_TOKEN, curChat.id)
+            : useChat(CUR_TOKEN, curChat?.id, curChat?.name);
 
     const handleSend = () => {
-        if (input.trim() === "") return;
-        sendMessages(conversation.conversationId, currentUser, friendName, input);
-        setInput("");
-    };
+        if (!input.trim()) return;
 
-    const currentUser = localStorage.getItem("username");
+        if (curChat.type === 'group') {
+            sendMessages(currentUser, input);
+        } else {
+            sendMessages(conversation.conversationId, currentUser, curChat.name, input);
+        }
+
+        setInput('');
+    };
 
     // Giới hạn số từ nhập vào là 8000 từ
     const MAX_WORDS = 8000;
@@ -38,24 +47,24 @@ function ChatBodyRight({ friend }) {
 
     return (
         <div id="right-pane" className="multi-chat-dialog-container d-flex flex-column">
-            {friend && (
+            {curChat && (
                 <div className="chat-wrapper h-100">
                     <div className="chat-tab" style={{ height: "5%" }}>
                         <div className="friend-box">
                             <div className="friend-avatar h-100 d-flex flex-row align-items-center">
-                                <img src={`${friend.friendAvatarUrl ? friend.friendAvatarUrl : UNKNOW_AVATAR_URL}`} alt={friend.friendName}></img>
+                                <img src={curChat.avatarUrl || UNKNOW_AVATAR_URL}
+                                    alt={curChat.name} ></img>
                             </div>
                             <div className="friend-name">
-                                {friend.friendName}
+                                {curChat.name}
                             </div>
                         </div>
                         <div className="padder-top"></div>
                     </div>
                     <div className="chat-history-scroll" style={{ height: "85%" }}>
                         <ChatHistory
-                            pastMessages={conversation?.messages || []}
+                            pastMessages={messages || []}
                             liveMessages={messages}
-                            friend={friend}
                         />
 
                     </div>

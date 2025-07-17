@@ -109,11 +109,11 @@
     gap: .2rem;
 }
 
-.friend-list-content .friend-list-wrapper .online{
+.friend-list-content .friend-list-wrapper .online {
     color: #6dcff6;
 }
 
-.friend-list-content .friend-list-wrapper .offline{
+.friend-list-content .friend-list-wrapper .offline {
     color: #a0a0a0;
 }
 
@@ -140,12 +140,12 @@
     height: 100%;
 }
 
-.friend .friend-name{
+.friend .friend-name {
     overflow: hidden;
     text-overflow: ellipsis;
     width: calc(100% - 40px);
     white-space: nowrap;
-    
+
 }
 
 .online .spacer {
@@ -156,13 +156,19 @@
     background-color: #898989;
 }
 
-
-
-
 .friends-list-container .friend-list .friend-list-footer {
     position: relative;
     min-height: 26px;
     background-color: #22252b;
     flex-shrink: 0;
     box-shadow: inset rgba(61, 68, 80, .3) 1px 1px 0px 0px;
+}
+
+#middle-pane .gutter {
+    cursor: s-resize;
+    border: .5px solid #121216;
+    border-top: 2px solid rgba(34, 37, 43, .8);
+    border-bottom: 3px solid rgba(34, 37, 43, .9);
+    background-color: #22252b;
+    min-height: 3px;
 }
