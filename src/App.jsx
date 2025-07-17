@@ -45,8 +45,8 @@ import SendUserFeedback from "./pages/SendUserFeedback";
 import Library from "./pages/LibraryPage/Library";
 import WalletPage from "./pages/WalletPage/WalletPage";
 import AvatarSettings from "./components/Profile/AvatarSettings/AvatarSettings";
-import ChatPage from "./pages/Community/ChatPage"; // Added by Phan NT Son
-import ChatHeader from "./pages/Community/ChatHeader"; // Added by Phan NT Son
+import ChatPage from "./pages/ChatPage/ChatPage"; // Added by Phan NT Son
+import ChatHeader from "./pages/ChatPage/ChatHeader"; // Added by Phan NT Son
 import AccountDetailsPage from "./components/AccountDetail/AccountDetailsPage"; // Added by TSHuy
 import PaymentResultPage from "./components/Payment/PaymentResultPage"; // Added by TSHuy
 import FriendsPage from "./pages/Friend/FriendsPage"; // Added by Phan NT Son
@@ -63,6 +63,12 @@ import { isTokenExpired } from "./utils/validators";
 import { CartCountProvider } from "./utils/TotalInCartContext";
 import AIGeneratorFrontend from "./pages/test"; // TEST
 
+import Community from "./pages/CommunityPage/Community";
+import ThreadDetailPage from "./pages/CommunityPage/ThreadDetailPage";
+import CreateThreadModal from "./components/Community/CreateThreadModal";
+import ReviewCard from "./components/Community/ReviewCard";
+import ThreadCard from "./components/Community/ThreadCard";
+import CommentSection from "./components/Community/CommentSection";
 function AppRoutes() {
   // Added by Phan NT Son 18-06-2025
   const headerHeight = useRef(null);
@@ -216,6 +222,8 @@ function AppRoutes() {
             <Route path="/verify-email" element={<VerifyEmail />} />{" "}
             {/* Added by Loc Phan */}
             <Route path="/register-details" element={<RegisterDetailsF />} />
+            <Route path="/community" element={<Community />} /> {/* Added by Loc Phan */}
+            <Route path="/community/threads/:threadId" element={<ThreadDetailPage />} /> {/* Added by Loc Phan */}
             <Route path="/account/history" element={<Transaction />} />
             <Route
               path="/account/history/detail/:transactionId"
