@@ -39,11 +39,11 @@ export function useChat(token, friendId, friendName) {
 
     }, [token, friendId])
 
-    const sendMessages = (conversationId, sender, receiver, content) => {
-        SocketService.publish("/app/chat.send", {
+    const sendMessages = (conversationId, senderId, receiverName, content) => {
+        SocketService.publish("/app/chat/private.send", {
             conversationId: conversationId,
-            senderUsername: sender,
-            receiverUsername: receiver,
+            senderId: senderId,
+            receiverUsername: receiverName,
             content: content
         })
 

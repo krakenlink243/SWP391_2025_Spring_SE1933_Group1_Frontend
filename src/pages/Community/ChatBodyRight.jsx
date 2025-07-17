@@ -1,31 +1,49 @@
-import { useState } from "react";
+import React, { useState, useMemo } from "react";
 import './ChatBodyRight.css'
 import ChatHistory from "./ChatHistory";
 import { useAuth } from "../../context/AuthContext";
 import { useChat } from "../../hooks/useChat";
+import { useGroupChat } from "../../hooks/useGroupChat";
+import { useConversation } from "../../hooks/useConversation";
 
 function ChatBodyRight({ curChat }) {
 
     const [input, setInput] = useState("");
-    const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
-    const CUR_TOKEN = useAuth();
-    const currentUser = localStorage.getItem("username");
+    const { token } = useAuth();
+    const { conversation, members, messages, sendMessages } =
+        useConversation(token, curChat);
 
-    const {
-        messages,
-        conversation,   // only for friend chat
-        sendMessages,
-    } = curChat && curChat.type === 'group'
-            ? useGroupChat(CUR_TOKEN, curChat.id)
-            : useChat(CUR_TOKEN, curChat?.id, curChat?.name);
+    // build membersLookup exactly as before
+    const membersLookup = useMemo(() => {
+        if (curChat?.type === 'group') {
+            return members.reduce((acc, m) => {
+                acc[m.friendId] = { username: m.friendName, avatarUrl: m.friendAvatarUrl };
+                return acc;
+            }, {});
+        } else if (conversation) {
+            const meId = localStorage.getItem('userId');
+            return {
+                [meId]: {
+                    username: localStorage.getItem('username'),
+                    avatarUrl: localStorage.getItem('avatarUrl'),
+                },
+                [curChat.id]: {
+                    username: curChat.name,
+                    avatarUrl: curChat.avatarUrl,
+                },
+            };
+        }
+        return {};
+    }, [curChat, members, conversation]);
+
 
     const handleSend = () => {
         if (!input.trim()) return;
 
         if (curChat.type === 'group') {
-            sendMessages(currentUser, input);
+            sendMessages(input);
         } else {
-            sendMessages(conversation.conversationId, currentUser, curChat.name, input);
+            sendMessages(input);
         }
 
         setInput('');
@@ -52,7 +70,7 @@ function ChatBodyRight({ curChat }) {
                     <div className="chat-tab" style={{ height: "5%" }}>
                         <div className="friend-box">
                             <div className="friend-avatar h-100 d-flex flex-row align-items-center">
-                                <img src={curChat.avatarUrl || UNKNOW_AVATAR_URL}
+                                <img src={curChat.avatarUrl}
                                     alt={curChat.name} ></img>
                             </div>
                             <div className="friend-name">
@@ -61,12 +79,13 @@ function ChatBodyRight({ curChat }) {
                         </div>
                         <div className="padder-top"></div>
                     </div>
-                    <div className="chat-history-scroll" style={{ height: "85%" }}>
+                    <div className="chat-history" style={{ height: "85%" }}>
                         <ChatHistory
-                            pastMessages={messages || []}
-                            liveMessages={messages}
+                            messages={messages}
+                            membersLookup={membersLookup}
+                            currentUsername={localStorage.getItem("username")}
+                            currentAvatar={localStorage.getItem("avatarUrl")}
                         />
-
                     </div>
                     <div className="chat-entry d-flex flex-row" style={{ height: "10%" }}>
                         <div className="chat-entry-control" style={{ width: "85%" }}>

@@ -5,7 +5,8 @@ import axios from "axios";
 
 export function useGroupChat(token, groupId) {
     const [messages, setMessages] = useState([]);
-    
+    const [members, setMembers] = useState([]);
+
 
     useEffect(() => {
         if (!token || isTokenExpired() || !groupId) return;
@@ -18,7 +19,9 @@ export function useGroupChat(token, groupId) {
 
         axios.get(`${import.meta.env.VITE_API_URL}/user/groupchat/${groupId}`)
             .then((resp) => {
+                console.log(resp.data);
                 setMessages(resp.data.data.messages || []);
+                setMembers(resp.data.data.members || []);
             })
             .catch((err) => { console.log("Error load conversation: " + err) })
 
@@ -37,14 +40,15 @@ export function useGroupChat(token, groupId) {
 
     }, [token, groupId])
 
-    const sendMessages = (senderId, content) => {
-        SocketService.publish(`/app/group/${groupId}.send`, {
+    const sendMessages = (groupId, senderId, content) => {
+        SocketService.publish(`/app/chat/group.send`, {
+            groupId: groupId,
             senderId: senderId,
             content: content
         })
 
     }
 
-    return { messages, sendMessages };
+    return { messages, members, sendMessages };
 
 }

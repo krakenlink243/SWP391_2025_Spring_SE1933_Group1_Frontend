@@ -43,7 +43,7 @@
     transition: text-overflow 0s linear;
 }
 
-.chat-wrapper .chat-history-scroll {
+.chat-wrapper .chat-history {
     overflow: auto;
     position: relative;
     padding: 0 6px 14px 6px;

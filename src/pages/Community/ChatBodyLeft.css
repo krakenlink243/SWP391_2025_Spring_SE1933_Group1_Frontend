@@ -91,15 +91,41 @@
 
 .friends-list-container .friend-list-content {
     background: radial-gradient(ellipse farthest-corner at 50% 30%, #212329 0%, #1e2025 50%, #1c1d22 100%);
-
 }
 
-.friends-list-container .friend-list-content .friend-list-wrapper {
+.friends-list-container .friend-list-content .friend-list-wrapper,
+.friends-list-container .group-chat-content .group-chat-wrapper {
     height: 100%;
     overflow-y: auto;
 }
 
-.friend-list-content .friend-list-wrapper .friend {
+#middle-pane .wrapper-header {
+    background-color: #434953;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 30px;
+    user-select: none;
+    cursor: default;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: left;
+    color: #b7ccd5;
+    padding: 0 10px;
+    position: relative;
+}
+
+#middle-pane .wrapper-header .icon{
+    height: 100%;
+    width: 25px;
+    cursor: pointer;
+}
+
+.friend-list-content .friend-list-wrapper .friend,
+.friend-list-content .group-chat-wrapper .group {
     height: 38px;
     display: flex;
     flex-direction: row;
@@ -171,4 +197,13 @@
     border-bottom: 3px solid rgba(34, 37, 43, .9);
     background-color: #22252b;
     min-height: 3px;
+}
+
+#friend-pane,
+#group-pane {
+    min-height: 100px;
+}
+
+.friends-list-container .group-chat-content {
+    background: radial-gradient(ellipse farthest-corner at 20% 30%, #222b35 0%, #252e38 10%, #20242b 100%);
 }
