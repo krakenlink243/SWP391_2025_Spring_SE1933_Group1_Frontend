@@ -30,7 +30,7 @@ export default function Community() {
             <section className="mb-10">
                 <h2 className="text-xl font-semibold mb-2" style={{ color: "white" }}>Game Reviews</h2>
                 <div className="space-y-3">
-                    {reviews.map((review, index) => (
+                    {/* {reviews.map((review, index) => (
                         <div key={index} className="review-card">
                             <div className="author-info">
                                 <img src={review.authorAvatarUrl} alt="avatar" className="avatar" />
@@ -44,8 +44,10 @@ export default function Community() {
                                 <p><small>{new Date(review.timeCreated).toLocaleDateString()}</small></p>
                             </div>
                         </div>
+                    ))} */}
+                    {reviews.map((review, index) => (
+                        <ReviewCard key={index} review={review} />
                     ))}
-
                 </div>
             </section>
 
@@ -56,6 +58,7 @@ export default function Community() {
                     <button
                         onClick={() => setShowModal(true)}
                         className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                        style={{ backgroundColor: 'blue', color: 'white' }}
                     >
                         Start New Thread
                     </button>
