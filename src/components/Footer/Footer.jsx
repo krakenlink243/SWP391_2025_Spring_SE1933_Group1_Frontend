@@ -1,52 +1,32 @@
-import React, {forwardRef} from "react"; // Added forwardRef by Phan NT Son 18-06-2025
+import React, { forwardRef } from "react"; // Added forwardRef by Phan NT Son 18-06-2025
 import "./Footer.css";
-import ValveLogo from "/footerLogo_valve_new.png"; // Đường dẫn đến logo Valve
-import SteamLogo from "/logo_steam.svg"; // Đường dẫn đến logo Steam
+import { useNavigate } from "react-router-dom";
+
 
 const Footer = forwardRef((props, ref) => { //Added forwardRef by Phan NT Son 18-06-2025
+
+  const navigate = useNavigate();
+
   return (
-    <footer className="steam-footer" ref={ref}> {/* Added by Phan NT Son 18-06-2025*/}
-      <div className="footer-top">
-        <div className="footer-copyright">
-          <img src={ValveLogo} alt="Valve Logo" className="valve-logo" />
-          <span>© 2024 Valve Corporation. All rights reserved.</span>
-          <span>
-            All trademarks are property of their respective owners in the US and
-            other countries.
-          </span>
-          <span>VAT included in all prices where applicable.</span>
+    <footer className="steam-footer container-fluid py-5" ref={ref}> {/* Added by Phan NT Son 18-06-2025*/}
+      <div className="row">
+        <div className="spacer col-lg-2"></div>
+        <div className="main-content col-lg-8 d-flex flex-column gap-2 justify-content-center align-items-center">
+          <div className="footer-logo">
+            <img src={`Centurion.svg`} onClick={() => navigate("/")}></img>
+          </div>
+          <div className="d-flex flex-column align-items-center gap-2">
+            <div>© 2025 Centurion Legion | Educational Project</div>
+            <div className="d-flex flex-row gap-5">
+              <div onClick={() => navigate("/terms-of-use")} className="policy-nav" >Terms of use</div>
+              <div onClick={() => navigate("/privacy-policy")} className="policy-nav">Privacy policy</div>
+              <div onClick={() => navigate("/contact")} className="policy-nav">Contact</div>
+            </div>
+          </div>
         </div>
-        <div className="footer-links">
-          <a href="#">Privacy Policy</a>|<a href="#">Legal</a>|
-          <a href="#">Steam Subscriber Agreement</a>|<a href="#">Refunds</a>|
-          <a href="#">Cookies</a>
-        </div>
-        <img src={SteamLogo} alt="Steam Logo" className="steam-logo" />
+        <div className="spacer col-lg-2"></div>
       </div>
-      <div className="footer-bottom">
-        <div className="bottom-links">
-          <a href="#">About Valve</a>
-          <a href="#">Jobs</a>
-          <a href="#">Steamworks</a>
-          <a href="#">Steam Distribution</a>
-          <a href="#">Support</a>
-          <a href="#">Gift Cards</a>
-        </div>
-        <div className="social-icons">
-          <a href="#" className="social-icon">
-            f
-          </a>
-          <a href="#" className="social-icon">
-            X
-          </a>
-          <a href="#" className="social-icon">
-            {/* Biểu tượng */}
-          </a>
-          <a href="#" className="social-icon">
-            {/* Biểu tượng */}
-          </a>
-        </div>
-      </div>
+
     </footer>
   );
 });

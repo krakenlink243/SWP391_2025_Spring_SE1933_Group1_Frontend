@@ -21,8 +21,7 @@ function ForgotPasswordRequest() {
     }
 
     try {
-  
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/password/request`, {
+      const response = await axios.post(`/api/password/request`, {
         username,
         email,
       });
@@ -43,7 +42,6 @@ function ForgotPasswordRequest() {
     <main className="support-form">
       <h1 className="form-title">Support</h1>
       <form className="form-container" onSubmit={handleSubmit}>
-        {message && <p className="message">{message}</p>}
         <div>
           <label htmlFor="username" className="form-label username-label">
             Username

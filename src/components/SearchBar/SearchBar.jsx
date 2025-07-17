@@ -106,11 +106,13 @@ const SearchBar = ({ onSearchSubmit }) => {
                 className="suggestion-item"
                 onClick={handleSuggestionClick}
               >
-                <img
-                  src={game.imageUrl}
-                  alt={game.title}
-                  className="suggestion-image"
-                />
+                <div className="media-with-caption">
+                  <img
+                    src={game.imageUrl}
+                    alt={game.title}
+                    className="suggestion-image"
+                  />
+                </div>
                 <div className="suggestion-text-content">
                   <div className="suggestion-title">{game.title}</div>
                   <div className="suggestion-price">${game.originalPrice}</div>

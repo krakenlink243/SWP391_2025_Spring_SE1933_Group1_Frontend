@@ -1,4 +1,8 @@
-.current-email-display {
+.change-email-container {
+  color: #c7d5e0;
+}
+
+.change-email-container .current-email-display {
   padding: 15px;
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 4px;
@@ -6,28 +10,77 @@
   border: 1px solid #36495f;
 }
 
-.current-email-display p {
+.change-email-container .current-email-display p {
   margin: 0;
+  padding: 0;
   font-size: 14px;
   color: #acb2b8;
 }
 
-.current-email-display strong {
+.change-email-container .current-email-display strong {
   color: #fff;
 }
 
 /* Kế thừa các style chung từ EditProfilePage.css */
 /* Bạn không cần thêm lại các style cho .settings-section, .form-group, .form-actions, .save-btn,... */
 
-.feedback-error,
-.feedback-success {
+.change-email-container .feedback-error,
+.change-email-container .feedback-success {
   font-size: 14px;
   font-weight: bold;
-  margin-left: 15px;
 }
-.feedback-error {
+
+.change-email-container .feedback-error {
   color: #ff6b6b;
 }
-.feedback-success {
+
+.change-email-container .feedback-success {
   color: #66c0f4;
+  position: absolute;
+  bottom: -1.2rem;
+  left: 0;
+}
+
+.change-email-container .changeEmail {
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.change-email-container .form-group {
+  position: relative;
+}
+
+
+.change-email-container .form-label {
+  font-size: 14px;
+  color: white;
+  vertical-align: top;
+  padding: 0;
+  margin: 0;
+}
+
+.change-email-container .form-input {
+  background: #32353C;
+  border-radius: 3px;
+  color: #E9E9E9;
+  padding: 8px 6px;
+  display: block;
+  box-shadow: none;
+  border: none;
+  width: 100%;
+  transition: border ease-in-out .5s;
+  font-family: "Motiva Sans", Sans-serif;
+  font-weight: normal;
+}
+
+.change-email-container .form-input:focus {
+  outline: none;
+  border-color: #0a7fff;
+}
+
+.section-description{
+  padding: 0;
+  margin: 0;
 }

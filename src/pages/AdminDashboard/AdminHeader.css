@@ -1,9 +1,0 @@
-.header-nav .active{
-    text-decoration: underline;
-    font-weight: bold;
-    color: #1999FF;
-}
-
-.header-nav a{
-    cursor: pointer;
-}

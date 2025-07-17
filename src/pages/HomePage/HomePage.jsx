@@ -4,13 +4,13 @@ import { useEffect } from "react";
 // import HeroCarousel from "../components/HomePage/HeroCarousel";
 
 import "./HomePage.css";
-import YouTubePlayer from "./YouTubePlayer";
-
-import BrowseByTag from "./BrowseByTag";
+import YoutubePlayer from "./YoutubePlayer";
 import BrowseByPublisher from "./BrowseByPublisher";
+import BrowseByTag from "./BrowseByTag";
 /**
  * Origin belongs to @author TS Huy
  * Remake by Phan NT Son
+ * Edited by TS Huy 7/7/2025
  * @since 14-06-2025
  * @returns
  */
@@ -19,21 +19,23 @@ const HomePage = () => {
     <div className="container-fluid">
       <div className="row">
         <div className="banner">
-          <video
-            loop
-            autoPlay
-            muted
-            playsInline
-            preload="none"
-            id="top-promo-video"
-            className="w-100"
-            alt="Top Promo Banner"
-          >
-            <source
-              src="https://shared.fastly.steamstatic.com/store_item_assets/steam/clusters/sale_summer2025/36a01fe4331ab0ca600ff205/webm_page_bg_english.webm?t=1750963512"
-              type="video/webm"
-            />
-          </video>
+          <div className="media-with-caption">
+            <video
+              loop
+              autoPlay
+              muted
+              playsInline
+              preload="none"
+              id="top-promo-video"
+              className="topbanner"
+              alt="Top Promo Banner"
+            >
+              <source
+                src="https://shared.fastly.steamstatic.com/store_item_assets/steam/clusters/sale_summer2025/36a01fe4331ab0ca600ff205/webm_page_bg_english.webm?t=1750963512"
+                type="video/webm"
+              />
+            </video>
+          </div>
         </div>
         <div className="row">
           <div className="col-lg-2"></div>
@@ -42,7 +44,7 @@ const HomePage = () => {
             <div>
               <div className="video-section">
                 <h2 className="section-title">Featured Video</h2>
-                <YouTubePlayer
+                <YoutubePlayer
                   videoId="EFf1AWnZVW0"
                   title="Featured Gameplay"
                 />

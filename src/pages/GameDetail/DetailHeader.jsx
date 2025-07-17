@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, Link } from "react-router-dom"; // Thêm Link cho breadcrumb
-import { createNotification } from "../../services/notification";
+import { useParams, Link, useNavigate } from "react-router-dom"; // Thêm Link cho breadcrumb
 import 'swiper/css';
 import 'swiper/css/thumbs';
 import 'swiper/css/navigation';
@@ -10,7 +9,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Thumbs, Scrollbar } from 'swiper/modules';
 import { useTranslation } from "react-i18next"; // Thêm useTranslation
 import CartPopup from "../../components/Popup/CartPopup";
-import { CartCountProvider } from "../../utils/TotalInCartContext";
 import { isTokenExpired } from "../../utils/validators";
 
 /**
@@ -27,7 +25,7 @@ function DetailHeader({ game }) {
     const [gameInLib, setGameInLib] = useState(false);
     const { t } = useTranslation(); // Thêm hook useTranslation
     const [showPopup, setShowPopup] = useState(false);
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         const extractMediaUrl = () => {
@@ -54,7 +52,7 @@ function DetailHeader({ game }) {
 
     const addCartHandler = async () => {
         if (!CUR_USERID || isTokenExpired()) {
-            window.location.href = "/login";
+            navigate("/login");
             return;
         }
         try {
@@ -67,7 +65,6 @@ function DetailHeader({ game }) {
             // @author Phan NT Son
             // Tạo thông báo khi người dùng thêm game vào giỏ hàng
             if (response.data.success) {
-                createNotification(CUR_USERID, "Cart", `Game ${game.name} has been added to your cart.`);
                 setShowPopup(game);
                 checkGameInCart();
                 checkGameInLib();
@@ -109,15 +106,13 @@ function DetailHeader({ game }) {
         <div className="game-detail-header-container my-3">
             {showPopup && (
 
-                <CartCountProvider>
-                    <CartPopup
-                        game={showPopup}
-                        mediaUrlArr={mediaUrlArr}
-                        onClose={() => setShowPopup(null)}
-                        onViewCart={() => window.location.href = "/cart"}
-                        onRemoveSuccess={() => checkGameInCart()}
-                    />
-                </CartCountProvider>
+                <CartPopup
+                    game={showPopup}
+                    mediaUrlArr={mediaUrlArr}
+                    onClose={() => setShowPopup(null)}
+                    onViewCart={() => navigate("/cart")}
+                    onRemoveSuccess={() => checkGameInCart()}
+                />
             )}
             <h1 className="game-name">{game.name}</h1>
             <div className="content d-flex my-3">
@@ -133,9 +128,15 @@ function DetailHeader({ game }) {
                         >
                             {mediaUrlArr.map((url, i) => (
                                 <SwiperSlide key={i}>
-                                    {url.endsWith('.mp4')
-                                        ? <video src={url} controls style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                        : <img src={url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    {url.endsWith('.mp4') ? (
+                                        <div className="media-with-caption">
+                                            <video src={url} controls style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        </div>
+                                    ) : (
+                                        <div className="media-with-caption">
+                                            <img src={url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        </div>
+                                    )
                                     }
                                 </SwiperSlide>
                             ))}
@@ -157,7 +158,9 @@ function DetailHeader({ game }) {
                         >
                             {mediaUrlArr.map((url, i) => (
                                 <SwiperSlide key={i} style={{ cursor: 'pointer' }}>
-                                    <img src={url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    <div className="media-with-caption">
+                                        <img src={url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    </div>
                                 </SwiperSlide>
                             ))}
 
@@ -167,11 +170,13 @@ function DetailHeader({ game }) {
                 <div className="right-col d-flex flex-column align-items-start justify-content-between">
                     <div className="content-row mt-0">
                         <div className="gameHeaderImgCtn w-100">
-                            <img
-                                // src={coverImageUrl}
-                                src={mediaUrlArr[0]}
-                                alt="Game cover"
-                            />
+                            <div className="media-with-caption">
+                                <img
+                                    // src={coverImageUrl}
+                                    src={mediaUrlArr[0]}
+                                    alt="Game cover"
+                                />
+                            </div>
                         </div>
                     </div>
                     <div className="content-row">
@@ -227,7 +232,7 @@ function DetailHeader({ game }) {
                                     </a>
                                 </div>
                             ) : (
-                                <div className={`btn-add-to-cart`} onClick={() => window.location.href = `${gameInCart ? "/cart" : "/library"}`}>
+                                <div className={`btn-add-to-cart`} onClick={() => navigate(`${gameInCart ? "/cart" : "/library"}`)}>
                                     <a className="btn-blue-ui">
                                         {gameInLib && (
                                             <span>{t("Already in Library")}</span>

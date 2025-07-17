@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./WalletPage.css";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import "../../services/notification";
 
 /**
@@ -11,6 +11,8 @@ import "../../services/notification";
 function WalletPage() {
   const amountArr = [50, 100, 200, 350, 500];
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
   if (!token) {
     return <Navigate to={"/"} replace />;
   }
@@ -29,7 +31,9 @@ function WalletPage() {
     }
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/v1/payments/create-vnpay-payment?amount=${amount}`
+        `${
+          import.meta.env.VITE_API_URL
+        }/api/v1/payments/create-vnpay-payment?amount=${amount}`
       );
       const { paymentUrl } = response.data;
       if (paymentUrl) {

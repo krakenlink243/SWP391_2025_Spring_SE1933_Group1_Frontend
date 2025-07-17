@@ -4,7 +4,7 @@ import ReviewListItem from "./ReviewListItem";
 import ReviewUpdateForm from "./ReviewUpdateForm";
 import axios from "axios";
 import './Review.css';
-import { connectSocketReview, disconnectSocketReview } from "../../services/reviewNotif";
+import { useReview } from "../../hooks/useReview";
 
 /**
  * @author Phan NT Son
@@ -15,19 +15,18 @@ import { connectSocketReview, disconnectSocketReview } from "../../services/revi
 function Review({ game }) {
   const [reloadSignal, setReloadSignal] = useState(0);
   const triggerReload = () => setReloadSignal(prev => prev + 1);
-
   const CUR_USERID = Number(localStorage.getItem("userId"));
   const [reviewList, setReviewList] = useState([]);
   const [visibleCount, setVisibleCount] = useState(5);
   const [editingId, setEditingId] = useState(null);
-
-
   const shownReviews = reviewList.slice(0, visibleCount);
+  const dto = useReview(game.gameId);
 
   useEffect(() => {
     console.log("[State] reviewList changed:", reviewList);
   }, [reviewList]);
 
+  // Init review list
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_API_URL}/review/list/${game.gameId}`)
@@ -39,20 +38,25 @@ function Review({ game }) {
 
   }, [reloadSignal]);
 
+
   useEffect(() => {
-    connectSocketReview(game.gameId, (dto) => {
-      switch (dto.type) {
-        case 'UPDATE_REACTION':
-          handleUpdateReaction(dto); break;
-        case 'UPDATE_CONTENT':
-          handleUpdateContent(dto); break;
-        case 'NEW_REVIEW':
-        case 'DELETE_REVIEW':
-          triggerReload(); break; // cập nhật toàn bộ
-      }
-    });
-    return () => disconnectSocketReview();
-  }, []);
+    if (!dto) return;
+
+    switch (dto.type) {
+      case 'UPDATE_REACTION':
+        handleUpdateReaction(dto);
+        break;
+      case 'UPDATE_CONTENT':
+        handleUpdateContent(dto);
+        break;
+      case 'NEW_REVIEW':
+      case 'DELETE_REVIEW':
+        triggerReload();
+        break;
+      default:
+        console.warn("Unknown DTO type:", dto);
+    }
+  }, [dto]);
 
   function handleUpdateReaction(dto) {
     setReviewList(prev => {
@@ -94,10 +98,8 @@ function Review({ game }) {
     <div className="review-container w-100">
       <h2>CUSTOMER REVIEWS FOR {game.name}</h2>
       <div className="line-seperate w-100"></div>
-      {/* {!isHavingReview && (
-      )} */}
 
-      {!isHavingReview && (
+      {CUR_USERID && !isHavingReview && (
         <ReviewForm
           onReload={triggerReload}
           game={game} />

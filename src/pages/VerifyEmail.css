@@ -1,39 +1,43 @@
-.verify-title {
-    color: white;
-    font-weight: 800;
-    font-size: 1.875rem; /* 3xl = 30px */
-    margin-bottom: 1.5rem; /* mb-6 = 24px */
-  }
-  
-  .otp-label {
-    display: block;
-    font-size: 0.625rem; /* 10px */
-    font-weight: 700;
-    color: white;
-    margin-bottom: 0.25rem; /* mb-1 = 4px */
-  }
-  
-  .otp-input {
-    width: 100%;
-    background-color: #e8f0fe;
-    height: 2.25rem; /* h-9 = 36px */
-    padding-left: 0.75rem; /* px-3 = 12px */
-    padding-right: 0.75rem;
-    margin-bottom: 1.5rem; /* mb-6 = 24px */
-    color: black;
-    font-size: 0.875rem; /* text-sm = 14px */
-  }
-  
-  .submit-button {
-    width: 9rem; /* w-36 = 144px */
-    height: 2.25rem; /* h-9 = 36px */
-    background: linear-gradient(to right, #00b0ff, #3a5aff);
-    color: white;
-    font-size: 0.875rem; /* text-sm = 14px */
-  }
-  
-  .message-text {
-    margin-top: 1rem; /* mt-4 = 16px */
-    color: white;
-    font-size: 0.875rem; /* text-sm = 14px */
-  }
+.verify-container {
+}
+
+.verify-container .verify-title {
+  color: white;
+  font-weight: 800;
+  font-size: 1.875rem;
+  /* 3xl = 30px */
+  margin-bottom: 1.5rem;
+  /* mb-6 = 24px */
+}
+
+
+.verify-container .otp-label {
+  display: block;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.25rem;
+}
+
+.verify-container .otp-input {
+  background-color: #e8f0fe;
+  height: 2.25rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  margin-bottom: 1.5rem;
+  color: black;
+  font-size: 0.875rem;
+}
+
+.verify-container .submit-button {
+  width: 9rem;
+  height: 2.25rem;
+  background: linear-gradient(to right, #00b0ff, #3a5aff);
+  color: white;
+  font-size: 0.875rem;
+}
+
+.verify-container .message-text {
+  margin-top: 1rem;
+  color: white;
+  font-size: 0.875rem;
+}

@@ -1,0 +1,15 @@
+.admin-layout .admin-container {
+    background: url("https://community.fastly.steamstatic.com/public/images/friends/colored_body_top2.png?v=2") center top no-repeat rgb(27, 40, 56);
+    padding: 10px 20px;
+
+}
+
+.admin-container .left-col .admin-menu-item{
+    flex: 1;
+    
+}
+
+.admin-container .right-col{
+    max-height: 100%;
+    overflow-y: auto;
+}

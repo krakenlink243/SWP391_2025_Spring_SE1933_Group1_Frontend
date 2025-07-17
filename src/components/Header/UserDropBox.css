@@ -1,14 +1,23 @@
 .user-drop-box-menu {
   position: relative;
   display: inline-block;
+  width: 100%;
 }
 
 .user-drop-box-avatar {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 6px;
   cursor: pointer;
   color: white;
+  width: 100%;
+}
+
+.user-drop-box-name {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+
 }
 
 .user-drop-box-avatar img {
@@ -21,6 +30,7 @@
 .dropdown-menu {
   background-color: #2a475e;
   min-width: 220px;
+  max-width: 250px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
   padding: 8px 0;
   z-index: 11;
@@ -29,13 +39,23 @@
 }
 
 
-.dropdown-menu a {
+.dropdown-menu .dropdown-item {
   display: block;
   color: white;
   padding: 8px 16px;
   text-decoration: none;
+  width: 100%;
 }
 
-.dropdown-menu a:hover {
+.dropdown-menu .dropdown-item:hover {
   background-color: #1b2838;
+}
+
+.dropdown-item .item-username {
+  color: #4cb4ff;
+  overflow-x: hidden;
+  max-width: 90px;
+  text-overflow: ellipsis;
+  display: inline-block;
+  vertical-align: bottom;
 }

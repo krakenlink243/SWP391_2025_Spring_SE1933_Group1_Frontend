@@ -48,26 +48,34 @@ const VerifyEmailOtp = () => {
   };
 
   return (
-    <main>
-      <h1 className="verify-title">Verify Your Email</h1>
-      <form onSubmit={handleSubmit}>
-      {message && (<p className="message-text">{message}</p>)}
-        <label htmlFor="otp" className="otp-label">
-          OTP Code
-        </label>
-        <input
-          id="otp"
-          type="text"
-          value={otp}
-          onChange={(e) => setOtp(e.target.value)}
-          className="otp-input"
-          required
-        />
-        <button type="submit" className="submit-button">
-          Verify
-        </button>
-      </form>
-      
+    <main className='verify-container container-fluid py-5 h-100'>
+      <div className='row'>
+        <div className='spacer col-lg-3'></div>
+        <div className='main-content col-lg-6 h-100'>
+          <h1 className="verify-title">Verify Your Email</h1>
+          <form onSubmit={handleSubmit} className='d-flex flex-column justify-content-center align-items-start'>
+            {message && (<p className="message-text">{message}</p>)}
+            <label htmlFor="otp" className="otp-label">
+              OTP Code
+            </label>
+            <input
+              id="otp"
+              type="text"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              className="otp-input"
+              required
+            />
+            <button type="submit" className="submit-button">
+              Verify
+            </button>
+          </form>
+
+        </div>
+        <div className='spacer col-lg-3'></div>
+      </div>
+
+
     </main>
   );
 };

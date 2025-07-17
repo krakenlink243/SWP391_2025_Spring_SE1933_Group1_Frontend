@@ -1,60 +1,134 @@
-/* General app container */
-  
-  /* Header styles */
+.register-detail-container {
+  background: linear-gradient(to right, rgb(0 0 0 / 50%) 0%, #000000bd 100%), url(https://cdnphoto.dantri.com.vn/4ydXR7ZhWF5ViH60xAFvBolm3JQ=/2021/02/01/khu-cach-ly-dai-hoc-fpt-13-1612154602281.jpg) center center / cover no-repeat;
 
-  
-  .brand {
-    font-weight: 800;
-    color: #cfd2d6;
-    font-size: 1.125rem;
-    user-select: none;
-  }
-  
+}
 
-  
+.register-detail-container .form {
+  background-color: #12151d;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  color: #E9E9E9;
+}
 
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    max-width: 28rem;
-    width: 100%;
-  }
-  
-  .form-title {
-    color: #ffffff;
-    font-size: 1.25rem;
-    font-weight: 400;
-    margin-bottom: 1.5rem;
-    user-select: none;
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    color: #8a8f98;
-    font-size: 0.75rem;
-  }
-  
-  .form-label {
-    margin-bottom: 0.25rem;
-  }
-  
-  .form-input {
-    background-color: #2a2e38;
-    border: 1px solid transparent;
-    border-radius: 0.25rem;
-    padding: 0.5rem 0.75rem;
-    color: #ffffff;
-  }
-  
-  .form-input::placeholder {
-    color: #8a8f98;
-  }
-  
-  .form-input:focus {
-    outline: none;
-    border-color: #0a7fff;
-  }
-  
+.register-detail-container .form-title {
+  text-transform: uppercase;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-size: 34px;
+  color: #ffffff;
+  margin-bottom: 30px;
+  font-weight: 200;
+  letter-spacing: 2px;
+}
+
+.register-detail-container .form-group {
+  display: flex;
+  flex-direction: column;
+  color: #8a8f98;
+  font-size: 0.75rem;
+  position: relative;
+}
+
+.register-detail-container .form-label {
+  font-size: 14px;
+  color: #b8b6b4;
+  vertical-align: top;
+  margin: 0;
+  padding: 0;
+}
+
+.register-detail-container .form-input {
+  background: #32353C;
+  border-radius: 3px;
+  color: #E9E9E9;
+  padding: 8px 6px;
+  display: block;
+  box-shadow: none;
+  border: none;
+  width: 100%;
+  transition: border ease-in-out .5s;
+  font-family: "Motiva Sans", Sans-serif;
+  font-weight: normal;
+
+}
+
+.register-detail-container .form-input::placeholder {
+  color: #8a8f98;
+}
+
+.register-detail-container .form-input:focus {
+  outline: none;
+  border-color: #0a7fff;
+}
+
+.register-detail-container .form-select {
+  background: #32353C;
+  border-radius: 3px;
+  color: #E9E9E9;
+  padding: 8px 6px;
+  display: block;
+  box-shadow: none;
+  border: none;
+  width: 100%;
+  transition: border ease-in-out .5s;
+  font-family: "Motiva Sans", Sans-serif;
+  font-weight: normal;
+}
+
+.register-detail-container .custom-select-arrow {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  /* Mũi tên màu xanh #66c0f4 (hoặc đổi màu tại stroke='%23xxxxxx') */
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23E9E9E9' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+  padding-right: 2.5rem;
+  /* để không đè lên text */
+}
+
+
+.register-detail-container .message-error {
+  color: red;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  bottom: -1.25rem;
+  left: 0;
+}
+
+.register-detail-container .message-success {
+  color: greenyellow;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  bottom: -1.25rem;
+  left: 0;
+}
+
+.register-detail-container .submit-button {
+  background: linear-gradient(90deg, #06BFFF 0%, #2D73FF 100%);
+  border-radius: 2px;
+  border: none;
+  outline: none;
+  padding: 12px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: inherit;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-detail-container .submit-button:hover {
+  filter: brightness(1.1);
+
+}

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import "./BrowseByTag.css";
+import "./BrowseByPublisher.css";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 /**
  * @author Phan NT Son
@@ -8,15 +9,20 @@ import "./BrowseByTag.css";
  */
 function BrowseByPublisher() {
   const [data, setData] = useState([]);
+  const [cachedPublishers, setCachedPublishers] = useLocalStorage('publisher', []);
 
   useEffect(() => {
+    if (cachedPublishers) setData(cachedPublishers);
     getPublishersList();
   }, []);
 
   const getPublishersList = async () => {
     try {
-      const resp = await axios.get("http://localhost:8080/publisher/list");
-      setData(resp.data);
+      await axios.get(`${import.meta.env.VITE_API_URL}/publisher/list`)
+        .then((response) => {
+          setData(response.data);
+          setCachedPublishers(response.data);
+        });
       console.log(resp.data);
     } catch (error) {
       console.log(error);
@@ -29,11 +35,11 @@ function BrowseByPublisher() {
   }
 
   return (
-    <div className="browse-tags">
+    <div className="browse-publishers">
       <div className="title">Browse by Publisher</div>
       <div className="conent-hub-carousel">
         <div
-          id="browseCarousel"
+          id="browseCarousel1"
           className="carousel-container carousel-fade carousel slide"
           data-ride="false"
           data-pause="true"
@@ -67,7 +73,7 @@ function BrowseByPublisher() {
               <button
                 key={index}
                 type="button"
-                data-bs-target="#browseCarousel"
+                data-bs-target="#browseCarousel1"
                 data-bs-slide-to={index}
                 className={index === 0 ? "active" : ""}
               ></button>
@@ -77,7 +83,7 @@ function BrowseByPublisher() {
           <button
             className="carousel-control-prev"
             type="button"
-            data-bs-target="#browseCarousel"
+            data-bs-target="#browseCarousel1"
             data-bs-slide="prev"
           >
             <span
@@ -89,7 +95,7 @@ function BrowseByPublisher() {
           <button
             className="carousel-control-next"
             type="button"
-            data-bs-target="#browseCarousel"
+            data-bs-target="#browseCarousel1"
             data-bs-slide="next"
           >
             <span

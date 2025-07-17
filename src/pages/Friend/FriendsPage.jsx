@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import MainTab from "./MainTab";
 import AddFriendTab from "./AddFriendTab";
 import PendingInvitesTab from "./PendingInvitesTab";
@@ -8,6 +8,8 @@ import './FriendPage.css';
 
 function FriendsPage() {
     const token = localStorage.getItem("token");
+    const navigate = useNavigate();
+
     if (!token) {
         return <Navigate to={"/"} replace />
     } else {
@@ -30,7 +32,7 @@ function FriendsPage() {
         return (
             <div className="friend-page-container">
                 <div className="friend-page-header d-flex flex-row align-items-center">
-                    <img src={avatarUrl} alt="avatar" className="avatar" onClick={() => window.location.href = "/profile"} />
+                    <img src={avatarUrl} alt="avatar" className="avatar" onClick={() => navigate("/profile")} />
                     <a className="username" href="/profile">{username}</a>
                 </div>
                 <div className="friend-page-content d-flex flex-row">

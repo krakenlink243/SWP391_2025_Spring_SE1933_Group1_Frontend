@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import GameShowcase from "./GameShowcase";
 import "./ProfilePage.css";
-import { useOnlineUsers } from "../../utils/OnlineUsersContext";
+import { AppContext } from "../../context/AppContext";
+import { useAuth } from "../../context/AuthContext";
+import { isTokenExpired } from "../../utils/validators";
 
 const ProfileHeader = ({
   user,
@@ -15,7 +17,35 @@ const ProfileHeader = ({
   const avatarUrl =
     user?.avatarUrl ||
     "https://avatars.steamstatic.com/b5bd56c1aa4644a474a2e4972be27ef9e82e517e_full.jpg";
-  const isOnline = useOnlineUsers || false;
+
+  const { onlineUsers } = useContext(AppContext);
+
+  const isOnline = onlineUsers.includes(user.username);
+
+  const [friendList, setFriendList] = useState([]);
+
+  const getFriendList = () => {
+    axios.get(`${import.meta.env.VITE_API_URL}/user/friends`)
+      .then((response) => { setFriendList(response.data) })
+      .catch((err) => { console.log("Error fetching friends list: " + err) })
+  };
+
+  const handleUnfriend = (friendId) => {
+    axios.delete(`${import.meta.env.VITE_API_URL}/user/unfriend/${friendId}`)
+      .then((resp) => {
+        setFriendList(prev => prev.filter(friend => friend.friendId !== friendId));
+      })
+      .catch((err) => {
+        console.log("Error unfriend: ", err);
+      })
+  }
+
+  const CUR_TOKEN = useAuth();
+  useEffect(() => {
+    if (CUR_TOKEN && !isTokenExpired()) {
+      getFriendList();
+    }
+  }, [])
 
   return (
     <div className="profile-header">
@@ -36,21 +66,28 @@ const ProfileHeader = ({
         </div>
 
         <div className="profile-actions">
-          {/* === LOGIC HIỂN THỊ CÓ ĐIỀU KIỆN === */}
           {isOwnProfile ? (
-            // Nếu là trang của mình -> Hiển thị nút Edit
             <button className="action-btn primary" onClick={onEditClick}>
               Edit Profile
             </button>
           ) : (
-            // Nếu là trang của người khác -> Hiển thị các nút tương tác
             <>
-              <button className="action-btn secondary" onClick={onMessageClick}>
-                Message
-              </button>
-              <button className="action-btn primary" onClick={onAddFriendClick}>
-                Add Friend
-              </button>
+              {friendList.some(friend => friend.friendName === user.username) ? (
+                <div className="d-flex flex-row gap-3">
+                  <button className="action-btn secondary" onClick={onMessageClick}>
+                    Message
+                  </button>
+
+                  <button className="action-btn secondary" onClick={() => handleUnfriend(user.userId)}>
+                    Unfriend
+                  </button>
+
+                </div>
+              ) : (
+                <button className="action-btn primary" onClick={onAddFriendClick}>
+                  Add Friend
+                </button>
+              )}
             </>
           )}
         </div>
@@ -94,7 +131,7 @@ const ProfilePage = () => {
       try {
         // Luôn fetch dữ liệu của profileId trên URL
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/user/profile/${userId}`
+          `${import.meta.env.VITE_API_URL}/user/profile/${profileId}`
         );
         setProfileData(response.data);
       } catch (err) {
@@ -120,10 +157,11 @@ const ProfilePage = () => {
   };
 
   const handleAddFriend = () => {
-    axios.post(`${import.meta.env.VITE_API_URL}/user/sendinvite/${profileData.userId}`);
+    axios.post(
+      `${import.meta.env.VITE_API_URL}/user/sendinvite/${profileData.userId}`
+    );
     alert(
-      `Friend request sent to ${
-        profileData.profileName || profileData.username
+      `Friend request sent to ${profileData.profileName || profileData.username
       }.`
     );
   };
@@ -135,47 +173,54 @@ const ProfilePage = () => {
     return <div className="profile-page-status">Profile not found.</div>;
 
   return (
-    <div className="profile-page">
-      <div className="dynamic-background">
-        <video src="/videos/Sequence 01.mp4" autoPlay loop muted></video>
-      </div>
-      <div className="profile-content">
-        <ProfileHeader
-          user={profileData}
-          isOwnProfile={isOwnProfile}
-          onEditClick={handleEditRedirect}
-          onMessageClick={handleSendMessage}
-          onAddFriendClick={handleAddFriend}
-        />
-        <div className="profile-main">
-          <div className="profile-left">
-            <GameShowcase
-              userId={profileData.userId}
-              gameCount={profileData.totalGames || 0}
+    <div className="profile-page container-fluid">
+      <div className="row">
+        <div className="dynamic-background">
+          <video src="/FckyouPewDiePie.mp" autoPlay loop muted></video>
+        </div>
+        <div className="spacer col-lg-2"></div>
+        <div className="main-content col-lg-8">
+          <div className="profile-content">
+            <ProfileHeader
+              user={profileData}
+              isOwnProfile={isOwnProfile}
+              onEditClick={handleEditRedirect}
+              onMessageClick={handleSendMessage}
+              onAddFriendClick={handleAddFriend}
             />
-            <div className="profile-bio section-box">
-              <h3>Bio</h3>
-              <p>
-                {profileData.summary ||
-                  "This user has not written a summary yet."}
-              </p>
-            </div>
-          </div>
-          <div className="profile-right">
-            <div className="profile-details section-box">
-              <ul className="details-list">
-                <li>
-                  Games <span>{profileData.totalGames ?? "N/A"}</span>
-                </li>
-                <li>
-                  Reviews <span>{profileData.reviewCount ?? "N/A"}</span>
-                </li>
-                <li>Inventory</li>
-              </ul>
+            <div className="profile-main">
+              <div className="profile-left">
+                <GameShowcase
+                  userId={profileData.userId}
+                  gameCount={profileData.totalGames || 0}
+                />
+                <div className="profile-bio section-box">
+                  <h3>Bio</h3>
+                  <p>
+                    {profileData.summary ||
+                      "This user has not written a summary yet."}
+                  </p>
+                </div>
+              </div>
+              <div className="profile-right">
+                <div className="profile-details section-box">
+                  <ul className="details-list">
+                    <li>
+                      Games <span>{profileData.totalGames ?? "N/A"}</span>
+                    </li>
+                    <li>
+                      Reviews <span>{profileData.reviewCount ?? "N/A"}</span>
+                    </li>
+                    <li>Inventory</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        <div className="spacer col-lg-2"></div>
       </div>
+
     </div>
   );
 };

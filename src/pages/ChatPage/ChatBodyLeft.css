@@ -68,6 +68,7 @@
     margin-left: 5px;
     flex-grow: 1;
     color: #6dcff6;
+    width: calc(100% - 48px);
 }
 
 .avatar-and-user .label-holder .name {
@@ -137,6 +138,14 @@
 .friend .spacer {
     width: 4px;
     height: 100%;
+}
+
+.friend .friend-name{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: calc(100% - 40px);
+    white-space: nowrap;
+    
 }
 
 .online .spacer {

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Transaction.css';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 /**
  * @author BaThanh
@@ -8,12 +10,14 @@ import './Transaction.css';
  * @param {*} param0 
  * @returns 
  */
-const userId = localStorage.getItem("userId");
 const username = localStorage.getItem('username');
 
 const Transaction = () => {
-  if (!userId) {
-    window.location.href = "/";
+  const navigate = useNavigate();
+
+  const { token } = useAuth();
+  if (!token) {
+    navigate("/");
   }
 
   const [transactions, setTransactions] = useState([]);
@@ -49,7 +53,7 @@ const Transaction = () => {
 
   const handleDetailClick = (transactionId) => {
     console.log(`Detail clicked for transaction ID: ${transactionId}`);
-    window.location.href = `/account/history/detail/${transactionId}`;
+    navigate(`/account/history/detail/${transactionId}`);
   };
 
   return (

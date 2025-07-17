@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createNotification } from "../../services/notification";
 import axios from "axios";
 import './ReviewButtons.css';
+import { useNavigate } from "react-router-dom";
 
 /**
  * @author Phan NT Sons
@@ -12,12 +13,10 @@ function ReviewButtons({ reivewHelpful, reivewNotHelpful, authorId, game }) {
 
     const [helpfulCount, setHelpfulCount] = useState(reivewHelpful);
     const [notHelpfulCount, setNotHelpfulCount] = useState(reivewNotHelpful);
-
-
     const [userOption, setUserOption] = useState(null);
     const [isReady, setIsReady] = useState(false);
     const CUR_USERNAME = localStorage.getItem("username");
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -45,7 +44,7 @@ function ReviewButtons({ reivewHelpful, reivewNotHelpful, authorId, game }) {
 
     const handleVote = (isHelpful) => {
         if (!CUR_USERNAME) {
-            window.location.href = "/login";
+            navigate("/login");
             return;
         }
 

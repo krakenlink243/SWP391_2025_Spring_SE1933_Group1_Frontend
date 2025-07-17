@@ -9,58 +9,64 @@
   background-color: #1B2438;
 } */
 
-.game-application {
-  /* margin-top: 100px; */
-  color: white;
-  margin: 0 auto;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-.form-border h1{
-  margin-left: 10%;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
-}
 .form-border {
-  margin-top: 100px !important;
   font-family: 'Motiva Sans Light';
   font-size: 13px;
   border: 1px solid #000000;
   height: auto;
-  width: 50%;
-  margin: 0 auto;
+  width: 75%;
+  margin: 5px auto;
   padding: 20px;
   border-radius: 10px;
   background-color: #23272B;
-  margin-bottom: 50px;
   color: #ADB2B8;
   ;
+}
+
+.form-border h1 {
+  margin-left: 10%;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .game-mandatory-information {
   display: flex;
   align-items: center;
-  gap: 15%;
+  gap: 20%;
   /* Increased space even more */
 }
-
-.game-avatar {
+/* .game-mandatory-information img {
   margin-left: 10%;
-  margin-top: 30px;
   width: 30%;
-  /* Bigger image */
   height: 30%;
   border-radius: 15px;
+} */
+ .game-mandatory-information .final-cropped {
+  margin-left: 40%;
+  width: 15vw;
+  border-radius: 15px;
 }
-
+.game-mandatory-information .game-icon .grey-button{
+  width: 15vw !important;
+  margin-left: 40%;
+  border-radius: 15px;
+  border: 2px dashed #ccc;
+  background: #3D4450;
+  align-self: stretch;
+  aspect-ratio: 1/1;
+  width: 100%;
+}
+.game-mandatory-information .game-avatar{
+  width: 20vw !important;
+  margin-left: 10%;
+  border-radius: 15px;
+}
 .name-price {
   display: flex;
   width: 80%;
   flex-direction: column;
   gap: 8px;
-  /* Reduced space between labels and input boxes */
 }
 
 .name-price input {
@@ -167,9 +173,11 @@
   border-radius: 5px;
   margin-right: 10px;
 }
-.remove-icon{
+
+.remove-icon {
   margin-right: 10px;
 }
+
 .inner-image button {
   width: 150px;
   height: 100px;
@@ -179,8 +187,8 @@
   margin-right: 10px;
 }
 
-.inner-image button:hover{
-  background:#2c313a;
+.inner-image button:hover,.game-mandatory-information button:hover {
+  background: #2c313a;
 }
 
 .game-file {
@@ -213,66 +221,81 @@
   margin-top: 100px;
   font-size: 34px;
 }
-  .price-input{
-    width: 78% !important;
-  }
-  .image-wrapper {
-    position: relative;
-    display: inline-block;
-  }
-  .remove-icon {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    background: #3D4450;
-    border-radius: 10%;
-    padding: 2px 6px;
-    cursor: pointer;
-    display: none;
-  }
-  
-  .image-wrapper:hover .remove-icon {
-    display: block;
-  }
-  .tag-selector {
+
+.price-input {
+  width: 78% !important;
+}
+
+.image-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.remove-icon {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: #3D4450;
+  border-radius: 10%;
+  padding: 2px 6px;
+  cursor: pointer;
+  display: none;
+}
+
+.image-wrapper:hover .remove-icon {
+  display: block;
+}
+
+.tag-selector {
   width: 80%;
-  }
-  .my-select__control,.my-select__menu,.my-select__menu-list {
-  background-color: #1A1C1F !important; 
+}
+
+.my-select__control,
+.my-select__menu,
+.my-select__menu-list {
+  background-color: #1A1C1F !important;
   color: white;
   border: none !important;
-  }
-  .my-select__option--is-focused {
+}
+
+.my-select__option--is-focused {
   background-color: transparent !important;
-  }
-  .my-select__option:hover{
-    background-color: gray !important;
-  }
-  .my-select__multi-value{
-    background-color: #232529 !important;
-  }
-  .my-select__multi-value__label{
-    color: white !important;
-  }
-  .my-select__input{
-    color: white !important;
-  }
-  .game-file progress{
-    height: 3px;
-    width: 100%;
-    appearance: none;
-    border-radius: 5px;
-  }
+}
+
+.my-select__option:hover {
+  background-color: gray !important;
+}
+
+.my-select__multi-value {
+  background-color: #232529 !important;
+}
+
+.my-select__multi-value__label {
+  color: white !important;
+}
+
+.my-select__input {
+  color: white !important;
+}
+
+.game-file progress {
+  height: 3px;
+  width: 100%;
+  appearance: none;
+  border-radius: 5px;
+}
+
 /* Chrome, Safari, Edge */
 progress::-webkit-progress-value {
-   background-image: linear-gradient(90deg, #007bff, #0056b3); /* Green fill */
+  background-image: linear-gradient(90deg, #007bff, #0056b3);
+  /* Green fill */
   border-radius: 5px;
 }
 
 progress::-webkit-progress-bar {
   /* background-color: black; Light gray background */
   border-radius: 5px;
-  
+
 }
 
 /* Firefox */
@@ -280,14 +303,3 @@ progress::-moz-progress-bar {
   background-color: #4caf50;
 }
 
-
-
-
-
-
-
-
-  
-    
-  
-  

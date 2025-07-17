@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { prepareChatHistory } from "../../utils/chatUtils";
 import './ChatHistory.css';
 
 export default function ChatHistory({ pastMessages, liveMessages, friend }) {
     const CUR_USER_AVATAR = localStorage.getItem("avatarUrl");
     const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
+    const scrollRef = useRef(null);
 
     // Hàm helper để định dạng ngày giờ theo kiểu "HH:mm DayOfWeek, DD/M/YYYY"
     const formatGroupTimestamp = (date) => {
@@ -29,8 +30,16 @@ export default function ChatHistory({ pastMessages, liveMessages, friend }) {
     );
 
     const me = localStorage.getItem("username");
+
+    useEffect(() => {
+        const container = scrollRef.current;
+        if (container) {
+            container.scrollTop = container.scrollHeight;
+        }
+    }, [days]);
+
     return (
-        <div className="chat-history">
+        <div className="chat-history" ref={scrollRef}>
             {days.map(dayBlock => (
                 <div key={dayBlock.day} className="day-block">
                     <div className="day-header">
@@ -48,7 +57,7 @@ export default function ChatHistory({ pastMessages, liveMessages, friend }) {
                             <div className="sender-small-profile">
                                 <div className="h-100">
                                     <img src={group.senderName === friend.friendName ?
-                                        (friend.friendAvatar ? friend.friendAvatar : UNKNOW_AVATAR_URL)
+                                        (friend.friendAvatarUrl ? friend.friendAvatarUrl : UNKNOW_AVATAR_URL)
                                         :
                                         CUR_USER_AVATAR}></img>
                                 </div>

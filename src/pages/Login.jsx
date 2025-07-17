@@ -3,23 +3,26 @@ import React, { useState } from "react";
 import axios from "axios";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import "./Login.css";
-import { jwtDecode } from "jwt-decode";
-import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
-import { useNavigate} from "react-router-dom";
+import { Navigate, useNavigate, useLocation, Link } from 'react-router-dom';
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState({ content: "", type: "" });
   const location = useLocation();
+  const navigate = useNavigate();
+  const { setToken } = useAuth();
 
   useEffect(() => {
     if (location.state?.fromRegister) {
-      setMessage('Registration successful!');
+      setMessage({
+        content: 'Registration successful!',
+        type: "success"
+      });
       // Clear the message after a few seconds
-      const timer = setTimeout(() => setMessage(''), 5000);
+      const timer = setTimeout(() => setMessage({ content: "", type: "" }), 5000);
       return () => clearTimeout(timer);
     }
   }, [location.state]);
@@ -38,24 +41,7 @@ const Login = () => {
         password: password,
       });
 
-      setMessage("Login successful!");
-
-      // Added by Phan NT Son
-      localStorage.setItem("token", res.data.token);
-      let decodedToken = null;
-      const token = localStorage.getItem("token");
-      decodedToken = jwtDecode(token);
-
-      const expireDate = decodedToken.exp;
-      const userId = decodedToken.userId;
-      const role = decodedToken.role;
-      const avatarUrl = decodedToken.avatarUrl;
-
-      localStorage.setItem("username", username);
-      localStorage.setItem("userId", userId);
-      localStorage.setItem("role", role);
-      localStorage.setItem("expDate", expireDate);
-      localStorage.setItem("avatarUrl", avatarUrl);
+      setToken(res.data.token);
 
       return <Navigate to="/" replace />;
 
@@ -63,7 +49,10 @@ const Login = () => {
       // Optionally redirect or store auth token here
     } catch (err) {
       console.error(err);
-      setMessage("Invalid username or password");
+      setMessage({
+        content: "Invalid username or password",
+        type: "error",
+      });
     }
   };
 
@@ -91,46 +80,52 @@ const Login = () => {
   return (
     <div className="login-container">
       <main>
-        <section class="form-section">
-          <h1 class="form-title">Log in</h1>
-          <form onSubmit={handleLogin} class="form">
-            {message && <p className="message">{message}</p>}
-            <label htmlFor="username" class="form-label">
-              Log in with username
-            </label>
-            <input
-              id="username"
-              name="username"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              class="form-input"
-              required
-            />
+        <section className="form-section">
+          <form onSubmit={handleLogin} className="form">
+            <h1 className="form-title">Sign in</h1>
+            <div className="form-item">
+              <label htmlFor="username" className="form-label username">
+                Sign in with username
+              </label>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="form-input"
+                required
+              />
+              {message && <div className={`message ${message.type === "success" ? "success-message" : "error-message"}`}>{message.content}</div>}
 
-            <label htmlFor="password" class="form-label password">
-              Password
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              class="form-input"
-              required
-            />
+            </div>
 
-            <div class="submit-container">
-              <button type="submit" class="submit-button">
+            <div className="form-item">
+              <label htmlFor="password" className="form-label">
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="form-input"
+                required
+              />
+            </div>
+
+            <div className="submit-container">
+              <button type="submit" className="submit-button">
                 Log in
               </button>
-              <a href="/forgot-password" class="forgot-password-link">
+              <Link to={"/forgot-password"} className="forgot-password-link">
                 Forgot password?
-              </a>
-              <a href={`${import.meta.env.VITE_API_URL}/oauth2/authorization/google`}>
+              </Link>
+
+              <Link to={`${import.meta.env.VITE_API_URL}/oauth2/authorization/google`}>
                 <img src="/google-logo.jpg" alt="Google login" className="google-logo" />
-              </a>
+              </Link>
 
               {/* <div className="google-login">
                   <GoogleLogin

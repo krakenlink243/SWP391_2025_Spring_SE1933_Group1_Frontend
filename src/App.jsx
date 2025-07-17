@@ -1,67 +1,69 @@
-import React from "react";
-// Son Added useLocation
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Outlet,
-  Link,
-  useLocation,
-  Navigate,
-} from "react-router-dom"; // Import các component của router
-import { useState, useEffect, loadingState, useRef, useMemo } from "react"; // Import useState và useEffect từ React
-import axios from "axios"; // Import axios để thực hiện các yêu cầu HTTP
-import "./App.css";
+import { React, useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, Outlet, useLocation, Navigate } from "react-router-dom";
+import { AppProvider } from "./context/AppContext";
+import { AuthProvider } from "./context/AuthContext";
+import axios from "axios";
+import './App.css';
 
-import Header from "./components/Header/Header";
-import Navbar from "./components/Navbar/Navbar";
-import GameDetail from "./pages/GameDetail/GameDetail";
+// Layouts
+import MainLayout from "./layouts/MainLayout";
+import AdminLayout from "./layouts/AdminLayout";
+import ChatLayout from "./layouts/ChatLayout";
+
+// Pages
 import HomePage from "./pages/HomePage/HomePage";
-import SendGameToAdmin from "./pages/SendGameToAdmin";
-import OAuth2RedirectHandler from "./pages/OAuth2RedirectHandler"; // Added by Loc Phan
+import GameDetail from "./pages/GameDetail/GameDetail";
+import GamesPage from "./components/GamesPage/GamesPage";
+import Cart from "./pages/CartPage/Cart";
+import WalletPage from "./pages/WalletPage/WalletPage";
+import PaymentResultPage from "./components/Payment/PaymentResultPage";
+import { Contact } from "./pages/PolicyPage/Contact";
+import { PrivacyPolicy } from "./pages/PolicyPage/PrivacyPolicy";
+import { TermsOfUse } from "./pages/PolicyPage/TermsOfUse";
+
+// Profile & User Pages
+import Transaction from "./pages/TransactionPage/Transaction";
+import FriendsPage from "./pages/Friend/FriendsPage";
+import Library from "./pages/LibraryPage/Library";
+import NotificationList from "./pages/NotificationPage/NotificationList";
+import ProfilePage from "./components/Profile/ProfilePage";
+import TransactionDetail from "./pages/TransactionPage/TransactionDetail";
+import EditProfilePage from "./components/Profile/EditProfilePage";
+import AvatarSettings from "./components/Profile/AvatarSettings/AvatarSettings";
+import AccountDetailsPage from "./components/AccountDetail/AccountDetailsPage";
+import EmailSettings from "./components/EmailChange/EmailSettings";
+import ChangePassword from "./pages/ForgotPassword/ChangePassword";
+
+// Admin pages
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import PublisherApproveDetails from "./pages/Admin/Request/PublisherApproveDetails";
+import FeedbackApproveDetails from "./pages/Admin/Request/FeedbackApproveDetails";
+import GameApproveDetails from "./pages/Admin/Request/GameApproveDetails";
+import FeedbackHub from "./pages/FeedbackHub";
+
+// Community
+import ChatPage from "./pages/ChatPage/ChatPage";
+
+// Auth
 import Login from "./pages/Login";
 import RegisterEmail from "./pages/RegisterEmail";
-import VerifyEmail from "./pages/VerifyEmail"; // Added by Loc Phan
-import ForgotPasswordRequest from "./pages/ForgotPassword/ForgotPasswordRequest"; // Added by Loc Phan
-import ChangePassword from "./pages/ForgotPassword/ChangePassword"; // Added by Loc Phan
-import RegisterDetails from "./pages/RegisterDetails";
-import GameApprrovePage from "./pages/AdminDashboard/GameApprovePage";
-import GameApproveDetails from "./pages/GameApproveDetails";
-import Transaction from "./pages/TransactionPage/Transaction";
-import TransactionDetail from "./pages/TransactionPage/TransactionDetail";
-import Cart from "./pages/CartPage/Cart";
-import SplashScreen from "./components/SplashScreen/SplashScreen"; // Import SplashScreen component
-import NotificationList from "./pages/NotificationPage/NotificationList";
-import GamesPage from "./components/GamesPage/GamesPage";
-import AdminDashboard from "./pages/AdminDashboard/AdminDashboard"; // Added by Phan NT Son
-import ApplyToPublisher from "./pages/ApplyToPublisher";
-import PublisherApprovePage from "./pages/PublisherApprovePage";
-import PublisherApproveDetails from "./pages/PublisherApproveDetails";
-import AdminHeader from "./pages/AdminDashboard/AdminHeader";
-import Footer from "./components/Footer/Footer";
-import ProfilePage from "./components/Profile/ProfilePage";
-import EditProfilePage from "./components/Profile/EditProfilePage";
-import SendUserFeedback from "./pages/SendUserFeedback";
-import Library from "./pages/LibraryPage/Library";
-import WalletPage from "./pages/WalletPage/WalletPage";
-import AvatarSettings from "./components/Profile/AvatarSettings/AvatarSettings";
-import ChatPage from "./pages/ChatPage/ChatPage"; // Added by Phan NT Son
-import ChatHeader from "./pages/ChatPage/ChatHeader"; // Added by Phan NT Son
-import AccountDetailsPage from "./components/AccountDetail/AccountDetailsPage"; // Added by TSHuy
-import PaymentResultPage from "./components/Payment/PaymentResultPage"; // Added by TSHuy
-import FriendsPage from "./pages/Friend/FriendsPage"; // Added by Phan NT Son
+import VerifyEmail from "./pages/VerifyEmail";
+import ForgotPasswordRequest from "./pages/ForgotPassword/ForgotPasswordRequest";
 import ResetPassword from "./pages/ForgotPassword/ResetPassword";
-import { OnlineUserProvider } from "./utils/OnlineUsersContext";
+import OAuth2RedirectHandler from "./pages/OAuth2RedirectHandler";
+import RegisterDetails from "./pages/RegisterDetails";
 
-import FeedbackApprovePage from "./pages/FeedbackApprovePage";
-import FeedbackApproveDetails from "./pages/FeedbackApproveDetails";
-import FeedbackHub from "./pages/FeedbackHub";
+// Others
+import SendGameToAdmin from "./pages/SendGameToAdmin";
+import SendUserFeedback from "./pages/SendUserFeedback";
+import ApplyToPublisher from "./pages/ApplyToPublisher";
+import ProfileLayout from "./layouts/ProfileLayout";
 import UserFeedback from "./pages/UserFeedback";
-import EmailSettings from "./components/EmailChange/EmailSettings";
-import { jwtDecode } from "jwt-decode";
+import LegalPopup from "./components/Popup/LegalPopup";
+
 import { isTokenExpired } from "./utils/validators";
-import { CartCountProvider } from "./utils/TotalInCartContext";
-import AIGeneratorFrontend from "./pages/test"; // TEST
+import RequestSection from "./pages/Admin/Request/RequestSection";
+import ErrorPage from "./pages/ErrorPage";
 
 import Community from "./pages/CommunityPage/Community";
 import ThreadDetailPage from "./pages/CommunityPage/ThreadDetailPage";
@@ -70,28 +72,8 @@ import ReviewCard from "./components/Community/ReviewCard";
 import ThreadCard from "./components/Community/ThreadCard";
 import CommentSection from "./components/Community/CommentSection";
 function AppRoutes() {
-  // Added by Phan NT Son 18-06-2025
-  const headerHeight = useRef(null);
-  const navHeight = useRef(null);
-  const footerHeight = useRef(null);
 
-  const [calculatedHeight, setCalculatedHeight] = useState(0);
-
-  const calMinimumHeight = () => {
-    const windowHeight = window.innerHeight;
-    const headerH = headerHeight.current
-      ? headerHeight.current.offsetHeight
-      : 0;
-    const navH = navHeight.current ? navHeight.current.offsetHeight : 0;
-    const footH = footerHeight.current ? footerHeight.current.offsetHeight : 0;
-    console.log("headerH:", headerH, "navH:", navH, "footH:", footH);
-
-    setCalculatedHeight(windowHeight - headerH - navH - footH);
-  };
-  // --!!
-
-  // Renamed by Phan NT Son
-  console.log("App component is rendering..."); // DEBUG: Kiểm tra xem component có render không
+  // console.log("App component is rendering...");
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -102,8 +84,7 @@ function AppRoutes() {
 
     const fetchCurrentUser = async () => {
       const token = localStorage.getItem("token");
-      // Giả sử bạn có token
-      if (token) {
+      if (token && !isTokenExpired()) {
         try {
           const userId = localStorage.getItem("userId");
           const response = await axios.get(
@@ -112,7 +93,6 @@ function AppRoutes() {
           setCurrentUser(response.data);
         } catch (error) {
           console.error("Failed to fetch current user", error);
-          // Xử lý lỗi, có thể đăng xuất người dùng
         }
       }
       setLoading(false);
@@ -121,8 +101,6 @@ function AppRoutes() {
     fetchCurrentUser();
   }, []);
 
-  // Added by Phan NT Son
-  // Set up axios interceptor to include token in headers
   axios.interceptors.request.use((config) => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -131,211 +109,110 @@ function AppRoutes() {
     return config;
   });
 
-  /**
-   * @author Phan NT Son
-   */
-  const location = useLocation();
-  const currentPath = location.pathname;
-  const needlessNavPath = [
-    "/profile",
-    "/chat",
-    "/admin",
-    "/sendfeedback",
-    "/wallet",
-    "/login",
-    "/register",
-    "/library",
-    "/notifications"
-  ];
-  const needlessHeaderPath = ["/admin", "/chat"];
-  const needlessFooterPath = ["/admin", "/chat"];
-  const isAddminPath = currentPath.startsWith("/admin");
-
-  const [adminTab, setAdminTab] = useState("Request Management");
-  const handleAdminTabChange = (tab) => {
-    setAdminTab(tab);
-  };
-
-  const isNeedlessHeader = useMemo(
-    () => needlessHeaderPath.some((p) => currentPath.startsWith(p)),
-    [currentPath]
-  );
-
-  const isNeedlessNav = useMemo(
-    () => needlessNavPath.some((p) => currentPath.startsWith(p)),
-    [currentPath]
-  );
-
-  const isNeedlessFooter = useMemo(
-    () => needlessFooterPath.some((p) => currentPath.startsWith(p)),
-    [currentPath]
-  );
-
-  //--!!
-
 
   return (
-    <div className="app-wrapper">
-      {" "}
-      <div className={`app-container`}>
-        <div className={`main-app-content`}>
-          {/* START FROM HERE */}
-          {/* Adjusted by Phan NT Son */}
-          {isAddminPath && (
-            <AdminHeader
-              currentTab={adminTab}
-              changeToTab={handleAdminTabChange}
-              ref={headerHeight}
-            />
-          )}
-          {!isNeedlessHeader && <Header ref={headerHeight} />}
+    <div className={`app-container`}>
+      <div className={`main-app-content`}>
+        <LegalPopup />
 
-          {!isNeedlessNav && (
-            <CartCountProvider>
-              <Navbar ref={navHeight} />
-            </CartCountProvider>
-          )}
-          {/* --!! */}
+        <Routes>
 
-          {/* Remove BrowserRouter by Phan NT Son */}
-          <Routes>
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/game/:gameId" element={<Detail />} />
-            <Route path="/game" element={<List />}></Route>
-            {/* hoangvq */}
-            <Route path="/aprrovegame" element={<AprroveF />}></Route>
-            <Route
-              path="/aprrovegame/:gameId"
-              element={<ApproveDetailsF />}
-            ></Route>
-            <Route path="/sendgame" element={<RequestAddGame />}></Route>
-            {/* hoangvq */}
-            <Route path="/login" element={<LoginF />} />
-            <Route
-              path="/forgot-password"
-              element={<ForgotPasswordRequest />}
-            />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/change-password" element={<ChangePassword />} /> {/* Added by Loc Phan */}
-            <Route path="/oauth2/callback" element={<OAuth2RedirectHandler />} /> {/* Added by Loc Phan */}
-            <Route path="/register" element={<RegisterF />} />
-            <Route path="/verify-email" element={<VerifyEmail />} />{" "}
-            {/* Added by Loc Phan */}
-            <Route path="/register-details" element={<RegisterDetailsF />} />
-            <Route path="/community" element={<Community />} /> {/* Added by Loc Phan */}
-            <Route path="/community/threads/:threadId" element={<ThreadDetailPage />} /> {/* Added by Loc Phan */}
-            <Route path="/account/history" element={<Transaction />} />
-            <Route
-              path="/account/history/detail/:transactionId"
-              element={<TransactionDetail />}
-            />
-            <Route
-              path="/cart"
-              element={<Cart minHeight={calculatedHeight} />}
-            />
-            <Route path="/library" element={<Library />} />
-            {/*adjusted by Bathanh - 15/6/2025 2:03PM */}
-            <Route
-              path="/notifications"
-              element={<NotifPage minimumHeight={calculatedHeight} />}
-            />
-            <Route path="/admin" element={<AdminDashboard tab={adminTab} />} />{" "}
-            {/* Added by Phan NT Son */}
-            {/* hoangvq */}
-            <Route
-              path="/sendpublisher"
-              element={
-                <SendPublisher publiserId={localStorage.getItem("userId")} />
-              }
-            ></Route>
-            <Route
-              path="/approvepublisher"
-              element={<ApprovePublisher />}
-            ></Route>
-            <Route
-              path="/approvepublisher/:publisherId"
-              element={<ApprovePublisherDetails />}
-            ></Route>
-            <Route path="/sendfeedback" element={<SendFeedback />}></Route>
-            <Route
-              path="/approvefeedback"
-              element={<ApproveFeedback />}
-            ></Route>
-            <Route
-              path="/approvefeedback/:feedbackId"
-              element={<ApproveFeedbackDetails />}
-            ></Route>
-            <Route
-              path="/feedbackhub/:feedbackId"
-              element={<UserFeedbackDetails />}
-            ></Route>
-            <Route path="/feedbackhub" element={<FeeedbackHub />}></Route>
-            {/* hoangvq */}
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/profile/:userId" element={<ProfilePage />} />
-            {/* Added by TSHUY */}
-            {/* TSHUY */}
-            <Route
-              path="/profile/:userId/edit/info"
-              element={<EditProfilePage />}
-            />
-            <Route
-              path="/profile/:userId/edit/avatar"
-              element={<AvatarSettings />}
-            />
-            {/* Added by TSHUY */}
-            {/* Notmebro */}
+          {/* 404 - Error page */}
+          <Route path="*" element={<ErrorPage />} />
+
+          {/* Main user area */}
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/game" element={<List />} />
+            <Route path="/game/:gameId" element={<GameDetail />} />
+            <Route path="/cart" element={<Cart />} />
             <Route path="/account/wallet" element={<Wallet />} />
-            <Route path="/chat" element={<Chat />} />
+            <Route path="/terms-of-use" element={<TermsOfUse />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/contact" element={<Contact />} />
+
+            {/* fallback */}
+          </Route>
+
+          {/* Chat (full-screen) */}
+          <Route path="/chat" element={<ChatLayout />}>
+            <Route index element={<ChatPage />} />
+          </Route>
+
+          {/* User Profile and related Pages */}
+          <Route element={<ProfileLayout />}>
+            <Route path="/profile/friends" element={<FriendsPageContainer />} />
+            <Route path="/sendfeedback" element={<SendUserFeedback />} />
+            <Route path="/account/history" element={<Transaction />} />
+            <Route path="/apply-publisher" element={<ApplyToPublisher />} />
+            <Route path="/notifications" element={<NotifPage />} />
+            <Route path="/library" element={<Library />} />
+            <Route path="/sendgame" element={<RequestAddGame />} />
+            <Route path="/profile/:userId/edit/avatar" element={<AvatarSettings />} />
             <Route path="/account" element={<AccountDetailsPage />} />
             <Route path="/payment-result" element={<PaymentResultPage />} />
-            <Route
-              path="/profile/friends"
-              element={<Friends minimumHeight={calculatedHeight} />}
-            />
-            <Route
-              path="/change-email"
-              element={<EmailSettings currentUser={currentUser} />}
-            />
-          </Routes>
-        </div>
-        {!isNeedlessFooter && <Footer ref={footerHeight} />}
+            <Route path="/change-email" element={<EmailSettings currentUser={currentUser} />} />
+            <Route path="/profile/:userId/edit/info" element={<EditProfilePage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/profile/:userId" element={<ProfilePage />} />
+            <Route path="/sendpublisher" element={<SendPublisher publiserId={localStorage.getItem("userId")} />} />
+            <Route path="feedbackhub" element={<FeedbackHub />}></Route>
+            <Route path="feedbackhub/:feedbackId" element={<UserFeedbackDetails />} />
+            <Route path="/account/history/detail/:transactionId" element={<TransactionDetail />} />
+            <Route path="/register" element={<RegisterF />} />
+            <Route path="/register-details" element={<RegisterDetailsF />} />
+            <Route path="/login" element={<LoginF />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/forgot-password" element={<ForgotPasswordRequest />} />
+            <Route path="/change-password" element={<ChangePassword />} />
+            <Route path="/oauth2/callback" element={<OAuth2RedirectHandler />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/community/threads/:threadId" element={<ThreadDetailPage />} />
+          </Route>
+
+          {/* Admin area */}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="request/:tab?" element={<RequestSection />} />
+            <Route path="request/publisher/detail/:requestId" element={<PublisherApproveDetails />} />
+            <Route path="request/feedback/detail/:requestId" element={<FeedbackApproveDetails />} />
+            <Route path="request/game/detail/:requestId" element={<GameApproveDetails />} />
+
+          </Route>
+
+        </Routes>
+
       </div>
     </div>
   );
 }
-function AprroveF() {
-  return <GameApprrovePage />;
-}
-function ApproveDetailsF() {
-  return <GameApproveDetails />;
-}
+
 function SendPublisher() {
   return <ApplyToPublisher publisherId={localStorage.getItem("userId")} />;
 }
-function ApprovePublisher() {
-  return <PublisherApprovePage />;
-}
-function ApprovePublisherDetails() {
-  return <PublisherApproveDetails />;
-}
-function SendFeedback() {
-  return <SendUserFeedback />;
-}
-function ApproveFeedback() {
-  return <FeedbackApprovePage />;
-}
-function ApproveFeedbackDetails() {
-  return <FeedbackApproveDetails />;
-}
+
 function UserFeedbackDetails() {
   return <UserFeedback />;
 }
-function FeeedbackHub() {
-  return <FeedbackHub />;
-}
+
 function LoginF() {
-  return <Login />;
+  return (
+    <div className="container-fluid py-3"
+      style={{
+        background: "radial-gradient(rgba(24, 26, 33, 0) 0%, #181A21 100%) fixed no-repeat, url(https://cdnphoto.dantri.com.vn/4ydXR7ZhWF5ViH60xAFvBolm3JQ=/2021/02/01/khu-cach-ly-dai-hoc-fpt-13-1612154602281.jpg) center center no-repeat, #181A21"
+      }}
+
+    >
+      <div className="row">
+        <div className="spacer col-lg-4"></div>
+        <div className="col-lg-4">
+          <Login />
+        </div>
+        <div className="spacer col-lg-4"></div>
+      </div>
+    </div>
+  );
 }
 function RegisterF() {
   return <RegisterEmail />;
@@ -344,17 +221,8 @@ function RegisterDetailsF() {
   return <RegisterDetails />;
 }
 function RequestAddGame() {
-  return (
-    <div>
-      <SendGameToAdmin />
-    </div>
-  );
+  return <div><SendGameToAdmin /></div>;
 }
-/**
- * Adjust by @author Phan NT Son
- * @since 17-06-2025
- * @returns
- */
 function List() {
   return (
     <div className="container-fluid">
@@ -367,28 +235,7 @@ function List() {
     </div>
   );
 }
-/**
- * @author Phan NT Son
- * @since 15-06-2025
- * @returns
- */
-function Detail() {
-  return <GameDetail />;
-}
-function NotFound() {
-  return (
-    <div className="app-container">
-      <div className="page-content-constrained-wrapper">
-        <h1>404 - Not Found</h1>
-        <p>The page you are looking for does not exist.</p>
-        <Link to="/">Go back to Home</Link>
-      </div>
-    </div>
-  );
-}
-function Home() {
-  return <HomePage />;
-}
+
 
 function Wallet() {
   return (
@@ -401,11 +248,10 @@ function Wallet() {
   );
 }
 
-function NotifPage({ minimumHeight }) {
+function NotifPage() {
   return (
     <div
-      className="container-fluid"
-      style={{ minHeight: `${minimumHeight}px` }}
+      className="container-fluid h-100"
     >
       <div className="row">
         <div className="spacer col-lg-2"></div>
@@ -417,30 +263,16 @@ function NotifPage({ minimumHeight }) {
 
 /**
  * @author Phan NT Son
- * @since 22-06-2025
- * @returns
- */
-function Chat() {
-  return (
-    <div>
-      <ChatPage />
-    </div>
-  );
-}
-
-/**
- * @author Phan NT Son
  * @since 23-06-2025
  * @returns
  */
-function Friends({ minimumHeight }) {
+function FriendsPageContainer() {
   return (
     <div
-      className="container-fluid"
+      className="container-fluid h-100"
       style={{
         background:
           "url(https://community.fastly.steamstatic.com/public/images/friends/colored_body_top2.png?v=2) center top no-repeat #1b2838",
-        minHeight: `${minimumHeight}px`,
       }}
     >
       <div className="row">
@@ -455,10 +287,12 @@ function Friends({ minimumHeight }) {
 
 export default function App() {
   return (
-    <OnlineUserProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
-    </OnlineUserProvider>
+    <AuthProvider>
+      <AppProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </AppProvider>
+    </AuthProvider>
   );
 }

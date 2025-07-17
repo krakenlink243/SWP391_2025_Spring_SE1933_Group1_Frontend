@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Link } from "react-router-dom";
-import "./Cart.css";
-import { isTokenExpired } from "../../utils/validators";
+import './Cart.css';
+import { isTokenExpired } from '../../utils/validators';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
-const userId = localStorage.getItem("userId");
-const CUR_TOKEN = localStorage.getItem("token");
 
-const Cart = ({ minHeight }) => {
-  if (!userId) {
-    window.location.href = "/";
-  }
+const Cart = () => {
+  const { token: CUR_TOKEN } = useAuth();
+  const navigate = useNavigate();
+
+
 
   const [cartItems, setCartItems] = useState([]);
   const [balance, setBalance] = useState(0);
@@ -24,25 +25,6 @@ const Cart = ({ minHeight }) => {
     gameName: "",
   });
 
-  useEffect(() => {
-    if (CUR_TOKEN && !isTokenExpired()) {
-      axios.get(`${import.meta.env.VITE_API_URL}/user/wallet`)
-        .then(response => {
-          console.log('Wallet API response:', response.data);
-          setBalance(Number(response.data) || 0);
-        })
-        .catch((error) => {
-          console.error(
-            "Error fetching wallet balance:",
-            error.message,
-            error.response?.status,
-            error.response?.data
-          );
-          setBalance(0);
-        });
-    }
-  }, []);
-
   const fetchCart = async () => {
     setLoading(true);
     try {
@@ -53,7 +35,7 @@ const Cart = ({ minHeight }) => {
       } else {
         setCartItems([]);
       }
-    } catch {
+    } catch (error) {
       setCartItems([]);
     } finally {
       setLoading(false);
@@ -66,13 +48,19 @@ const Cart = ({ minHeight }) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (!CUR_TOKEN || isTokenExpired()) {
+      navigate("/");
+    }
+  }, [])
+
   const handleRemove = async (gameId) => {
     setLoading(true);
     try {
       await axios.delete(`${import.meta.env.VITE_API_URL}/user/cart/remove?gameId=${gameId}`);
       await fetchCart();
     } catch (error) {
-      console.error("Error removing game:", error);
+      console.error('Error removing game:', error);
     } finally {
       setLoading(false);
     }
@@ -82,30 +70,28 @@ const Cart = ({ minHeight }) => {
     setShowConfirmModal(false);
     setLoading(true);
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/user/cart/checkout`
-      );
-      if (!response.data.success) throw new Error("Purchase failed!");
-      setResultMessage("Purchase successful!");
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/user/cart/checkout`);
+      if (!response.data.success) throw new Error('Purchase failed!');
+      setResultMessage('Purchase successful!');
       setCartItems([]);
       await fetchCart();
       const userRes = await axios.get(`${import.meta.env.VITE_API_URL}/user/wallet`);
       setBalance(Number(userRes.data) || 0);
       setShowResultModal(true); // chỉ hiển thị modal khi thành công
-    } catch {
+    } catch (error) {
       if (parseFloat(total) > balance) {
         const params = {
           amount: total,
           language: "en",
         };
         const response = await axios.post(
-          `http://localhost:8080/api/v1/payments/create-vnpay-payment`,
+          `${import.meta.env.VITE_API_URL}/api/v1/payments/create-vnpay-payment`,
           null,
           { params: params }
         );
         const { paymentUrl } = response.data;
         if (paymentUrl) {
-          window.location.href = paymentUrl; // Chuyển hướng đến cổng thanh toán
+          navigate(paymentUrl);
         }
       } else {
         alert("Purchase failed due to an unknown error.");
@@ -130,12 +116,10 @@ const Cart = ({ minHeight }) => {
     closeRemoveConfirm();
   };
 
-  const total = cartItems
-    .reduce((sum, item) => sum + (item.price || 0), 0)
-    .toFixed(2);
+  const total = cartItems.reduce((sum, item) => sum + (item.price || 0), 0).toFixed(2);
 
   return (
-    <div className="cart-steam-bg" style={{ minHeight: `${minHeight}px` }}>
+    <div className="cart-steam-bg h-100">
       <div className="cart-main-steam">
         <h2 className="cart-title-steam">Your Shopping Cart</h2>
         <div className="cart-list-steam">
@@ -148,32 +132,24 @@ const Cart = ({ minHeight }) => {
               {cartItems.map((item) => (
                 <div className="cart-item-steam" key={item.id}>
                   <div className="cart-item-image">
-                    <img
-                      className="library-game-image"
-                      src={
-                        item.imageUrl ||
-                        "https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg"
-                      }
-                      alt={item.title || "Unnamed Game"}
-                    />
+                    <div className='media-with-caption'>
+                      <img
+                        className="library-game-image"
+                        src={item.imageUrl || "https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg"}
+                        alt={item.title || 'Unnamed Game'}
+                      />
+                    </div>
                   </div>
-                  <div className="cart-item-title">
-                    {item.title || "Unnamed Game"}
-                  </div>
+                  <div className="cart-item-title">{item.title || 'Unnamed Game'}</div>
                   <div className="cart-item-price-container">
                     <span className="cart-item-price">
-                      $
-                      {item.discountPrice > 0
-                        ? item.discountPrice.toFixed(2)
-                        : item.price?.toFixed(2) || "0.00"}
+                      ${item.discountPrice > 0 ? item.discountPrice.toFixed(2) : item.price?.toFixed(2) || '0.00'}
                     </span>
                   </div>
                   <div className="cart-item-remove">
                     <button
                       className="cart-item-remove-btn"
-                      onClick={() =>
-                        openRemoveConfirm(item.id, item.title || "Unnamed Game")
-                      }
+                      onClick={() => openRemoveConfirm(item.id, item.title || 'Unnamed Game')}
                       title="Remove"
                       disabled={loading}
                     >
@@ -194,9 +170,7 @@ const Cart = ({ minHeight }) => {
           )}
           {cartItems.length > 0 && (
             <div className="cart-btns-steam">
-              <Link className="cart-btn-steam" to="/game">
-                Continue Shopping
-              </Link>
+              <Link className="cart-btn-steam" to="/game">Continue Shopping</Link>
               <button
                 className="cart-btn-steam cart-btn-blue-steam"
                 onClick={() => setShowConfirmModal(true)}
@@ -215,19 +189,8 @@ const Cart = ({ minHeight }) => {
             <h3>Confirm Purchase</h3>
             <p>Are you sure you want to purchase all games in your cart?</p>
             <div className="cart-modal-btns-steam">
-              <button
-                onClick={() => setShowConfirmModal(false)}
-                className="cart-btn-steam"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleCheckout}
-                className="cart-btn-steam cart-btn-blue-steam"
-                disabled={loading}
-              >
-                Confirm
-              </button>
+              <button onClick={() => setShowConfirmModal(false)} className="cart-btn-steam">Cancel</button>
+              <button onClick={handleCheckout} className="cart-btn-steam cart-btn-blue-steam" disabled={loading}>Confirm</button>
             </div>
           </div>
         </div>
@@ -254,21 +217,10 @@ const Cart = ({ minHeight }) => {
         <div className="cart-modal-steam">
           <div className="cart-modal-content-steam">
             <h3>Remove Game</h3>
-            <p>
-              Are you sure you want to remove{" "}
-              <b>{removeConfirm.gameName || "Unnamed Game"}</b> from your cart?
-            </p>
+            <p>Are you sure you want to remove <b>{removeConfirm.gameName || 'Unnamed Game'}</b> from your cart?</p>
             <div className="cart-modal-btns-steam">
-              <button onClick={closeRemoveConfirm} className="cart-btn-steam">
-                Cancel
-              </button>
-              <button
-                onClick={confirmRemove}
-                className="cart-btn-steam cart-btn-blue-steam"
-                disabled={loading}
-              >
-                Remove
-              </button>
+              <button onClick={closeRemoveConfirm} className="cart-btn-steam">Cancel</button>
+              <button onClick={confirmRemove} className="cart-btn-steam cart-btn-blue-steam" disabled={loading}>Remove</button>
             </div>
           </div>
         </div>

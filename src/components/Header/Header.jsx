@@ -1,12 +1,12 @@
-import React, { useState, useEffect, forwardRef } from "react";
+import React, { useState, useEffect, forwardRef, useContext } from "react";
 import "./Header.css"; // Or use CSS Modules: import styles from './Header.module.css';
 // Added by Phan NT Son
 import NotificationBox from "../Notifications/NotificationBox";
 import UserDropBox from "./UserDropBox";
 import axios from "axios";
 import { useLocation } from "react-router";
-import { isTokenExpired } from "../../utils/validators";
-import { NotificationProvider } from "../../services/notification";
+import { Link } from "react-router-dom";
+import { AppContext } from "../../context/AppContext";
 
 /**
  * @author Origin belongs to TS Huy
@@ -21,17 +21,20 @@ const Header = forwardRef((props, ref) => {
   const location = useLocation();
   const CUR_PATHNAME = location.pathname;
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const activePathMap = [
     {
       index: 0, // STORE
-      paths: [
-        "/",
-        "/game",
-        "/cart",
-        "/library",
-        "/account",
-        "/account/wallet",
-      ],
+      paths: ["/", "/game", "/cart", "/library", "/account", "/account/wallet"],
     },
     {
       index: 1, // COMMUNITY
@@ -44,7 +47,7 @@ const Header = forwardRef((props, ref) => {
         "/profile/friends",
         "/profile/:userId/edit/info",
         "/profile/:userId/edit/avatar",
-        "/notifications"
+        "/notifications",
       ],
     },
     {
@@ -59,18 +62,12 @@ const Header = forwardRef((props, ref) => {
         "/feedbackhub/:feedbackId",
         "/sendfeedback",
         "/approvefeedback",
-        "/approvefeedback/:feedbackId"
+        "/approvefeedback/:feedbackId",
       ],
     },
     {
       index: 5, // ADMIN
-      paths: [
-        "/admin",
-        "/aprrovegame",
-        "/aprrovegame/:gameId",
-        "/approvepublisher",
-        "/approvepublisher/:publisherId"
-      ],
+      paths: ["/admin"],
     },
   ];
 
@@ -92,69 +89,94 @@ const Header = forwardRef((props, ref) => {
 
   const isActive = (index) => currentIndex === index;
 
-
-
   /**
    * @author Bathanh
    *add methods allows to get user balance from backend
    *create a separate api for wallet balance
    * @returns user balance
    */
-  const [balance, setBalance] = useState(0);
-  useEffect(() => {
-    const getUserBalance = () => {
-      axios
-        .get(`${import.meta.env.VITE_API_URL}/user/wallet`)
-        .then((response) => setBalance(response.data))
-        .catch((error) => alert(error));
-    };
-    if (token && !isTokenExpired()) {
-      getUserBalance();
-    }
-  }, []);
-
+  const { walletBalance } = useContext(AppContext);
 
   return (
     <div className="container-fluid" ref={ref}>
       <div className="header row">
         <div className={`col-lg-${section[0]}`}></div>
         <div
-          className={`header-logo col-lg-${section[1]} align-content-center`}
+          className={`header-logo col-sm-4 col-lg-${section[1]} align-content-center`}
         >
-          <a href="/">
+          <Link to={"/"}>
             <img
-              src="/logo_steam.svg"
-              alt="Steam Logo"
+              src="/Centurion.svg"
+              alt="Centurion Logo"
               className="logo w-100"
             />
-          </a>
+          </Link>
         </div>
         <div className={`header-nav col-lg-${section[2]}`}>
-          <a className={`header-nav-item ${isActive(0) ? "active" : ""}`} href="/">STORE</a>
-          <a className={`header-nav-item ${isActive(1) ? "active" : ""}`} href="#">COMMUNITY</a>
+          <Link
+            className={`header-nav-item ${isActive(0) ? "active" : ""}`}
+            to="/"
+          >
+            STORE
+          </Link>
+          <Link
+            className={`header-nav-item ${isActive(1) ? "active" : ""}`}
+            to={"#"}
+          >
+            COMMUNITY
+          </Link>
+
           {username && (
             <div className="nav-user-dropdown-wrapper">
-              <a className={`header-nav-item ${isActive(2) ? "active" : ""}`} href="/profile">{username}</a>
+              <Link
+                className={`header-nav-item ${isActive(2) ? "active" : ""}`}
+                to="/profile"
+              >
+                {username}
+              </Link>
               <div className="nav-box-dropdown">
-                <a className="submenuitem" href="/profile">Profile</a>
-                <a className="submenuitem" href="/profile/friends">Friends</a>
+                <Link className="submenuitem" to="/profile">
+                  Profile
+                </Link>
+                <Link className="submenuitem" to="/profile/friends">
+                  Friends
+                </Link>
               </div>
             </div>
           )}
 
-          <a className={`header-nav-item ${isActive(3) ? "active" : ""}`} href={token && '/chat'}>{token ? "CHAT" : "ABOUT"}</a>
-          {role != 'Admin' && <a className={`header-nav-item ${isActive(4) ? "active" : ""}`} href="/feedbackhub">Support</a>}
-          {role === 'Admin' && <a className={`header-nav-item ${isActive(5) ? "active" : ""}`} href="/aprrovegame">ADMIN TOOLS</a>}
+          <Link
+            className={`header-nav-item ${isActive(3) ? "active" : ""}`}
+            to={token ? "/chat" : "#"}
+          >
+            {token ? "CHAT" : "ABOUT"}
+          </Link>
+          {role != "Admin" && (
+            <Link
+              className={`header-nav-item ${isActive(4) ? "active" : ""}`}
+              to="/feedbackhub"
+            >
+              Support
+            </Link>
+          )}
+          {role === "Admin" && (
+            <Link
+              className={`header-nav-item ${isActive(5) ? "active" : ""}`}
+              to="/admin"
+            >
+              ADMIN TOOLS
+            </Link>
+          )}
         </div>
         <div className={`header-user-action col-lg-${section[3]}`}>
           {!token ? (
             <>
               <div className="header-user-action-content d-flex flex-column align-items-end w-100 p-2">
                 <div className="user-action-content">
-                  <a href="/login" className="border-end">
+                  <Link className="border-end" to="/login">
                     Login
-                  </a>
-                  <a href="/register">Register</a>
+                  </Link>
+                  <Link to="/register">Register</Link>
                 </div>
               </div>
             </>
@@ -162,28 +184,24 @@ const Header = forwardRef((props, ref) => {
             <>
               <div className="header-user-action-content d-flex flex-column align-items-end w-75 gap-2">
                 <div className="user-action-content">
-
                   <div className="w-25">
-                    <NotificationProvider>
-                      <NotificationBox />
-
-                    </NotificationProvider>
+                    <NotificationBox />
                   </div>
                   <div className="w-50 px-2 d-flex flex-row-reverse">
-
-                    <UserDropBox userBalance={balance} />
-
+                    <UserDropBox userBalance={walletBalance} />
                   </div>
                 </div>
                 <div className="user-wallet w-100">
-                  {balance.toLocaleString("en-US", {
+                  {walletBalance.toLocaleString("en-US", {
                     style: "currency",
                     currency: "USD",
                   })}
                 </div>
               </div>
               <div className="header-user-action-icon w-25">
-                <a href="/profile"><img src={localStorage.getItem("avatarUrl")}></img></a>
+                <Link to="/profile">
+                  <img src={localStorage.getItem("avatarUrl")}></img>
+                </Link>
               </div>
             </>
           )}

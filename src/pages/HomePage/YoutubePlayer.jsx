@@ -1,6 +1,5 @@
 import React from "react";
-import "./YouTubePlayer.css"; // File CSS riêng cho component này
-
+import "./YoutubePlayer.css"; // Assuming you have some styles for the player
 const YouTubePlayer = ({ videoId, title }) => {
   if (!videoId) {
     return <div>Video ID is missing.</div>;

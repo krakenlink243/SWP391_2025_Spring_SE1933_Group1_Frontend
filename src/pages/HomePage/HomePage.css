@@ -4,16 +4,22 @@
     height: 46vw;
   }
 } */
-.video-banner {
-  width: 100%;
-  height: auto;
-  max-width: 100%;
-  border-radius: 4px;
-}
 .homepage-content {
   width: 100%;
 }
-
+.section-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+.topbanner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  display: block;
+  
+}
 .top-promo-banner,
 .bottom-promo-banner {
   margin-bottom: 20px;
