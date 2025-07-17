@@ -38,7 +38,7 @@ const Header = forwardRef((props, ref) => {
     },
     {
       index: 1, // COMMUNITY
-      paths: ["/community"], // Giữ chỗ nếu sau này mở rộng
+      paths: ["/community", "/community/threads/:threadId"], // Giữ chỗ nếu sau này mở rộng
     },
     {
       index: 2, // PROFILE
@@ -121,7 +121,7 @@ const Header = forwardRef((props, ref) => {
           </Link>
           <Link
             className={`header-nav-item ${isActive(1) ? "active" : ""}`}
-            to={"#"}
+            to={"/community"}
           >
             COMMUNITY
           </Link>

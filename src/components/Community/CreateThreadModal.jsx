@@ -38,8 +38,8 @@ export default function CreateThreadModal({ isOpen, onClose }) {
                     onChange={(e) => setContent(e.target.value)}
                 />
                 <div className="flex justify-end gap-2">
-                    <button onClick={onClose} className="px-4 py-2 text-gray-600">Cancel</button>
-                    <button onClick={handleSubmit} className="px-4 py-2 bg-blue-600 text-white rounded">
+                    <button onClick={onClose} style={{backgroundColor:'red', color: 'black', margin: '0 4px'}} className="px-4 py-2 text-gray-600 rounded">Cancel</button>
+                    <button onClick={handleSubmit} style={{backgroundColor: 'blue', color: 'white', margin: '0 4px'}} className="px-4 py-2 bg-blue-600 text-white rounded">
                         Post
                     </button>
                 </div>
