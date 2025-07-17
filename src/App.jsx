@@ -20,6 +20,8 @@ import PaymentResultPage from "./components/Payment/PaymentResultPage";
 import { Contact } from "./pages/PolicyPage/Contact";
 import { PrivacyPolicy } from "./pages/PolicyPage/PrivacyPolicy";
 import { TermsOfUse } from "./pages/PolicyPage/TermsOfUse";
+import GameManagement from "./pages/Publisher/GameManagement/GameManagement";
+import UpdateGame from "./pages/UpdateGame";
 
 // Profile & User Pages
 import Transaction from "./pages/TransactionPage/Transaction";
@@ -137,6 +139,7 @@ function AppRoutes() {
           <Route element={<ProfileLayout />}>
             <Route path="/profile/friends" element={<FriendsPageContainer />} />
             <Route path="/sendfeedback" element={<SendUserFeedback />} />
+            <Route path="/publisher/game-management/:tab?" element={<GameManagement />} />
             <Route path="/account/history" element={<Transaction />} />
             <Route path="/apply-publisher" element={<ApplyToPublisher />} />
             <Route path="/notifications" element={<NotifPage />} />
@@ -161,7 +164,9 @@ function AppRoutes() {
             <Route path="/change-password" element={<ChangePassword />} />
             <Route path="/oauth2/callback" element={<OAuth2RedirectHandler />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
-
+            <Route path="/update-game/:gameId" element={<UpdateGame />} />
+            <Route path="/edit-game/:requestId" element={<UpdateGame />} />
+            <Route path="publisher/game/detail/:requestId" element={<GameApproveDetails />} />
           </Route>
 
           {/* Admin area */}
@@ -171,7 +176,6 @@ function AppRoutes() {
             <Route path="request/publisher/detail/:requestId" element={<PublisherApproveDetails />} />
             <Route path="request/feedback/detail/:requestId" element={<FeedbackApproveDetails />} />
             <Route path="request/game/detail/:requestId" element={<GameApproveDetails />} />
-
           </Route>
 
         </Routes>

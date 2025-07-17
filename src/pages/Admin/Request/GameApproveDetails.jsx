@@ -243,10 +243,12 @@ function GameApproveDetails() {
             <Button className='upload-button' label="Download Game File" onClick={handleGetLinkDownload} color='blue-button'/>
           </a>
         </div>
-        <div className='send-request-cancel'>
-          <Button className='cancel-button' label='Decline' onClick={handleDecline} color={'red-button'} />
-          <Button className='send-button' label='Approve' isApprove={'true'} onClick={handleApprove} color='green-button' />
-        </div>
+        {localStorage.getItem("role") !== "Publisher" && (
+          <div className='send-request-cancel'>
+            <Button className='cancel-button' label='Decline' onClick={handleDecline} color='red-button' />
+            <Button className='send-button' label='Approve' isApprove='true' onClick={handleApprove} color='green-button' />
+          </div>
+        )}
       </div>
     </>
   )
