@@ -5,16 +5,14 @@ import { AppContext } from "../../context/AppContext";
 import Split from "split.js";
 import { Link } from "react-router-dom";
 
-function ChatBodyLeft({ setCurChat }) {
+function ChatBodyLeft({ setCurChat, setOpenPopup, friendList, groupChats }) {
     const avatarUrl = localStorage.getItem("avatarUrl");
     const username = localStorage.getItem("username");
 
-    const [friendList, setFriendList] = useState([]);
-    const [groupChats, setGroupChats] = useState([]);
+
 
     const headerH = useRef(null);
     const footerH = useRef(null);
-
     const [listH, setListH] = useState("100%");
 
     // Get from context ↓
@@ -24,10 +22,6 @@ function ChatBodyLeft({ setCurChat }) {
     const onlineFriends = friendList.filter(f => onlineUsers.includes(f.friendName));
     const offlineFriends = friendList.filter(f => !onlineUsers.includes(f.friendName));
 
-    useEffect(() => {
-        getFriendList();
-        getGroupChatList();
-    }, [])
 
     useEffect(() => {
         const updateHeights = () => {
@@ -54,17 +48,8 @@ function ChatBodyLeft({ setCurChat }) {
         return () => instance.destroy();
     }, []);
 
-    const getFriendList = () => {
-        axios.get(`${import.meta.env.VITE_API_URL}/user/friends`)
-            .then((response) => { setFriendList(response.data) })
-            .catch((err) => { console.log("Error fetching friends list: " + err) })
-    };
 
-    const getGroupChatList = () => {
-        axios.get(`${import.meta.env.VITE_API_URL}/user/groupchat`)
-            .then((response) => { setGroupChats(response.data.data) })
-            .catch((err) => { console.log("Error: ", err) })
-    }
+
 
     return (
         <div id="left-pane" className="friends-list-container bg-light h-100">
@@ -93,7 +78,7 @@ function ChatBodyLeft({ setCurChat }) {
                                 Friends
                                 <div className="icon">
                                     <Link to={"/profile/friends"}>
-                                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" class="SVGIcon_Button SVGIcon_AddFriend" x="0px" y="0px" width="256px" height="256px" viewBox="0 0 256 256"><g class="friendHead" transform="matrix(1.34048,0,0,1.34048,-10.0942,-5.50445)"><circle cx="86.296" cy="47.419" r="33.526" fill="currentcolor"></circle></g><path class="friendBody" d="M100.353,170.882c0-23.589,10.397-44.736,26.842-59.152c-3.352-0.423-6.773-0.649-10.257-0.649H94.231	c-39.775,0-56.481,28.271-56.481,63.099v41.88c0,0-0.3,16.369,35.917,21.813c36.217,5.444,73.651,5,73.651,5 C119.666,230.681,100.353,203.044,100.353,170.882z" fill="currentColor"></path><path class="plusCircle" d="M179.01,103.892c-36.998,0-66.99,29.992-66.99,66.99s29.994,66.989,66.99,66.989c36.997,0,66.99-29.991,66.99-66.989 S216.008,103.892,179.01,103.892z M217.893,175.882h-33.647v33.882c0,2.762-2.239,5-5,5s-5-2.238-5-5v-33.882h-33.647 c-2.762,0-5-2.238-5-5c0-2.763,2.238-5,5-5h33.647V132.47c0-2.762,2.239-5,5-5s5,2.238,5,5v33.412h33.647c2.762,0,5,2.237,5,5 C222.893,173.643,220.654,175.882,217.893,175.882z" fill="currentColor"></path></svg>
+                                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" className="SVGIcon_Button SVGIcon_AddFriend" x="0px" y="0px" width="256px" height="256px" viewBox="0 0 256 256"><g className="friendHead" transform="matrix(1.34048,0,0,1.34048,-10.0942,-5.50445)"><circle cx="86.296" cy="47.419" r="33.526" fill="currentcolor"></circle></g><path className="friendBody" d="M100.353,170.882c0-23.589,10.397-44.736,26.842-59.152c-3.352-0.423-6.773-0.649-10.257-0.649H94.231	c-39.775,0-56.481,28.271-56.481,63.099v41.88c0,0-0.3,16.369,35.917,21.813c36.217,5.444,73.651,5,73.651,5 C119.666,230.681,100.353,203.044,100.353,170.882z" fill="currentColor"></path><path className="plusCircle" d="M179.01,103.892c-36.998,0-66.99,29.992-66.99,66.99s29.994,66.989,66.99,66.989c36.997,0,66.99-29.991,66.99-66.989 S216.008,103.892,179.01,103.892z M217.893,175.882h-33.647v33.882c0,2.762-2.239,5-5,5s-5-2.238-5-5v-33.882h-33.647 c-2.762,0-5-2.238-5-5c0-2.763,2.238-5,5-5h33.647V132.47c0-2.762,2.239-5,5-5s5,2.238,5,5v33.412h33.647c2.762,0,5,2.237,5,5 C222.893,173.643,220.654,175.882,217.893,175.882z" fill="currentColor"></path></svg>
                                     </Link>
                                 </div>
                             </div>
@@ -133,16 +118,16 @@ function ChatBodyLeft({ setCurChat }) {
                         <div className="group-chat-wrapper">
                             <div className="wrapper-header">
                                 Group Chats
-                                <div className="icon">
-
+                                <div className="icon" onClick={() => setOpenPopup(true)}>
+                                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" className="SVGIcon_Button SVGIcon_AddFriend" x="0px" y="0px" width="256px" height="256px" viewBox="0 0 256 256"><g className="friendHead" transform="matrix(1.34048,0,0,1.34048,-10.0942,-5.50445)"><circle cx="86.296" cy="47.419" r="33.526" fill="currentcolor"></circle></g><path className="friendBody" d="M100.353,170.882c0-23.589,10.397-44.736,26.842-59.152c-3.352-0.423-6.773-0.649-10.257-0.649H94.231	c-39.775,0-56.481,28.271-56.481,63.099v41.88c0,0-0.3,16.369,35.917,21.813c36.217,5.444,73.651,5,73.651,5 C119.666,230.681,100.353,203.044,100.353,170.882z" fill="currentColor"></path><path className="plusCircle" d="M179.01,103.892c-36.998,0-66.99,29.992-66.99,66.99s29.994,66.989,66.99,66.989c36.997,0,66.99-29.991,66.99-66.989 S216.008,103.892,179.01,103.892z M217.893,175.882h-33.647v33.882c0,2.762-2.239,5-5,5s-5-2.238-5-5v-33.882h-33.647 c-2.762,0-5-2.238-5-5c0-2.763,2.238-5,5-5h33.647V132.47c0-2.762,2.239-5,5-5s5,2.238,5,5v33.412h33.647c2.762,0,5,2.237,5,5 C222.893,173.643,220.654,175.882,217.893,175.882z" fill="currentColor"></path></svg>
                                 </div>
                             </div>
                             {
-                                groupChats.map(group => {
+                                groupChats.map(group => (
                                     <div
                                         className="group"
-                                        key={group.groupChatId}
-                                        onClick={() => setCurChat({ type: 'group', id: group.groupChatId, name: group.groupName })}
+                                        key={group.groupId}
+                                        onClick={() => setCurChat({ type: 'group', id: group.groupId, name: group.groupName })}
                                     >
                                         <div className="group-avatar">
                                             <img src={""} alt={group.groupName} />
@@ -152,7 +137,7 @@ function ChatBodyLeft({ setCurChat }) {
                                             {group.groupName}
                                         </div>
                                     </div>
-                                })
+                                ))
                             }
                         </div>
                     </div>

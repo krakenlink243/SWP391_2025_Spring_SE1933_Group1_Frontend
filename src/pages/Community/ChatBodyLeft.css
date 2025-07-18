@@ -44,7 +44,7 @@
     transition-property: box-shadow, filter, transform;
     transition-duration: .24s, .16s;
     transition-timing-function: ease-in-out;
-    z-index: 100;
+    z-index: 10;
     position: relative;
     -webkit-app-region: no-drag;
     cursor: pointer;
@@ -118,14 +118,20 @@
     position: relative;
 }
 
-#middle-pane .wrapper-header .icon{
+#middle-pane .wrapper-header .icon {
     height: 100%;
     width: 25px;
     cursor: pointer;
 }
 
+#middle-pane .wrapper-header .icon a {
+    color: white;
+
+}
+
+
 .friend-list-content .friend-list-wrapper .friend,
-.friend-list-content .group-chat-wrapper .group {
+.group-chat-content .group-chat-wrapper .group {
     height: 38px;
     display: flex;
     flex-direction: row;
@@ -151,22 +157,26 @@
     background-color: rgba(0, 0, 0, .5);
 }
 
-.friend .friend-avatar {
+.friend .friend-avatar,
+.group .group-avatar {
     height: 36px;
     width: 36px;
 }
 
-.friend .friend-avatar img {
+.friend .friend-avatar img,
+.group .group-avatar img {
     height: 100%;
     width: 100%;
 }
 
-.friend .spacer {
+.friend .spacer,
+.group .spacer {
     width: 4px;
     height: 100%;
 }
 
-.friend .friend-name {
+.friend .friend-name,
+.group .group-name {
     overflow: hidden;
     text-overflow: ellipsis;
     width: calc(100% - 40px);
@@ -206,4 +216,6 @@
 
 .friends-list-container .group-chat-content {
     background: radial-gradient(ellipse farthest-corner at 20% 30%, #222b35 0%, #252e38 10%, #20242b 100%);
+    color: #a0a0a0;
+
 }
