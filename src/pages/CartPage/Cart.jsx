@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+  import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import './Cart.css';
@@ -91,7 +91,7 @@ const Cart = () => {
         );
         const { paymentUrl } = response.data;
         if (paymentUrl) {
-          navigate(paymentUrl);
+          window.location.href = paymentUrl;
         }
       } else {
         alert("Purchase failed due to an unknown error.");
