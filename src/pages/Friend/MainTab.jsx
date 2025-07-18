@@ -1,31 +1,19 @@
 
 import { useState, useEffect, useContext } from "react";
-import axios from "axios";
 import './MainTab.css'
 import { AppContext } from "../../context/AppContext";
 import { useNavigate } from "react-router-dom";
 
 function MainTab({ setCurTab }) {
-    const [friendList, setFriendList] = useState([]);
     // Get from context ↓
-    const { onlineUsers: online } = useContext(AppContext);
+    const { friendList, onlineUsers: online } = useContext(AppContext);
     const onlineUsers = online;
-    const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
     const navigate = useNavigate();
 
-    const getFriendList = () => {
-        axios.get(`${import.meta.env.VITE_API_URL}/user/friends`)
-            .then((response) => { setFriendList(response.data) })
-            .catch((err) => { console.log("Error fetching friends list: " + err) })
-    };
 
     const isOnline = (username) => {
         return onlineUsers.includes(username);
     }
-
-    useEffect(() => {
-        getFriendList();
-    }, [])
 
     return (
         <div className="main-tab">
@@ -54,7 +42,7 @@ function MainTab({ setCurTab }) {
                         >
                             <div className="friend-avatar">
                                 <img
-                                    src={friend.friendAvatarUrl ? friend.friendAvatarUrl : UNKNOW_AVATAR_URL}
+                                    src={friend.friendAvatarUrl}
                                     alt={friend.friendName}
                                 />
                             </div>

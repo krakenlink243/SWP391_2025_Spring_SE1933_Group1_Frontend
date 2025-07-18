@@ -8,7 +8,9 @@ export const AppContext = createContext({
     notification: [],
     walletBallance: 0,
     cartTotal: 0,
-    onlineUsers: []
+    onlineUsers: [],
+    friendList: [],
+    groupChats: []
 })
 
 export function AppProvider({ children }) {
@@ -19,8 +21,12 @@ export function AppProvider({ children }) {
     const [library, setLibrary] = useState([]);
     const [libraryLoading, setLibraryLoading] = useState(true);
 
+    const [friendList, setFriendList] = useState([]);
+    const [groupChats, setGroupChats] = useState([]);
+
     // const [CUR_TOKEN, setCUR_TOKEN] = useState(localStorage.getItem("token"));
     const { token: CUR_TOKEN } = useAuth();
+    const userId = localStorage.getItem("userId");
 
     useEffect(() => {
         if (!CUR_TOKEN || isTokenExpired())
@@ -55,6 +61,41 @@ export function AppProvider({ children }) {
                 .finally(() => {
                     setLibraryLoading(false);
                 })
+
+            // Initial Friends
+            axios.get(`${import.meta.env.VITE_API_URL}/user/friends`)
+                .then(r => setFriendList(r.data))
+                .catch(console.error);
+
+            // Initial GroupChats
+            axios.get(`${import.meta.env.VITE_API_URL}/user/groupchat`)
+                .then(r => setGroupChats(r.data.data))
+                .catch(console.error);
+
+            // --- Subscribe realtime friend events ---
+            SocketService.subscribe(
+                `/topic/friends.${userId}.added`,
+                newFriend => setFriendList(prev => [...prev, newFriend])
+            );
+
+            SocketService.subscribe(
+                `/topic/friends.${userId}.removed`,
+                removedId => {
+
+                    console.log("Removed friend:", removedId);
+                    setFriendList(prev => prev.filter(f => f.friendId !== removedId));
+                }
+            );
+
+            // --- Subscribe realtime group events ---
+            SocketService.subscribe(
+                `/topic/groups.${userId}.added`,
+                newGroup => setGroupChats(prev => [...prev, newGroup])
+            );
+            SocketService.subscribe(
+                `/topic/groups.${userId}.removed`,
+                removedGroupId => setGroupChats(prev => prev.filter(g => g.groupId !== removedGroupId))
+            );
 
 
             SocketService.subscribe('/user/queue/notification.unread', data => {
@@ -112,6 +153,11 @@ export function AppProvider({ children }) {
             SocketService.unsubscribe('/topic/online');
             SocketService.unsubscribe('/queue/cart.count');
             SocketService.unsubscribe('/user/queue/library.added');
+            // Unsubscribe friend & group channels
+            SocketService.unsubscribe(`/topic/friends/${userId}/added`);
+            SocketService.unsubscribe(`/topic/friends/${userId}/removed`);
+            SocketService.unsubscribe(`/topic/groups/${userId}/added`);
+            SocketService.unsubscribe(`/topic/groups/${userId}/removed`);
         };
     }, [CUR_TOKEN]);
 
@@ -124,7 +170,9 @@ export function AppProvider({ children }) {
                 cartTotal,
                 onlineUsers,
                 library,
-                libraryLoading
+                libraryLoading,
+                friendList,
+                groupChats
             }}>
             {children}
         </AppContext.Provider>

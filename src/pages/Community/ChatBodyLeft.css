@@ -125,13 +125,21 @@
 }
 
 #middle-pane .wrapper-header .icon a {
-    color: white;
+    color: #ccc;
+}
 
+#middle-pane .wrapper-header .icon svg {
+    fill: #b7ccd5;
+    stroke-width: 0px;
+}
+
+#middle-pane .wrapper-header .icon svg line {
+    stroke: #434953;
 }
 
 
-.friend-list-content .friend-list-wrapper .friend,
-.group-chat-content .group-chat-wrapper .group {
+
+.friend-list-content .friend-list-wrapper .friend {
     height: 38px;
     display: flex;
     flex-direction: row;
@@ -157,20 +165,17 @@
     background-color: rgba(0, 0, 0, .5);
 }
 
-.friend .friend-avatar,
-.group .group-avatar {
+.friend .friend-avatar {
     height: 36px;
     width: 36px;
 }
 
-.friend .friend-avatar img,
-.group .group-avatar img {
+.friend .friend-avatar img {
     height: 100%;
     width: 100%;
 }
 
-.friend .spacer,
-.group .spacer {
+.friend .spacer {
     width: 4px;
     height: 100%;
 }
@@ -218,4 +223,31 @@
     background: radial-gradient(ellipse farthest-corner at 20% 30%, #222b35 0%, #252e38 10%, #20242b 100%);
     color: #a0a0a0;
 
+}
+
+.group-chat-content .group-chat-wrapper .group {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    line-height: 20px;
+    padding-left: 12px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    align-items: center;
+}
+
+.group-chat-content .group-chat-wrapper .group:hover {
+    background-color: rgba(47, 56, 68, .5);
+}
+
+.group .group-avatar {
+    border-radius: 2px;
+    background-color: #0005;
+    border: 2px solid #535c68;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, .3);
+    width: 30px;
+    height: 30px;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin: 6px 3px 6px 6px;
 }

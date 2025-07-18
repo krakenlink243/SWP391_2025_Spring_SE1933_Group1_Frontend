@@ -1,58 +1,56 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import SocketService from '../services/SocketService';
 
 export function useConversation(token, curChat) {
   const [conversation, setConversation] = useState(null);
-  const [members, setMembers]           = useState([]);
-  const [messages, setMessages]         = useState([]);
+  const [members, setMembers] = useState([]);
+  const [messages, setMessages] = useState([]);
+
+  // <-- ref to hold the active subscription
+  const subscriptionRef = useRef(null);
 
   useEffect(() => {
     if (!token || !curChat) return;
 
-    // keep track of the active subscription id
-    let subscriptionId;
+    // 1) Unsubscribe from previous chat (if any)
+    if (subscriptionRef.current != null) {
+      SocketService.unsubscribe(subscriptionRef.current);
+      subscriptionRef.current = null;
+    }
 
-    // connect & subscribe
-    SocketService.connect(token, () => {
-      if (curChat.type === 'friend') {
-        // 1) REST fetch private history
-        axios.get(`${import.meta.env.VITE_API_URL}/user/conversation/${curChat.id}`)
-          .then(resp => {
-            setConversation(resp.data);
-            setMessages(resp.data.messages || []);
-          });
+    // 2) Fetch history
+    if (curChat.type === 'friend') {
+      axios.get(`${import.meta.env.VITE_API_URL}/user/conversation/${curChat.id}`)
+        .then(resp => {
+          setConversation(resp.data);
+          setMessages(resp.data.messages || []);
+        });
+    } else {
+      axios.get(`${import.meta.env.VITE_API_URL}/user/groupchat/${curChat.id}`)
+        .then(resp => {
+          setMembers(resp.data.data.members || []);
+          setMessages(resp.data.data.messages || []);
+        });
+    }
 
-        // 2) STOMP subscribe
-        subscriptionId = SocketService.subscribe(
-          `/user/queue/messages/${curChat.name}`,
-          msg => setMessages(prev => [...prev, msg])
-        );
+    // 3) Subscribe to new chat
+    const topic = curChat.type === 'friend'
+      ? `/user/queue/messages/${curChat.name}`
+      : `/topic/group/${curChat.id}/messages`;
 
-      } else {
-        // 1) REST fetch group history + members
-        axios.get(`${import.meta.env.VITE_API_URL}/user/groupchat/${curChat.id}`)
-          .then(resp => {
-            setMembers(resp.data.data.members || []);
-            setMessages(resp.data.data.messages || []);
-          });
-
-        // 2) STOMP subscribe
-        subscriptionId = SocketService.subscribe(
-          `/topic/group/${curChat.id}/messages`,
-          msg => setMessages(prev => [...prev, msg])
-        );
-      }
+    subscriptionRef.current = topic;
+    SocketService.subscribe(topic, msg => {
+      setMessages(prev => [...prev, msg]);
     });
 
-    // cleanup: unsubscribe & disconnect if no more subscriptions
+    // 4) Cleanup when curChat or token changes (or on unmount)
     return () => {
-      if (subscriptionId != null) {
-        SocketService.unsubscribe(subscriptionId);
+      if (subscriptionRef.current != null) {
+        SocketService.unsubscribe(subscriptionRef.current);
+        subscriptionRef.current = null;
       }
-      // optionally disconnect if you want to fully tear down:
-      // SocketService.disconnect();
-
+      // reset state
       setMessages([]);
       setConversation(null);
       setMembers([]);
@@ -64,18 +62,17 @@ export function useConversation(token, curChat) {
     if (curChat.type === 'friend') {
       SocketService.publish('/app/chat/private.send', {
         conversationId: conversation.conversationId,
-        senderId:       localStorage.getItem('userId'),
+        senderId: localStorage.getItem('userId'),
         receiverUsername: curChat.name,
         content,
       });
     } else {
       SocketService.publish('/app/chat/group.send', {
-        groupId:  curChat.id,
+        groupId: curChat.id,
         senderId: localStorage.getItem('userId'),
         content,
       });
     }
   };
-
   return { conversation, members, messages, sendMessages };
 }

@@ -1,21 +1,24 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Split from "split.js";
 import ChatBodyLeft from "./ChatBodyLeft";
 import ChatBodyRight from "./ChatBodyRight";
 import './ChatBody.css';
 import Button from "../../components/Button/Button";
 import axios from "axios";
+import { AppContext } from "../../context/AppContext";
+import GroupSettingPopup from "./GroupSettingPopup";
 
 function ChatBody({ bodyH }) {
 
     const [curChat, setCurChat] = useState(null);
 
-    const [openPopup, setOpenPopup] = useState(false);
+    const [openAddGroupPopup, setOpenAddGroupPopup] = useState(false);
     const [newGroupName, setNewGroupName] = useState("");
     const [newGMembers, setNewGMembers] = useState([]);
 
-    const [friendList, setFriendList] = useState([]);
-    const [groupChats, setGroupChats] = useState([]);
+    const [openGroupSettingPopup, setOpenGroupSettingPopup] = useState(false);
+
+    const { friendList } = useContext(AppContext);
 
     useEffect(() => {
 
@@ -30,46 +33,24 @@ function ChatBody({ bodyH }) {
         return () => split.destroy()
     }, [])
 
-    useEffect(() => {
-        getFriendList();
-        getGroupChatList();
-    }, [])
-
-
-
-    const getFriendList = () => {
-        axios.get(`${import.meta.env.VITE_API_URL}/user/friends`)
-            .then((response) => { setFriendList(response.data) })
-            .catch((err) => { console.log("Error fetching friends list: " + err) })
-    };
-
-    const getGroupChatList = () => {
-        axios.get(`${import.meta.env.VITE_API_URL}/user/groupchat`)
-            .then((response) => {
-                setGroupChats(response.data.data);
-                console.log("Group: ", response.data.data);
-            })
-            .catch((err) => { console.log("Error: ", err) })
-    }
-
     const handleAddGroupChat = () => {
         axios.post(`${import.meta.env.VITE_API_URL}/user/groupchat/add`, {
             groupName: newGroupName,
             members: newGMembers
         })
-            .then((response) => {
-                setGroupChats((value) => {
-                    return [...value, response.data.data];
-                })
-            })
             .catch((error) => { console.log("Error creating Group: ", error) })
         setNewGMembers([]);
         setNewGroupName("");
-        setOpenPopup(false);
+        setOpenAddGroupPopup(false);
+    }
+
+    const handleDeleteGroupChat = () => {
+        axios.delete(`${import.meta.env.VITE_API_URL}/user/groupchat/delete`);
+        setOpenGroupSettingPopup(false);
     }
 
     const handleCancel = () => {
-        setOpenPopup(false);
+        setOpenAddGroupPopup(false);
         setNewGMembers([]);
         setNewGroupName("");
     }
@@ -77,7 +58,7 @@ function ChatBody({ bodyH }) {
     return (
         <div className="chat-main split d-flex flex-row p-0" style={{ height: `${bodyH}px` }}>
             {
-                openPopup && (
+                openAddGroupPopup && (
                     <div className="add-group-popup-container d-flex flex-column">
                         <div className="popup-wrapper d-flex flex-column gap-3">
                             <div className="title">
@@ -100,15 +81,15 @@ function ChatBody({ bodyH }) {
                                 <div className="selected-members-list d-flex flex-wrap">
                                     {newGMembers.map((member) => (
                                         <div
-                                            key={member.friendId}
+                                            key={member.memberId}
                                             className="selected-member badge"
                                             onClick={() =>
                                                 setNewGMembers((prev) =>
-                                                    prev.filter((m) => m.id !== member.id)
+                                                    prev.filter((m) => m.memberId !== member.memberId)
                                                 )
                                             }
                                         >
-                                            {member.friendName} ✕
+                                            {member.memberName} ✕
                                         </div>
                                     ))}
                                 </div>
@@ -119,7 +100,7 @@ function ChatBody({ bodyH }) {
                                 <label>Choose Friends</label>
                                 <div className="friend-list">
                                     {friendList.map((friend) => {
-                                        const isSelected = newGMembers.some((m) => m.friendId === friend.friendId);
+                                        const isSelected = newGMembers.some((m) => m.memberId === friend.friendId);
                                         return (
                                             <div
                                                 key={friend.friendId}
@@ -127,10 +108,15 @@ function ChatBody({ bodyH }) {
                                                 onClick={() => {
                                                     if (isSelected) {
                                                         setNewGMembers((prev) =>
-                                                            prev.filter((m) => m.id !== friend.friendId)
+                                                            prev.filter((m) => m.memberId !== friend.friendId)
                                                         );
                                                     } else {
-                                                        setNewGMembers((prev) => [...prev, friend]);
+                                                        setNewGMembers((prev) => [...prev, {
+                                                            memberId: friend.friendId,
+                                                            isAdmin: false,
+                                                            memberName: friend.friendName,
+                                                            memberAvatar: friend.friendAvatarUrl
+                                                        }]);
                                                     }
                                                 }}
                                             >
@@ -152,14 +138,20 @@ function ChatBody({ bodyH }) {
                     </div>
                 )
             }
+            {openGroupSettingPopup && (
+                <GroupSettingPopup 
+                    setOpenPopup={setOpenGroupSettingPopup}
+                />
+            )
+
+            }
             <ChatBodyLeft
                 setCurChat={setCurChat}
-                setOpenPopup={setOpenPopup}
-                friendList={friendList}
-                groupChats={groupChats}
+                setOpenPopup={setOpenAddGroupPopup}
             />
             <ChatBodyRight
                 curChat={curChat}
+                setOpenPopup={setOpenGroupSettingPopup}
             />
 
         </div>
