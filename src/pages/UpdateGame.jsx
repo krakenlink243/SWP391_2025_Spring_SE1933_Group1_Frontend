@@ -202,7 +202,7 @@ function UpdateGame() {
 
   const handleSubmit = async () => {
     if(requestId){
-      await axios.delete(`${import.meta.env.VITE_API_URL}/request/delete/${requestId}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/request/game/delete/${requestId}`);
     }
     for (const key in formData) {
       if (!validateEmty(formData.memory) || !validateEmty(formData.processor) || !validateEmty(formData.storage) ||

@@ -302,4 +302,12 @@ progress::-webkit-progress-bar {
 progress::-moz-progress-bar {
   background-color: #4caf50;
 }
+.form-border pre{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
+}
+.form-border .decline-reason{
+    width: 80%;
+    margin: 0 auto;
+}
 

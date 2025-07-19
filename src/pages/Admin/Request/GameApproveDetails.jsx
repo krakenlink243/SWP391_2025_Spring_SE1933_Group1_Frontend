@@ -12,6 +12,7 @@ import { createNotification } from '../../../services/notification';
 import Select, { components } from 'react-select'
 import { confirmAlert } from 'react-confirm-alert'
 import { useNavigate } from 'react-router-dom';
+import { trimValue } from '../../../utils/validators'
 
 function GameApproveDetails() {
   const gameId = useParams().requestId;
@@ -36,7 +37,8 @@ function GameApproveDetails() {
     gameUrl: '',
     publisherName: '',
     publisherId: '',
-    iconUrl:''
+    iconUrl:'',
+    declineMessage:''
   })
   const tags = [
     { value: 18, label: 'Action' },
@@ -139,7 +141,10 @@ function GameApproveDetails() {
                     `Answer for ${formData.gameName}: ${answer}`
                   );
                   const response = await axios.patch(
-                    `${import.meta.env.VITE_API_URL}/request/game/reject/${gameId}`
+                    `${import.meta.env.VITE_API_URL}/request/game/reject/${gameId}`,
+                    {
+                      declineMessage:trimValue(answer)
+                    }
                   );
                   console.log("Declined request:", response.data);
                   navigate("/admin/request/game");
@@ -247,6 +252,12 @@ function GameApproveDetails() {
           <div className='send-request-cancel'>
             <Button className='cancel-button' label='Decline' onClick={handleDecline} color='red-button' />
             <Button className='send-button' label='Approve' isApprove='true' onClick={handleApprove} color='green-button' />
+          </div>
+        )}
+        {localStorage.getItem("role") === "Publisher" && formData.declineMessage && (
+          <div className='decline-reason'>
+            <PartHeading content='Decline Reason' />
+            <pre>{formData.declineMessage}</pre>
           </div>
         )}
       </div>
