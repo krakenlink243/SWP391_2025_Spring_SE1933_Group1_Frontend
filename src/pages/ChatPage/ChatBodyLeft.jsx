@@ -3,6 +3,7 @@ import './ChatBodyLeft.css';
 import { AppContext } from "../../context/AppContext";
 import Split from "split.js";
 import { Link } from "react-router-dom";
+import GroupAvatar from "./GroupAvatar";
 
 function ChatBodyLeft({ setCurChat, setOpenPopup }) {
     const avatarUrl = localStorage.getItem("avatarUrl");
@@ -123,7 +124,8 @@ function ChatBodyLeft({ setCurChat, setOpenPopup }) {
                                         key={group.groupId}
                                         onClick={() => setCurChat({ type: 'group', id: group.groupId, name: group.groupName })}
                                     >
-                                        <div className="group-avatar">
+                                        <div className="group-avatar-container">
+                                            <GroupAvatar />
                                         </div>
                                         <div className="group-name">
                                             {group.groupName}

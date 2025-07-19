@@ -240,7 +240,7 @@
     background-color: rgba(47, 56, 68, .5);
 }
 
-.group .group-avatar {
+.group .group-avatar-container {
     border-radius: 2px;
     background-color: #0005;
     border: 2px solid #535c68;

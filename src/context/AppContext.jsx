@@ -24,7 +24,6 @@ export function AppProvider({ children }) {
     const [friendList, setFriendList] = useState([]);
     const [groupChats, setGroupChats] = useState([]);
 
-    // const [CUR_TOKEN, setCUR_TOKEN] = useState(localStorage.getItem("token"));
     const { token: CUR_TOKEN } = useAuth();
     const userId = localStorage.getItem("userId");
 

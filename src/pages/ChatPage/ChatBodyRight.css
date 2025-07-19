@@ -29,11 +29,11 @@
     gap: 10px;
 }
 
-.current-chat-box .current-chat-avatar img {
+.current-chat-box .current-chat-avatar .avatar {
     height: calc(100% - 2px);
 }
 
-.current-chat-box .current-chat-avatar .group-avatar {
+.current-chat-box .current-chat-avatar .group-avatar-container {
     border-radius: 2px;
     background-color: #0005;
     border: 2px solid #535c68;
@@ -72,10 +72,10 @@
     position: relative;
     padding: 0 6px 14px 6px;
     word-break: break-word;
-    background: radial-gradient(ellipse farthest-corner at 50% 30%, #212329 0%, #1e2025 50%, #1c1d22 100%);
-    /* background:
+    /* background: radial-gradient(ellipse farthest-corner at 50% 30%, #212329 0%, #1e2025 50%, #1c1d22 100%); */
+    background:
         linear-gradient(rgba(30, 32, 37, 0.8), rgba(30, 32, 37, 0.8)),
-        url("https://cdnmedia.baotintuc.vn/Upload/DGCvMTLSo95Cq4TvfGr0A/files/2019/08/14-8/dhfpt.JPG"); */
+        url("https://cdnmedia.baotintuc.vn/Upload/DGCvMTLSo95Cq4TvfGr0A/files/2019/08/14-8/dhfpt.JPG");
     font-size: 14px;
     display: flex;
     flex-direction: row;
@@ -158,6 +158,22 @@
     background: linear-gradient(to right, #3a3e46 80%, #2c3037 100%);
     transition: height 0.3s ease;
 }
+
+.padder-top .padder-top-content .group-name {
+    color: #ccc;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.padder-top .padder-top-content .group-avatar-container {
+    height: 100%;
+    width: 100%;
+    border-radius: 2px;
+    background-color: #0005;
+    border: 2px solid #535c68;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, .3);
+}
+
 
 .padder-top .padder-top-content .setting-icon {
     width: 32px;
