@@ -1,0 +1,118 @@
+.chat-main .add-member-popup-container {
+    position: absolute;
+    z-index: 11;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+
+}
+
+.add-member-popup-container .popup-wrapper {
+    max-width: calc(100% / 2);
+    min-width: calc(100% / 3);
+    margin: auto;
+    background: radial-gradient(circle at top left, rgba(74, 81, 92, 0.4) 0%, rgba(75, 81, 92, 0) 60%), #25282e;
+    user-select: none;
+    color: white;
+    padding: 20px;
+}
+
+.popup-wrapper .title {
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.popup-wrapper .form-group {
+    display: flex;
+    flex-direction: column;
+    color: #969696;
+}
+
+.popup-wrapper .form-group input {
+    background: rgba(59, 63, 72, .5);
+    color: #dfe3e6;
+    font-size: 14px;
+    font-family: "Motiva Sans", Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    margin: 0;
+    border: none;
+    border-radius: 3px;
+    box-shadow: inset 0px 0px 0px #0000;
+    padding: 10px;
+}
+
+.popup-wrapper .form-group input:hover {
+    background: rgba(67, 73, 83, .6);
+}
+
+.popup-wrapper .form-group input:focus,
+.popup-wrapper .form-group input:focus-within {
+
+    background: rgba(67, 73, 83, .6);
+    box-shadow: inset 1px 1px 8px #000a;
+    padding-left: 11px;
+}
+
+.popup-wrapper .form-group .selected-members-list {
+    height: 35px;
+}
+
+.selected-members-list .selected-member {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    margin: 4px;
+    border-radius: 4px;
+    background: #1f8dfe;
+    padding: 0 8px;
+    color: #dfe3e6;
+    cursor: pointer;
+
+}
+
+.selected-members-list .selected-member .selected-member-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 107px;
+}
+
+
+.popup-wrapper .form-group .friend-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+    gap: 5px;
+}
+
+.popup-wrapper .form-group .friend-list .friend-item {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.popup-wrapper .form-group .friend-list .friend-item:hover .avatar {
+    filter: brightness(1.5);
+    transition: filter 0.3s ease-in;
+}
+
+
+.popup-wrapper .form-group .friend-list .friend-item .avatar {
+    width: 38px;
+    height: 38px;
+    transition: filter 0.3s ease-out;
+
+}
+
+.popup-wrapper .form-group .friend-list .friend-item .avatar img {
+    height: 100%;
+    width: 100%;
+}
+
+.popup-wrapper .form-group .friend-list .friend-item.selected {
+    background: #596168;
+
+}
