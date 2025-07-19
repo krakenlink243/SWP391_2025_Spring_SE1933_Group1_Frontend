@@ -95,6 +95,7 @@
     background-color: rgba(34, 37, 43, 0);
     position: relative;
     border-left: 1px solid #22252b;
+    overflow-y: auto;
 }
 
 .group-chat-detail .toggle-btn-detail {
