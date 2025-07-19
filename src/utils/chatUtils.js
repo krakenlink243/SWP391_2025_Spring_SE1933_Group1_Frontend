@@ -53,18 +53,10 @@ export function prepareChatHistory(messages, membersLookup) {
 }
 
 // Formats "HH:mm Weekday, DD/MM/YYYY"
+// Formats "HH:mm"
 export const formatGroupTimestamp = (isoDate) => {
   const locale = 'vi-VN';
-  const timeOptions = { hour: 'numeric', minute: '2-digit', hour12: false };
-  const dateOptions = {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'numeric',
-    year: 'numeric',
-  };
+  const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false };
   const d = new Date(isoDate);
-  return `${d.toLocaleTimeString(locale, timeOptions)} ${d.toLocaleDateString(
-    locale,
-    dateOptions
-  )}`;
+  return d.toLocaleTimeString(locale, timeOptions);
 };

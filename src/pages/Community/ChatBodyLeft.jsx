@@ -17,7 +17,6 @@ function ChatBodyLeft({ setCurChat, setOpenPopup }) {
     const onlineFriends = friendList.filter(f => onlineUsers.includes(f.friendName));
     const offlineFriends = friendList.filter(f => !onlineUsers.includes(f.friendName));
 
-
     useEffect(() => {
         const updateHeights = () => {
             const header = headerH.current?.offsetHeight || 0;
@@ -114,7 +113,7 @@ function ChatBodyLeft({ setCurChat, setOpenPopup }) {
                             <div className="wrapper-header">
                                 Group Chats
                                 <div className="icon" onClick={() => setOpenPopup(true)}>
-                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" className="SVGIcon_Button SVGIcon_NewChatGroup" x="0px" y="0px" viewBox="0 0 256 256"><path className="Bubble" stroke-width="12" stroke-miterlimit="10" d="M127.393,10.833 c64.854,0,117.46,52.609,117.46,117.013c0,24.035-7.254,45.804-19.5,63.943c-4.99,7.711,13.15,39.457,20.408,51.705 c4.989,8.612-51.701-19.05-59.412-14.514c-17.233,9.979-37.188,15.872-58.957,15.872c-64.859,0-117.465-52.607-117.465-117.008 C9.928,63.442,62.534,10.833,127.393,10.833z"></path><line stroke-width="22" stroke-linecap="round" stroke-miterlimit="10" x1="83.5" y1="128.886" x2="176.184" y2="128.886"></line><line stroke-width="22" stroke-linecap="round" stroke-miterlimit="10" x1="129.842" y1="82.544" x2="129.842" y2="175.228"></line></svg>
+                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" className="SVGIcon_Button SVGIcon_NewChatGroup" x="0px" y="0px" viewBox="0 0 256 256"><path className="Bubble" strokeWidth="12" strokeMiterlimit="10" d="M127.393,10.833 c64.854,0,117.46,52.609,117.46,117.013c0,24.035-7.254,45.804-19.5,63.943c-4.99,7.711,13.15,39.457,20.408,51.705 c4.989,8.612-51.701-19.05-59.412-14.514c-17.233,9.979-37.188,15.872-58.957,15.872c-64.859,0-117.465-52.607-117.465-117.008 C9.928,63.442,62.534,10.833,127.393,10.833z"></path><line strokeWidth="22" strokeLinecap="round" strokeMiterlimit="10" x1="83.5" y1="128.886" x2="176.184" y2="128.886"></line><line strokeWidth="22" strokeLinecap="round" strokeMiterlimit="10" x1="129.842" y1="82.544" x2="129.842" y2="175.228"></line></svg>
                                 </div>
                             </div>
                             {

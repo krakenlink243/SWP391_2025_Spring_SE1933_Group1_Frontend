@@ -9,6 +9,8 @@ export function useConversation(token, curChat) {
 
   // <-- ref to hold the active subscription
   const subscriptionRef = useRef(null);
+  const groupJoinRef = useRef(null);
+  const groupLeaveRef = useRef(null);
 
   useEffect(() => {
     if (!token || !curChat) return;
@@ -44,11 +46,38 @@ export function useConversation(token, curChat) {
       setMessages(prev => [...prev, msg]);
     });
 
+    // 3.1) Subscribe to group event 
+    if (curChat.type === 'group') {
+      const joinTopic = `/topic/group.${curChat.id}.join`;
+      const leaveTopic = `/topic/group.${curChat.id}.leave`;
+
+      groupJoinRef.current = joinTopic;
+      groupLeaveRef.current = leaveTopic;
+
+      SocketService.subscribe(joinTopic, newMember => {
+        setMembers(prev => [...prev, newMember]);
+      });
+
+      SocketService.subscribe(leaveTopic, leaverId => {
+        console.log(`Member left: ${leaverId}`);
+        console.log('Current members:', members);
+        setMembers(prev => prev.filter(member => member.memberId !== leaverId));
+      });
+    }
+
     // 4) Cleanup when curChat or token changes (or on unmount)
     return () => {
-      if (subscriptionRef.current != null) {
+      if (subscriptionRef.current) {
         SocketService.unsubscribe(subscriptionRef.current);
         subscriptionRef.current = null;
+      }
+      if (groupJoinRef.current) {
+        SocketService.unsubscribe(groupJoinRef.current);
+        groupJoinRef.current = null;
+      }
+      if (groupLeaveRef.current) {
+        SocketService.unsubscribe(groupLeaveRef.current);
+        groupLeaveRef.current = null;
       }
       // reset state
       setMessages([]);

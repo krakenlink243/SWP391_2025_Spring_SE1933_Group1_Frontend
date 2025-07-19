@@ -2,6 +2,7 @@
     overflow-y: auto;
     padding: 1rem;
     height: 100%;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 .day-header {
@@ -29,7 +30,7 @@
 .message-group .sender-small-profile {
     display: flex;
     flex-direction: row;
-    height: 38px;
+    height: 23px;
     gap: 10px;
     align-items: center;
 }
@@ -45,6 +46,16 @@
 .friend .sender-small-profile {
     color: #6dcff6;
 }
+
+.sender-small-profile .timestamp{
+    font-size: 10px;
+    color: #555;
+    align-self: flex-end;
+    line-height: 20px;
+    margin-left: 6px;
+    white-space: nowrap;
+}
+
 
 .bubble {
     padding: 0.5rem 0 0.5rem 48px;

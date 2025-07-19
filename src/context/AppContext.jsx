@@ -94,7 +94,7 @@ export function AppProvider({ children }) {
             );
             SocketService.subscribe(
                 `/topic/groups.${userId}.removed`,
-                removedGroupId => setGroupChats(prev => prev.filter(g => g.groupId !== removedGroupId))
+                removedGroupId => setGroupChats(prev => prev.filter(g => g.groupId != removedGroupId))
             );
 
 
