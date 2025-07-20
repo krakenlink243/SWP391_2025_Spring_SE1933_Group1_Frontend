@@ -5,12 +5,13 @@ import axios from 'axios';
 import { useAuth } from './AuthContext';
 
 export const AppContext = createContext({
-    notification: [],
-    walletBallance: 0,
+    notifications: [],
+    walletBalance: 0,
     cartTotal: 0,
     onlineUsers: [],
     friendList: [],
-    groupChats: []
+    groupChats: [],
+    library: []
 })
 
 export function AppProvider({ children }) {
@@ -103,6 +104,8 @@ export function AppProvider({ children }) {
                     setNotifications(data);
                 } else {
                     // single new notification
+                    console.log("New notification received:", data);
+                    // Add new notification to the top of the list
                     setNotifications(prev => [data, ...prev]);
                 }
             })
@@ -141,10 +144,9 @@ export function AppProvider({ children }) {
                     return [...prev, mapped];
                 });
             });
+
+
         });
-
-
-
         return () => {
             SocketService.unsubscribe('/user/queue/notification.all');
             SocketService.unsubscribe('/user/queue/wallet.balance');
@@ -153,10 +155,10 @@ export function AppProvider({ children }) {
             SocketService.unsubscribe('/queue/cart.count');
             SocketService.unsubscribe('/user/queue/library.added');
             // Unsubscribe friend & group channels
-            SocketService.unsubscribe(`/topic/friends/${userId}/added`);
-            SocketService.unsubscribe(`/topic/friends/${userId}/removed`);
-            SocketService.unsubscribe(`/topic/groups/${userId}/added`);
-            SocketService.unsubscribe(`/topic/groups/${userId}/removed`);
+            SocketService.unsubscribe(`/topic/friends.${userId}.added`);
+            SocketService.unsubscribe(`/topic/friends.${userId}.removed`);
+            SocketService.unsubscribe(`/topic/groups.${userId}.added`);
+            SocketService.unsubscribe(`/topic/groups.${userId}.removed`);
         };
     }, [CUR_TOKEN]);
 
@@ -165,6 +167,7 @@ export function AppProvider({ children }) {
         <AppContext.Provider
             value={{
                 notifications,
+                setNotifications,
                 walletBalance,
                 cartTotal,
                 onlineUsers,

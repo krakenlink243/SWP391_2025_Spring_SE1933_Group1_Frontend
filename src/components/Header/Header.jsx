@@ -3,7 +3,6 @@ import "./Header.css"; // Or use CSS Modules: import styles from './Header.modul
 // Added by Phan NT Son
 import NotificationBox from "../Notifications/NotificationBox";
 import UserDropBox from "./UserDropBox";
-import axios from "axios";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";

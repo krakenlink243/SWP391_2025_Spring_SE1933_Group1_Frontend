@@ -47,6 +47,7 @@
     cursor: pointer;
     display: block;
     padding: 10px 10px;
+    user-select: none;
 }
 
 .content-left-nav .nav-item:hover {

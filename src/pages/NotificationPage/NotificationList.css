@@ -44,6 +44,7 @@
     background-position: 99% 1%;
     background-size: 300% 300%;
     flex: 1;
+    user-select: none;
 }
 
 .right-col .right-col-btn:hover {

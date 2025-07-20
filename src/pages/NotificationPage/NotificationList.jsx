@@ -5,79 +5,53 @@ import "./NotificationList.css"
 import { Navigate, useNavigate } from "react-router-dom";
 import { isTokenExpired } from "../../utils/validators";
 import { AppContext } from "../../context/AppContext";
+import { useAuth } from "../../context/AuthContext";
 
 /**
  *
  * @returns Component to display a list of notifications for a user
  */
 function NotificationList() {
-  const [data, setData] = useState([]);
-  const [reloadSignal, setReloadSignal] = useState(0);
+
   const [countUnRead, setCountUnRead] = useState(0);
+
   const [typeList, setTypeList] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
-  const token = localStorage.getItem("token");
+
+  const { token } = useAuth();
   const CUR_AVATAR_URL = localStorage.getItem("avatarUrl");
   const CUR_USERNAME = localStorage.getItem("username");
+
   // Get from context ↓
-  const { notification } = useContext(AppContext);
-  const socketNotifications = notification;
+  const { notifications, setNotifications } = useContext(AppContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (token && !isTokenExpired()) {
-      getNotificationList();
-    }
-  }, [reloadSignal]);
+    setCountUnRead(notifications.filter(n => !n.read).length);
+  }, [notifications]);
 
   useEffect(() => {
-
-    if (socketNotifications && Array.isArray(socketNotifications)) {
-      setData(prevData => {
-        const existingIds = new Set(prevData.map(n => n.notifId));
-        const newNotifs = socketNotifications.filter(n => !existingIds.has(n.notifId));
-        if (newNotifs.length === 0) return prevData;
-        const updatedData = [...newNotifs, ...prevData];
-        setCountUnRead(updatedData.filter(n => n.read === false).length);
-        setTypeList([...new Set(updatedData.map(n => n.notificationType))]);
-        return updatedData;
-      });
-    }
-  }, [socketNotifications])
-
-
-  const reloadList = () => {
-    setReloadSignal((prev) => prev + 1);
-  };
-
-  const getNotificationList = async () => {
-    try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/notification/list`);
-      const notifs = response.data || [];
-
-      setData(notifs);
-      setCountUnRead(notifs.filter(n => n.read === false).length);
-      setTypeList([...new Set(notifs.map(n => n.notificationType))]);
-    } catch (error) {
-      console.error("Error fetching notifications:", error);
-    }
-  };
+    setTypeList([...new Set(notifications.map(n => n.notificationType))]);
+  }, [notifications]);
 
   const handleMarkReadAll = async () => {
+    if (notifications.length === 0) return;
+    if (notifications.every(n => n.read)) return
     try {
       await axios.patch(`${import.meta.env.VITE_API_URL}/notification/markreadall`);
-      reloadList();
+      setNotifications((prev) => prev.map(n => ({ ...n, read: true })));
     } catch (error) {
       console.log("error mark read all: " + error);
     }
   };
 
   const handleDeleteAll = () => {
+    if (notifications.length === 0) return;
     if (!window.confirm("Are you sure you want to delete all notifications?")) return;
     try {
       axios.delete(`${import.meta.env.VITE_API_URL}/notification/deleteall`)
         .then((resp) => {
-          reloadList();
+          setNotifications([]);
         });
 
     } catch (error) {
@@ -96,8 +70,8 @@ function NotificationList() {
   };
 
   const filteredData = selectedTypes.length === 0
-    ? data
-    : data.filter(n => selectedTypes.includes(n.notificationType));
+    ? notifications
+    : notifications.filter(n => selectedTypes.includes(n.notificationType));
 
   if (!token || isTokenExpired()) {
     return <Navigate to="/" replace />;
@@ -108,7 +82,7 @@ function NotificationList() {
           <img src={CUR_AVATAR_URL} alt="avatar" className="avatar" onClick={() => navigate("/profile")} />
           <a className="username" href="/profile">{CUR_USERNAME}</a>
         </div>
-        {data.length > 0 ? (
+        {notifications.length > 0 ? (
           <div className="w-100 py-5 d-flex flex-row gap-4 flex-wrap">
             <div className="notiflist-title w-100">Notifications ({countUnRead} unread)</div>
             <div className="left-col">
@@ -117,7 +91,8 @@ function NotificationList() {
                   <NotificationItem
                     key={notification.notifId}
                     notification={notification}
-                    onReload={reloadList}
+                    onClick={() => setNotifications((prev) => prev.map(n => n.notifId === notification.notifId ? { ...n, read: true } : n))}
+                    onDelete={() => setNotifications((prev) => prev.filter(n => n.notifId !== notification.notifId))}
                   />
                 ))}
               </div>

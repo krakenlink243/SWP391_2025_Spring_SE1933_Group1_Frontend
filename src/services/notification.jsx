@@ -15,7 +15,6 @@ export const createNotification = async (receiverId, type, message) => {
                 notificationContent: message,
             }
         );
-        console.log("Notification created:", response.data);
     } catch (error) {
         console.error("Error creating notification:", error);
     }
