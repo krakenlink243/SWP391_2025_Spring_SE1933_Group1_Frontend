@@ -11,7 +11,7 @@ export default function AdminLayout() {
     const items = [
         { title: "Dashboard", url: "/admin/" },
         { title: "Request", url: "/admin/request/game" },
-        { title: "Ban Users", url: "" }
+        { title: "Users Management", url: "/admin/user-management/active" }
     ]
 
     return (
@@ -30,7 +30,7 @@ export default function AdminLayout() {
                         </Link>
                     ))}
                 </div>
-                <div className="right-col w-75">
+                <div className="right-col w-75" id="scroll-area">
                     <Outlet />
                 </div>
             </div>

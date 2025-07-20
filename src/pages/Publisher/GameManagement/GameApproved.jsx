@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import SearchBarPublisher from '../../../components/SearchBarPublisher/SearchBarPublisher';
 import PublisherGameItem from '../../../components/PublisherGameItem/PublisherGameItem';
 
-function GameApproved() {
+export default function GameApproved() {
   const navigate = useNavigate();
   const hasFetchedRef = useRef(false);
 
@@ -16,21 +16,23 @@ function GameApproved() {
 
   const size = 5;
 
+  // Fetch paginated game list
   const fetchGames = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/game/publisher/listed`, {
-        params: { page, size, name: searchTerm }
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/game/publisher/listed`, {
+        params: { page, size, name: searchTerm.trim() },
       });
-      console.log(res.data)
-      const newGames = res.data.content;
-      setGames(prev => (page === 0 ? newGames : [...prev, ...newGames]));
-      setHasMore(!res.data.last);
+
+      const newGames = response.data.content;
+      setGames(prev => page === 0 ? newGames : [...prev, ...newGames]);
+      setHasMore(!response.data.last);
       setPage(prev => prev + 1);
-    } catch (err) {
-      console.error("Failed to fetch games", err);
+    } catch (error) {
+      console.error("Failed to fetch games", error);
     }
   };
 
+  // Initial load
   useEffect(() => {
     if (!hasFetchedRef.current) {
       fetchGames();
@@ -38,32 +40,56 @@ function GameApproved() {
     }
   }, []);
 
+  // Trigger search
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
       setPage(0);
       setGames([]);
       fetchGames();
     }, 300);
-
     return () => clearTimeout(debounceTimer);
   }, [searchTerm]);
 
+  // Search callback
   const handleSearch = (term) => {
     setSearchTerm(term);
     setGames([]);
     setPage(0);
     hasFetchedRef.current = false;
-    console.log(term)
   };
 
+  // Navigation handler
   const handleRedirect = (gameId, action) => {
     if (action === "Update") navigate(`/update-game/${gameId}`);
-    else if (action === "Hide") navigate(`/hide-game/${gameId}`);
-    else if (action === "View") navigate(`/game/${gameId}`);
+    if (action === "View") navigate(`/game/${gameId}`);
+  };
+
+  // Toggle Hide/Unhide logic
+  const toggleGameVisibility = async (gameId, isVisible) => {
+    const confirmMsg = isVisible
+      ? "Are you sure you want to hide this game?"
+      : "Are you sure you want to unhide this game?";
+    if (!window.confirm(confirmMsg)) return;
+
+    const endpoint = isVisible ? "hide" : "unhide";
+    try {
+      await axios.patch(`${import.meta.env.VITE_API_URL}/game/${endpoint}/${gameId}`);
+
+      // Update state instantly for UI sync
+      setGames(prev =>
+        prev.map(game =>
+          game.id === gameId
+            ? { ...game, state: !isVisible }
+            : game
+        )
+      );
+    } catch (error) {
+      console.error(`Failed to ${endpoint} game`, error);
+    }
   };
 
   return (
-    <div className='game-approved-container'>
+    <div className="game-approved-container">
       <SearchBarPublisher onSearch={handleSearch} />
       <InfiniteScroll
         dataLength={games.length}
@@ -71,16 +97,16 @@ function GameApproved() {
         hasMore={hasMore}
         loader={<h4>Loading...</h4>}
       >
-        {games.map(game => (
+        {games.map((game) => (
           <PublisherGameItem
-            key={game.id}
+            key={`${game.id}-${game.state}`} // 🔁 re-render when visibility changes
             thumbnail={game.imageUrl}
             title={game.title}
             action1="Update"
-            action2="Hide"
+            action2={game.state ? "Hide" : "Unhide"}
             action3="View"
             onAction1Click={() => handleRedirect(game.id, "Update")}
-            onAction2Click={() => handleRedirect(game.id, "Hide")}
+            onAction2Click={() => toggleGameVisibility(game.id, game.state)}
             onAction3Click={() => handleRedirect(game.id, "View")}
             time={new Date(game.releaseDate).toLocaleDateString()}
           />
@@ -89,6 +115,3 @@ function GameApproved() {
     </div>
   );
 }
-
-export default GameApproved;
-

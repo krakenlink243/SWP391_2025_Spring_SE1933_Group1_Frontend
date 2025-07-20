@@ -38,7 +38,8 @@ function GameApproveDetails() {
     publisherName: '',
     publisherId: '',
     iconUrl:'',
-    declineMessage:''
+    declineMessage:'',
+    updateLog:'',
   })
   const tags = [
     { value: 18, label: 'Action' },
@@ -248,6 +249,12 @@ function GameApproveDetails() {
             <Button className='upload-button' label="Download Game File" onClick={handleGetLinkDownload} color='blue-button'/>
           </a>
         </div>
+        {formData.updateLog && (
+          <div className='update-log'>
+            <PartHeading content='Update Log' />
+            <textarea name="updateLog" id="" value={formData.updateLog} readOnly></textarea>
+          </div>
+        )}
         {localStorage.getItem("role") !== "Publisher" && (
           <div className='send-request-cancel'>
             <Button className='cancel-button' label='Decline' onClick={handleDecline} color='red-button' />

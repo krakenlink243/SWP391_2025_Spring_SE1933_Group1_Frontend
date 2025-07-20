@@ -38,6 +38,11 @@ function UserDropBox({ userBalance }) {
             Request Add Game
           </Link>
         ) : null}
+        {role == 'Publisher' ? (
+          <Link className="dropdown-item" to="/publisher/game-management">
+            Manage Game
+          </Link>
+        ) : null}
         {role == 'Standard' ? (
           <Link className="dropdown-item" to="/sendpublisher">
             Request Publisher

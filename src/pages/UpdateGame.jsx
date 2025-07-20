@@ -31,7 +31,7 @@ function UpdateGame() {
   ];
   const [formData, setFormData] = useState({
     gameName: '', price: '', os: '', processor: '', memory: '', graphics: '', storage: '',
-    additionalNotes: '', shortDescription: '', fullDescription: '', mediaUrls: [], tags: [], gameUrl: '', iconUrl: '',gameId:''
+    additionalNotes: '', shortDescription: '', fullDescription: '', mediaUrls: [], tags: [], gameUrl: '', iconUrl: '',gameId:'',updateLog:''
   });
 
   const fileRef = useRef(null);
@@ -168,7 +168,9 @@ function UpdateGame() {
       }));
       return;
     }
-    if (value.length > 10000 && name === 'fullDescription') {
+    if (value.length > 10000 && (name === 'fullDescription'||name==='updateLog')) {
+
+
       alert("10000 characters limit exceeded!");
       setFormData(prev => ({
         ...prev,
@@ -248,13 +250,14 @@ function UpdateGame() {
         mediaUrls: finalMediaUrls, // This should now correctly send string URLs
         iconUrl: finalIconUrl,
         gameId: gameId||formData.gameId,
+        updateLog:formData.updateLog,
       };
 
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/request/game/add`, payload);
 
       console.log(response);
       alert(response.data.message);
-      navigate("/");
+      navigate("/publisher/game-management/");
     } catch (error) {
       console.error("Submission failed:", error);
       alert("Failed to submit game data. Please check the console for details.");
@@ -359,7 +362,7 @@ function UpdateGame() {
     if (!gameId && formData.gameUrl !== '') {
       await handleDelete();
     }
-    navigate("/");
+    navigate("/publisher/game-management/");
   }
 
   const normalizeValue = async (e) => {
@@ -604,6 +607,12 @@ function UpdateGame() {
             </>
           )}
         </div>
+        {gameId||requestId &&(
+          <div className='update-log'>
+            <PartHeading content='Update Log' />
+            <textarea name="updateLog" id="" value={formData.updateLog} onChange={handleChange}></textarea>
+          </div>
+        )}
         <div className='send-request-cancel'>
           <Button className='cancel-button' label='Cancel' onClick={handleCancel} color='grey-button' />
           <Button className='send-button' label={gameId ? 'Update Request' : 'Send Request'} isApprove={'true'} onClick={handleSubmit} color='blue-button' />

@@ -4,7 +4,6 @@ import { AppProvider } from "./context/AppContext";
 import { AuthProvider } from "./context/AuthContext";
 import axios from "axios";
 import './App.css';
-
 // Layouts
 import MainLayout from "./layouts/MainLayout";
 import AdminLayout from "./layouts/AdminLayout";
@@ -42,6 +41,7 @@ import PublisherApproveDetails from "./pages/Admin/Request/PublisherApproveDetai
 import FeedbackApproveDetails from "./pages/Admin/Request/FeedbackApproveDetails";
 import GameApproveDetails from "./pages/Admin/Request/GameApproveDetails";
 import FeedbackHub from "./pages/FeedbackHub";
+import UserManagement from "./pages/Admin/UserManagement/UserManagementPage";
 
 // Community
 import ChatPage from "./pages/Community/ChatPage";
@@ -68,7 +68,6 @@ import RequestSection from "./pages/Admin/Request/RequestSection";
 import ErrorPage from "./pages/ErrorPage";
 
 function AppRoutes() {
-
   // console.log("App component is rendering...");
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -176,6 +175,7 @@ function AppRoutes() {
             <Route path="request/publisher/detail/:requestId" element={<PublisherApproveDetails />} />
             <Route path="request/feedback/detail/:requestId" element={<FeedbackApproveDetails />} />
             <Route path="request/game/detail/:requestId" element={<GameApproveDetails />} />
+            <Route path="user-management/:tab?" element={<UserManagement />} />
           </Route>
 
         </Routes>
