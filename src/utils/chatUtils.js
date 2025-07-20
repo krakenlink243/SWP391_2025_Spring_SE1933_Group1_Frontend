@@ -1,66 +1,62 @@
-export function prepareChatHistory(pastMessages, liveMessages) {
-  const MAX_GAP_MINUTES = 5;
+export function prepareChatHistory(messages, membersLookup) {
 
-  // 1. Merge và chuẩn hóa dữ liệu
-  const all = [
-    ...pastMessages.map(m => ({
-      rawTs: m.createAt,
-      senderKey: m.senderName,
-      senderName: m.senderName,
-      content: m.messageContent,
-    })),
-    ...liveMessages.map(m => ({
-      rawTs: m.sentAt,
-      senderKey: m.senderUsername,
-      senderName: m.senderUsername,
-      content: m.content,
-    }))
-  ];
+  if (!messages?.length) return [];
 
-  // 2. Sắp xếp theo thời gian
-  all.sort((a, b) => new Date(a.rawTs) - new Date(b.rawTs));
+  // 1. sort by sentAt
+  const sorted = [...messages].sort(
+    (a, b) => new Date(a.sentAt) - new Date(b.sentAt)
+  );
 
-  const days = [];
-  const dayMap = {}; // để truy cập nhanh hơn
+  // 2. bucket by ISO day
+  const byDay = sorted.reduce((acc, msg) => {
+    const dayKey = new Date(msg.sentAt).toISOString().slice(0, 10);
+    (acc[dayKey] = acc[dayKey] || []).push(msg);
+    return acc;
+  }, {});
 
-  // 3. Gom theo ngày + người gửi + khoảng cách thời gian
-  for (let msg of all) {
-    const ts = new Date(msg.rawTs);
-    if (isNaN(ts.getTime())) {
-      console.warn("Invalid timestamp:", msg.rawTs);
-      continue;
-    }
+  // 3. group within each day
+  return Object.entries(byDay).map(([day, msgs]) => {
+    const groups = [];
+    msgs.forEach((msg) => {
+      const last = groups[groups.length - 1];
+      const ts = new Date(msg.sentAt).getTime();
 
-    const dayKey = ts.toLocaleDateString('vi-VN'); // ví dụ: "8/7/2025"
-    let dayBlock = dayMap[dayKey];
-    if (!dayBlock) {
-      dayBlock = { day: dayKey, groups: [] };
-      dayMap[dayKey] = dayBlock;
-      days.push(dayBlock);
-    }
-
-    const lastGroup = dayBlock.groups[dayBlock.groups.length - 1];
-
-    const isSameSender = lastGroup && lastGroup.senderKey === msg.senderKey;
-    const timeGapOK = lastGroup
-      ? (ts - lastGroup.lastMsgTime) / 60000 <= MAX_GAP_MINUTES
-      : false;
-
-    if (isSameSender && timeGapOK) {
-      // Tiếp tục nhóm hiện tại
-      lastGroup.messages.push({ content: msg.content });
-      lastGroup.lastMsgTime = ts; // cập nhật thời gian cuối cùng
-    } else {
-      // Bắt đầu nhóm mới
-      dayBlock.groups.push({
-        senderKey: msg.senderKey,
-        senderName: msg.senderName,
-        groupTimestamp: ts,
-        lastMsgTime: ts,
-        messages: [{ content: msg.content }]
-      });
-    }
-  }
-
-  return days;
+      if (
+        last &&
+        last.senderId === msg.senderId &&
+        ts - new Date(last.lastSent).getTime() < 5 * 60 * 1000
+      ) {
+        // continue the group
+        last.messages.push({
+          content: msg.messageContent,
+          sentAt: msg.sentAt,
+        });
+        last.lastSent = msg.sentAt;
+      } else {
+        // start new group
+        groups.push({
+          senderId: msg.senderId,
+          senderName:
+            membersLookup[msg.senderId]?.username || msg.senderName,
+          senderAvatarUrl:
+            membersLookup[msg.senderId]?.avatarUrl || '',
+          groupTimestamp: msg.sentAt,
+          messages: [{ content: msg.messageContent, sentAt: msg.sentAt }],
+          lastSent: msg.sentAt,
+        });
+      }
+    });
+    // remove helper
+    groups.forEach((g) => delete g.lastSent);
+    return { day, groups };
+  });
 }
+
+// Formats "HH:mm Weekday, DD/MM/YYYY"
+// Formats "HH:mm"
+export const formatGroupTimestamp = (isoDate) => {
+  const locale = 'vi-VN';
+  const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false };
+  const d = new Date(isoDate);
+  return d.toLocaleTimeString(locale, timeOptions);
+};

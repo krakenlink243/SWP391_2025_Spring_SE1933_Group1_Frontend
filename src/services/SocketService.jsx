@@ -1,7 +1,6 @@
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { isTokenExpired } from '../utils/validators';
-import React from 'react';
 
 class SocketService {
     constructor() {
@@ -56,6 +55,7 @@ class SocketService {
 
     unsubscribe(topic) {
         this.subscriptions[topic]?.unsubscribe();
+        console.log(`[SocketService] Unsubscribing to ${topic}`);
         delete this.subscriptions[topic];
     }
 

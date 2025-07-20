@@ -44,7 +44,7 @@ import FeedbackHub from "./pages/FeedbackHub";
 import UserManagement from "./pages/Admin/UserManagement/UserManagementPage";
 
 // Community
-import ChatPage from "./pages/Community/ChatPage";
+import ChatPage from "./pages/ChatPage/ChatPage";
 
 // Auth
 import Login from "./pages/Login";
@@ -67,6 +67,12 @@ import { isTokenExpired } from "./utils/validators";
 import RequestSection from "./pages/Admin/Request/RequestSection";
 import ErrorPage from "./pages/ErrorPage";
 
+import Community from "./pages/CommunityPage/Community";
+import ThreadDetailPage from "./pages/CommunityPage/ThreadDetailPage";
+import CreateThreadModal from "./components/Community/CreateThreadModal";
+import ReviewCard from "./components/Community/ReviewCard";
+import ThreadCard from "./components/Community/ThreadCard";
+import CommentSection from "./components/Community/CommentSection";
 function AppRoutes() {
   // console.log("App component is rendering...");
   const [currentUser, setCurrentUser] = useState(null);
@@ -166,6 +172,8 @@ function AppRoutes() {
             <Route path="/update-game/:gameId" element={<UpdateGame />} />
             <Route path="/edit-game/:requestId" element={<UpdateGame />} />
             <Route path="publisher/game/detail/:requestId" element={<GameApproveDetails />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/community/threads/:threadId" element={<ThreadDetailPage />} />
           </Route>
 
           {/* Admin area */}

@@ -44,7 +44,7 @@
     transition-property: box-shadow, filter, transform;
     transition-duration: .24s, .16s;
     transition-timing-function: ease-in-out;
-    z-index: 100;
+    z-index: 10;
     position: relative;
     -webkit-app-region: no-drag;
     cursor: pointer;
@@ -91,13 +91,58 @@
 
 .friends-list-container .friend-list-content {
     background: radial-gradient(ellipse farthest-corner at 50% 30%, #212329 0%, #1e2025 50%, #1c1d22 100%);
-
 }
 
 .friends-list-container .friend-list-content .friend-list-wrapper {
     height: 100%;
     overflow-y: auto;
 }
+
+.friends-list-container .group-chat-content .group-chat-wrapper {
+    height: calc(100% - 30px);
+    overflow-y: auto;
+}
+
+
+#middle-pane .wrapper-header {
+    background-color: #434953;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 30px;
+    user-select: none;
+    cursor: default;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: left;
+    color: #b7ccd5;
+    padding: 0 10px;
+    position: relative;
+}
+
+#middle-pane .wrapper-header .icon {
+    height: 100%;
+    width: 25px;
+    cursor: pointer;
+}
+
+#middle-pane .wrapper-header .icon a {
+    color: #ccc;
+}
+
+#middle-pane .wrapper-header .icon svg {
+    fill: #b7ccd5;
+    stroke-width: 0px;
+}
+
+#middle-pane .wrapper-header .icon svg line {
+    stroke: #434953;
+}
+
+
 
 .friend-list-content .friend-list-wrapper .friend {
     height: 38px;
@@ -109,11 +154,11 @@
     gap: .2rem;
 }
 
-.friend-list-content .friend-list-wrapper .online{
+.friend-list-content .friend-list-wrapper .online {
     color: #6dcff6;
 }
 
-.friend-list-content .friend-list-wrapper .offline{
+.friend-list-content .friend-list-wrapper .offline {
     color: #a0a0a0;
 }
 
@@ -140,12 +185,13 @@
     height: 100%;
 }
 
-.friend .friend-name{
+.friend .friend-name,
+.group .group-name {
     overflow: hidden;
     text-overflow: ellipsis;
     width: calc(100% - 40px);
     white-space: nowrap;
-    
+
 }
 
 .online .spacer {
@@ -156,13 +202,57 @@
     background-color: #898989;
 }
 
-
-
-
 .friends-list-container .friend-list .friend-list-footer {
     position: relative;
     min-height: 26px;
     background-color: #22252b;
     flex-shrink: 0;
     box-shadow: inset rgba(61, 68, 80, .3) 1px 1px 0px 0px;
+}
+
+#middle-pane .gutter {
+    cursor: s-resize;
+    border: .5px solid #121216;
+    border-top: 2px solid rgba(34, 37, 43, .8);
+    border-bottom: 3px solid rgba(34, 37, 43, .9);
+    background-color: #22252b;
+    min-height: 3px;
+}
+
+#friend-pane,
+#group-pane {
+    min-height: 100px;
+}
+
+.friends-list-container .group-chat-content {
+    background: radial-gradient(ellipse farthest-corner at 20% 30%, #222b35 0%, #252e38 10%, #20242b 100%);
+    color: #a0a0a0;
+
+}
+
+.group-chat-content .group-chat-wrapper .group {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    line-height: 20px;
+    padding-left: 12px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    align-items: center;
+}
+
+.group-chat-content .group-chat-wrapper .group:hover {
+    background-color: rgba(47, 56, 68, .5);
+}
+
+.group .group-avatar-container {
+    border-radius: 2px;
+    background-color: #0005;
+    border: 2px solid #535c68;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, .3);
+    width: 30px;
+    height: 30px;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin: 6px 3px 6px 6px;
 }

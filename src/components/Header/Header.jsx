@@ -3,7 +3,6 @@ import "./Header.css"; // Or use CSS Modules: import styles from './Header.modul
 // Added by Phan NT Son
 import NotificationBox from "../Notifications/NotificationBox";
 import UserDropBox from "./UserDropBox";
-import axios from "axios";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
@@ -21,6 +20,16 @@ const Header = forwardRef((props, ref) => {
   const location = useLocation();
   const CUR_PATHNAME = location.pathname;
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const activePathMap = [
     {
       index: 0, // STORE
@@ -28,7 +37,7 @@ const Header = forwardRef((props, ref) => {
     },
     {
       index: 1, // COMMUNITY
-      paths: ["/community"], // Giữ chỗ nếu sau này mở rộng
+      paths: ["/community", "/community/threads/:threadId"], // Giữ chỗ nếu sau này mở rộng
     },
     {
       index: 2, // PROFILE
@@ -92,7 +101,7 @@ const Header = forwardRef((props, ref) => {
       <div className="header row">
         <div className={`col-lg-${section[0]}`}></div>
         <div
-          className={`header-logo col-lg-${section[1]} align-content-center`}
+          className={`header-logo col-sm-4 col-lg-${section[1]} align-content-center`}
         >
           <Link to={"/"}>
             <img
@@ -111,7 +120,7 @@ const Header = forwardRef((props, ref) => {
           </Link>
           <Link
             className={`header-nav-item ${isActive(1) ? "active" : ""}`}
-            to={"#"}
+            to={"/community"}
           >
             COMMUNITY
           </Link>

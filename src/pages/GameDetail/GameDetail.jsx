@@ -24,6 +24,19 @@ const GameDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [cachedGameDetail, setCachedGameDetail] = useLocalStorage(`gameDetail_${gameId}`, null);
+  const [isShowPopup, setIsShowPopup] = useState(false);
+
+  useEffect(() => {
+    if (isShowPopup) {
+      document.body.style.overflow = 'hidden'; // Disable scroll when popup is open
+    }
+    else {
+      document.body.style.overflow = ''; // Enable scroll when popup is closed
+    }
+    return () => {
+      document.body.style.overflow = ''; // Ensure scroll is enabled when component unmounts
+    }
+  }, [isShowPopup]);
 
   useEffect(() => {
     const fetchGameDetails = async () => {
@@ -70,16 +83,25 @@ const GameDetail = () => {
      * @since 15-06-2025
      * @status done
      */
-    <div className="container-fluid">
+    <div className="game-detail container-fluid">
+      <DetailHeader
+        game={game}
+        setIsOpenPopup={setIsShowPopup} // Pass the function to set popup state
+      />
       <div className="row">
         <div className="spacer col-lg-2"></div>
         <div className=" col-lg-8 text-white">
-          <DetailHeader
-            game={game}
-          />
+
           <DetailBody
             game={game}
           />
+
+        </div>
+      </div>
+      <div className="row">
+        <div className="spacer col-lg-2"></div>
+        <div className=" col-lg-8 text-white">
+
           <DetailSystem
             game={game}
           />

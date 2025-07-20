@@ -7,12 +7,13 @@ import "./NotificationList.css"
  * @param {*} param0 
  * @returns 
  */
-function NotificationItem({ notification, onReload }) {
+function NotificationItem({ notification, onClick, onDelete }) {
+
   const handleClick = () => {
     if (!notification.read) {
       axios.patch(`${import.meta.env.VITE_API_URL}/notification/markread/${notification.notifId}`)
         .then(() => {
-          onReload();
+          onClick();
         })
         .catch((error) => console.error("Error marking notification as read:", error));
     }
@@ -22,8 +23,7 @@ function NotificationItem({ notification, onReload }) {
     axios.delete(`${import.meta.env.VITE_API_URL}/notification/delete/${notification.notifId}`)
       .then(() => {
         // Optionally, you can refresh the notification list or remove the item from the UI
-        console.log("Notification deleted successfully");
-        onReload();
+        onDelete();
       })
       .catch((error) => console.error("Error deleting notification:", error));
   };

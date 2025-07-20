@@ -20,6 +20,8 @@ function ChatPage() {
                 setBodyH(windowH - headerH.current.offsetHeight);
             };
             calculateH();
+            window.addEventListener('resize', calculateH);
+            return () => window.removeEventListener('resize', calculateH);
         }, [])
 
         return (

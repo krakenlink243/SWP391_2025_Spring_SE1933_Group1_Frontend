@@ -46,7 +46,14 @@
     margin-right: 10px;
     width: 40px;
     height: 40px;
+}
+.judge-section .thumbs-icon.recommed{
+
     background-color: #3498db;
+}
+.judge-section .thumbs-icon.not-recommend{
+
+    background-color: rgb(224, 99, 99);
 }
 
 .judge-section .title {
