@@ -29,10 +29,34 @@
 
 
 
-.game-detail-header-container {}
+.game-detail-header-container {
+  position: relative;
+}
 
 .game-detail-header-container .content {
   height: 435px;
+}
+
+.background-image {
+  position: absolute;
+  z-index: 0;
+  height: 100%;
+  width: 100%;
+  background: rgb(31, 58, 87);
+  mask-image: linear-gradient(to right, transparent 0%, black 25%, black 75%, transparent 100%);
+
+}
+
+.background-image .img {
+  width: 100%;
+  height: 100%;
+  opacity: 0.075;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 25%, black 75%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.game-detail-header-container .content {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.4) 100%);
 }
 
 .game-detail-header-container .content .left-col,
@@ -44,7 +68,7 @@
   width: 63%;
   margin: 0 2% 0 0;
   background: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.4) 100%);
-
+  z-index: 5;
 }
 
 .game-detail-header-container .content .left-col .highlight-player-area {
@@ -79,6 +103,7 @@
   margin: 3px 0;
   width: 100%;
   display: flex;
+  z-index: 5;
 }
 
 .game-detail-header-container .info-label {
@@ -98,6 +123,12 @@
   max-height: 180px;
   object-fit: cover;
 }
+
+.pruchase-area {
+  z-index: 5;
+
+}
+
 
 .purchase-box {
   background: linear-gradient(-60deg, rgba(226, 244, 255, 0.3) 5%, rgba(84, 107, 115, 0.3) 95%);

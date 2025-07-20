@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import Button from "../Button/Button";
 
 export default function CreateThreadModal({ isOpen, onClose }) {
     const [title, setTitle] = useState("");
@@ -37,11 +38,17 @@ export default function CreateThreadModal({ isOpen, onClose }) {
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                 />
-                <div className="flex justify-end gap-2">
-                    <button onClick={onClose} style={{backgroundColor:'red', color: 'black', margin: '0 4px'}} className="px-4 py-2 text-gray-600 rounded">Cancel</button>
-                    <button onClick={handleSubmit} style={{backgroundColor: 'blue', color: 'white', margin: '0 4px'}} className="px-4 py-2 bg-blue-600 text-white rounded">
-                        Post
-                    </button>
+                <div className="d-flex justify-content-around gap-2">
+                    <Button
+                        label="Cancel"
+                        onClick={onClose}
+                        color="red-button"
+                    />
+                    <Button
+                        label="Post"
+                        onClick={handleSubmit}
+                        color="blue-button"
+                    />
                 </div>
             </div>
         </div>

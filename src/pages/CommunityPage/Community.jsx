@@ -3,6 +3,7 @@ import axios from "axios";
 import ThreadCard from "../../components/Community/ThreadCard";
 import ReviewCard from "../../components/Community/ReviewCard";
 import CreateThreadModal from "../../components/Community/CreateThreadModal";
+import Button from "../../components/Button/Button";
 
 export default function Community() {
     const [threads, setThreads] = useState([]);
@@ -55,13 +56,18 @@ export default function Community() {
             <section>
                 <div className="flex justify-between items-center mb-2">
                     <h2 className="text-xl font-semibold" style={{ color: "white" }}>Discussions</h2>
-                    <button
+                    {/* <button
                         onClick={() => setShowModal(true)}
                         className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                         style={{ backgroundColor: 'blue', color: 'white' }}
                     >
                         Start New Thread
-                    </button>
+                    </button> */}
+                    <Button 
+                        label="Start New Thread"
+                        onClick={() => setShowModal(true)}
+                        color="blue-button"
+                    />
                 </div>
                 <div className="space-y-3">
                     {threads.map((thread) => (
