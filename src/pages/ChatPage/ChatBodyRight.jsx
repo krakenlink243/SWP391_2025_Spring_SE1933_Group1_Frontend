@@ -81,7 +81,9 @@ function ChatBodyRight({ curChat, setSettingPopup, setAddMemberPopup, setCurChat
                                 {
                                     curChat.type === 'group' ? (
                                         <div className="group-avatar-container">
-                                            <GroupAvatar />
+                                            <GroupAvatar
+                                                groupId={curChat.id}
+                                            />
                                         </div>
                                     ) : (
                                         <img className="avatar" src={curChat.avatarUrl}
@@ -100,32 +102,30 @@ function ChatBodyRight({ curChat, setSettingPopup, setAddMemberPopup, setCurChat
                     </div>
                     <div className="middle-body" style={{ height: "85%" }}>
                         <div className="padder-top" style={{ height: curChat.type === 'group' ? "60px" : "4px" }}>
-                            {
-                                curChat.type === 'group' && (
-                                    <div className="padder-top-content h-100 d-flex align-items-center justify-content-between gap-3 p-2">
-                                        <div className="group-title h-100 d-flex align-items-center gap-2">
-                                            <div className="group-avatar-container">
-                                                <GroupAvatar />
-                                            </div>
-                                            <div className="group-name" >
-                                                {curChat.name}
-                                            </div>
-                                        </div>
-                                        <div className="user-actions d-flex flex-row align-items-center gap-2">
-                                            <div className="setting-icon" onClick={() => setAddMemberPopup(true)}>
-                                                <svg version="1.1" id="Layer_5" xmlns="http://www.w3.org/2000/svg" className="h-100 w-100" x="0px" y="0px" width="256px" height="255.999px" viewBox="0 0 256 255.999"><path d="M165.678,20.535c-17.251,0-31.386,14.135-31.386,31.386c0,17.252,14.135,31.386,31.386,31.386 c17.251,0,31.386-14.134,31.386-31.386C197.063,34.67,182.929,20.535,165.678,20.535z"></path><path d="M165.678,93.121c24.995,0,45.335,20.34,45.335,45.335v52.31c0,3.853-3.123,6.975-6.975,6.975h-13.95v34.874 c0,3.852-3.123,6.974-6.974,6.975h-34.874c-3.852-0.001-6.974-3.123-6.975-6.975v-34.874h-13.95c-3.852,0-6.974-3.123-6.974-6.975 v-52.31C120.343,113.461,140.683,93.121,165.678,93.121z"></path><g className="invitePlus"><line fill="none" stroke="#ffffff" stroke-width="22" stroke-miterlimit="10" x1="14" y1="128" x2="101.5" y2="128"></line><line fill="none" stroke="#ffffff" stroke-width="22" strokeMiterlimit="10" x1="57.75" y1="84.25" x2="57.75" y2="171.75"></line></g></svg>
-                                            </div>
-                                            <div className="setting-icon" onClick={() => setSettingPopup({
-                                                groupId: curChat.id,
-                                                isAdmin: meId === String(sortedMembers[0].memberId) && sortedMembers[0].admin
-                                            })}>
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-100 w-100" version="1.1" x="0px" y="0px" viewBox="0 0 600 600"><g><path d="M256,0C126.6,0,21.3,104.7,21.3,233.7c0,65.9,26.5,125.4,74.7,168.3v99.3c0,3.8,2,7.4,5.3,9.2c1.7,1,3.5,1.5,5.3,1.5   c1.8,0,3.7-0.5,5.4-1.5l85.8-50.3c18.9,4.8,38.4,7.3,58.1,7.3c129.4,0,234.7-104.9,234.7-233.7C490.7,104.7,385.4,0,256,0z    M405.3,254.1L370,260c-3,13.5-8.3,26-15.5,37.3l20.8,29.2L347.8,354l-29.2-20.8c-11.3,7.2-23.8,12.5-37.3,15.5l-5.9,35.3h-39   l-5.9-35.3c-13.5-3-26-8.3-37.3-15.5L164.2,354l-27.5-27.5l20.8-29.2C150.3,286,145,273.5,142,260l-35.3-5.9v-39l35.3-5.9   c3-13.5,8.3-26,15.5-37.3l-20.8-29.2l27.5-27.5l29.2,20.8c11.3-7.2,23.8-12.5,37.3-15.5l5.9-35.3h39l5.9,35.3   c13.5,3,26,8.3,37.3,15.5l29.2-20.8l27.5,27.5L354.5,172c7.2,11.3,12.5,23.8,15.5,37.3l35.3,5.9V254.1z"></path><circle cx="256" cy="234.6" r="45.9"></circle></g></svg>
-                                            </div>
-                                        </div>
-
+                            <div className={`padder-top-content h-100 d-flex align-items-center justify-content-between gap-3 p-2 ${curChat.type === 'group' ? 'show' : ''}`}>
+                                <div className="group-title h-100 d-flex align-items-center gap-2">
+                                    <div className="group-avatar-container">
+                                        <GroupAvatar
+                                            groupId={curChat.id}
+                                        />
                                     </div>
-                                )
-                            }
+                                    <div className="group-name" >
+                                        {curChat.name}
+                                    </div>
+                                </div>
+                                <div className="user-actions d-flex flex-row align-items-center gap-2">
+                                    <div className="setting-icon" onClick={() => setAddMemberPopup(true)}>
+                                        <svg version="1.1" id="Layer_5" xmlns="http://www.w3.org/2000/svg" className="h-100 w-100" x="0px" y="0px" width="256px" height="255.999px" viewBox="0 0 256 255.999"><path d="M165.678,20.535c-17.251,0-31.386,14.135-31.386,31.386c0,17.252,14.135,31.386,31.386,31.386 c17.251,0,31.386-14.134,31.386-31.386C197.063,34.67,182.929,20.535,165.678,20.535z"></path><path d="M165.678,93.121c24.995,0,45.335,20.34,45.335,45.335v52.31c0,3.853-3.123,6.975-6.975,6.975h-13.95v34.874 c0,3.852-3.123,6.974-6.974,6.975h-34.874c-3.852-0.001-6.974-3.123-6.975-6.975v-34.874h-13.95c-3.852,0-6.974-3.123-6.974-6.975 v-52.31C120.343,113.461,140.683,93.121,165.678,93.121z"></path><g className="invitePlus"><line fill="none" stroke="#ffffff" stroke-width="22" stroke-miterlimit="10" x1="14" y1="128" x2="101.5" y2="128"></line><line fill="none" stroke="#ffffff" stroke-width="22" strokeMiterlimit="10" x1="57.75" y1="84.25" x2="57.75" y2="171.75"></line></g></svg>
+                                    </div>
+                                    <div className="setting-icon" onClick={() => setSettingPopup({
+                                        groupId: curChat.id,
+                                        isAdmin: meId === String(sortedMembers[0].memberId) && sortedMembers[0].admin
+                                    })}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-100 w-100" version="1.1" x="0px" y="0px" viewBox="0 0 600 600"><g><path d="M256,0C126.6,0,21.3,104.7,21.3,233.7c0,65.9,26.5,125.4,74.7,168.3v99.3c0,3.8,2,7.4,5.3,9.2c1.7,1,3.5,1.5,5.3,1.5   c1.8,0,3.7-0.5,5.4-1.5l85.8-50.3c18.9,4.8,38.4,7.3,58.1,7.3c129.4,0,234.7-104.9,234.7-233.7C490.7,104.7,385.4,0,256,0z    M405.3,254.1L370,260c-3,13.5-8.3,26-15.5,37.3l20.8,29.2L347.8,354l-29.2-20.8c-11.3,7.2-23.8,12.5-37.3,15.5l-5.9,35.3h-39   l-5.9-35.3c-13.5-3-26-8.3-37.3-15.5L164.2,354l-27.5-27.5l20.8-29.2C150.3,286,145,273.5,142,260l-35.3-5.9v-39l35.3-5.9   c3-13.5,8.3-26,15.5-37.3l-20.8-29.2l27.5-27.5l29.2,20.8c11.3-7.2,23.8-12.5,37.3-15.5l5.9-35.3h39l5.9,35.3   c13.5,3,26,8.3,37.3,15.5l29.2-20.8l27.5,27.5L354.5,172c7.2,11.3,12.5,23.8,15.5,37.3l35.3,5.9V254.1z"></path><circle cx="256" cy="234.6" r="45.9"></circle></g></svg>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                         <div className="chat-history-container" style={{ height: curChat.type === 'group' ? "calc(100% - 60px)" : "calc(100% - 4px)" }}>
                             <div

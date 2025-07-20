@@ -95,12 +95,17 @@ export default function GroupSettingPopup({ groupSetting, setOpenPopup, setCurCh
                                             )
                                         }
                                     </div>
-                                    <div className='fast-exit' onClick={() => setIsLeaveGroup(true)}>
-                                        <svg
-                                            version="1.1"
-                                            xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="64px" height="64px" viewBox="0 0 64 64" enableBackground="new 0 0 64 64"><g className="Arrow"><polyline fill="none" stroke-width="2" stroke-linecap="round" strokeLinejoin="round" stroke-miterlimit="10" points="41,30.7 14.5,30.7 23.5,19.4 "></polyline><polyline fill="none" stroke-width="2" stroke-linecap="round" strokeLinejoin="round" stroke-miterlimit="10" points="41,30.7 14.5,30.7 23.5,42 "></polyline></g><g><polyline className="ExitDoor" stroke-linecap="round" stroke-miterlimit="1" stroke-width="2px" fill="none" points="32.5,22.1 32.5,17.7 47.7,17.7 47.7,43.8 32.5,43.8 32.5,39.5"></polyline></g></svg>
-                                        Leave Group Chat
-                                    </div>
+                                    {
+                                        !groupSetting.isAdmin && (
+                                            <div className='fast-exit' onClick={() => setIsLeaveGroup(true)}>
+                                                <svg
+                                                    version="1.1"
+                                                    xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="64px" height="64px" viewBox="0 0 64 64" enableBackground="new 0 0 64 64"><g className="Arrow"><polyline fill="none" stroke-width="2" stroke-linecap="round" strokeLinejoin="round" stroke-miterlimit="10" points="41,30.7 14.5,30.7 23.5,19.4 "></polyline><polyline fill="none" stroke-width="2" stroke-linecap="round" strokeLinejoin="round" stroke-miterlimit="10" points="41,30.7 14.5,30.7 23.5,42 "></polyline></g><g><polyline className="ExitDoor" stroke-linecap="round" stroke-miterlimit="1" stroke-width="2px" fill="none" points="32.5,22.1 32.5,17.7 47.7,17.7 47.7,43.8 32.5,43.8 32.5,39.5"></polyline></g></svg>
+                                                Leave Group Chat
+                                            </div>
+                                        )
+                                    }
+
                                 </div>
                                 <div className='right-col'>
                                     {subTabs[curTab]}

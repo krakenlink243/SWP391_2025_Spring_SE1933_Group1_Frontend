@@ -93,11 +93,16 @@
     background: radial-gradient(ellipse farthest-corner at 50% 30%, #212329 0%, #1e2025 50%, #1c1d22 100%);
 }
 
-.friends-list-container .friend-list-content .friend-list-wrapper,
-.friends-list-container .group-chat-content .group-chat-wrapper {
+.friends-list-container .friend-list-content .friend-list-wrapper {
     height: 100%;
     overflow-y: auto;
 }
+
+.friends-list-container .group-chat-content .group-chat-wrapper {
+    height: calc(100% - 30px);
+    overflow-y: auto;
+}
+
 
 #middle-pane .wrapper-header {
     background-color: #434953;

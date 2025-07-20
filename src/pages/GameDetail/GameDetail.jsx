@@ -70,7 +70,7 @@ const GameDetail = () => {
      * @since 15-06-2025
      * @status done
      */
-    <div className="container-fluid">
+    <div className="game-detail container-fluid">
       <div className="row">
         <div className="spacer col-lg-2"></div>
         <div className=" col-lg-8 text-white">
