@@ -607,7 +607,7 @@ function UpdateGame() {
             </>
           )}
         </div>
-        {gameId||requestId &&(
+        {(gameId||requestId) &&(
           <div className='update-log'>
             <PartHeading content='Update Log' />
             <textarea name="updateLog" id="" value={formData.updateLog} onChange={handleChange}></textarea>
