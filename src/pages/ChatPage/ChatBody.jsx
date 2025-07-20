@@ -18,8 +18,10 @@ function ChatBody({ bodyH }) {
     const [openAddGroupPopup, setOpenAddGroupPopup] = useState(false);
     const [openGroupSettingPopup, setOpenGroupSettingPopup] = useState(null);
     const [openAddMemberPopup, setOpenAddMemberPopup] = useState(null);
+
     const { token } = useAuth();
-    const { members } = useConversation(token, curChat);
+    const { conversation, members, messages, sendMessages } =
+        useConversation(token, curChat);
 
     const { groupChats } = useContext(AppContext);
 
@@ -70,6 +72,7 @@ function ChatBody({ bodyH }) {
                     groupSetting={openGroupSettingPopup}
                     setOpenPopup={setOpenGroupSettingPopup}
                     setCurChat={setCurChat}
+                    members={members}
                 />
             )
             }
@@ -92,6 +95,10 @@ function ChatBody({ bodyH }) {
                 setSettingPopup={setOpenGroupSettingPopup}
                 setAddMemberPopup={setOpenAddMemberPopup}
                 setCurChat={setCurChat}
+                conversation={conversation}
+                members={members}
+                messages={messages}
+                sendMessages={sendMessages}
             />
 
         </div>

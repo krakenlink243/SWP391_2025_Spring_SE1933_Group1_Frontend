@@ -59,8 +59,6 @@ export function useConversation(token, curChat) {
       });
 
       SocketService.subscribe(leaveTopic, leaverId => {
-        console.log(`Member left: ${leaverId}`);
-        console.log('Current members:', members);
         setMembers(prev => prev.filter(member => member.memberId !== leaverId));
       });
     }

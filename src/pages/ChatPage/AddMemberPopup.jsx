@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AppContext } from "../../context/AppContext";
 import Button from "../../components/Button/Button";
 import axios from "axios";
@@ -7,13 +7,24 @@ import './AddMemberPopup.css'
 export default function AddMemberPopup({ setOpenPopup, groupId, groupMembers }) {
     const [newGMembers, setNewGMembers] = useState([]);
     const { friendList } = useContext(AppContext);
+    const isBanned = localStorage.getItem("isBanned") === "true";
+    const [isGroupFull, setIsGroupFull] = useState(false);
+
+    useEffect(() => {
+        setIsGroupFull((groupMembers.length + newGMembers.length) > 50);
+    }, [groupMembers, newGMembers]);
+
+    // const isGroupFull = true;
+    // const isBanned = true;
 
     const availableFriend = friendList.filter(
-        (friend) => !groupMembers.some((member) => member.memberId === friend.friendId)
+        (friend) => !groupMembers.some((member) => member.memberId === friend.friendId && friend.groupsTakeIn < 10)
     );
 
 
     const handleAddMembers = () => {
+        if (isGroupFull || newGMembers.length === 0 || isBanned)
+            return;
         axios.post(`${import.meta.env.VITE_API_URL}/user/groupchat/join/${groupId}`, newGMembers);
         setNewGMembers([]);
         setOpenPopup(false);
@@ -25,6 +36,20 @@ export default function AddMemberPopup({ setOpenPopup, groupId, groupMembers }) 
                 <div className="title">
                     Add Member to Group Chat
                 </div>
+                {
+                    isGroupFull && (
+                        <div className="warning-message">
+                            Number of members in this group has reached the limit of 50. Please remove some members before adding new ones.
+                        </div>
+                    )
+                }
+                {
+                    isBanned && (
+                        <div className="warning-message">
+                            You are currently banned. Please contact through Feedback or Email to unban.
+                        </div>
+                    )
+                }
 
                 {/* Group Members selected */}
                 <div className="form-group">
@@ -56,13 +81,13 @@ export default function AddMemberPopup({ setOpenPopup, groupId, groupMembers }) 
                             return (
                                 <div
                                     key={friend.friendId}
-                                    className={`friend-item ${isSelected ? 'selected' : ''}`}
+                                    className={`friend-item ${isSelected ? 'selected' : ''} ${isGroupFull || isBanned ? 'disabled' : ''}`}
                                     onClick={() => {
                                         if (isSelected) {
                                             setNewGMembers((prev) =>
                                                 prev.filter((m) => m.memberId !== friend.friendId)
                                             );
-                                        } else {
+                                        } else if (!isGroupFull && !isBanned) {
                                             setNewGMembers((prev) => [...prev, {
                                                 memberId: friend.friendId,
                                                 isAdmin: false,
@@ -88,7 +113,7 @@ export default function AddMemberPopup({ setOpenPopup, groupId, groupMembers }) 
                         setOpenPopup(false);
                     }
                     } color="grey-button" />
-                    <Button label={"Add Members"} onClick={() => handleAddMembers()} color="gradient-blue-button" />
+                    <Button label={"Add Members"} onClick={() => handleAddMembers()} color="gradient-blue-button" disabled={isBanned || isGroupFull || newGMembers.length === 0} />
                 </div>
             </div>
         </div>

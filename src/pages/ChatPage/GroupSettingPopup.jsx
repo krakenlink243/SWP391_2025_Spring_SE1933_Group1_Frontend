@@ -1,13 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../../components/Button/Button';
 import './GroupSettingPopup.css';
 import axios from 'axios';
 
-export default function GroupSettingPopup({ groupSetting, setOpenPopup, setCurChat }) {
+export default function GroupSettingPopup({ groupSetting, setOpenPopup, setCurChat, members }) {
 
     const [curTab, setCurTab] = useState(0);
     const curUserId = localStorage.getItem("userId");
     const [isLeaveGroup, setIsLeaveGroup] = useState(false);
+    const [kickMembers, setKickMembers] = useState([]);
+
+    const [isGroupEmpty, setIsGroupEmpty] = useState(members.length === 1);
+
+    const [groupMembers, setGroupMembers] = useState(members.filter(member => String(member.memberId) !== curUserId));
+    useEffect(() => {
+        setIsGroupEmpty(members.length === 1);
+    }, [members]);
+
+    useEffect(() => {
+        setGroupMembers(members.filter(member => String(member.memberId) !== curUserId));
+    }, [members, curUserId]);
 
     const handleDeleteGroupChat = () => {
         if (!groupSetting.isAdmin) return;
@@ -23,6 +35,12 @@ export default function GroupSettingPopup({ groupSetting, setOpenPopup, setCurCh
         setCurChat(null);
     }
 
+    const handleKickMember = () => {
+        if (!groupSetting.isAdmin || kickMembers.length === 0) return;
+        const kickMemberIds = kickMembers.map(member => member.memberId);
+        axios.post(`${import.meta.env.VITE_API_URL}/user/groupchat/kick/${groupSetting.groupId}`, kickMemberIds)
+        setKickMembers([]);
+    }
     const handleChangeGroupName = () => {
 
     }
@@ -47,12 +65,90 @@ export default function GroupSettingPopup({ groupSetting, setOpenPopup, setCurCh
         ),
         (
             <div className='delete-group wrapper'>
-                <div>
+                <div className='pb-3'>
                     Are you sure you want to delete this group ?
+                    <br></br>
+                    All messages and members will be <u>removed</u>.
                 </div>
                 <Button label={'Delete'} color='red-button' onClick={() => handleDeleteGroupChat()} />
             </div>
         ),
+        (
+            <div className='kick-member wrapper'>
+                <div>
+                    Kick Member
+                </div>
+                <div>
+                    <div className="form-group">
+                        <label>Choosed Group Members</label>
+                        <div className="selected-members-list d-flex flex-row flex-wrap align-items-center">
+                            {kickMembers.map((member) => (
+                                <div
+                                    key={member.memberId}
+                                    className="selected-member"
+                                    onClick={() =>
+                                        setKickMembers((prev) =>
+                                            prev.filter((m) => m.memberId !== member.memberId)
+                                        )
+                                    }
+                                >
+                                    <span className="selected-member-name">{member.memberName}</span>
+                                    ✕
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Friend list to choose */}
+                    <div className="form-group">
+                        <label>Choose Members</label>
+                        <div className="member-list">
+                            {groupMembers.map((member) => {
+                                const isSelected = kickMembers.some((g) => g.memberId === member.memberId);
+                                return (
+                                    <div
+                                        key={member.memberId}
+                                        className={`member-item ${isSelected ? 'selected' : ''}`}
+                                        onClick={() => {
+                                            if (isSelected) {
+                                                setKickMembers((prev) =>
+                                                    prev.filter((m) => m.memberId !== member.memberId)
+                                                );
+                                            } else {
+                                                setKickMembers((prev) => [...prev, {
+                                                    memberId: member.memberId,
+                                                    isAdmin: false,
+                                                    memberName: member.memberName,
+                                                    memberAvatar: member.memberAvatar
+                                                }]);
+                                            }
+                                        }}
+                                    >
+                                        <div className="avatar">
+                                            <img src={member.memberAvatar}></img>
+                                        </div>
+                                        {member.memberName}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    <div className="d-flex flex-row justify-content-around align-items-center py-2">
+                        <Button label={"Reset"} onClick={() => {
+                            setKickMembers([]);
+                        }
+                        } color="grey-button" />
+                        <Button
+                            label={`Kick ${kickMembers.length} Member${kickMembers.length > 1 ? 's' : ''}`}
+                            onClick={() => handleKickMember()}
+                            color="gradient-blue-button"
+                            disabled={isGroupEmpty || kickMembers.length === 0}
+                        />
+                    </div>
+                </div>
+            </div>
+        )
     ];
 
     return (
@@ -87,10 +183,20 @@ export default function GroupSettingPopup({ groupSetting, setOpenPopup, setCurCh
                                         {
                                             groupSetting.isAdmin && (
                                                 <div
-                                                    className={`sub-item ${curTab[2] ? "actived" : ""}`}
+                                                    className={`sub-item ${curTab === 2 ? "actived" : ""}`}
                                                     onClick={() => setCurTab(2)}
                                                 >
                                                     Delete Group
+                                                </div>
+                                            )
+                                        }
+                                        {
+                                            groupSetting.isAdmin && (
+                                                <div
+                                                    className={`sub-item ${curTab == 3 ? "actived" : ""}`}
+                                                    onClick={() => setCurTab(3)}
+                                                >
+                                                    Kick Member
                                                 </div>
                                             )
                                         }

@@ -8,8 +8,8 @@
 }
 
 .add-member-popup-container .popup-wrapper {
-    max-width: calc(100% / 2);
-    min-width: calc(100% / 3);
+    width: calc(100% / 2);
+    
     margin: auto;
     background: radial-gradient(circle at top left, rgba(74, 81, 92, 0.4) 0%, rgba(75, 81, 92, 0) 60%), #25282e;
     user-select: none;
@@ -21,6 +21,11 @@
     text-align: center;
     text-transform: uppercase;
 }
+
+.popup-wrapper .warning-message {
+    color: red;
+}
+
 
 .popup-wrapper .form-group {
     display: flex;
@@ -93,6 +98,11 @@
     gap: 5px;
     cursor: pointer;
 }
+
+.popup-wrapper .form-group .friend-list .friend-item.disabled {
+    user-select: none;
+}
+
 
 .popup-wrapper .form-group .friend-list .friend-item:hover .avatar {
     filter: brightness(1.5);

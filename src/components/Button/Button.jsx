@@ -13,7 +13,7 @@ function Button({ label, onClick, disabled, color, type }) {
     <button
       onClick={onClick}
       disabled={disabled}
-      className={color} // Adjusted by Phan NT Son
+      className={`${color} ${disabled === true ? "disabled-button" : ""}`} // Adjusted by Phan NT Son
       type={type ? type : ""}
     >
       {label}

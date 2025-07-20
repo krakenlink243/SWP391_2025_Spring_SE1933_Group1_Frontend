@@ -8,9 +8,15 @@ export default function AddGroupPopup({ setOpenPopup }) {
 
     const [newGroupName, setNewGroupName] = useState("");
     const [newGMembers, setNewGMembers] = useState([]);
-    const { friendList } = useContext(AppContext);
+    const { friendList, groupChats } = useContext(AppContext);
+    const isGroupFull = groupChats.length >= 10;
+    const isBanned = localStorage.getItem("isBanned") === "true";
+    // const isGroupFull = true;
 
     const handleAddGroupChat = () => {
+        if (isGroupFull) {
+            return;
+        }
         axios.post(`${import.meta.env.VITE_API_URL}/user/groupchat/add`, {
             groupName: newGroupName,
             members: newGMembers
@@ -34,9 +40,10 @@ export default function AddGroupPopup({ setOpenPopup }) {
                     <label>Group Name</label>
                     <input
                         type="text"
-                        max={100}
+                        maxLength={100}
                         value={newGroupName}
                         onChange={(e) => setNewGroupName(e.target.value)}
+                        disabled={isGroupFull || isBanned}
                     ></input>
                 </div>
 
@@ -103,7 +110,12 @@ export default function AddGroupPopup({ setOpenPopup }) {
                         setOpenPopup(false);
                     }
                     } color="grey-button" />
-                    <Button label={"Create Group"} onClick={() => handleAddGroupChat()} color="gradient-blue-button" />
+                    <Button
+                        label={`Create Group`}
+                        onClick={() => handleAddGroupChat()}
+                        color="gradient-blue-button"
+                        disabled={isGroupFull || isBanned || newGroupName.trim() === "" || newGMembers.length === 0}
+                    />
                 </div>
             </div>
         </div>

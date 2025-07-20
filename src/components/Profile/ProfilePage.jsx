@@ -40,6 +40,10 @@ const ProfileHeader = ({
       })
   }
 
+  const handleBlock = (friendId) => {
+    axios.patch(`${import.meta.env.VITE_API_URL}/user/block/${friendId}`);
+  }
+
   const CUR_TOKEN = useAuth();
   useEffect(() => {
     if (CUR_TOKEN && !isTokenExpired()) {
@@ -77,16 +81,20 @@ const ProfileHeader = ({
                   <button className="action-btn secondary" onClick={onMessageClick}>
                     Message
                   </button>
-
                   <button className="action-btn secondary" onClick={() => handleUnfriend(user.userId)}>
                     Unfriend
                   </button>
 
                 </div>
               ) : (
-                <button className="action-btn primary" onClick={onAddFriendClick}>
-                  Add Friend
-                </button>
+                <div className="d-flex flex-row gap-3">
+                  <button className="action-btn primary" onClick={onAddFriendClick}>
+                    Add Friend
+                  </button>
+                  <button className="action-btn secondary" onClick={() => handleBlock(user.userId)}>
+                    Block User
+                  </button>
+                </div>
               )}
             </>
           )}
