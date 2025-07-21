@@ -29,10 +29,6 @@
   transition-duration: 250ms;
 }
 
-/*
-
-*/
-
 .notifbox-container .notifbox-badge {
   position: absolute;
   top: -5px;

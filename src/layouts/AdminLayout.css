@@ -5,11 +5,32 @@
 }
 
 .admin-container .left-col .admin-menu-item{
-    flex: 1;
-    
+    /* flex: 1; */
+    /* background-color: red; */
 }
 
 .admin-container .right-col{
     max-height: 100%;
     overflow-y: auto;
 }
+.admin-container .admin-menu-item {
+  padding: 10px 20px;
+  color: #c7d5e0;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.admin-container .admin-menu-item:hover,
+.admin-container .admin-menu-item:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.admin-container .admin-menu-item.active {
+  background: linear-gradient(to right, #5c7694, #2e5375);
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+

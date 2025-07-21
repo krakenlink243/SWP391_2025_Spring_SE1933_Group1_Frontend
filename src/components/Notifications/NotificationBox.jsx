@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect, useContext } from "react";
 import { FaBell } from 'react-icons/fa';
 import './NotificationBox.css';
 import { useNavigate } from "react-router-dom";
 import NotificationBoxItem from "./NotificationBoxItem";
-import { useUnreadNotifications } from "../../hooks/useUnreadNotifications";
+import { AppContext } from "../../context/AppContext";
 
 /**
  * @author Phan NT Son
@@ -13,34 +12,32 @@ import { useUnreadNotifications } from "../../hooks/useUnreadNotifications";
  * @returns 
  */
 function NotificationBox() {
-  const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const CUR_TOKEN = localStorage.getItem("token");
-  const socketNotifications = useUnreadNotifications(CUR_TOKEN);
+  const [isSeen, setIsSeen] = useState(false);
   const navigate = useNavigate();
+  const [unreadNotifications, setUnreadNotifications] = useState([]);
 
-  useEffect(() => {
-    console.log("Refresh notiflist");
-    setData(socketNotifications);
-  }, [socketNotifications]);
- 
+  const { notifications, setNotifications } = useContext(AppContext);
+
 
   // Open notif box
   const toggleOpenNotification = () => {
     setIsOpen((prev) => !prev);
+    setIsSeen(true);
   }
 
+  useEffect(() => {
+    setIsSeen(false);
+    setUnreadNotifications(notifications.filter(n => !n.read));
+  }, [notifications]);
+
   const handleMarkRead = (notifId) => {
-    setData(prev =>
-      prev.map(n =>
-        n.notifId === notifId ? { ...n, read: true } : n
-      )
-    );
+    setNotifications((prev) => prev.map(n => n.notifId === notifId ? { ...n, read: true } : n));
   };
 
   return (
     <div className="notifbox-container">
-      <div className={`notifbox-bell ${data.length > 0 ? "notif" : ""}`} onClick={toggleOpenNotification}>
+      <div className={`notifbox-bell ${unreadNotifications.length > 0 && !isSeen ? "notif" : ""}`} onClick={toggleOpenNotification}>
         <FaBell />
       </div>
 
@@ -51,8 +48,8 @@ function NotificationBox() {
         </div>
 
         <ul className="notifbox-list">
-          {data.length > 0 ? (
-            data.map((n) => (
+          {unreadNotifications.length > 0 ? (
+            unreadNotifications.map((n) => (
               <div key={n.notifId}>
                 <NotificationBoxItem
                   notification={n}

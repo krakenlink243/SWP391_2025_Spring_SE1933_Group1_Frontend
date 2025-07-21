@@ -1,0 +1,39 @@
+.user-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background-color: #161E2A;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 10px;
+  border-radius: 3px;
+}
+
+.user-item-title {
+  flex: 2;
+  text-align: left;
+  color: white;
+  font-size: 18px;
+}
+.user-item-thumbnail{
+    /* flex: 1; */
+    margin-right: 10px;
+}
+.user-item-actions {
+  flex: 1;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.user-item-actions button{
+  width: 100px;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+.user-item-time {
+  flex: 2;
+  text-align: center;
+  color: #4C6C8C;
+}

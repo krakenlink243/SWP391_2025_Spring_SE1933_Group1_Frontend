@@ -1,75 +1,812 @@
 {
   
-  "STORE": "STORE",
-  "COMMUNITY": "COMMUNITY",
-  "ABOUT": "ABOUT",
-  "SUPPORT": "SUPPORT",
-  "CHAT": "CHAT",
-  "ADMIN TOOLS": "ADMIN TOOLS",
+    "pages/Admin/Request/FeedbackApproveDetails":"pages/Admin/Request/FeedbackApproveDetails",
+      "Error fetching feedback details":"Error fetching feedback details",
+      "Send answer to": "Send answer to",
+      "Answer Feedback": "Answer Feedback",
+      "Answer For": "Answer For",
+      "Type your answer here...": "Type your answer here...",
+      "Approved request": "Approved request",
+      "Error approving request": "Error approving request",
+      "Please enter answer": "Please enter answer",
+      "Submit": "Submit",
+      "Are you sure you want to decline this feedback?": "Are you sure you want to decline this feedback?",
+      "Feedback Answer": "Feedback Answer",
+      "Your feedback": "Your feedback",
+      "has been dismissed": "has been dismissed",
+      "FEEDBACK": "FEEDBACK",
+      "from": "from",
+      "Subject": "Subject",
 
-  "Your Store": "Your Store",
-  "New & Noteworthy": "New & Noteworthy",
-  "Categories": "Categories",
-  "Points Shop": "Points Shop",
-  "News": "News",
-  "Labs": "Labs",
-  "search": "search",
 
-  "trang 1": "/components/AccountDetailPage",
+    "pages/Admin/Request/FeedbackApprovePage":"pages/Admin/Request/FeedbackApprovePage",
+      "Error fetching data": "Error fetching data",
+      "Answer for your feedback": "Answer for your feedback",
+      "Feedback dismissed": "Feedback dismissed",
+      "Updated Tick Array": "Updated Tick Array",
+      "Are you sure you want to dissmiss all selected feedback?": "Are you sure you want to dissmiss all selected feedback?",
+      "Processed approve for request ID": "Processed approve for request ID",
+      "All selected feedback have been dissmiss": "All selected feedback have been dissmiss",
+      "Error during approve": "Error during approve",
+      "Feedback Subject": "Feedback Subject",
+      "From": "From",
+      "Date": "Date",
+      "There is no feedback at this time": "There is no feedback at this time",
+
+
+  "pages/Admin/Request/GameApproveDetails": "pages/Admin/Request/GameApproveDetails",
+    "Are you sure you want to approve this game?": "Are you sure you want to approve this game?",
+    "Game Approved": "Game Approved",
+    "Decline Game Request": "Decline Game Request",
+    "To": "To",
+    "Game Approval Response": "Game Approval Response",
+    "Answer for": "Answer for",
+    "Declined request": "Declined request",
+    "Error declining request": "Error declining request",
+    "'s  Game Application": "'s Game Application",
+    "Name(*)": "Name(*)",
+    "Price(*)": "Price(*)",
+    "Tags(*)": "Tags(*)",
+    "OS(*)": "OS(*)",
+    "Processor(*)": "Processor(*)",
+    "Memory(*)": "Memory(*)",
+    "Graphics(*)": "Graphics(*)",
+    "Storage(*)": "Storage(*)",
+
+
+  "pages/Admin/Request/GameApprovePage": "pages/Admin/Request/GameApprovePage",
+    "Decline Game": "Decline Game",
+    "Game Declined": "Game Declined",
+    "ook": "ook",
+    "Are you sure you want to approve these selected games?": "Are you sure you want to approve these selected games?",
+    "All selected requests have been approved": "All selected requests have been approved",
+    "All selected requests have been declined": "All selected requests have been declined",
+    "Game Title": "Game Title",
+    "There is no game pending for approve at this time": "There is no game pending for approve at this time",
+
+
+  "pages/Admin/Request/PublisherApproveDetails": "pages/Admin/Request/PublisherApproveDetails",
+    "Error fetching publisher data": "Error fetching publisher data",
+    "Are you sure you want to approve this publisher?": "Are you sure you want to approve this publisher?",
+    "Publisher Approved": "Publisher Approved",
+    "Decline Publisher Request": "Decline Publisher Request",
+    "Publisher Apply Response": "Publisher Apply Response",
+    "Answer for your publisher apply": "Answer for your publisher apply",
+    "Publisher Application": "Publisher Application",
+    "Legal Name": "Legal Name",
+    "Publisher Name": "Publisher Name",
+    "Address": "Address",
+    "Social ID": "Social ID",
+    "Country": "Country",
+
+
+  "pages/Admin/Request/PublisherApprovePage": "pages/Admin/Request/PublisherApprovePage",
+    "Decline Publisher": "Decline Publisher",
+    "Reason for declining...": "Reason for declining...",
+    "Publisher Declined": "Publisher Declined",
+    "Are you sure you want to approve these publishers?": "Are you sure you want to approve these publishers?",
+    "All selected publishers have been approved": "All selected publishers have been approved",
+    "All selected publishers have been declined": "All selected publishers have been declined",
+    "There is no one want to be publisher at this time": "There is no one want to be publisher at this time",
+
+
+  "pages/Admin/Request/RequestSection": "pages/Admin/Request/RequestSection",
+    "Game Request": "Game Request",
+    "Publisher Request": "Publisher Request",
+    "Feedback": "Feedback",
+
+
+  "pages/Admin/AdminDashboard": "pages/Admin/AdminDashboard",
+    "DASHBOARD CONTENT HERE": "DASHBOARD CONTENT HERE",
+
+
+  "pages/Admin/UserManagementPage": "pages/Admin/UserManagementPage",
+    "Banned Users": "Banned Users",
+
+
+  "pages/CartPage/Cart": "pages/CartPage/Cart",
+    "Error removing game": "Error removing game",
+    "Purchase failed": "Purchase failed",
+    "Purchase successful": "Purchase successful",
+    "Purchase failed due to an unknown error": "Purchase failed due to an unknown error",
+    "Your Shopping Cart": "Your Shopping Cart",
+    "Loading...": "Loading...",
+    "Your cart is empty": "Your cart is empty",
+    "Unnamed Game": "Unnamed Game",
+    "Remove": "Remove",
+    "Estimated total": "Estimated total",
+    "Continue Shopping": "Continue Shopping",
+    "Purchase for Myself": "Purchase for Myself",
+    "Confirm Purchase": "Confirm Purchase",
+    "Are you sure you want to purchase all games in your cart?": "Are you sure you want to purchase all games in your cart?",
+    "Cancel": "Cancel",
+    "Confirm": "Confirm",
+    "Purchase Result": "Purchase Result",
+    "OK": "OK",
+    "Remove Game": "Remove Game",
+    "Are you sure you want to remove": "Are you sure you want to remove",
+    "from your cart?": "from your cart?",
+
+
+  "pages/Community/ChatBody":"pages/Community/ChatBody",
+  
+
+  "pages/Community/ChatBodyLeft":"pages/Community/ChatBodyLeft",
+    "Online": "Online",
+
+
+  "pages/Community/ChatBodyRight":"pages/Community/ChatBodyRight",
+
+
+  "pages/Community/ChatHeader":"pages/Community/ChatHeader",
+    "STORE": "STORE",
+    "COMMUNITY": "COMMUNITY",
+     "SUPPORT": "SUPPORT",
+
+
+  "pages/Community/ChatHistory":"pages/Community/ChatHistory",
+
+
+  "pages/Community/ChatPage":"pages/Community/ChatPage",
+
+
+  "pages/ForgotPassword/ChangePassword":"pages/ForgotPassword/ChangePassword",
+    "OTP sent to your email": "OTP sent to your email",
+    "Failed to send OTP": "Failed to send OTP",
+    "Please check your info": "Please check your info",
+    "Password changed successfully": "Password changed successfully",
+    "Failed to reset password": "Failed to reset password",
+    "Please check your OTP and input": "Please check your OTP and input",
+    "Change Password": "Change Password",
+    "Email": "Email",
+    "Checking...": "Checking...",
+    "Send OTP": "Send OTP",
+    "OTP": "OTP",
+    "New Password": "New Password",
+    "Confirm New Password": "Confirm New Password",
+    "Confirm Password Change": "Confirm Password Change",
+
+
+  "pages/ForgotPassword/ForgotPasswordRequest":"pages/ForgotPassword/ForgotPasswordRequest",
+    "OTP sent successfully": "OTP sent successfully",
+    "Please check your email": "Please check your email",
+    "User or email not found": "User or email not found",
+    "Something went wrong":"Something went wrong",
+    "Please try again": "Please try again",
+    "Support": "Support",
+    "Username": "Username",
+    "Confirm email address": "Confirm email address",
+    "Send": "Send",
+
+
+  "pages/ForgotPassword/ResetPassword":"pages/ForgotPassword/ResetPassword",
+    "Passwords do not match": "Passwords do not match",
+    "Password reset successfully": "Password reset successfully",
+    "Redirecting to login...": "Redirecting to login...",
+    "Invalid OTP or request failed": "Invalid OTP or request failed",
+    "OTP Code": "OTP Code",
+    "Confirm Password": "Confirm Password",
+    "Reset": "Reset",
+
+
+  "pages/Friend/AddFriendTab":"pages/Friend/AddFriendTab",
+    "Friend": "Friend",
+    "send you an invite": "send you an invite",
+    "Add A Friend": "Add A Friend",
+    "Your Friend Code": "Your Friend Code",
+    "Enter your friend's Friend Code to invite them to connect": "Enter your friend's Friend Code to invite them to connect",
+    "Enter a Friend Code": "Enter a Friend Code",
+    "Send Invite": "Send Invite",
+
+
+  "pages/Friend/BlockedTab":"pages/Friend/BlockedTab",
+    "Blocked": "Blocked",
+    "Sorry, there are no blocked players to show": "Sorry, there are no blocked players to show",
+
+
+  "pages/Friend/FriendsPage":"pages/Friend/FriendsPage",
+    "Friends": "Friends",
+    "Your Friends": "Your Friends",
+    "Add a Friend": "Add a Friend",
+    "Pending Invites": "Pending Invites",
+
+
+  "pages/Friend/MainTab":"pages/Friend/MainTab",
+    "You have no friends": "You have no friends",
+
+
+  "pages/Friend/PendingInvitesTab":"pages/Friend/PendingInvitesTab",
+    "has accepted your invites": "has accepted your invites",
+    "Received Invites": "Received Invites",
+    "Sorry, there are no pending friend invites to show": "Sorry, there are no pending friend invites to show",
+    "Accept": "Accept",
+    "Block": "Block",
+    "Decline": "Decline",
+    "Sent Invites": "Sent Invites",
+    "Sorry, there are no pending sent invites to show": "Sorry, there are no pending sent invites to show",
+
+
+  "pages/GameDetail/DetailBody":"pages/GameDetail/DetailBody",
+    "ABOUT THIS GAME": "ABOUT THIS GAME",
+
+
+  "pages/GameDetail/DetailHeader":"pages/GameDetail/DetailHeader",  
+    "Failed to add game to cart": "Failed to add game to cart",
+    "RELEASE DATE": "RELEASE DATE",
+    "PUBLISHER": "PUBLISHER",
+    "Reviews stuff": "Reviews stuff",
+    "Buy": "Buy",
+    "Free to Play": "Free to Play",
+    "Add to Cart": "Add to Cart",
+    "Already in Cart": "Already in Cart",
+    "Already in Library": "Already in Library",
+
+
+  "pages/GameDetail/DetailSystem": "pages/GameDetail/DetailSystem",
+    "SYSTEM REQUIREMENTS": "SYSTEM REQUIREMENTS",
+    "MINIMUM": "MINIMUM",
+    "OS": "OS",
+    "Processor": "Processor",
+    "Memory": "Memory",
+    "Graphics": "Graphics",
+    "Storage": "Storage",
+    "Additional Notes": "Additional Notes",
+    "RECOMMENDED": "RECOMMENDED",
+
+
+  "pages/GameDetail/GameDetail": "pages/GameDetail/GameDetail",
+    "Loading game details...": "Loading game details...",
+    "Error fetching game details": "Error fetching game details",
+    "Game not found": "Game not found",
+
+
+  "pages/HomePage/HomePage": "pages/HomePage/HomePage",
+    "Featured Video": "Featured Video",
+
+
+  "pages/HomePage/BrowseByPublisher": "pages/HomePage/BrowseByPublisher",
+    "Browse by Publisher": "Browse by Publisher",
+    "Previous": "Previous",
+    "Next": "Next",
+
+
+  "pages/HomePage/BrowseByTag": "pages/HomePage/BrowseByTag",
+    "Browse by Category": "Browse by Category",
+
+
+  "pages/HomePage/YoutubePlayer": "pages/HomePage/YoutubePlayer",
+    "Video ID is missing": "Video ID is missing",
 
   
-  "BROWSE BY CATEGORY": "BROWSE BY CATEGORY",
-  "trang 2": "/game",
-  "Sort by": "Sort by",
-  "Name (A-Z)":"Name (A-Z)",
-  "Name (Z-A)":"Name (Z-A)",
-  "Release Date (Newest)":"Release Date (Newest)",
-  "Release Date (Oldest)":"Release Date (Oldest)",
-  "Price (Low to High)":"Price (Low to High)",
-  "Price (High to Low)":"Price (High to Low)",
-  "All Games":"All Games",
-  "titles found.":"titles found.",
-  "Free":"Free",
-  "Page":"Page",
-  "of":"of",
-  "Prev":"Prev",
-  "Next":"Next",
-  "Narrow by Price":"Narrow by Price",
-  "Under":"Under",
-  "Any Price":"Any Price",
-  "Narrow by Tag":"Narrow by Tag",
-  "Search for tags":"Search for tags",
-  "Narrow by Publisher":"Narrow by Publisher",
-  "Search for publishers":"Search for publishers",
-
-  "Trang 3":"/game/:gameId",
-  "RELEASE DATE":"RELEASE DATE",
-  "PUBLISHER":"PUBLISHER",
-  "Buy":"Buy",
-  "Free to Play":"Free to Play",
-  "Add to Cart":"Add to Cart",
-  "Already in Cart":"Already in Cart",
-  "Already in Library":"Already in Library",
-  "ABOUT THIS GAME":"ABOUT THIS GAME",
-  "SYSTEM REQUIREMENTS":"SYSTEM REQUIREMENTS",
-  "MINIMUM":"MINIMUM",
-  "RECOMMENDED":"RECOMMENDED",
-  "OS":"OS",
-  "Processor":"Processor",
-  "Memory":"Memory",
-  "Graphics":"Graphics",
-  "Storage":"Storage",
-  "Additional Notes":"Additional Notes",
-  "CUSTOMER REVIEWS FOR ":"CUSTOMER REVIEWS FOR ",
-  "Write a review for ":"Write a review for ",
-  "Write your review here...":"Write your review here...",
-  "Post Review":"Post review",
-  "Do you recommend this game?":"Do you recommend this game?",
-  "No Reviews have been made.":"No Reviews have been made.",
+  "pages/LibraryPage/Library": "pages/LibraryPage/Library",
+    "All Games": "All Games",
+    "'s Library": "'s Library",
+    "My Library": "My Library",
+    "Sort by": "Sort by",
+    "You have not purchased any games yet": "You have not purchased any games yet",
+    "minutes played": "minutes played",
+    "A-Z": "A-Z",
+    "Z-A": "Z-A",
+    "Price (Low to High)": "Price (Low to High",
+    "Price (High to Low)": "Price (High to Low",
 
 
-  "Trang dich cac line xu ly ngoai le":"exception",
-    "AccountDetailsPage":"alert",
-      "Minimum funding amount is $5.":"Minimum funding amount is $5."
+  "pages/NotificationPage/NotificationItem": "pages/NotificationPage/NotificationItem",
+
+
+  "pages/NotificationPage/NotificationList": "pages/NotificationPage/NotificationList",
+    "Are you sure you want to delete all notifications?": "Are you sure you want to delete all notifications?",
+    "Notifications": "Notifications",
+    "unread": "unread",
+    "Mark All Read": "Mark All Read",
+    "Delete All": "Delete All",
+    "Filter to": "Filter to",
+    "You have no notifications at this time": "You have no notifications at this time",
+    "This is where you'll be able to see SteamCL notifications regarding your Friends, Games, and more": "This is where you'll be able to see SteamCL notifications regarding your Friends, Games, and more",
+  
+  
+  "pages/TransactionPage/Transaction": "pages/TransactionPage/Transaction",
+    "No transactions found": "No transactions found",
+    "Game": "Game",
+    "Type": "Type",
+    "Amount": "Amount",
+    "Charges": "Charges",
+    "Detail": "Detail",
+    "Unknown Item": "Unknown Item",
+    "Purchase Game": "Purchase Game",
+
+
+  "pages/TransactionPage/TransactionDetail": "pages/TransactionPage/TransactionDetail",
+    "Loading transaction detail...": "Loading transaction detail...",
+    "Transaction not found": "Transaction not found",
+    "'s Transaction Detail": "'s Transaction Detail",
+    "Back to Transaction History": "Back to Transaction History",
+    "Transaction ID": "Transaction ID",
+    "Owner": "Owner",
+    "Game ID": "Game ID",
+    "Game Name": "Game Name",
+    "Price": "Price",
+    "What issue are you having with this purchase?": "What issue are you having with this purchase?",
+    "I would like a refund": "I would like a refund",
+    "I was charged the wrong amount": "I was charged the wrong amount",
+    "I have a question about this purchase": "I have a question about this purchase",
+    "I would like to view or print the receipt for this purchase": "I would like to view or print the receipt for this purchase",
+
+
+  "pages/WalletPage/WalletPage": "pages/WalletPage/WalletPage",
+    "Please enter a valid amount": "Please enter a valid amount",
+    "Error creating payment link": "Error creating payment link",
+    "Add funds to": "Add funds to",
+    "wallet": "wallet",
+    "Add": "Add",
+    "Add funds": "Add funds",
+    "YOUR STEAMCL ACCOUNT":" YOUR STEAMCL ACCOUNT",
+    "Current Wallet balance": "Current Wallet balance",
+
+
+  "pages/ApplyToPublisher": "pages/ApplyToPublisher",
+    "12 characters limit exceeded": "12 characters limit exceeded",
+    "Social ID must be a positive number": "Social ID must be a positive number",
+    "64 characters limit exceeded": "64 characters limit exceeded",
+    "Please select an image first": "Please select an image first",
+    "Please fill in all fields": "Please fill in all fields",
+    "Are you sure you want to submit this application?": "Are you sure you want to submit this application?",
+    "Upload failed": "Upload failed",
+    "Legal Name(*)": "Legal Name(*)",
+    "Publisher Name(*)": "Publisher Name(*)",
+    "Address(*)": "Address(*)",
+    "Social ID(*)": "Social ID(*)",
+    "Country(*)": "Country(*)",
+
+
+  "pages/ErrorPage": "pages/ErrorPage",
+
+
+  "pages/FeedbackHub": "pages/FeedbackHub",
+    "Are you sure you want to delete this feedback?": "Are you sure you want to delete this feedback?",
+    "Feedback Hub": "Feedback Hub",
+    "Your Submitted Feedback": "Your Submitted Feedback",
+    "No feedback available": "No feedback available",
+
+
+  "pages/Login": "pages/Login",
+    "Registration successful": "Registration successful",
+    "Login successful": "Login successful",
+    "Invalid username or password": "Invalid username or password",
+    "Google login successful": "Google login successful",
+    "Google login failed": "Google login failed",
+    "Log in": "Log in",
+    "Log in with username": "Log in with username",
+    "Password": "Password",
+    "Forgot password?": "Forgot password?",
+
+
+  "pages/OAuth2RedirectHandler": "pages/OAuth2RedirectHandler",
+    "Logging in via Google...": "Logging in via Google...",
+
+    
+  "pages/RegisterDetail": "pages/RegisterDetail",
+    "Username must not contain spaces": "Username must not contain spaces",
+    "Username is already taken": "Username is already taken",
+    "Registration failed": "Registration failed",
+    "CREATE YOUR ACCOUNT": "CREATE YOUR ACCOUNT",
+    "Steam Account Name": "Steam Account Name",
+    "Username already taken": "Username already taken",
+    "Username is available": "Username is available",
+    "Choose Password": "Choose Password",
+    "Select a country": "Select a country",
+    "Vietnam": "Vietnam",
+    "United States": "United States",
+    "Continue": "Continue",
+
+
+  "pages/RegisterEmail": "pages/RegisterEmail",
+    "Invalid email format": "Invalid email format",
+    "Email already in use": "Email already in use",
+    "Error checking email": "Error checking email",
+    "Email address": "Email address",
+    "I'm 13 years old or older and agree with policies and SteamCL security policy": "I'm 13 years old or older and agree with policies and SteamCL security policy",
+  
+  
+  "pages/SendGameToAdmin": "pages/SendGameToAdmin",
+    "Action": "Action",
+    "Adventure": "Adventure",
+    "Anime": "Anime",
+    "Casual": "Casual",
+    "Choices Matter": "Choices Matter",
+    "Classic": "Classic",
+    "Co-op": "Co-op",
+    "Crafting": "Crafting",
+    "Exploration": "Exploration",
+    "Fantasy": "Fantasy",
+    "FPS": "FPS",
+    "Great Soundtrack": "Great Soundtrack",
+    "Historical": "Historical",
+    "Horror": "Horror",
+    "Indie": "Indie",
+    "Multiplayer": "Multiplayer",
+    "Open World": "Open World",
+    "Pixel Graphics": "Pixel Graphics",
+    "Platformer": "Platformer",
+    "Puzzle": "Puzzle",
+    "Racing": "Racing",
+    "RPG": "RPG",
+    "RTS": "RTS",
+    "Role Playing": "Role Playing",
+    "Sci-fi": "Sci-fi",
+    "Simulation": "Simulation",
+    "Singleplayer": "Singleplayer",
+    "Story Rich": "Story Rich",
+    "Strategy": "Strategy",
+    "Surreal": "Surreal",
+    "Survival": "Survival",
+    "Price of games must follow these rules": "Price of games must follow these rules",
+    "1. Only numbers": "1. Only numbers",
+    "2. No space": "2. No space",
+    "3. No special characters": "3. No special characters",
+    "4. No empty string": "4. No empty string",
+    "5. No negative number": "5. No negative number",
+    "6. 2 digits after decimal point": "6. 2 digits after decimal point",
+    "32 characters limit exceeded!": "32 characters limit exceeded!",
+    "1024 characters limit exceeded!": "1024 characters limit exceeded!",
+    "10000 characters limit exceeded!": "10000 characters limit exceeded!",
+    "Game price must be under or equals $1000!": "Game price must be under or equals $1000!",
+    "Please fill in the required field": "Please fill in the required field",
+    "Memory of games must follow this rule: Number + (GB/MB)": "Memory of games must follow this rule: Number + (GB/MB)",
+    "Game name already exists!": "Game name already exists!",
+    "Game Application": "Game Application",
+    "Additionnal Notes": "Additionnal Notes",
+    "Speed": "Speed",
+    "Time Remaining": "Time Remaining",
+
+
+  "pages/SendUserFeedback": "pages/SendUserFeedback",
+    "Subject must be less than 256 characters": "Subject must be less than 256 characters",
+    "Feedback must be less than 2048 characters": "Feedback must be less than 2048 characters",
+    "Please fill in all fields!": "Please fill in all fields!",
+    "Send Feedback": "Send Feedback",
+    "Hi,": "Hi,",
+    "If you have any thing to tell us to improve our products or any question, please tell us below": "If you have any thing to tell us to improve our products or any question, please tell us below",
+    "Subject(*)": "Subject(*)",
+    "Your Feedback(*)": "Your Feedback(*)",
+
+
+  "pages/UserFeedback": "pages/UserFeedback",
+    "your feedback": "your feedback",
+
+
+  "pages/VerifyEmail": "pages/VerifyEmail",
+    "Email is required to verify. Please register first": "Email is required to verify. Please register first",
+    "OTP must be a 6-digit number": "OTP must be a 6-digit number",
+    "Invalid or expired OTP": "Invalid or expired OTP",
+    "Verify Your Email": "Verify Your Email",
+    "Verify": "Verify",
+
+
+  "services/notification": "services/notification",
+
+
+  "services/reviewNotif": "services/reviewNotif",
+
+
+  "services/socketService": "services/socketService",
+  
+  
+  "App.jsx": "App.jsx",
+    "The page you are looking for does not exist": "The page you are looking for does not exist",
+    "Go back to Home": "Go back to Home",
+  
+  
+  "layouts/AdminLayout": "layouts/AdminLayout",
+
+
+  "layouts/ChatLayout" : "layouts/ChatLayout",
+
+
+  "layouts/ProfileLayout": "layouts/ProfileLayout",
+
+
+  "layouts/MainLayout": "layouts/MainLayout",
+
+
+  "context/AppContext": "context/AppContext",
+
+
+  "context/AuthContext": "context/AuthContext",
+
+
+  "components/AccountDetail/AccountDetailsPage":"components/AccountDetail/AccountDetailsPage",
+    "Minimum funding amount is $5":"Minimum funding amount is $5",
+    "Loading account details...": "Loading account details...",
+    "Account details": "Account details",
+    "Store preferences": "Store preferences",
+    "'s Account": "'s Account",
+    "STORE & PURCHASE HISTORY": "STORE & PURCHASE HISTORY",
+    "Wallet Balance": "Wallet Balance",
+    "Add funds to your Wallet": "Add funds to your Wallet",
+    "View purchase history": "View purchase history",
+    "CONTACT INFO": "CONTACT INFO",
+    "Manage email preferences": "Manage email preferences",
+    "Change password": "Change password",
+    "Add Funds to Your Steam Wallet": "Add Funds to Your Steam Wallet",
+    "Bank (Optional)": "Bank (Optional)",
+    "Select a bank...": "Select a bank...",
+    "NCB (Recommended)": "NCB (Recommended)",
+    "Ngân hàng Nội địa": "Local Bank",
+    "VNPAYQR": "VNPAYQR",
+    "VISA": "VISA",
+    "Add Funds": "Add Funds",
+
+
+  "components/Button/Button": "components/Button/Button",
+
+
+  "components/EmailChange/EmailSettings": "components/EmailChange/EmailSettings",
+    "An error occurred": "An error occurred",
+    "Email updated successfully!": "Email updated successfully!",
+    "Please log in again to see the changes": "Please log in again to see the changes",
+    "Failed to verify code": "Failed to verify code",
+    "Manage your account's email address": "Manage your account's email address",
+    "Current Email": "Current Email",
+    "Change Email Address": "Change Email Address",
+    "New Email Address": "New Email Address",
+    "Enter your new email": "Enter your new email",
+    "Enter Verification Code": "Enter Verification Code",
+    "A code has been sent to": "A code has been sent to",
+    "Please enter it below": "Please enter it below",
+    "Verification Code": "Verification Code",
+    "6-digit code": "6-digit code",
+    "Back": "Back",
+
+
+  "components/FeedbackItem/FeedbackItem": "components/FeedbackItem/FeedbackItem",
+
+
+  "components/FilterSideBar/FilterSidebar": "components/FilterSidebar/FilterSidebar",
+    "Narrow by Price": "Narrow by Price",
+    "Any Price": "Any Price",
+    "Under": "Under",
+    "Narrow by Tag": "Narrow by Tag",
+    "Search for tags": "Search for tags",
+    "Narrow by Publisher": "Narrow by Publisher",
+    "Search for publishers": "Search for publishers",
+
+
+  "components/Footer/Footer": "components/Footer/Footer",
+    "2024 Valve Corporation": "2024 Valve Corporation",
+    "All rights reserved": "All rights reserved",
+    "All trademarks are property of their respective owners in the US and other countries": "All trademarks are property of their respective owners in the US and other countries",
+    "VAT included in all prices where applicable": "VAT included in all prices where applicable",
+    "Privacy Policy": "Privacy Policy",
+    "Legal": "Legal",
+    "Steam Subscriber Agreement": "Steam Subscriber Agreement",
+    "Refunds": "Refunds",
+    "Cookies": "Cookies",
+    "About Valve": "About Valve",
+    "Jobs": "Jobs",
+    "Steamworks": "Steamworks",
+    "Steam Distribution": "Steam Distribution",
+    "Gift Cards": "Gift Cards",
+
+
+  "components/GameCard/GameCard": "components/GameCard/GameCard",
+    "Free": "Free",
+
+
+  "components/GameDetail/GameDetail": "components/GameDetail/GameDetail",
+    "Game added to cart successfully!": "Game added to cart successfully!",
+    "Game already bought or not available": "Game already bought or not available",
+    "CUSTOMER REVIEWS": "CUSTOMER REVIEWS",
+
+
+  "components/GameList/GameList": "components/GameList/GameList",
+    "Loading games...": "Loading games...",
+    "Error":" Error",
+    "No games found": "No games found",
+
+
+  "components/GamesPage/GamesPage": "components/GamesPage/GamesPage",
+
+
+  "components/Header/Header": "components/Header/Header",
+    "Profile": "Profile",
+    "ADMIN TOOLS": "ADMIN TOOLS",
+    "Login": "Login",
+    "Register": "Register",
+
+
+  "components/Header/UserDropBox": "components/Header/UserDropBox",
+    "View my profile": "View my profile",
+    "Library": "Library",
+    "Request Add Game": "Request Add Game",
+    "Request Publisher": "Request Publisher",
+    "View my wallet": "View my wallet",
+    "Sign out of account…": "Sign out of account…",
+
+
+  "components/LoadingScreen/LoadingScreen": "components/LoadingScreen/LoadingScreen",
+
+
+  "components/Logout/Logout": "components/Logout/Logout",
+    "Do you want to logout?": "Do you want to logout?",
+
+
+  "components/MainContent/MainContent": "components/MainContent/MainContent",
+
+
+  "components/Navbar/Navbar": "components/Navbar/Navbar",
+    "Cart": "Cart",
+    "Your Store": "Your Store",
+    "New & Noteworthy": "New & Noteworthy",
+    "Categories": "Categories",
+    "Points Shop": "Points Shop",
+    "News": "News",
+    "Labs": "Labs",
+
+
+  "components/Notifications/NotificationBox": "components/Notifications/NotificationBox",
+    "You have no new notifications at this time": "You have no new notifications at this time",
+
+
+  "components/Notifications/NotificationBoxItem": "components/Notifications/NotificationBoxItem",
+
+
+  "components/Pagination/Pagination": "components/Pagination/Pagination",
+    "Prev": "Prev",
+    "Page": "Page",
+
+
+  "components/PartHeading/PartHeading": "components/PartHeading/PartHeading",
+
+
+  "components/PaymentResultPage/PaymentResultPage": "components/PaymentResultPage/PaymentResultPage",
+    "Processing your payment, please wait...": "Processing your payment, please wait...",
+    "Your payment failed": "Your payment failed",
+    "Please try again or contact support": "Please try again or contact support",
+    "Please check your account balance for confirmation": "Please check your account balance for confirmation",
+    "Transaction Details": "Transaction Details",
+    "Bank": "Bank",
+    "Order Info": "Order Info",
+    "VNPay Transaction No": "VNPay Transaction No",
+    "Payment Time": "Payment Time",
+    "Return to Account": "Return to Account",
+
+
+  "components/popup/CartPopup": "components/popup/CartPopup",
+    "Added to your cart!": "Added to your cart!",
+    "View My Cart": "View My Cart",
+
+
+  "components/Profile/AvatarSettings/AvatarSettings": "components/Profile/AvatarSettings/AvatarSettings",
+    "Avatar updated successfully!": "Avatar updated successfully!",
+    "Please try another image": "Please try another image",
+    "Choose your avatar image": "Choose your avatar image",
+    "Your profile will be updated immediately after upload": "Your profile will be updated immediately after upload",
+    "Crop Your New Avatar": "Crop Your New Avatar",
+    "CURRENT AVATAR": "CURRENT AVATAR",
+    "Upload a new image to change your avatar": "Upload a new image to change your avatar",
+    "Upload Image": "Upload Image",
+    "Your Library": "Your Library",
+
+
+  "components/Profile/EditProfilePage": "components/EditProfilePage/EditProfilePage",
+    "Set your profile name and details": "Set your profile name and details",
+    "This information is public": "This information is public",
+    "General": "General",
+    "PROFILE NAME": "PROFILE NAME",
+    "COUNTRY": "COUNTRY",
+    "Japan": "Japan",
+    "GENDER":"GENDER",
+    "Male":"Male",
+    "Female":"Female",
+    "DATE OF BIRTH": "DATE OF BIRTH",
+    "About": "About",
+    "SUMMARY": "SUMMARY",
+    "User ID not found": "User ID not found",
+    "Failed to load user data": "Failed to load user data",
+    "Profile Name cannot be empty": "Profile Name cannot be empty",
+    "Summary cannot exceed 500 characters": "Summary cannot exceed 500 characters",
+    "Date of Birth cannot be in the future": "Date of Birth cannot be in the future",
+    "Your profile has been saved successfully!": "Your profile has been saved successfully!",
+    "Failed to save profile": "Failed to save profile",
+    "Select a setting": "Select a setting",
+    "Avatar": "Avatar",
+
+
+  "components/Profile/GameShowcase": "components/Profile/GameShowcase",
+    "of": "of:",
+    "Games": "Games",
+    "View All": "View All",
+    "This user has no games to showcase": "This user has no games to showcase",
+
+
+  "components/Profile/GeneralSettings": "components/Profile/GeneralSettings",
+
+
+  "components/Profile/Profilepage": "components/Profile/ProfilePage",
+    "Edit Profile": "Edit Profile",
+    "Message": "Message",
+    "Add Friend": "Add Friend",
+    "No profile to display": "No profile to display",
+    "Please log in or specify a user ID": "Please log in or specify a user ID",
+    "Could not fetch profile data": "Could not fetch profile data",
+    "The user may not exist":"The user may not exist",
+    "Friend request sent to ": "Friend request sent to ",
+    "Loading Profile...": "Loading Profile...",
+    "Profile not found": "Profile not found",
+    "Bio": "Bio",
+    "This user has not written a summary yet": "This user has not written a summary yet",
+    "Reviews": "Reviews",
+    "Inventory": "Inventory",
+
+
+  "components/RequestItem/RequestItem": "components/RequestItem/RequestItem",
+  
+  
+  "components/Review/Review": "components/Review/Review",
+    "CUSTOMER REVIEWS FOR ": "CUSTOMER REVIEWS FOR ",
+    "Recommended": "Recommended",
+    "Not recommended": "Not recommended",
+    "No Reviews have been made": "No Reviews have been made",
+    "Show more": "Show more",
+    "Show less": "Show less",
+
+
+  "components/Review/ReviewButtons": "components/Review/ReviewButtons",
+
+
+  "components/Review/ReviewForm": "components/Review/ReviewForm",
+    "Please fill in all fields before submitting": "Please fill in all fields before submitting",
+    "Your review contains inappropriate content": "Your review contains inappropriate content",
+    "Network error": "Network error",
+    "Please try again later": "Please try again later",
+    "Write a review for": "Write a review for",
+    "Write your review here...":"Write your review here...",
+    "Do you recommend this game?":"Do you recommend this game?",
+    "Yes": "Yes",
+    "No": "No",
+
+
+  "components/Review/ReviewListItem": "components/Review/ReviewListItem",
+    "Posted on": "Posted on",
+    "Read more": "Read more",
+    "Was this review helpful?": "Was this review helpful?",
+    "Edit": "Edit",
+
+
+  "components/Review/ReviewUpdateForm": "components/Review/ReviewUpdateForm",
+    "Are you sure you want to update this review?": "Are you sure you want to update this review?",
+    "Unknown error": "Unknown error",
+    "Are you sure you want to delete this review?": "Are you sure you want to delete this review?",
+    "Delete": "Delete",
+    "Update Review": "Update Review",
+
+
+  "components/SearchBar/SearchBar": "components/SearchBar/SearchBar",
+    "Searching...": "Searching...",
+    "No results found for": "No results found for",
+
+
+  "components/SearchResultHeader/SearchResultHeader": "components/SearchResultHeader/SearchResultHeader",
+    "Name (A-Z)":"Name (A-Z)",
+    "Name (Z-A)":"Name (Z-A)",
+    "Release Date (Newest)":"Release Date (Newest)",
+    "Release Date (Oldest)":"Release Date (Oldest)",
+    "Results for": "Results for",
+    "titles found": "titles found",
+
+
+  "components/SplashScreen/SPlashScreen": "components/SplashScreen/SplashScreen",
+    "STEAM SYSTEM GROUP 1": "STEAM SYSTEM GROUP 1"
+
+
+
+
+
+
+
+
+
+
 
 }

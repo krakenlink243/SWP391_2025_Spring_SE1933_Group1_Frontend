@@ -302,4 +302,29 @@ progress::-webkit-progress-bar {
 progress::-moz-progress-bar {
   background-color: #4caf50;
 }
+.form-border pre{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
+}
+.form-border .decline-reason{
+    width: 80%;
+    margin: 0 auto;
+}
+.update-log textarea{
+    border: none;
+  border-radius: 3px;
+  box-shadow: inset 1px 1px 0px #000a;
+  outline: none;
+  background-color: #1A1C1F;
+  resize: vertical;
+  width: 100%;
+  margin: 0 auto;
+  color: white;
+}
+.update-log{
+  width: 80%;
+  margin: 0 auto;
+}
+
+
 

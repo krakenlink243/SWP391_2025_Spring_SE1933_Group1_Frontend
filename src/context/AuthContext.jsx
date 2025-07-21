@@ -29,6 +29,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("userId", decoded.userId);
       localStorage.setItem("role", decoded.role);
       localStorage.setItem("avatarUrl", decoded.avatarUrl || "");
+      localStorage.setItem("banned", decoded.banned || false);
       setUser(decoded);
       setTokenState(newToken);
     } catch (err) {

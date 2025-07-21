@@ -4,7 +4,6 @@ import { AppProvider } from "./context/AppContext";
 import { AuthProvider } from "./context/AuthContext";
 import axios from "axios";
 import './App.css';
-
 // Layouts
 import MainLayout from "./layouts/MainLayout";
 import AdminLayout from "./layouts/AdminLayout";
@@ -20,6 +19,8 @@ import PaymentResultPage from "./components/Payment/PaymentResultPage";
 import { Contact } from "./pages/PolicyPage/Contact";
 import { PrivacyPolicy } from "./pages/PolicyPage/PrivacyPolicy";
 import { TermsOfUse } from "./pages/PolicyPage/TermsOfUse";
+import GameManagement from "./pages/Publisher/GameManagement/GameManagement";
+import UpdateGame from "./pages/UpdateGame";
 
 // Profile & User Pages
 import Transaction from "./pages/TransactionPage/Transaction";
@@ -40,6 +41,7 @@ import PublisherApproveDetails from "./pages/Admin/Request/PublisherApproveDetai
 import FeedbackApproveDetails from "./pages/Admin/Request/FeedbackApproveDetails";
 import GameApproveDetails from "./pages/Admin/Request/GameApproveDetails";
 import FeedbackHub from "./pages/FeedbackHub";
+import UserManagement from "./pages/Admin/UserManagement/UserManagementPage";
 
 // Community
 import ChatPage from "./pages/ChatPage/ChatPage";
@@ -72,7 +74,6 @@ import ReviewCard from "./components/Community/ReviewCard";
 import ThreadCard from "./components/Community/ThreadCard";
 import CommentSection from "./components/Community/CommentSection";
 function AppRoutes() {
-
   // console.log("App component is rendering...");
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -143,6 +144,7 @@ function AppRoutes() {
           <Route element={<ProfileLayout />}>
             <Route path="/profile/friends" element={<FriendsPageContainer />} />
             <Route path="/sendfeedback" element={<SendUserFeedback />} />
+            <Route path="/publisher/game-management/:tab?" element={<GameManagement />} />
             <Route path="/account/history" element={<Transaction />} />
             <Route path="/apply-publisher" element={<ApplyToPublisher />} />
             <Route path="/notifications" element={<NotifPage />} />
@@ -167,6 +169,9 @@ function AppRoutes() {
             <Route path="/change-password" element={<ChangePassword />} />
             <Route path="/oauth2/callback" element={<OAuth2RedirectHandler />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route path="/update-game/:gameId" element={<UpdateGame />} />
+            <Route path="/edit-game/:requestId" element={<UpdateGame />} />
+            <Route path="publisher/game/detail/:requestId" element={<GameApproveDetails />} />
             <Route path="/community" element={<Community />} />
             <Route path="/community/threads/:threadId" element={<ThreadDetailPage />} />
             <Route path="/community/create-thread" element={<CreateThreadModal />} />
@@ -179,7 +184,7 @@ function AppRoutes() {
             <Route path="request/publisher/detail/:requestId" element={<PublisherApproveDetails />} />
             <Route path="request/feedback/detail/:requestId" element={<FeedbackApproveDetails />} />
             <Route path="request/game/detail/:requestId" element={<GameApproveDetails />} />
-
+            <Route path="user-management/:tab?" element={<UserManagement />} />
           </Route>
 
         </Routes>

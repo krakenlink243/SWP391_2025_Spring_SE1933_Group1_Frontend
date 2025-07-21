@@ -2,16 +2,22 @@
   font-family: "Motiva Sans";
   src: url("/src/assets/fonts/MotivaSansRegular.woff.ttf") format("truetype");
 }
+
 body {
   font-family: "Motiva Sans";
   font-size: 14px;
 }
+
+.disabled-button {
+  opacity: 0.6;
+  cursor: not-allowed !important;
+}
+
 .blue-button {
-  background: linear-gradient(
-    90deg,
-    #007bff,
-    #0056b3
-  ); /* Gradient from light to dark blue */
+  background: linear-gradient(90deg,
+      #007bff,
+      #0056b3);
+  /* Gradient from light to dark blue */
   color: white;
   padding: 10px 50px;
   border: none;
@@ -21,15 +27,15 @@ body {
 }
 
 .blue-button:hover {
-  background: linear-gradient(
-    90deg,
-    #0056b3,
-    #003f7f
-  ); /* Darker gradient on hover */
+  background: linear-gradient(90deg,
+      #0056b3,
+      #003f7f);
+  /* Darker gradient on hover */
 }
 
 .grey-button {
-  background: #3d4450; /* Gradient from light to dark blue */
+  background: #3d4450;
+  /* Gradient from light to dark blue */
   color: white;
   padding: 10px 50px;
   border: none;
@@ -39,14 +45,16 @@ body {
 }
 
 .grey-button:hover {
-  background: #2c313a; /* Darker gradient on hover */
+  background: #2c313a;
+  /* Darker gradient on hover */
 }
 
 /*
 Added by Phan NT Son
 */
 .red-button {
-  background: linear-gradient(90deg, #dc3545, #b52a37); /* đỏ tươi -> đỏ đậm */
+  background: linear-gradient(90deg, #dc3545, #b52a37);
+  /* đỏ tươi -> đỏ đậm */
   color: white;
   padding: 10px 50px;
   border: none;
@@ -56,15 +64,15 @@ Added by Phan NT Son
 }
 
 .red-button:hover {
-  background: linear-gradient(90deg, #b52a37, #8e1f2a); /* hover đỏ đậm hơn */
+  background: linear-gradient(90deg, #b52a37, #8e1f2a);
+  /* hover đỏ đậm hơn */
 }
 
 .green-button {
-  background: linear-gradient(
-    90deg,
-    #28a745,
-    #218838
-  ); /* xanh lá tươi -> đậm */
+  background: linear-gradient(90deg,
+      #28a745,
+      #218838);
+  /* xanh lá tươi -> đậm */
   color: white;
   padding: 10px 50px;
   border: none;
@@ -74,7 +82,8 @@ Added by Phan NT Son
 }
 
 .green-button:hover {
-  background: linear-gradient(90deg, #218838, #1e7e34); /* hover xanh đậm hơn */
+  background: linear-gradient(90deg, #218838, #1e7e34);
+  /* hover xanh đậm hơn */
 }
 
 .white-button {
@@ -92,7 +101,8 @@ Added by Phan NT Son
 }
 
 .white-grey-button {
-  background: #f8f9fa; /* trắng xám */
+  background: #f8f9fa;
+  /* trắng xám */
   color: #212529;
   padding: 10px 50px;
   border: 1px solid #ced4da;
