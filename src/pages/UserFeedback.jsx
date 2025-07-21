@@ -7,8 +7,10 @@ import { useParams } from 'react-router'
 import axios from 'axios'
 import PartHeading from '../components/PartHeading/PartHeading'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 function UserFeedback() {
+    const {t}=useTranslation();
     const feedbackId = useParams().feedbackId;
     const [arr, setArr] = useState([]);
     const [userName, setUserName] = useState("");
@@ -34,7 +36,7 @@ function UserFeedback() {
         fetchFeedbackDetails();
     }, []);
     const handleDeleteClick = async (feedbackId) => {
-        if (window.confirm("Are you sure you want to delete this feedback?")) {
+        if (window.confirm(t(t("Are you sure you want to delete this feedback?")))) {
             try {
                 await axios.delete(`${import.meta.env.VITE_API_URL}/request/feedback/user/${feedbackId}`);
                 navigate(`/feedbackhub`);
@@ -46,14 +48,14 @@ function UserFeedback() {
     return (
         <div className='sendfeedback-container'>
             <div className='sendfeedback-title'>
-                <h1>FEEDBACK</h1>
-                <h2>your feedback</h2>
+                <h1>{t('FEEDBACK')}</h1>
+                <h2>{t('your feedback')}</h2>
             </div>
             <div className='feedback-content'>
-                Subject
+                {t('Subject')}
                 <input type="text" name="subject" id="" value={formData.subject} readOnly />
                 <br />
-                Feedback
+                {t('Feedback')}
                 <textarea name="message" id="" readOnly value={formData.message}></textarea>
             </div>
             <div className='inner-image'>
@@ -70,12 +72,12 @@ function UserFeedback() {
                 <div>
                     {formData.response !== null
                         ? <pre>{formData.response}</pre>
-                        : 'Not yet answered'}
+                        : t('Not yet answered')}
                 </div>
             </div>
             <div className='feedback-button'>
                 {/* <Button label="UPDATE" color='blue-button' /> */}
-                <Button label="Delete" color='red-button' onClick={() => handleDeleteClick(feedbackId)} />
+                <Button label={t("Delete")} color='red-button' onClick={() => handleDeleteClick(feedbackId)} />
             </div>
         </div>
     )

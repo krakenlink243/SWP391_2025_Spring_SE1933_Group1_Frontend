@@ -1,5 +1,6 @@
 import React, { useState, useEffect, forwardRef, useContext } from "react";
 import "./Header.css"; // Or use CSS Modules: import styles from './Header.module.css';
+import { useTranslation } from "react-i18next";
 // Added by Phan NT Son
 import NotificationBox from "../Notifications/NotificationBox";
 import UserDropBox from "./UserDropBox";
@@ -19,7 +20,7 @@ const Header = forwardRef((props, ref) => {
   const section = [2, 2, 4, 2, 2];
   const location = useLocation();
   const CUR_PATHNAME = location.pathname;
-
+  const {t} = useTranslation();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   useEffect(() => {
     const handleResize = () => {
@@ -116,13 +117,13 @@ const Header = forwardRef((props, ref) => {
             className={`header-nav-item ${isActive(0) ? "active" : ""}`}
             to="/"
           >
-            STORE
+            {t('STORE')}
           </Link>
           <Link
             className={`header-nav-item ${isActive(1) ? "active" : ""}`}
             to={"/community"}
           >
-            COMMUNITY
+            {t('COMMUNITY')}
           </Link>
 
           {username && (
@@ -135,10 +136,10 @@ const Header = forwardRef((props, ref) => {
               </Link>
               <div className="nav-box-dropdown">
                 <Link className="submenuitem" to="/profile">
-                  Profile
+                  {t('Profile')}
                 </Link>
                 <Link className="submenuitem" to="/profile/friends">
-                  Friends
+                  {t('Friends')}
                 </Link>
               </div>
             </div>
@@ -148,14 +149,14 @@ const Header = forwardRef((props, ref) => {
             className={`header-nav-item ${isActive(3) ? "active" : ""}`}
             to={token ? "/chat" : "#"}
           >
-            {token ? "CHAT" : "ABOUT"}
+            {token ? t("CHAT") : t("ABOUT")}
           </Link>
           {role != "Admin" && (
             <Link
               className={`header-nav-item ${isActive(4) ? "active" : ""}`}
               to="/feedbackhub"
             >
-              Support
+              {t('Support')}
             </Link>
           )}
           {role === "Admin" && (
@@ -163,7 +164,7 @@ const Header = forwardRef((props, ref) => {
               className={`header-nav-item ${isActive(5) ? "active" : ""}`}
               to="/admin"
             >
-              ADMIN TOOLS
+              {t('ADMIN TOOLS')}
             </Link>
           )}
         </div>
@@ -173,9 +174,9 @@ const Header = forwardRef((props, ref) => {
               <div className="header-user-action-content d-flex flex-column align-items-end w-100 p-2">
                 <div className="user-action-content">
                   <Link className="border-end" to="/login">
-                    Login
+                    {t('Login')}
                   </Link>
-                  <Link to="/register">Register</Link>
+                  <Link to="/register">{t('Register')}</Link>
                 </div>
               </div>
             </>

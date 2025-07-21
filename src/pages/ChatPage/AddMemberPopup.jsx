@@ -3,10 +3,12 @@ import { AppContext } from "../../context/AppContext";
 import Button from "../../components/Button/Button";
 import axios from "axios";
 import './AddMemberPopup.css'
+import { useTranslation } from "react-i18next";
 
 export default function AddMemberPopup({ setOpenPopup, groupId, groupMembers }) {
     const [newGMembers, setNewGMembers] = useState([]);
     const { friendList } = useContext(AppContext);
+<<<<<<< HEAD
     const isBanned = localStorage.getItem("isBanned") === "true";
     const [isGroupFull, setIsGroupFull] = useState(false);
 
@@ -16,6 +18,9 @@ export default function AddMemberPopup({ setOpenPopup, groupId, groupMembers }) 
 
     // const isGroupFull = true;
     // const isBanned = true;
+=======
+    const { t } = useTranslation();
+>>>>>>> bathanh
 
     const availableFriend = friendList.filter(
         (friend) => !groupMembers.some((member) => member.memberId === friend.friendId && friend.groupsTakeIn < 10)
@@ -34,7 +39,7 @@ export default function AddMemberPopup({ setOpenPopup, groupId, groupMembers }) 
         <div className="add-member-popup-container d-flex flex-column">
             <div className="popup-wrapper d-flex flex-column gap-3">
                 <div className="title">
-                    Add Member to Group Chat
+                    {t('Add Member to Group Chat')}
                 </div>
                 {
                     isGroupFull && (
@@ -53,7 +58,7 @@ export default function AddMemberPopup({ setOpenPopup, groupId, groupMembers }) 
 
                 {/* Group Members selected */}
                 <div className="form-group">
-                    <label>Group Members</label>
+                    <label>{t('Group Members')}</label>
                     <div className="selected-members-list d-flex flex-row flex-wrap align-items-center">
                         {newGMembers.map((member) => (
                             <div
@@ -74,7 +79,7 @@ export default function AddMemberPopup({ setOpenPopup, groupId, groupMembers }) 
 
                 {/* Friend list to choose */}
                 <div className="form-group">
-                    <label>Choose Friends</label>
+                    <label>{t('Choose Friends')}</label>
                     <div className="friend-list">
                         {availableFriend.map((friend) => {
                             const isSelected = newGMembers.some((m) => m.memberId === friend.friendId);
@@ -108,12 +113,16 @@ export default function AddMemberPopup({ setOpenPopup, groupId, groupMembers }) 
                 </div>
 
                 <div className="d-flex flex-row justify-content-around align-items-center py-2">
-                    <Button label={"Cancel"} onClick={() => {
+                    <Button label={t('Cancel')} onClick={() => {
                         setNewGMembers([]);
                         setOpenPopup(false);
                     }
                     } color="grey-button" />
+<<<<<<< HEAD
                     <Button label={"Add Members"} onClick={() => handleAddMembers()} color="gradient-blue-button" disabled={isBanned || isGroupFull || newGMembers.length === 0} />
+=======
+                    <Button label={t('Add Members')} onClick={() => handleAddMembers()} color="gradient-blue-button" />
+>>>>>>> bathanh
                 </div>
             </div>
         </div>

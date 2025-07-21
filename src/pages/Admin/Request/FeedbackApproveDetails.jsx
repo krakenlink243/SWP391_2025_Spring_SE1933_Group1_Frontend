@@ -10,6 +10,8 @@ import { trimValue } from '../../../utils/validators'
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Required for default styles
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next' // translation
+
 
 function FeedbackApproveDetails() {
   const feedbackId = useParams().requestId;
@@ -23,6 +25,9 @@ function FeedbackApproveDetails() {
     response: ""
   });
   const navigate = useNavigate();
+  //Author: Ba thanh
+  const { t } = useTranslation(); //translation
+
 
   useEffect(() => {
     async function fetchFeedbackDetails() {
@@ -62,13 +67,13 @@ function FeedbackApproveDetails() {
       title: `Send answer to ${userName}`,
       customUI: ({ onClose }) => (
         <div className="custom-ui">
-          <h2>Answer Feedback</h2>
-          <p>Answer for: {userName}</p>
+          <h2> {t('Answer Feedback')} </h2>
+          <p>{t('Answer for')}: {userName}</p>
           <textarea
             rows={5}
             style={{ width: '100%', marginBottom: '1rem' }}
             onChange={(e) => (answer = e.target.value)}
-            placeholder="Type your answer here..."
+            placeholder={t('Type your answer here...')}
           />
           <button className='blue-button'
             onClick={async () => {
@@ -85,18 +90,18 @@ function FeedbackApproveDetails() {
                 }
                 onClose();
               } else {
-                alert('Please enter answer');
+                alert(t('Please enter answer'));
               }
             }}
           >
-            Submit
+            {t('Submit')}
           </button>
         </div>
       )
     });
   };
   const handleDecline = async () => {
-    const confirmDecline = window.confirm("Are you sure you want to decline this feedback?");
+    const confirmDecline = window.confirm(t('Are you sure you want to decline this feedback?'));
     if (!confirmDecline) {
       return;
     }
@@ -116,14 +121,14 @@ function FeedbackApproveDetails() {
   return (
     <div className='sendfeedback-container'>
       <div className='sendfeedback-title'>
-        <h1>FEEDBACK</h1>
-        <h2>from {userName} </h2>
+        <h1>{t('FEEDBACK')}</h1>
+        <h2>{t('from')} {userName} </h2>
       </div>
       <div className='feedback-content'>
-        Subject
+        {t('Subject')}
         <input type="text" name="subject" id="" value={formData.subject} readOnly />
         <br />
-        Feedback
+        {t('Feedback')}
         <textarea name="message" id="" readOnly value={formData.message}></textarea>
       </div>
       <div className='inner-image'>
@@ -136,8 +141,8 @@ function FeedbackApproveDetails() {
         </PhotoProvider>
       </div>
       <div className='feedback-button'>
-        <Button label="Dismiss" color='red-button' onClick={handleDecline} />
-        <Button label="Answer" color='blue-button' onClick={handleAnswer} />
+        <Button label={t('Dismiss')} color='red-button' onClick={handleDecline} />
+        <Button label={t('Answer')} color='blue-button' onClick={handleAnswer} />
       </div>
     </div>
   )

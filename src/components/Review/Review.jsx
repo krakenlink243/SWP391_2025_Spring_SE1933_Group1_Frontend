@@ -5,6 +5,7 @@ import ReviewUpdateForm from "./ReviewUpdateForm";
 import axios from "axios";
 import './Review.css';
 import { useReview } from "../../hooks/useReview";
+import { useTranslation } from "react-i18next";
 
 /**
  * @author Phan NT Son
@@ -21,6 +22,7 @@ function Review({ game }) {
   const [editingId, setEditingId] = useState(null);
   const shownReviews = reviewList.slice(0, visibleCount);
   const dto = useReview(game.gameId);
+  
 
   useEffect(() => {
     console.log("[State] reviewList changed:", reviewList);
@@ -93,10 +95,10 @@ function Review({ game }) {
   }, [reviewList, CUR_USERID]);
 
 
-
+const {t} = useTranslation();
   return (
     <div className="review-container w-100">
-      <h2>CUSTOMER REVIEWS FOR {game.name}</h2>
+      <h2>{t('CUSTOMER REVIEWS FOR')} {game.name}</h2>
       <div className="line-seperate w-100"></div>
 
       {CUR_USERID && !isHavingReview && (
@@ -109,15 +111,15 @@ function Review({ game }) {
       {reviewList.length > 0 ? (
         <div className="d-flex align-items-center flex-column text-white pt-5 pb-3 review-summary-bar" >
           <div className="d-flex flex-row justify-content-between w-100">
-            <div>Recommended {recommendPct}%</div>
-            <div>Not recommended {notRecommendPct}%</div>
+            <div>{t('Recommended')} {recommendPct}%</div>
+            <div>{t('Not recommended')} {notRecommendPct}%</div>
           </div>
           <div className="w-100">
             <progress className="w-100" value={recommendPct} max={100} style={{ flexGrow: 1 }} />
           </div>
         </div>
       ) : (
-        <div className="text-white py-3">No Reviews have been made.</div>
+        <div className="text-white py-3">{t('No Reviews have been made')}.</div>
       )}
 
       <div className="reviews d-flex flex-column gap-2">
@@ -145,10 +147,10 @@ function Review({ game }) {
       </div>
 
       {visibleCount < reviewList.length && (
-        <p className="text-white" ><u onClick={() => setVisibleCount(v => v + 5)} style={{ cursor: "pointer" }}>Show more</u></p>
+        <p className="text-white" ><u onClick={() => setVisibleCount(v => v + 5)} style={{ cursor: "pointer" }}>{t('Show more')}</u></p>
       )}
       {visibleCount >= reviewList.length && reviewList.length > 5 && (
-        <p className="text-white" ><u onClick={() => setVisibleCount(5)} style={{ cursor: "pointer" }}>Show less</u></p>
+        <p className="text-white" ><u onClick={() => setVisibleCount(5)} style={{ cursor: "pointer" }}>{t('Show less')}</u></p>
       )}
     </div>
   );

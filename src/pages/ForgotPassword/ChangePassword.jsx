@@ -3,6 +3,7 @@ import axios from 'axios';
 import './ChangePassword.css';
 import Button from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const ChangePassword = () => {
     const [step, setStep] = useState(1);
@@ -16,7 +17,7 @@ const ChangePassword = () => {
         confirmPassword: '',
     });
     const navigate = useNavigate();
-
+    const {t} = new useTranslation();
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
@@ -29,11 +30,11 @@ const ChangePassword = () => {
                 username: form.username,
                 email: form.email,
             });
-            alert('OTP sent to your email.');
+            alert(t('OTP sent to your email.'));
             setStep(2);
         } catch (err) {
             console.error(err);
-            alert('Failed to send OTP. Please check your info.');
+            alert(t('Failed to send OTP. Please check your info.'));
             setLoading(false);
         }
     };
@@ -47,13 +48,13 @@ const ChangePassword = () => {
                 newPassword: form.newPassword,
                 confirmPassword: form.confirmPassword,
             });
-            alert('Password changed successfully!');
+            alert(t('Password changed successfully!'));
             setTimeout(() => {
                 navigate("/account");
             }, 2000);
         } catch (err) {
             console.error(err);
-            alert('Failed to reset password. Please check your OTP and input.');
+            alert(t('Failed to reset password. Please check your OTP and input.'));
         }
     };
 
@@ -62,13 +63,13 @@ const ChangePassword = () => {
             <div className='row'>
                 <div className='spacer col-lg-4'></div>
                 <div className='main-content col-lg-4'>
-                    <h2 className='text-center'>Change Password</h2>
+                    <h2 className='text-center'>{t('Change Password')}</h2>
                     {message && <p style={{ color: 'red' }}>{message}</p>}
 
                     {step === 1 && (
                         <form onSubmit={requestOtp} className='d-flex flex-column gap-3 pt-3'>
                             <div className='d-flex flex-row w-100 gap-3 justify-content-center align-items-center'>
-                                <label >Email:</label>
+                                <label >{t('Email')}:</label>
                                 <input
                                     type="email"
                                     name="email"
@@ -78,7 +79,7 @@ const ChangePassword = () => {
                                 />
                             </div>
                             <div className='d-flex justify-content-center align-items-center'>
-                                <Button type={"submit"} disabled={loading} label={`${loading ? "Checking..." : "Send OTP"}`} color='gradient-blue-button' />
+                                <Button type={t('submit')} disabled={loading} label={`${loading ? t('Checking...') : t('Send OTP')}`} color='gradient-blue-button' />
                             </div>
                         </form>
                     )}
@@ -89,7 +90,7 @@ const ChangePassword = () => {
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <label style={{ color: 'white' }} htmlFor="otp">OTP:</label>
+                                            <label style={{ color: 'white' }} htmlFor="otp">{t('OTP')}:</label>
                                         </td>
                                         <td>
                                             <input
@@ -105,7 +106,7 @@ const ChangePassword = () => {
 
                                     <tr>
                                         <td>
-                                            <label style={{ color: 'white' }} htmlFor="newPassword">New Password:</label>
+                                            <label style={{ color: 'white' }} htmlFor="newPassword">{t('New Password')}:</label>
                                         </td>
                                         <td>
                                             <input
@@ -121,7 +122,7 @@ const ChangePassword = () => {
 
                                     <tr>
                                         <td>
-                                            <label style={{ color: 'white' }} htmlFor="confirmPassword">Confirm New Password:</label>
+                                            <label style={{ color: 'white' }} htmlFor="confirmPassword">{t('Confirm New Password')}:</label>
                                         </td>
                                         <td>
                                             <input
@@ -138,7 +139,7 @@ const ChangePassword = () => {
                                 </tbody>
                             </table>
                             <div className='d-flex justify-content-center align-items-center pt-3'>
-                                <Button type={"submit"} label={"Confirm Password Change"} color='gradient-blue-button' />
+                                <Button type={t('submit')} label={t('Confirm Password Change')} color='gradient-blue-button' />
                             </div>
                         </form>
                     )}

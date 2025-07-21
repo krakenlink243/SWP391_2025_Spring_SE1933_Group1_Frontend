@@ -5,11 +5,12 @@ import PendingInvitesTab from "./PendingInvitesTab";
 import BlockedTab from "./BlockedTab";
 import { useState } from "react";
 import './FriendPage.css';
+import { useTranslation } from "react-i18next";
 
 function FriendsPage() {
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
-
+    const {t} = useTranslation();
     if (!token) {
         return <Navigate to={"/"} replace />
     } else {
@@ -37,30 +38,30 @@ function FriendsPage() {
                 </div>
                 <div className="friend-page-content d-flex flex-row">
                     <div className="content-left-nav d-flex flex-column w-25">
-                        <h4 className="nav-title">Friends</h4>
+                        <h4 className="nav-title">{t('Friends')}</h4>
                         <div
                             className={`nav-item${curTab === 0 ? " active" : ""}`}
                             onClick={() => handleChangeTab(0)}
                         >
-                            Your Friends
+                            {t('Your Friends')}
                         </div>
                         <div
                             className={`nav-item${curTab === 1 ? " active" : ""}`}
                             onClick={() => handleChangeTab(1)}
                         >
-                            Add a Friend
+                            {t('Add a Friend')}
                         </div>
                         <div
                             className={`nav-item${curTab === 2 ? " active" : ""}`}
                             onClick={() => handleChangeTab(2)}
                         >
-                            Pending Invites
+                            {t('Pending Invites')}
                         </div>
                         <div
                             className={`nav-item${curTab === 3 ? " active" : ""}`}
                             onClick={() => handleChangeTab(3)}
                         >
-                            Blocked
+                            {t('Blocked')}
                         </div>
                     </div>
                     <div className={`content-right-detail w-75 ${fadeClass}`}>

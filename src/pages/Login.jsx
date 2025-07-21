@@ -6,6 +6,7 @@ import "./Login.css";
 import { useEffect } from 'react';
 import { Navigate, useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from "../context/AuthContext";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -14,11 +15,12 @@ const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { setToken } = useAuth();
+  const {t} = useTranslation();
 
   useEffect(() => {
     if (location.state?.fromRegister) {
       setMessage({
-        content: 'Registration successful!',
+        content: t('Registration successful!'),
         type: "success"
       });
       // Clear the message after a few seconds
@@ -50,7 +52,7 @@ const Login = () => {
     } catch (err) {
       console.error(err);
       setMessage({
-        content: "Invalid username or password",
+        content: t("Invalid username or password"),
         type: "error",
       });
     }
@@ -69,11 +71,11 @@ const Login = () => {
 
       const token = response.data.token;
       localStorage.setItem("token", token);
-      alert("Google login successful!");
+      alert(t("Google login successful!"));
       navigate('/')
     } catch (err) {
       console.error(err);
-      alert("Google login failed");
+      alert(t("Google login failed"));
     }
   };
 
@@ -82,10 +84,10 @@ const Login = () => {
       <main>
         <section className="form-section">
           <form onSubmit={handleLogin} className="form">
-            <h1 className="form-title">Sign in</h1>
+            <h1 className="form-title">{t('Sign in')}</h1>
             <div className="form-item">
               <label htmlFor="username" className="form-label username">
-                Sign in with username
+                {t('Sign in with username')}
               </label>
               <input
                 id="username"
@@ -102,7 +104,7 @@ const Login = () => {
 
             <div className="form-item">
               <label htmlFor="password" className="form-label">
-                Password
+                {t('Password')}
               </label>
               <input
                 id="password"
@@ -117,10 +119,10 @@ const Login = () => {
 
             <div className="submit-container">
               <button type="submit" className="submit-button">
-                Log in
+                {t('Log in')}
               </button>
               <Link to={"/forgot-password"} className="forgot-password-link">
-                Forgot password?
+                {t('Forgot password?')}
               </Link>
 
               <Link to={`${import.meta.env.VITE_API_URL}/oauth2/authorization/google`}>

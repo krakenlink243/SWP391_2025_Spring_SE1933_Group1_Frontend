@@ -69,13 +69,13 @@ function DetailHeader({ game, setIsOpenPopup }) {
                 checkGameInCart();
                 checkGameInLib();
             } else {
-                alert("Failed to add game to cart.");
+                alert(t('Failed to add game to cart.'));
             }
             // ---
 
         } catch (err) {
             console.error("Error adding to cart:", err);
-            alert("Failed to add game to cart.");
+            alert(t('Failed to add game to cart.'));
         }
     };
 
@@ -202,13 +202,13 @@ function DetailHeader({ game, setIsOpenPopup }) {
                                     </span>
                                 </div>
                                 <div className="content-row">
-                                    <strong className="info-label">{t("PUBLISHER")}:</strong>
+                                    <strong className="info-label">{t('PUBLISHER')}:</strong>
                                     <span className="info-value">
                                         {game.publisher?.publisherName || "N/A"}
                                     </span>
                                 </div>
                                 <div className="content-row">
-                                    <p>Reviews stuff</p>
+                                    <p>{t('Reviews stuff')}</p>
                                 </div>
                                 <div className="content-row mb-0">
                                     <div className="game-tags">
@@ -241,7 +241,7 @@ function DetailHeader({ game, setIsOpenPopup }) {
                                     {game.price > 0 ? (
                                         <div className="price">${game.price.toFixed(2)}</div>
                                     ) : (
-                                        <div className="price">{t("Free to Play")}</div>
+                                        <div className="price">{t('Free to Play')}</div>
                                     )}
                                     {!gameInCart && !gameInLib ? (
                                         <div className="btn-add-to-cart" onClick={addCartHandler}>

@@ -2,6 +2,7 @@ import axios from "axios";
 import './AddFriendTab.css'
 import { useEffect, useState } from "react";
 import { createNotification } from "../../services/notification";
+import { useTranslation } from "react-i18next";
 
 function AddFriendTab() {
 
@@ -9,7 +10,7 @@ function AddFriendTab() {
     const curUsername = localStorage.getItem("username");
     const [searchFriendCode, setSearchFriendCode] = useState("");
     const [searchResult, setSearchResult] = useState(null);
-
+    const {t} = useTranslation();
     const [friendList, setFriendList] = useState([]);
     const [sentInvitesList, setSentInvitesList] = useState([]);
     const [blockList, setBlockList] = useState([]);
@@ -96,12 +97,12 @@ function AddFriendTab() {
         <div className="add-friend-tab">
             <div className="add-friend-box">
                 <div className="title">
-                    Add A Friend
+                    {t('Add A Friend')}
                 </div>
                 <div className="content">
                     <div className="user-code-wrapper">
                         <div className="user-code-title">
-                            Your Friend Code
+                            {t('Your Friend Code')}
                         </div>
                         <div className="user-code-box d-flex flex-row justify-content-between align-items-center">
                             <div className="user-code">
@@ -116,18 +117,18 @@ function AddFriendTab() {
                                 }}
                                 style={{ cursor: "pointer" }}
                             >
-                                {copied ? "Copied" : "Copy"}
+                                {copied ? t('Copied') : t('Copy')}
                             </div>
                         </div>
                     </div>
                     <div className="enter-friend-code-wrapper">
                         <div className="enter-friend-code-title">
-                            Enter your friend's Friend Code to invite them to connect
+                            {t(`Enter your friend's Friend Code to invite them to connect`)}
                         </div>
                         <div className="enter-friend-code-input-box d-flex flex-column">
                             <input
                                 type="text"
-                                placeholder="Enter a Friend Code"
+                                placeholder={t('Enter a Friend Code')}
                                 value={searchFriendCode}
                                 onChange={(e) => {
                                     setSearchFriendCode(e.target.value);
@@ -160,14 +161,14 @@ function AddFriendTab() {
                                             handleCheckSentInvite(searchResult.userId) ||
                                             handleCheckBlockFriend(searchResult.userId))) ? (
                                         <div className="send-invite-btn btn-disable">
-                                            Send Invite
+                                            {t('Send Invite')}
                                         </div>
                                     ) : (
                                         <div
                                             className="send-invite-btn btn-active"
                                             onClick={() => handleSendInvite(searchResult.userId)}
                                         >
-                                            Send Invite
+                                            {t('Send Invite')}
                                         </div>
                                     )}
                                 </>

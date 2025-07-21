@@ -8,6 +8,7 @@ import { createNotification } from '../../../services/notification';
 import { trimValue } from '../../../utils/validators';
 import { confirmAlert } from 'react-confirm-alert';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next' // translation
 
 function FeedbackApprovePage() {
   const [totalPages, setTotalPages] = useState(1);
@@ -16,6 +17,7 @@ function FeedbackApprovePage() {
   const [selectedRequests, setSelectedRequests] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const fetchData = async () => {
     try {
@@ -41,13 +43,13 @@ function FeedbackApprovePage() {
       title: `Send answer to ${userName}`,
       customUI: ({ onClose }) => (
         <div className="custom-ui">
-          <h2>Answer Feedback</h2>
-          <p>Answer for: {userName}</p>
+          <h2>{t('Answer Feedback')}</h2>
+          <p>{t('Answer for')}: {userName}</p>
           <textarea
             rows={5}
             style={{ width: '100%', marginBottom: '1rem' }}
             onChange={(e) => (answer = e.target.value)}
-            placeholder="Type your response..."
+            placeholder={t('Type your response...')}
           />
           <button className="blue-button"
             onClick={async () => {
@@ -69,18 +71,18 @@ function FeedbackApprovePage() {
                 }
                 onClose();
               } else {
-                alert("Please enter answer");
+                alert(t('Please enter answer'));
               }
             }}
           >
-            Submit
+            {t('Submit')}
           </button>
         </div>
       )
     });
   };
   const handleDecline = async (requestId, subject, senderId) => {
-    const confirmDecline = window.confirm("Are you sure you want to decline this feedback?");
+    const confirmDecline = window.confirm(t('Are you sure you want to decline this feedback?'));
     if (!confirmDecline) {
       return;
     }
@@ -92,7 +94,7 @@ function FeedbackApprovePage() {
         "Feedback Answer",
         `Your feedback ${subject} has been dissmissed`
       )
-      alert("Feedback Dissmissed")
+      alert(t('Feedback Dissmissed'))
       fetchData();
     } catch (err) {
       console.error("Error approving request:", err);
@@ -116,7 +118,7 @@ function FeedbackApprovePage() {
     console.log("Updated Tick Array:", selectedRequests);
   };
   const handleDeclineSelected = async () => {
-    const confirmDecline = window.confirm("Are you sure you want to dissmiss all selected feedback?");
+    const confirmDecline = window.confirm(t('Are you sure you want to dissmiss all selected feedback?'));
     if (!confirmDecline) {
       return;
     }
@@ -126,7 +128,7 @@ function FeedbackApprovePage() {
         const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/feedback/reject/${requestId}`);
         console.log(`Processed approve for request ID:`, requestId);
       }
-      alert(`All selected feedback have been dissmiss`);
+      alert(t('All selected feedback have been dissmiss'));
       setSelectedRequests([]);
       fetchData();
     } catch (err) {
@@ -147,15 +149,15 @@ function FeedbackApprovePage() {
             alt="Checkbox"
             onClick={handleTick}
           />
-          <div>Feedback Subject</div>
-          <div>From</div>
-          <div>Date</div>
+          <div>{t('Feedback Subject')}</div>
+          <div>{t('From')}</div>
+          <div>{t('Date')}</div>
           <div>
             <img src="/icons/Decline.png" alt="" onClick={handleDeclineSelected} />
             {/* <img src="/icons/Approve.png" alt="" onClick={handleApproveSelected} /> */}
           </div>
         </div>
-      ) : (<p>There is no feedback at this time</p>)}
+      ) : (<p>{t('There is no feedback at this time')}</p>)}
       {loadedRequest.map((request) => (
         <RequestItem
           key={request.requestId}

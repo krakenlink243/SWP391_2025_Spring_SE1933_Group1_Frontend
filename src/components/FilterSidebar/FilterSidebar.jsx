@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useMemo } from "react";
 import "./FilterSidebar.css";
+import { useTranslation } from "react-i18next";
 
 const FilterSidebar = ({ allTags, allPublishers, filters, onFilterChange }) => {
+  const {t}=useTranslation();
   const [localPrice, setLocalPrice] = useState(filters.maxPrice);
   const [tagSearchTerm, setTagSearchTerm] = useState("");
   const [publisherSearchTerm, setPublisherSearchTerm] = useState("");
@@ -43,7 +45,7 @@ const FilterSidebar = ({ allTags, allPublishers, filters, onFilterChange }) => {
 
   return (
     <aside className="filter-sidebar-container">
-      <h4>Narrow by Price</h4>
+      <h4>{t('Narrow by Price')}</h4>
       <div className="filter-group price-filter">
         <input
           type="range"
@@ -56,16 +58,16 @@ const FilterSidebar = ({ allTags, allPublishers, filters, onFilterChange }) => {
           }}
         />
         <span className="price-label">
-          {localPrice >= 60 ? "Any Price" : `Under $${localPrice}`}
+          {localPrice >= 60 ? t("Any Price") : t(`Under $`, {price: localPrice})}
         </span>
       </div>
 
-      <h4>Narrow by Tag</h4>
+      <h4>{t('Narrow by Tag')}</h4>
       <div className="filter-group">
         <input
           type="search"
           className="filter-search"
-          placeholder="Search for tags"
+          placeholder={t("Search for tags")}
           value={tagSearchTerm}
           onChange={(e) => setTagSearchTerm(e.target.value)}
         />
@@ -83,12 +85,12 @@ const FilterSidebar = ({ allTags, allPublishers, filters, onFilterChange }) => {
         </div>
       </div>
 
-      <h4>Narrow by Publisher</h4>
+      <h4>{t('Narrow by Publisher')}</h4>
       <div className="filter-group">
         <input
           type="search"
           className="filter-search"
-          placeholder="Search for publishers"
+          placeholder={t("Search for publishers")}
           value={publisherSearchTerm}
           onChange={(e) => setPublisherSearchTerm(e.target.value)}
         />

@@ -6,8 +6,10 @@ import { PhotoProvider, PhotoView } from "react-photo-view";
 import { trimValue } from "../utils/validators";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function SendUserFeedback() {
+  const {t}=useTranslation();
   const [userName, setUserName] = useState("");
   const [formData, setFormData] = useState({
     subject: "",
@@ -23,7 +25,7 @@ function SendUserFeedback() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "subject" && value.length > 256) {
-      alert("Subject must be less than 256 characters");
+      alert(t("Subject must be less than 256 characters"));
       setFormData((prev) => ({
         ...prev,
         subject: value.slice(0, 256),
@@ -31,7 +33,7 @@ function SendUserFeedback() {
       return;
     }
     if (name === "message" && value.length > 2048) {
-      alert("Feedback must be less than 2048 characters");
+      alert(t("Feedback must be less than 2048 characters"));
       setFormData((prev) => ({
         ...prev,
         message: value.slice(0, 2048),
@@ -62,7 +64,7 @@ function SendUserFeedback() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.subject || !formData.message) {
-      alert("Please fill in all fields!");
+      alert(t("Please fill in all fields!"));
       return;
     }
     try {
@@ -105,15 +107,15 @@ function SendUserFeedback() {
   return (
     <div className="sendfeedback-container">
       <div className="sendfeedback-title">
-        <h1>Send Feedback</h1>
-        <h2>Hi, {userName}</h2>
+        <h1>{t('Send Feedback')}</h1>
+        <h2>{t('Hi,')} {userName}</h2>
         <p style={{ fontStyle: "italic" }}>
-          If you have any thing to tell us to improve our products or any
-          question, please tell us below.{" "}
+          {t('If you have any thing to tell us to improve our products or any question, please tell us below.')}
+          {" "}
         </p>
       </div>
       <div className="feedback-content">
-        Subject(*)
+        {t('Subject(*)')}
         <input
           type="text"
           name="subject"
@@ -123,7 +125,7 @@ function SendUserFeedback() {
           onBlur={normalizeValue}
         />
         <br />
-        Your Feedback(*)
+        {t('Your Feedback(*)')}
         <textarea
           name="message"
           id=""
@@ -170,9 +172,9 @@ function SendUserFeedback() {
         </PhotoProvider>
       </div>
       <div className="feedback-button">
-        <Button label="Send" color="blue-button" onClick={handleSubmit} />
+        <Button label={t("Send")} color="blue-button" onClick={handleSubmit} />
         <Button
-          label="Cancel"
+          label={t("Cancel")}
           color="grey-button"
           onClick={() => navigate("/feedbackhub")}
         />

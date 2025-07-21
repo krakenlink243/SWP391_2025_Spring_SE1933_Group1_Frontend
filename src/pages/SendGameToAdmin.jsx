@@ -12,41 +12,43 @@ import Select from 'react-select';
 import { useNavigate } from 'react-router-dom'
 import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css';
+import { useTranslation } from 'react-i18next'
 function SendGameToAdmin() {
+  const {t} = useTranslation();
   const [fileName, setFileName] = useState('Upload');
   const [selectedTags, setSelectedTags] = useState([]);
   const tags = [
-    { value: 18, label: 'Action' },
-    { value: 17, label: 'Adventure' },
-    { value: 29, label: 'Anime' },
-    { value: 31, label: 'Casual' },
-    { value: 12, label: 'Choices Matter' },
-    { value: 4, label: 'Classic' },
-    { value: 27, label: 'Co-op' },
-    { value: 23, label: 'Crafting' },
-    { value: 15, label: 'Exploration' },
-    { value: 20, label: 'Fantasy' },
-    { value: 28, label: 'FPS' },
-    { value: 16, label: 'Free to Play' },
-    { value: 10, label: 'Great Soundtrack' },
-    { value: 3, label: 'Historical' },
-    { value: 14, label: 'Horror' },
-    { value: 8, label: 'Indie' },
-    { value: 6, label: 'Multiplayer' },
-    { value: 19, label: 'Open World' },
-    { value: 11, label: 'Pixel Graphics' },
-    { value: 25, label: 'Platformer' },
-    { value: 26, label: 'Puzzle' },
-    { value: 30, label: 'Racing' },
-    { value: 7, label: 'RPG' },
-    { value: 1, label: 'RTS' },
-    { value: 21, label: 'Sci-fi' },
-    { value: 24, label: 'Simulation' },
-    { value: 5, label: 'Singleplayer' },
-    { value: 9, label: 'Story Rich' },
-    { value: 2, label: 'Strategy' },
-    { value: 13, label: 'Surreal' },
-    { value: 22, label: 'Survival' },
+    { value: 18, label: t('Action') },
+    { value: 17, label: t('Adventure') },
+    { value: 29, label: t('Anime') },
+    { value: 31, label: t('Casual') },
+    { value: 12, label: t('Choices Matter') },
+    { value: 4, label: t('Classic') },
+    { value: 27, label: t('Co-op') },
+    { value: 23, label: t('Crafting') },
+    { value: 15, label: t('Exploration') },
+    { value: 20, label: t('Fantasy') },
+    { value: 28, label: t('FPS') },
+    { value: 16, label: t('Free to Play') },
+    { value: 10, label: t('Great Soundtrack') },
+    { value: 3, label: t('Historical') },
+    { value: 14, label: t('Horror') },
+    { value: 8, label: t('Indie') },
+    { value: 6, label: t('Multiplayer') },
+    { value: 19, label: t('Open World') },
+    { value: 11, label: t('Pixel Graphics') },
+    { value: 25, label: t('Platformer') },
+    { value: 26, label: t('Puzzle') },
+    { value: 30, label: t('Racing') },
+    { value: 7, label: t('RPG') },
+    { value: 1, label: t('RTS') },
+    { value: 21, label: t('Sci-fi') },
+    { value: 24, label: t('Simulation') },
+    { value: 5, label: t('Singleplayer') },
+    { value: 9, label: t('Story Rich') },
+    { value: 2, label: t('Strategy') },
+    { value: 13, label: t('Surreal') },
+    { value: 22, label: t('Survival') },
   ];
   const [formData, setFormData] = useState({
     gameName: '',
@@ -91,11 +93,11 @@ function SendGameToAdmin() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === 'price' && !validatePrice(value)) {
-      alert('Price of games must follow these rules:\n1. Only numbers\n2. No space\n3. No special characters\n4. No empty string\n5. No negative number\n6. 2 digits after decimal point');
+      alert(t('Price of games must follow these rules:\n1. Only numbers\n2. No space\n3. No special characters\n4. No empty string\n5. No negative number\n6. 2 digits after decimal point'));
       return;
     }
     if (value.length > 32 && (name === 'gameName' || name === 'os' || name === 'processor' || name === 'graphics' || name === 'storage')) {
-      alert("32 characters limit exceeded!")
+      alert(t("32 characters limit exceeded!"))
       setFormData(prev => ({
         ...prev,
         [name]: value.slice(0, 32), // Truncate without trimming spaces
@@ -103,7 +105,7 @@ function SendGameToAdmin() {
       return;
     }
     if (value.length > 1024 && (name === 'additionalNotes' || name === 'shortDescription')) {
-      alert("1024 characters limit exceeded!")
+      alert(t("1024 characters limit exceeded!"))
       setFormData(prev => ({
         ...prev,
         [name]: value.slice(0, 1024), // Truncate without trimming spaces
@@ -111,7 +113,7 @@ function SendGameToAdmin() {
       return;
     }
     if (value.length > 10000 && name === 'fullDescription') {
-      alert("10000 characters limit exceeded!");
+      alert(t("10000 characters limit exceeded!"));
       setFormData(prev => ({
         ...prev,
         [name]: value.slice(0, 10000), // Truncate without trimming spaces
@@ -119,7 +121,7 @@ function SendGameToAdmin() {
       return;
     }
     if (value > 1000 && name === 'price') {
-      alert("Game price must be under or equals $1000!")
+      alert(t("Game price must be under or equals $1000!"))
       setFormData(prev => ({
         ...prev,
         [name]: "", // Truncate without trimming spaces
@@ -143,7 +145,7 @@ function SendGameToAdmin() {
   const handleSubmit = async () => {
     for (const key in formData) {
       if (!validateEmty(formData.memory) || !validateEmty(formData.processor) || !validateEmty(formData.storage) || !validateEmty(formData.graphics) || !validateEmty(formData.shortDescription) || !validateEmty(formData.fullDescription) || !validateEmty(formData.gameName) || !validateEmty(formData.price) || !validateEmty(formData.os) || !validateEmty(formData.gameUrl) || !validateEmty(arr) ||!croppedUrl) {
-        alert(`Please fill in the required field.`);
+        alert(t(`Please fill in the required field.`));
         return;
       }
     }
@@ -171,7 +173,7 @@ function SendGameToAdmin() {
   const validMemory = (e) => {
     const { name, value } = e.target;
     if (!validateMemory(value)) {
-      alert('Memory of games must follow this rule: Number + (GB/MB)');
+      alert(t('Memory of games must follow this rule: Number + (GB/MB)'));
       setFormData(prev => ({ ...prev, [name]: '' }));
       return;
     } else {
@@ -272,7 +274,7 @@ function SendGameToAdmin() {
       console.log(response.data.message)
       console.log(response.data.debug)
       if (response.data.message === true) {
-        alert('Game name already exists!');
+        alert(t('Game name already exists!'));
         setFormData(prev => ({ ...prev, [name]: '' }));
         return;
       }
@@ -333,7 +335,7 @@ function SendGameToAdmin() {
   return (
     <>
       <div className='form-border' style={{width:'60%',marginTop:'5%',marginBottom:'5%'}}>
-        <h1 >Game Application</h1>
+        <h1 >{t('Game Application')}</h1>
         <div className='game-mandatory-information'>
           <div className='game-icon'style={{margin:'0 auto'}}>
             <input
@@ -372,7 +374,7 @@ function SendGameToAdmin() {
                   />
                 </ReactCrop>
                 <br />
-                <button onClick={confirmCrop}>Confirm Crop</button>
+                <button onClick={confirmCrop}>{t('Confirm Crop')}</button>
               </div>
             )}
 
@@ -390,13 +392,13 @@ function SendGameToAdmin() {
           {!(imageSrc && !croppedUrl) && (
 
           <div className='name-price'>
-            Name(*)
+            {t('Name(*)')}
             <input type="text" name="gameName" id="" value={formData.gameName} onChange={handleChange} onBlur={normalizeValue} />
-            Price(*)
+            {t('Price(*)')}
             <div>
               $ <input className='price-input' type="text" name="price" id="" value={formData.price} onChange={handleChange} />
             </div>
-            Tags(*)
+            {t('Tags(*)')}
             <div className="tag-selector">
               <Select
                 options={tags}
@@ -418,19 +420,19 @@ function SendGameToAdmin() {
           <PartHeading content='System Requirements' />
           <div className='sys-req-col-container'>
             <div className='sys-req-col1'>
-              OS(*)
+              {t('OS(*)')}
               <input type="text" name="os" id="" value={formData.os} onChange={handleChange} onBlur={normalizeValue} />
-              Processor(*)
+              {t('Processor(*)')}
               <input type="text" name="processor" id="" value={formData.processor} onChange={handleChange} onBlur={normalizeValue} />
-              Memory(*)
+              {t('Memory(*)')}
               <input type="text" name="memory" id="" value={formData.memory} onChange={handleChange} onBlur={validMemory} />
             </div>
             <div className='sys-req-col2'>
-              Graphics(*)
+              {t('Graphics(*)')}
               <input type="text" name="graphics" id="" value={formData.graphics} onChange={handleChange} onBlur={normalizeValue} />
-              Storage(*)
+              {t('Storage(*)')}
               <input type="text" name="storage" id="" value={formData.storage} onChange={handleChange} onBlur={validMemory} />
-              Additionnal Notes
+              {t('Additionnal Notes')}
               <textarea name="additionalNotes" id="" value={formData.additionalNotes} onChange={handleChange} onBlur={normalizeValue}></textarea>
             </div>
           </div>
@@ -467,16 +469,16 @@ function SendGameToAdmin() {
           {uploadProgress > 0 && uploadProgress < 100 && (
             <>
               <progress value={uploadProgress} max="100" />
-              <div>Speed: {uploadSpeed} KB/s</div>
+              <div>{t('Speed')}: {uploadSpeed} KB/s</div>
               <div>
-                Time Remaining: {timeRemaining ? timeRemaining : 'Calculating...'}
+                {t('Time Remaining')}: {timeRemaining ? timeRemaining : t('Calculating...')}
               </div>
             </>
           )}
         </div>
         <div className='send-request-cancel'>
-          <Button className='cancel-button' label='Cancel' onClick={handleCancel} color='grey-button' />
-          <Button className='send-button' label='Send Request' isApprove={'true'} onClick={handleSubmit} color='blue-button' />
+          <Button className='cancel-button' label={t('Cancel')} onClick={handleCancel} color='grey-button' />
+          <Button className='send-button' label={t('Send Request')} isApprove={'true'} onClick={handleSubmit} color='blue-button' />
         </div>
       </div>
     </>

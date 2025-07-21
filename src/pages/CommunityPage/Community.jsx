@@ -4,12 +4,13 @@ import ThreadCard from "../../components/Community/ThreadCard";
 import ReviewCard from "../../components/Community/ReviewCard";
 import CreateThreadModal from "../../components/Community/CreateThreadModal";
 import Button from "../../components/Button/Button";
+import { useTranslation } from "react-i18next";
 
 export default function Community() {
     const [threads, setThreads] = useState([]);
     const [reviews, setReviews] = useState([]);
     const [showModal, setShowModal] = useState(false);
-
+    const {t} = useTranslation();
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_API_URL}/api/discussions`)
             .then((res) => setThreads(res.data))
@@ -25,11 +26,11 @@ export default function Community() {
 
     return (
         <div className="max-w-5xl mx-auto p-4">
-            <h1 className="text-3xl font-bold mb-6" style={{ color: "white" }}>Community</h1>
+            <h1 className="text-3xl font-bold mb-6" style={{ color: "white" }}>{t('Community')}</h1>
 
             {/* Reviews Section */}
             <section className="mb-10">
-                <h2 className="text-xl font-semibold mb-2" style={{ color: "white" }}>Game Reviews</h2>
+                <h2 className="text-xl font-semibold mb-2" style={{ color: "white" }}>{t('Game Reviews')}</h2>
                 <div className="space-y-3">
                     {/* {reviews.map((review, index) => (
                         <div key={index} className="review-card">
@@ -55,7 +56,7 @@ export default function Community() {
             {/* Threads Section */}
             <section>
                 <div className="flex justify-between items-center mb-2">
-                    <h2 className="text-xl font-semibold" style={{ color: "white" }}>Discussions</h2>
+                    <h2 className="text-xl font-semibold" style={{ color: "white" }}>{t('Discussions')}</h2>
                     {/* <button
                         onClick={() => setShowModal(true)}
                         className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
@@ -64,7 +65,7 @@ export default function Community() {
                         Start New Thread
                     </button> */}
                     <Button 
-                        label="Start New Thread"
+                        label={t('Start New Thread')}
                         onClick={() => setShowModal(true)}
                         color="blue-button"
                     />

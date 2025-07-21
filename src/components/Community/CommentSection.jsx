@@ -1,10 +1,11 @@
 // src/components/CommentSection.jsx
 import { useState } from "react";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 export default function CommentSection({ threadId, comments, setComments }) {
   const [newComment, setNewComment] = useState("");
-
+  const {t}=useTranslation();
   const handleSubmit = async () => {
     const token = localStorage.getItem("token");
     try {
@@ -21,16 +22,16 @@ export default function CommentSection({ threadId, comments, setComments }) {
       setNewComment("");
     } catch (err) {
       console.error(err);
-      alert("Failed to post comment.");
+      alert(t("Failed to post comment."));
     }
   };
 
   return (
     <div>
-      <h3 className="text-lg font-semibold mb-3">Comments</h3>
+      <h3 className="text-lg font-semibold mb-3">{t('Comments')}</h3>
       <div className="space-y-3 mb-4">
         {comments.length === 0 ? (
-          <p className="text-gray-500 italic">No comments yet.</p>
+          <p className="text-gray-500 italic">{t('No comments yet.')}</p>
         ) : (
           comments.map((c) => (
             <div key={c.commentId} className="border p-3 rounded shadow-sm">
@@ -47,7 +48,7 @@ export default function CommentSection({ threadId, comments, setComments }) {
       <textarea
         className="w-full p-2 border rounded mb-2"
         rows="3"
-        placeholder="Write a comment..."
+        placeholder={t("Write a comment...")}
         value={newComment}
         onChange={(e) => setNewComment(e.target.value)}
       />
@@ -55,7 +56,7 @@ export default function CommentSection({ threadId, comments, setComments }) {
         onClick={handleSubmit}
         className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
       >
-        Post Comment
+        {t('Post Comment')}
       </button>
     </div>
   );

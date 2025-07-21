@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import "./BrowseByTag.css";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-
+import { useTranslation } from "react-i18next";
 /**
  * @author Phan NT Son
  * @returns 
@@ -11,7 +11,7 @@ function BrowseByTag() {
 
     const [data, setData] = useState([]);
     const [cachedTags, setCachedTags] = useLocalStorage('tags', []);
-
+    const {t} = useTranslation();
     useEffect(() => {
 
         if (cachedTags.length) setData(cachedTags);
@@ -40,7 +40,7 @@ function BrowseByTag() {
 
     return (
         <div className="browse-tags">
-            <div className="title">Browse by Category</div>
+            <div className="title">{t('Browse by Category')}</div>
             <div className="conent-hub-carousel">
                 <div id="browseCarousel" className="carousel-container carousel-fade carousel slide" data-ride="false" data-pause="true">
                     <div className="carousel-items carousel-inner">
@@ -79,11 +79,11 @@ function BrowseByTag() {
 
                     <button className="carousel-control-prev" type="button" data-bs-target="#browseCarousel" data-bs-slide="prev">
                         <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span className="visually-hidden">Previous</span>
+                        <span className="visually-hidden">{t('Previous')}</span>
                     </button>
                     <button className="carousel-control-next" type="button" data-bs-target="#browseCarousel" data-bs-slide="next">
                         <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span className="visually-hidden">Next</span>
+                        <span className="visually-hidden">{t('Next')}</span>
                     </button>
                 </div>
             </div>
