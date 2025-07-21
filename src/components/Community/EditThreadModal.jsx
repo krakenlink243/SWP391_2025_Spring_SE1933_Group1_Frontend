@@ -3,6 +3,7 @@ import { useState } from "react";
 import "./EditThreadModal.css";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 export default function EditThreadModal({ thread, onCancel, onSave }) {
     const [title, setTitle] = useState(thread.title);
     const [content, setContent] = useState(thread.content);
@@ -19,9 +20,7 @@ export default function EditThreadModal({ thread, onCancel, onSave }) {
         if (!confirmed) return;
 
         try {
-            await fetch(`${import.meta.env.VITE_API_URL}/api/discussions/${thread.threadId}`, {
-                method: "DELETE",
-            });
+            await axios.delete(`${import.meta.env.VITE_API_URL}/api/discussions/delete/${thread.threadId}`);
             alert("Thread deleted successfully.");
             navigate("/community");
         } catch (error) {
