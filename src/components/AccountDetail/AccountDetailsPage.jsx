@@ -3,13 +3,14 @@ import axios from "axios";
 import "./AccountDetailsPage.css";
 import { useNavigate, Link } from "react-router-dom";
 import Button from "../Button/Button";
+import { useTranslation } from "react-i18next";
 
 const AccountDetailsPage = () => {
   const [account, setAccount] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
-
+  const {t}=useTranslation();
   // === STATE CHO MODAL NẠP TIỀN (BẰNG USD) ===
   const [amountUsd, setAmountUsd] = useState(5); // Số tiền nạp mặc định là $5
   const [bankCode, setBankCode] = useState("");
@@ -32,7 +33,7 @@ const AccountDetailsPage = () => {
   const handleAddFunds = async () => {
     if (amountUsd < 5) {
       // Giới hạn số tiền nạp tối thiểu là $5
-      alert("Minimum funding amount is $5.");
+      alert(t("Minimum funding amount is $5."));
       return;
     }
     try {
@@ -58,11 +59,11 @@ const AccountDetailsPage = () => {
       }
     } catch (error) {
       console.error("Failed to create payment URL:", error);
-      alert("Error creating payment link. Please try again.");
+      alert(t("Error creating payment link. Please try again."));
     }
   };
 
-  if (loading) return <div>Loading account details...</div>;
+  if (loading) return <div>{t('Loading account details...')}</div>;
 
   const handleOpenModal = (cond) => {
     if (cond) document.body.style.overflow = "hidden"
@@ -79,17 +80,17 @@ const AccountDetailsPage = () => {
           <div className="account-main-content">
             <aside className="account-sidebar">
               <Link to="#" className="active">
-                Account details
+                {t('Account details')}
               </Link>
-              <Link to="#">Store preferences</Link>
+              <Link to="#">{t('Store preferences')}</Link>
             </aside>
 
             <main className="account-info-panel">
-              <h1>{account?.username}'s Account</h1>
+              <h1>{t(`'s Account`, {userName: account.username})}</h1>
               <section className="info-section purchase-history">
-                <h3>STORE & PURCHASE HISTORY</h3>
+                <h3>{t('STORE & PURCHASE HISTORY')}</h3>
                 <div className="wallet-balance">
-                  <span>Wallet Balance</span>
+                  <span>{t('Wallet Balance')}</span>
                   <strong>
                     {new Intl.NumberFormat("en-US", {
                       style: "currency",
@@ -102,17 +103,17 @@ const AccountDetailsPage = () => {
                     onClick={() => handleOpenModal(true)}
                     className="action-btn"
                   >
-                    Add funds to your Wallet
+                    {t('Add funds to your Wallet')}
                   </button>
-                  <Link to="/account/history">View purchase history</Link>
+                  <Link to="/account/history">{t('View purchase history')}</Link>
                 </div>
               </section>
               <section className="info-section contact-info">
-                <h3>CONTACT INFO</h3>
-                <p>Email address: {account?.email}</p>
-                <Link to="/change-email">Manage email preferences</Link>
+                <h3>{t('CONTACT INFO')}</h3>
+                <p>{t('Email address')}: {account?.email}</p>
+                <Link to="/change-email">{t('Manage email preferences')}</Link>
                 <br />
-                <Link to="/change-password">Change password</Link>
+                <Link to="/change-password">{t('Change password')}</Link>
               </section>
             </main>
           </div>
@@ -121,7 +122,7 @@ const AccountDetailsPage = () => {
           {isModalOpen && (
             <div className="modal-overlay">
               <div className="modal-content">
-                <h2>Add Funds to Your Steam Wallet</h2>
+                <h2>{t('Add Funds to Your Steam Wallet')}</h2>
                 <div className="amount-options">
                   <button onClick={() => setAmountUsd(5)}>$5.00</button>
                   <button onClick={() => setAmountUsd(10)}>$10.00</button>
@@ -139,15 +140,15 @@ const AccountDetailsPage = () => {
                 />
 
                 <div className="form-group-modal">
-                  <label htmlFor="bankCode">Bank (Optional)</label>
+                  <label htmlFor="bankCode">{t('Bank (Optional)')}</label>
                   <select
                     id="bankCode"
                     value={bankCode}
                     onChange={(e) => setBankCode(e.target.value)}
                   >
-                    <option value="">Select a bank...</option>
-                    <option value="NCB">NCB (Recommended)</option>
-                    <option value="VNBANK">Ngân hàng Nội địa</option>
+                    <option value="">{t('Select a bank...')}</option>
+                    <option value="NCB">{t('NCB (Recommended)')}</option>
+                    <option value="VNBANK">{t('Ngân hàng Nội địa')}</option>
                     <option value="VnPayQR">VNPAYQR</option>
                     <option value="VISA">VISA</option>
                   </select>
@@ -163,8 +164,8 @@ const AccountDetailsPage = () => {
                   >
                     Cancel
                   </button> */}
-                  <Button label={`Add funds`} onClick={handleAddFunds} color="gradient-green-button" />
-                  <Button label={`Cancel`} onClick={() => handleOpenModal(false)} color="grey-button" />
+                  <Button label={t(`Add funds`)} onClick={handleAddFunds} color="gradient-green-button" />
+                  <Button label={t(`Cancel`)} onClick={() => handleOpenModal(false)} color="grey-button" />
                 </div>
               </div>
             </div>

@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom"; // Thêm Link cho breadcrumb
 import "./GameDetail.css";
 import Review from "../../components/Review/Review";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 // Added by Phan NT Son
 import DetailHeader from "./DetailHeader";
@@ -12,7 +13,6 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 // add by Bathanh
 const userId = localStorage.getItem("userId");
-
 const isStale = (timestamp) => {
   const TEN_MINUTES = 10 * 60 * 1000;
   return Date.now() - timestamp > TEN_MINUTES;
@@ -25,7 +25,7 @@ const GameDetail = () => {
   const [error, setError] = useState(null);
   const [cachedGameDetail, setCachedGameDetail] = useLocalStorage(`gameDetail_${gameId}`, null);
   const [isShowPopup, setIsShowPopup] = useState(false);
-
+  const {t} = useTranslation();
   useEffect(() => {
     if (isShowPopup) {
       document.body.style.overflow = 'hidden'; // Disable scroll when popup is open
@@ -69,12 +69,12 @@ const GameDetail = () => {
   }, [gameId]);
 
   if (loading)
-    return <div className="loading-message">Loading game details...</div>;
+    return <div className="loading-message">{t('Loading game details...')}</div>;
   if (error)
     return (
-      <div className="error-message">Error fetching game details: {error}</div>
+      <div className="error-message">{t('Error fetching game details:')}{error}</div>
     );
-  if (!game) return <div className="not-found-message">Game not found.</div>;
+  if (!game) return <div className="not-found-message">{t('Game not found.')}</div>;
 
   return (
 

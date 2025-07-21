@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import "./PaymentResultPage.css"; // Sẽ tạo file CSS này
+import { useTranslation } from "react-i18next";
 
 const PaymentResultPage = () => {
+  const{t}=useTranslation();
   const location = useLocation();
   const [status, setStatus] = useState("processing"); // 'processing', 'success', 'failed'
   const [message, setMessage] = useState(
@@ -27,7 +29,7 @@ const PaymentResultPage = () => {
 
     if (responseCode === "00") {
       setStatus("success");
-      setMessage("Your payment was successful!");
+      setMessage(t("Your payment was successful!"));
 
       axios.post(
         `${import.meta.env.VITE_API_URL}/user/wallet/add?amount=${
@@ -36,7 +38,7 @@ const PaymentResultPage = () => {
       );
     } else {
       setStatus("failed");
-      setMessage("Your payment failed. Please try again or contact support.");
+      setMessage(t("Your payment failed. Please try again or contact support."));
     }
   }, [location]);
 
@@ -63,36 +65,36 @@ const PaymentResultPage = () => {
 
         <h1 className="status-title">{message}</h1>
         <p className="status-subtitle">
-          Please check your account balance for confirmation.
+          {t('Please check your account balance for confirmation')}.
         </p>
 
         <div className="transaction-details">
-          <h4>Transaction Details</h4>
+          <h4>{t('Transaction Details')}</h4>
           <ul>
             <li>
-              <strong>Amount:</strong>{" "}
+              <strong>{t('Amount')}:</strong>{" "}
               {new Intl.NumberFormat("vi-VN", {
                 style: "currency",
                 currency: "VND",
               }).format(details.amount / 100)}
             </li>
             <li>
-              <strong>Bank:</strong> {details.bankCode}
+              <strong>{t('Bank')}:</strong> {details.bankCode}
             </li>
             <li>
-              <strong>Order Info:</strong> {details.orderInfo}
+              <strong>{t('Order Info')}:</strong> {details.orderInfo}
             </li>
             <li>
-              <strong>VNPay Transaction No:</strong> {details.transactionNo}
+              <strong>{t('VNPay Transaction No')}:</strong> {details.transactionNo}
             </li>
             <li>
-              <strong>Payment Time:</strong> {formatPayDate(details.payDate)}
+              <strong>{t('Payment Time')}:</strong> {formatPayDate(details.payDate)}
             </li>
           </ul>
         </div>
 
         <Link to="/account" className="action-btn primary">
-          Return to Account
+          {t('Return to Account')}
         </Link>
       </div>
     </div>

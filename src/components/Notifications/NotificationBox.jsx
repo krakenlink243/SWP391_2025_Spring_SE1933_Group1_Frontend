@@ -5,6 +5,7 @@ import './NotificationBox.css';
 import { useNavigate } from "react-router-dom";
 import NotificationBoxItem from "./NotificationBoxItem";
 import { useUnreadNotifications } from "../../hooks/useUnreadNotifications";
+import { useTranslation } from "react-i18next";
 
 /**
  * @author Phan NT Son
@@ -18,6 +19,9 @@ function NotificationBox() {
   const CUR_TOKEN = localStorage.getItem("token");
   const socketNotifications = useUnreadNotifications(CUR_TOKEN);
   const navigate = useNavigate();
+  const {t} = useTranslation();
+
+
 
   useEffect(() => {
     console.log("Refresh notiflist");
@@ -46,8 +50,8 @@ function NotificationBox() {
 
       <div className={`notifbox-box text-light p-3 ${isOpen ? "active" : ""}`}>
         <div className="notifbox-header d-flex flex-row align-items-center justify-content-around pb-3">
-          <p className="notifbox-title">Notifications</p>
-          <button className="notfif-button text-light" onClick={() => navigate("/notifications")}>View All</button>
+          <p className="notifbox-title">{t('Notifications')}</p>
+          <button className="notfif-button text-light" onClick={() => navigate("/notifications")}>{t('View All')}</button>
         </div>
 
         <ul className="notifbox-list">
@@ -61,7 +65,7 @@ function NotificationBox() {
               </div>
             ))
           ) : (
-            <li className="notifbox-empty">You have no new notifications at this time.</li>
+            <li className="notifbox-empty">{t('You have no new notifications at this time')}.</li>
           )}
         </ul>
       </div>

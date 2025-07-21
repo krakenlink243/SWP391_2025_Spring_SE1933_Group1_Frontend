@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import "./BrowseByPublisher.css";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { useTranslation } from "react-i18next";
 
 /**
  * @author Phan NT Son
@@ -10,7 +11,7 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 function BrowseByPublisher() {
   const [data, setData] = useState([]);
   const [cachedPublishers, setCachedPublishers] = useLocalStorage('publisher', []);
-
+  const {t} = useTranslation();
   useEffect(() => {
     if (cachedPublishers) setData(cachedPublishers);
     getPublishersList();
@@ -36,7 +37,7 @@ function BrowseByPublisher() {
 
   return (
     <div className="browse-publishers">
-      <div className="title">Browse by Publisher</div>
+      <div className="title">{t('Browse by Publisher')}</div>
       <div className="conent-hub-carousel">
         <div
           id="browseCarousel1"
@@ -90,7 +91,7 @@ function BrowseByPublisher() {
               className="carousel-control-prev-icon"
               aria-hidden="true"
             ></span>
-            <span className="visually-hidden">Previous</span>
+            <span className="visually-hidden">{t('Previous')}</span>
           </button>
           <button
             className="carousel-control-next"
@@ -102,7 +103,7 @@ function BrowseByPublisher() {
               className="carousel-control-next-icon"
               aria-hidden="true"
             ></span>
-            <span className="visually-hidden">Next</span>
+            <span className="visually-hidden">{t('Next')}</span>
           </button>
         </div>
       </div>

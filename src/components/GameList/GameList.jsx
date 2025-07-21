@@ -2,12 +2,14 @@ import React from "react";
 import GameCard from "../GameCard/GameCard";
 import "./GameList.css";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const GameList = ({ games, loading, error }) => {
-  if (loading) return <div className="loading-message">Loading games...</div>;
-  if (error) return <div className=".error-message">Error: {error}.</div>;
+  const {t} = useTranslation();
+  if (loading) return <div className="loading-message">{t('Loading games...')}</div>;
+  if (error) return <div className=".error-message">{t('Error')}: {error}.</div>;
   if (!games || games.length === 0)
-    return <div className="no-games-message">No games found.</div>;
+    return <div className="no-games-message">{t('No games found')}.</div>;
 
   return (
     <div className="games-container d-flex flex-column">

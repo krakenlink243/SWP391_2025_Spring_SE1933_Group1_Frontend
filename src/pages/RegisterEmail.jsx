@@ -2,13 +2,14 @@ import "./RegisterEmail.css";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 const RegisterEmail = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  const {t}=useTranslation();
   const validateEmailFormat = (email) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -17,7 +18,7 @@ const RegisterEmail = () => {
     setMessage("");
 
     if (!validateEmailFormat(email)) {
-      setMessage("Invalid email format.");
+      setMessage(t("Invalid email format."));
       return;
     }
 
@@ -31,14 +32,14 @@ const RegisterEmail = () => {
       );
 
       if (!res.data.available) {
-        setMessage("Email already in use.");
+        setMessage(t("Email already in use."));
         return;
       }
       await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/send-verification-otp`, { email });
       navigate("/verify-email", { state: { email } });
     } catch (err) {
       console.error(err);
-      setMessage("Error checking email.");
+      setMessage(t("Error checking email."));
     } finally {
       setLoading(false);
     }
@@ -50,11 +51,11 @@ const RegisterEmail = () => {
         <div className="spacer col-lg-3"></div>
         <div className="main-content col-lg-6">
           <form className="form" onSubmit={handleSubmit}>
-            <h1 className="form-title">CREATE YOUR ACCOUNT</h1>
+            <h1 className="form-title">{t('CREATE YOUR ACCOUNT')}</h1>
             {message && <p className="message">{message}</p>}
             <div className="form-group">
               <label htmlFor="email" className="form-label">
-                Email address
+                {t('Email address')}
               </label>
               <input
                 id="email"
@@ -74,12 +75,12 @@ const RegisterEmail = () => {
                 required
               />
               <span>
-                I'm 13 years old or older and agree with Centurion <Link to={`/terms-of-use`} >Terms of use</Link>
-                {" "}and <Link to={`/privacy-policy`}>Privacy policy</Link>.
+                {t(`I'm 13 years old or older and agree with Centurion`)} <Link to={`/terms-of-use`} >{t('Terms of use')}</Link>
+                {" "}and <Link to={`/privacy-policy`}>{t('Privacy policy')}</Link>.
               </span>
             </label>
             <button type="submit" className="submit-button" disabled={loading}>
-              {loading ? "Checking..." : "Continue"}
+              {loading ? t("Checking...") : t("Continue")}
             </button>
           </form>
 

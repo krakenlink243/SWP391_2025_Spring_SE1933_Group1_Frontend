@@ -3,13 +3,14 @@ import { useState, useEffect, useContext } from "react";
 import './MainTab.css'
 import { AppContext } from "../../context/AppContext";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function MainTab({ setCurTab }) {
     // Get from context ↓
     const { friendList, onlineUsers: online } = useContext(AppContext);
     const onlineUsers = online;
     const navigate = useNavigate();
-
+    const {t} = useTranslation();
 
     const isOnline = (username) => {
         return onlineUsers.includes(username);
@@ -19,7 +20,7 @@ function MainTab({ setCurTab }) {
         <div className="main-tab">
             <div className="main-tab-header d-flex flex-row justify-content-between">
                 <div className="status">
-                    Your Friends
+                    {t('Your Friends')}
                     <span className="friends-count"> {friendList.length} </span>
                     /
                     <span className="friends-limit"> 285 </span>
@@ -27,12 +28,12 @@ function MainTab({ setCurTab }) {
                 <div className="btn-add-friend" onClick={() => setCurTab(1)}>
                     <span>
                         <i className="icon"></i>
-                        Add a Friend
+                        {t('Your Friends')}
                     </span>
                 </div>
             </div>
             <div className="main-tab-body d-flex flex-row gap-2 flex-wrap">
-                {friendList.length == 0 && <div>You have no friends</div>}
+                {friendList.length == 0 && <div>{t('You have no friends')}</div>}
                 {
                     friendList.map((friend, idx) => (
                         <div

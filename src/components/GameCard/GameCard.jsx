@@ -1,10 +1,12 @@
 import React from "react";
 import "./GameCard.css"; // CSS cho GameCard
+import { useTranslation } from "react-i18next";
 
 const GameCard = ({ game }) => {
   // const gameId = game.id; 
   const date = new Date(game.releaseDate);
   const formattedDate = `${date.getDate()} ${date.toLocaleString("en-US", { month: "short" })}, ${date.getFullYear()}`;
+  const {t} = useTranslation();
   return (
     <div className="game-card d-flex align-items-center justify-content-between">
       <div className="game-card-thumbnail-wrapper">
@@ -39,7 +41,7 @@ const GameCard = ({ game }) => {
             {game.originalPrice == 0 ? (
               <div>
                 <div className="current-price">
-                  Free
+                  {t('Free')}
                 </div>
               </div>
             ) : (

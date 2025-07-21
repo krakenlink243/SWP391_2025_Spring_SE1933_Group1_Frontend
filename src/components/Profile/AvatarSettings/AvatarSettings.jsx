@@ -3,6 +3,7 @@ import axios from "axios";
 import ReactCrop, { centerCrop, makeAspectCrop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import "./AvatarSettings.css";
+import { useTranslation } from "react-i18next";
 
 // Hàm helper để tạo ảnh đã được crop (giữ nguyên)
 function getCroppedImg(image, crop, fileName) {
@@ -12,6 +13,7 @@ function getCroppedImg(image, crop, fileName) {
   canvas.width = crop.width;
   canvas.height = crop.height;
   const ctx = canvas.getContext("2d");
+  const {t}=useTranslation();
   ctx.drawImage(
     image,
     crop.x * scaleX,
@@ -117,9 +119,9 @@ const AvatarSettings = ({ currentUser }) => {
         setAvatarLibrary((prev) => [newAvatarUrl, ...prev]);
       }
       setUpImgSrc(""); // Đóng giao diện crop
-      setSuccessMessage("Avatar updated successfully!");
+      setSuccessMessage(t("Avatar updated successfully!"));
     } catch (error) {
-      setError("Upload failed. Please try another image.");
+      setError(t("Upload failed. Please try another image."));
       console.error("Upload failed:", error);
     } finally {
       setIsUploading(false);
@@ -130,9 +132,9 @@ const AvatarSettings = ({ currentUser }) => {
   return (
     <div>
       <div className="settings-section">
-        <h2>Avatar</h2>
+        <h2>{t('Avatar')}</h2>
         <p className="section-description">
-          Choose your avatar image. Your profile will be updated immediately
+          {t('Choose your avatar image. Your profile will be updated immediately')}
           after upload.
         </p>
       </div>
@@ -140,7 +142,7 @@ const AvatarSettings = ({ currentUser }) => {
       {/* Giao diện Crop */}
       {upImgSrc && (
         <div className="cropper-container section-box">
-          <h3>Crop Your New Avatar</h3>
+          <h3>{t('Crop Your New Avatar')}</h3>
           <ReactCrop
             crop={crop}
             onChange={(c) => setCrop(c)}
@@ -156,10 +158,10 @@ const AvatarSettings = ({ currentUser }) => {
               className="save-btn"
               disabled={isUploading}
             >
-              {isUploading ? "Uploading..." : "Confirm & Upload"}
+              {isUploading ? t("Uploading...") : t("Confirm & Upload")}
             </button>
             <button onClick={() => setUpImgSrc("")} className="cancel-btn">
-              Cancel
+              {t('Cancel')}
             </button>
           </div>
         </div>
@@ -167,7 +169,7 @@ const AvatarSettings = ({ currentUser }) => {
 
       {/* Vùng xem trước và upload */}
       <div className="form-group">
-        <label>CURRENT AVATAR</label>
+        <label>{t('CURRENT AVATAR')}</label>
         <div className="avatar-preview-area">
           <img
             src={currentAvatar || "https://i.imgur.com/83ba2ki.png"}
@@ -175,7 +177,7 @@ const AvatarSettings = ({ currentUser }) => {
             className="avatar-preview"
           />
           <div className="avatar-upload-actions">
-            <p>Upload a new image to change your avatar.</p>
+            <p>{t('Upload a new image to change your avatar.')}</p>
             <input
               type="file"
               accept="image/*"
@@ -188,7 +190,7 @@ const AvatarSettings = ({ currentUser }) => {
               onClick={() => fileInputRef.current.click()}
               disabled={isUploading}
             >
-              Upload Image
+              {t('Upload Image')}
             </button>
           </div>
         </div>

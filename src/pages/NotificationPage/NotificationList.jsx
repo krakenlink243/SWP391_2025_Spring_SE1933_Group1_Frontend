@@ -5,6 +5,7 @@ import "./NotificationList.css"
 import { Navigate, useNavigate } from "react-router-dom";
 import { isTokenExpired } from "../../utils/validators";
 import { AppContext } from "../../context/AppContext";
+import { useTranslation } from "react-i18next";
 
 /**
  *
@@ -19,6 +20,7 @@ function NotificationList() {
   const token = localStorage.getItem("token");
   const CUR_AVATAR_URL = localStorage.getItem("avatarUrl");
   const CUR_USERNAME = localStorage.getItem("username");
+  const {t} = useTranslation();
   // Get from context ↓
   const { notification } = useContext(AppContext);
   const socketNotifications = notification;
@@ -73,7 +75,7 @@ function NotificationList() {
   };
 
   const handleDeleteAll = () => {
-    if (!window.confirm("Are you sure you want to delete all notifications?")) return;
+    if (!window.confirm(t('Are you sure you want to delete all notifications?'))) return;
     try {
       axios.delete(`${import.meta.env.VITE_API_URL}/notification/deleteall`)
         .then((resp) => {
@@ -110,7 +112,7 @@ function NotificationList() {
         </div>
         {data.length > 0 ? (
           <div className="w-100 py-5 d-flex flex-row gap-4 flex-wrap">
-            <div className="notiflist-title w-100">Notifications ({countUnRead} unread)</div>
+            <div className="notiflist-title w-100">{t('Notifications (count unread)', {count: countUnRead})}</div>
             <div className="left-col">
               <div className="notiflist-list w-100 d-flex flex-column gap-2">
                 {filteredData.map((notification) => (
@@ -125,14 +127,14 @@ function NotificationList() {
             <div className="right-col">
               <div className="d-flex flex-row gap-2">
                 <div className="right-col-btn" onClick={() => handleMarkReadAll()}>
-                  Mark All Read
+                  {t('Mark All Read')}
                 </div>
                 <div className="right-col-btn" onClick={() => handleDeleteAll()}>
-                  Delete All
+                  {t('Delete All')}
                 </div>
               </div>
               <div id="filter-wrapper">
-                <div id="title">Filter to</div>
+                <div id="title">{t('Filter to')}</div>
                 {
                   typeList.map((type) => (
                     <label key={type} className="filter-item">
@@ -146,13 +148,13 @@ function NotificationList() {
                   ))
                 }
               </div>
-              <button className="reset-btn" onClick={resetFilter}>Reset</button>
+              <button className="reset-btn" onClick={resetFilter}>{t('Reset')}</button>
             </div>
           </div>
         ) : (
           <div className="d-flex flex-column align-items-center w-100 py-5">
-            <h3>You have no notifications at this time.</h3>
-            <p>This is where you'll be able to see SteamCL notifications regarding your Friends, Games, and more.</p>
+            <h3>{t('You have no notifications at this time.')}</h3>
+            <p>{t(`This is where you'll be able to see SteamCL notifications regarding your Friends, Games, and more.`)}</p>
           </div>
         )}
       </div>

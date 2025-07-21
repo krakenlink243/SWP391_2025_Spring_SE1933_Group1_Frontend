@@ -3,6 +3,7 @@ import axios from "axios";
 import "./WalletPage.css";
 import { Navigate, useNavigate } from "react-router-dom";
 import "../../services/notification";
+import { useTranslation } from "react-i18next";
 
 /**
  * @author Phan NT Son
@@ -12,7 +13,7 @@ function WalletPage() {
   const amountArr = [50, 100, 200, 350, 500];
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
-
+  const {t} = useTranslation();
   if (!token) {
     return <Navigate to={"/"} replace />;
   }
@@ -26,7 +27,7 @@ function WalletPage() {
    */
   const addMoney = async (amount) => {
     if (amount <= 0) {
-      alert("Please enter a valid amount.");
+      alert(t('Please enter a valid amount.'));
       return;
     }
     try {
@@ -41,7 +42,7 @@ function WalletPage() {
       }
     } catch (error) {
       console.error("Failed to create payment URL:", error);
-      alert("Error creating payment link. Please try again.");
+      alert(t('Error creating payment link. Please try again.'));
     }
   };
 
@@ -60,7 +61,7 @@ function WalletPage() {
 
   return (
     <div className="add-money-container col-lg-8 text-white">
-      <h2>Add funds to {username} wallet</h2>
+      <h2>{t('Add funds to wallet', {userName: username})}</h2>
 
       <div className="main-content d-flex flex-row">
         <div className="left-col w-75">
@@ -72,7 +73,7 @@ function WalletPage() {
               >
                 <h3>
                   {" "}
-                  Add{" "}
+                  {t('Add')}{" "}
                   {am.toLocaleString("en-US", {
                     style: "currency",
                     currency: "USD",
@@ -87,7 +88,7 @@ function WalletPage() {
                   </div>
                   <div className="btn-add-money" onClick={() => addMoney(am)}>
                     <a className="btn-green-ui p-2">
-                      <span>Add funds</span>
+                      <span>{t('Add funds')}</span>
                     </a>
                   </div>
                 </div>
@@ -97,9 +98,9 @@ function WalletPage() {
         </div>
         <div className="right-col w-25">
           <div className="right-content">
-            <h2>YOUR STEAMCL ACCOUNT</h2>
+            <h2>{t('YOUR CENTURION ACCOUNT')}</h2>
             <div className="content-detail">
-              <strong>Current Wallet balance:</strong>
+              <strong>{t('Current Wallet balance')}:</strong>
               <h2>
                 {balance.toLocaleString("en-US", {
                   style: "currency",

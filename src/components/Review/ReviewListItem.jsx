@@ -1,12 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import './ReviewListItem.css';
 import ReviewButtons from "./ReviewButtons";
+import { useTranslation } from "react-i18next";
 
 function ReviewListItem({ review, game, CUR_USERID, setEditingId }) {
 
   const contentSection = useRef(null);
   const [contentH, setContentH] = useState(0);
   const [revealAll, setRevealAll] = useState(false);
+  const {t} = useTranslation();
 
 
   useEffect(() => {
@@ -35,7 +37,7 @@ function ReviewListItem({ review, game, CUR_USERID, setEditingId }) {
           <div className="title">{review.recommended ? "Recommended" : "Not Recommended"}</div>
         </div>
         <div className="time-posted-section w-100">
-          Posted on {review.timeCreated}
+          {t('Posted on')} {review.timeCreated}
         </div>
         <pre className={`content-section w-100 mb-2 ${contentH > 225 && revealAll == false ? "partical" : "full"}`} ref={contentSection}>
           {review.reviewContent}
@@ -46,14 +48,14 @@ function ReviewListItem({ review, game, CUR_USERID, setEditingId }) {
         {contentH > 225 && revealAll == false && (
           <div className="posted w-100">
             <div className="view-more-btn" onClick={() => setRevealAll(true)}>
-              Read more
+              {t('Read more')}
             </div>
           </div>
         )}
 
         <div className="hr w-100"></div>
         <div className="actions-section w-100">
-          <span className="review-was-helpful">Was this review helpful?</span>
+          <span className="review-was-helpful">{t('Was this review helpful?')}</span>
           <div className={`${review.authorId == CUR_USERID ? "d-flex flex-row justify-content-between align-items-center" : ""}`}>
             <ReviewButtons
               game={game}
@@ -62,7 +64,7 @@ function ReviewListItem({ review, game, CUR_USERID, setEditingId }) {
               reivewNotHelpful={review.notHelpful}
             />
             {review.authorId == CUR_USERID && (
-              <div onClick={() => setEditingId(review.authorId)} className="edit-btn"><u>Edit</u></div>
+              <div onClick={() => setEditingId(review.authorId)} className="edit-btn"><u>{t('Edit')}</u></div>
             )}
           </div>
         </div>

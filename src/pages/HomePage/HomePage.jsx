@@ -1,5 +1,5 @@
 // src/pages/HomePage.jsx
-import { useEffect } from "react";
+import { useEffect, useTransition } from "react";
 // import SideNav from "../components/HomePage/SideNav";
 // import HeroCarousel from "../components/HomePage/HeroCarousel";
 
@@ -7,6 +7,7 @@ import "./HomePage.css";
 import YoutubePlayer from "./YoutubePlayer";
 import BrowseByPublisher from "./BrowseByPublisher";
 import BrowseByTag from "./BrowseByTag";
+import { useTranslation } from "react-i18next";
 /**
  * Origin belongs to @author TS Huy
  * Remake by Phan NT Son
@@ -15,6 +16,7 @@ import BrowseByTag from "./BrowseByTag";
  * @returns
  */
 const HomePage = () => {
+  const {t} = useTranslation();
   return (
     <div className="container-fluid">
       <div className="row">
@@ -43,7 +45,7 @@ const HomePage = () => {
             <BrowseByTag />
             <div>
               <div className="video-section">
-                <h2 className="section-title">Featured Video</h2>
+                <h2 className="section-title">{t('Featured Video')}</h2>
                 <YoutubePlayer
                   videoId="EFf1AWnZVW0"
                   title="Featured Gameplay"

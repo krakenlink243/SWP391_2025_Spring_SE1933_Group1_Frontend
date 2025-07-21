@@ -5,12 +5,13 @@ import './Cart.css';
 import { isTokenExpired } from '../../utils/validators';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 
 const Cart = () => {
   const { token: CUR_TOKEN } = useAuth();
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
 
 
   const [cartItems, setCartItems] = useState([]);
@@ -71,8 +72,8 @@ const Cart = () => {
     setLoading(true);
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/user/cart/checkout`);
-      if (!response.data.success) throw new Error('Purchase failed!');
-      setResultMessage('Purchase successful!');
+      if (!response.data.success) throw new Error(t('Purchase failed!'));
+      setResultMessage(t('Purchase successful!'));
       setCartItems([]);
       await fetchCart();
       const userRes = await axios.get(`${import.meta.env.VITE_API_URL}/user/wallet`);
@@ -94,7 +95,7 @@ const Cart = () => {
           window.location.href = paymentUrl;
         }
       } else {
-        alert("Purchase failed due to an unknown error.");
+        alert(t('Purchase failed due to an unknown error.'));
       }
     } finally {
       setLoading(false);
@@ -121,12 +122,12 @@ const Cart = () => {
   return (
     <div className="cart-steam-bg h-100">
       <div className="cart-main-steam">
-        <h2 className="cart-title-steam">Your Shopping Cart</h2>
+        <h2 className="cart-title-steam">{t('Your Shopping Cart')}</h2>
         <div className="cart-list-steam">
           {loading ? (
-            <div className="cart-loading">Loading...</div>
+            <div className="cart-loading">{t('Loading...')}</div>
           ) : cartItems.length === 0 ? (
-            <div className="cart-empty-steam">Your cart is empty.</div>
+            <div className="cart-empty-steam">{t('Your cart is empty.')}</div>
           ) : (
             <div className="cart-items-container">
               {cartItems.map((item) => (
@@ -149,7 +150,7 @@ const Cart = () => {
                   <div className="cart-item-remove">
                     <button
                       className="cart-item-remove-btn"
-                      onClick={() => openRemoveConfirm(item.id, item.title || 'Unnamed Game')}
+                      onClick={() => openRemoveConfirm(item.id, item.title || t('Unnamed Game'))}
                       title="Remove"
                       disabled={loading}
                     >
@@ -160,7 +161,7 @@ const Cart = () => {
               ))}
               <div className="cart-item-steam">
                 <div className="cart-item-image" />
-                <div className="cart-item-title">Estimated total:</div>
+                <div className="cart-item-title">{t('Estimated total')}:</div>
                 <div className="cart-item-price-container">
                   <span className="cart-item-price">${total}</span>
                 </div>
@@ -170,13 +171,13 @@ const Cart = () => {
           )}
           {cartItems.length > 0 && (
             <div className="cart-btns-steam">
-              <Link className="cart-btn-steam" to="/game">Continue Shopping</Link>
+              <Link className="cart-btn-steam" to="/game">{t('Continue Shopping')}</Link>
               <button
                 className="cart-btn-steam cart-btn-blue-steam"
                 onClick={() => setShowConfirmModal(true)}
                 disabled={cartItems.length === 0 || loading}
               >
-                Purchase for Myself
+                {t('Purchase for Myself')}
               </button>
             </div>
           )}
@@ -186,11 +187,11 @@ const Cart = () => {
       {showConfirmModal && (
         <div className="cart-modal-steam">
           <div className="cart-modal-content-steam">
-            <h3>Confirm Purchase</h3>
-            <p>Are you sure you want to purchase all games in your cart?</p>
+            <h3>{t('Confirm Purchase')}</h3>
+            <p>{t('Are you sure you want to purchase all games in your cart?')}</p>
             <div className="cart-modal-btns-steam">
-              <button onClick={() => setShowConfirmModal(false)} className="cart-btn-steam">Cancel</button>
-              <button onClick={handleCheckout} className="cart-btn-steam cart-btn-blue-steam" disabled={loading}>Confirm</button>
+              <button onClick={() => setShowConfirmModal(false)} className="cart-btn-steam">{t('Cancel')}</button>
+              <button onClick={handleCheckout} className="cart-btn-steam cart-btn-blue-steam" disabled={loading}>{t('Confirm')}</button>
             </div>
           </div>
         </div>
@@ -199,7 +200,7 @@ const Cart = () => {
       {showResultModal && (
         <div className="cart-modal-steam">
           <div className="cart-modal-content-steam">
-            <h3>Purchase Result</h3>
+            <h3>{t('Purchase Result')}</h3>
             <p>{resultMessage}</p>
             <div className="cart-modal-btns-steam">
               <button
@@ -216,11 +217,11 @@ const Cart = () => {
       {removeConfirm.show && (
         <div className="cart-modal-steam">
           <div className="cart-modal-content-steam">
-            <h3>Remove Game</h3>
-            <p>Are you sure you want to remove <b>{removeConfirm.gameName || 'Unnamed Game'}</b> from your cart?</p>
+            <h3>{t('Remove Game')}</h3>
+            <p>{t('Are you sure you want to remove gameName from your cart?', {gameName: removeConfirm.gameName})}</p>
             <div className="cart-modal-btns-steam">
-              <button onClick={closeRemoveConfirm} className="cart-btn-steam">Cancel</button>
-              <button onClick={confirmRemove} className="cart-btn-steam cart-btn-blue-steam" disabled={loading}>Remove</button>
+              <button onClick={closeRemoveConfirm} className="cart-btn-steam">{t('Cancel')}</button>
+              <button onClick={confirmRemove} className="cart-btn-steam cart-btn-blue-steam" disabled={loading}>{t('Remove')}</button>
             </div>
           </div>
         </div>

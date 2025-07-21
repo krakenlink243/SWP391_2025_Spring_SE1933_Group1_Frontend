@@ -4,6 +4,7 @@ import ChatHistory from "./ChatHistory";
 import { useAuth } from "../../context/AuthContext";
 import { useConversation } from "../../hooks/useConversation";
 import GroupAvatar from "./GroupAvatar";
+import { useTranslation } from "react-i18next";
 
 function ChatBodyRight({ curChat, setSettingPopup, setAddMemberPopup, setCurChat }) {
 
@@ -14,7 +15,7 @@ function ChatBodyRight({ curChat, setSettingPopup, setAddMemberPopup, setCurChat
         useConversation(token, curChat);
     const meId = localStorage.getItem('userId');
     const [sortedMembers, setSortedMembers] = useState([]);
-
+    const { t } = useTranslation();
     useEffect(() => {
         setSortedMembers(
             [...members].sort((a, b) => (b.admin === true) - (a.admin === true))
@@ -200,7 +201,7 @@ function ChatBodyRight({ curChat, setSettingPopup, setAddMemberPopup, setCurChat
                                 maxLength={65535} // optional: limit max chars
                             />
                             <div style={{ fontSize: "12px", color: "#888", position: "absolute", top: "0" }}>
-                                {input.trim() === "" ? 0 : input.trim().split(/\s+/).length} / {MAX_WORDS} words
+                                {input.trim() === "" ? 0 : input.trim().split(/\s+/).length} / {MAX_WORDS} {t('words')}
                             </div>
                         </div>
                         <div className="chat-entry-actions d-flex align-items-center justify-content-center" style={{ width: "15%" }}>

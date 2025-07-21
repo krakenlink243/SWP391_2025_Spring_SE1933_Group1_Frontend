@@ -6,13 +6,14 @@ import axios from 'axios'
 import Button from '../components/Button/Button'
 import FeedbackItem from '../components/FeedbackItem/FeedbackItem'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 function FeedbackHub() {
     const [feedbackItems, setFeedbackItems] = useState([])
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
     const navigate = useNavigate();
-
+    const {t}=useTranslation();
     const fetchData = async () => {
         try {
             const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/feedback/user/${page}`);
@@ -34,7 +35,7 @@ function FeedbackHub() {
         navigate(`/feedbackhub/${feedbackId}`);
     };
     const handleDeleteClick = async (feedbackId) => {
-        if (window.confirm("Are you sure you want to delete this feedback?")) {
+        if (window.confirm(t("Are you sure you want to delete this feedback?"))) {
             try {
                 await axios.delete(`${import.meta.env.VITE_API_URL}/request/feedback/user/${feedbackId}`);
                 fetchData();
@@ -46,22 +47,22 @@ function FeedbackHub() {
     return (
         <div className='feedback-hub-container'>
             <div className='feedback-hub-title'>
-                <h1>Feedback Hub</h1>
+                <h1>{t('Feedback Hub')}</h1>
             </div>
             <div className='create-feedback-button'>
-                <Button label='Write New Feedback' color='blue-button' onClick={() => navigate('/sendfeedback')} />
+                <Button label={t('Write New Feedback')} color='blue-button' onClick={() => navigate('/sendfeedback')} />
             </div>
             <div className='your-feedback'>
-                <h2>Your Submitted Feedback</h2>
+                <h2>{t('Your Submitted Feedback')}</h2>
                 {feedbackItems.length === 0 ? (
-                    <p>No feedback available.</p>
+                    <p>{t('No feedback available.')}</p>
                 ) : (
                     <div className='your-feedback-item'>
                         {feedbackItems.map((feedback) => (
                             <FeedbackItem
                                 key={feedback.requestId}
                                 title={feedback.subject}
-                                status={feedback.status === 0 ? 'Pending' : feedback.status === 1 ? 'Answered' : 'Dismissed'}
+                                status={feedback.status === 0 ? t('Pending') : feedback.status === 1 ? t('Answered') : t('Dismissed')}
                                 action1={'View'}
                                 action2={'Delete'}
                                 time={feedback.createdDate}

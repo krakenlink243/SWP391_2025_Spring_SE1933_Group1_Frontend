@@ -3,12 +3,14 @@ import { AppContext } from "../../context/AppContext";
 import Button from "../../components/Button/Button";
 import axios from "axios";
 import './AddGroupPopup.css';
+import { useTranslation } from "react-i18next";
 
 export default function AddGroupPopup({ setOpenPopup }) {
 
     const [newGroupName, setNewGroupName] = useState("");
     const [newGMembers, setNewGMembers] = useState([]);
     const { friendList } = useContext(AppContext);
+    const { t } = useTranslation();
 
     const handleAddGroupChat = () => {
         axios.post(`${import.meta.env.VITE_API_URL}/user/groupchat/add`, {
@@ -27,11 +29,11 @@ export default function AddGroupPopup({ setOpenPopup }) {
         <div className="add-group-popup-container d-flex flex-column">
             <div className="popup-wrapper d-flex flex-column gap-3">
                 <div className="title">
-                    Create Group Chat
+                    {t('Create Group Chat')}
                 </div>
 
                 <div className="form-group">
-                    <label>Group Name</label>
+                    <label>{t('Group Name')}</label>
                     <input
                         type="text"
                         max={100}
@@ -42,7 +44,7 @@ export default function AddGroupPopup({ setOpenPopup }) {
 
                 {/* Group Members selected */}
                 <div className="form-group">
-                    <label>Group Members</label>
+                    <label>{t('Group Members')}</label>
                     <div className="selected-members-list d-flex flex-row flex-wrap align-items-center">
                         {newGMembers.map((member) => (
                             <div
@@ -63,7 +65,7 @@ export default function AddGroupPopup({ setOpenPopup }) {
 
                 {/* Friend list to choose */}
                 <div className="form-group">
-                    <label>Choose Friends</label>
+                    <label>{t('Choose Friends')}</label>
                     <div className="friend-list">
                         {friendList.map((friend) => {
                             const isSelected = newGMembers.some((m) => m.memberId === friend.friendId);
@@ -97,13 +99,13 @@ export default function AddGroupPopup({ setOpenPopup }) {
                 </div>
 
                 <div className="d-flex flex-row justify-content-around align-items-center py-2">
-                    <Button label={"Cancel"} onClick={() => {
+                    <Button label={t('Cancel')} onClick={() => {
                         setNewGMembers([]);
                         setNewGroupName("");
                         setOpenPopup(false);
                     }
                     } color="grey-button" />
-                    <Button label={"Create Group"} onClick={() => handleAddGroupChat()} color="gradient-blue-button" />
+                    <Button label={t('Create Group')} onClick={() => handleAddGroupChat()} color="gradient-blue-button" />
                 </div>
             </div>
         </div>

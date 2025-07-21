@@ -6,6 +6,7 @@ import "./ProfilePage.css";
 import { AppContext } from "../../context/AppContext";
 import { useAuth } from "../../context/AuthContext";
 import { isTokenExpired } from "../../utils/validators";
+import { useTranslation } from "react-i18next";
 
 const ProfileHeader = ({
   user,
@@ -23,7 +24,6 @@ const ProfileHeader = ({
   const isOnline = onlineUsers.includes(user.username);
 
   const [friendList, setFriendList] = useState([]);
-
   const getFriendList = () => {
     axios.get(`${import.meta.env.VITE_API_URL}/user/friends`)
       .then((response) => { setFriendList(response.data) })
@@ -46,7 +46,7 @@ const ProfileHeader = ({
       getFriendList();
     }
   }, [])
-
+   const {t} = useTranslation();
   return (
     <div className="profile-header">
       <div className="profile-info-container">
@@ -59,33 +59,33 @@ const ProfileHeader = ({
           </div>
           <div className="profile-details-header">
             <h1 className="username">
-              {user?.profileName || user?.username || "Anonymous User"}
+              {user?.profileName || user?.username || t("Anonymous User")}
             </h1>
-            <p className="country">{user?.country || "Location not set"}</p>
+            <p className="country">{user?.country || t("Location not set")}</p>
           </div>
         </div>
 
         <div className="profile-actions">
           {isOwnProfile ? (
             <button className="action-btn primary" onClick={onEditClick}>
-              Edit Profile
+              {t('Edit Profile')}
             </button>
           ) : (
             <>
               {friendList.some(friend => friend.friendName === user.username) ? (
                 <div className="d-flex flex-row gap-3">
                   <button className="action-btn secondary" onClick={onMessageClick}>
-                    Message
+                    {t('Message')}
                   </button>
 
                   <button className="action-btn secondary" onClick={() => handleUnfriend(user.userId)}>
-                    Unfriend
+                    {t('Unfriend')}
                   </button>
 
                 </div>
               ) : (
                 <button className="action-btn primary" onClick={onAddFriendClick}>
-                  Add Friend
+                  {t('Add Friend')}
                 </button>
               )}
             </>
@@ -100,7 +100,7 @@ const ProfilePage = () => {
   // Lấy ID của profile đang được xem từ URL (ví dụ: /profile/123)
   const { userId: profileId } = useParams();
   const navigate = useNavigate();
-
+  const {t} = useTranslation();
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -122,7 +122,7 @@ const ProfilePage = () => {
     // Nếu không có ID nào cả (cả trên URL và localStorage), báo lỗi
     if (!profileId) {
       setLoading(false);
-      setError("No profile to display. Please log in or specify a user ID.");
+      setError(t("No profile to display. Please log in or specify a user ID."));
       return;
     }
 
@@ -135,7 +135,7 @@ const ProfilePage = () => {
         );
         setProfileData(response.data);
       } catch (err) {
-        setError("Could not fetch profile data. The user may not exist.");
+        setError(t("Could not fetch profile data. The user may not exist."));
         console.error(err);
       } finally {
         setLoading(false);
@@ -161,16 +161,15 @@ const ProfilePage = () => {
       `${import.meta.env.VITE_API_URL}/user/sendinvite/${profileData.userId}`
     );
     alert(
-      `Friend request sent to ${profileData.profileName || profileData.username
-      }.`
+      t(`Friend request sent to`, {userName: profileData.profileName})
     );
   };
 
   if (loading)
-    return <div className="profile-page-status">Loading Profile...</div>;
+    return <div className="profile-page-status">{t('Loading Profile...')}</div>;
   if (error) return <div className="profile-page-status error">{error}</div>;
   if (!profileData)
-    return <div className="profile-page-status">Profile not found.</div>;
+    return <div className="profile-page-status">{t('Profile not found')}.</div>;
 
   return (
     <div className="profile-page container-fluid">
@@ -195,10 +194,10 @@ const ProfilePage = () => {
                   gameCount={profileData.totalGames || 0}
                 />
                 <div className="profile-bio section-box">
-                  <h3>Bio</h3>
+                  <h3>{t('Bio')}</h3>
                   <p>
                     {profileData.summary ||
-                      "This user has not written a summary yet."}
+                      t("This user has not written a summary yet.")}
                   </p>
                 </div>
               </div>
@@ -206,12 +205,12 @@ const ProfilePage = () => {
                 <div className="profile-details section-box">
                   <ul className="details-list">
                     <li>
-                      Games <span>{profileData.totalGames ?? "N/A"}</span>
+                      {t('Games')} <span>{profileData.totalGames ?? "N/A"}</span>
                     </li>
                     <li>
-                      Reviews <span>{profileData.reviewCount ?? "N/A"}</span>
+                      {t('Reviews')} <span>{profileData.reviewCount ?? "N/A"}</span>
                     </li>
-                    <li>Inventory</li>
+                    <li>{t('Inventory')}</li>
                   </ul>
                 </div>
               </div>

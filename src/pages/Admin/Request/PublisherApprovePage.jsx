@@ -7,6 +7,7 @@ import './GameApprovePage.css'
 import { confirmAlert } from 'react-confirm-alert';
 import { createNotification } from '../../../services/notification';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function PublisherApprovePage() {
   const [totalPages, setTotalPages] = useState(1);
@@ -15,6 +16,7 @@ function PublisherApprovePage() {
   const [selectedRequests, setSelectedRequests] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const fetchData = async () => {
     try {
@@ -36,14 +38,14 @@ function PublisherApprovePage() {
   }, [page]);
 
   const handleApprove = async (requestId) => {
-    const confirmApprove = window.confirm("Are you sure you want to approve this publisher?");
+    const confirmApprove = window.confirm(t('Are you sure you want to approve this publisher?'));
     if (!confirmApprove) {
       return;
     }
     try {
       const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/publisher/approve/${requestId}`);
       console.log("Approved request:", response.data);
-      alert("Publisher Approved")
+      alert(t('Publisher Approved'))
       fetchData();
     } catch (err) {
       console.error("Error approving request:", err);
@@ -56,13 +58,13 @@ function PublisherApprovePage() {
       title: `Decline Publisher Request`,
       customUI: ({ onClose }) => (
         <div className="custom-ui">
-          <h2>Decline Publisher</h2>
-          <p>Answer for: {userName}</p>
+          <h2>{t('Decline Publisher')}</h2>
+          <p>{t('Answer for')}: {userName}</p>
           <textarea
             rows={5}
             style={{ width: '100%', marginBottom: '1rem' }}
             onChange={(e) => (answer = e.target.value)}
-            placeholder="Reason for declining..."
+            placeholder={t('Reason for declining...')}
           />
           <button className="blue-button"
             onClick={async () => {
@@ -81,18 +83,18 @@ function PublisherApprovePage() {
                   );
                   console.log("Declined request:", response.data);
 
-                  alert("Publisher Declined");
+                  alert(t('Publisher Declined'));
                   fetchData(); // Refresh list
                 } catch (err) {
                   console.error("Error declining request:", err);
                 }
                 onClose();
               } else {
-                alert("Please enter answer");
+                alert(t('Please enter answer'));
               }
             }}
           >
-            Submit
+            {t('Submit')}
           </button>
         </div>
       )
@@ -116,7 +118,7 @@ function PublisherApprovePage() {
     console.log("Updated Tick Array:", selectedRequests);
   };
   const handleApproveSelected = async () => {
-    const confirmApprove = window.confirm("Are you sure you want to approve these publishers?");
+    const confirmApprove = window.confirm(t('Are you sure you want to approve these publishers?'));
     if (!confirmApprove) {
       return;
     }
@@ -126,7 +128,7 @@ function PublisherApprovePage() {
         const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/publisher/approve/${requestId}`);
         console.log(`Processed approve for request ID:`, requestId);
       }
-      alert(`All selected publishers have been approved`);
+      alert(t('All selected publishers have been approved'));
       setSelectedRequests([]); // Clear selection after processing
       fetchData(); // Refresh data
     } catch (err) {
@@ -141,7 +143,7 @@ function PublisherApprovePage() {
         const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/publisher/reject/${requestId}`);
         console.log(`Processed approve for request ID:`, requestId);
       }
-      alert(`All selected publishers have been declined`);
+      alert(t('All selected publishers have been declined'));
       setSelectedRequests([]);
       fetchData();
     } catch (err) {
@@ -163,14 +165,14 @@ function PublisherApprovePage() {
             alt="Checkbox"
             onClick={handleTick}
           />
-          <div>Publisher Name</div>
-          <div>From</div>
-          <div>Date</div>
+          <div>{t('Publisher Name')}</div>
+          <div>{t('From')}</div>
+          <div>{t('Date')}</div>
           <div>
             <img src="/icons/Approve.png" alt="" onClick={handleApproveSelected} />
           </div>
         </div>
-      ) : (<p>There is no one want to be publisher at this time🥹</p>)}
+      ) : (<p>{t('There is no one want to be publisher at this time')}🥹</p>)}
       {loadedRequest.map((request) => (
         <RequestItem
           key={request.requestId}

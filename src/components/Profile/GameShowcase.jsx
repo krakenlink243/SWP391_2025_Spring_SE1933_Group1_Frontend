@@ -2,10 +2,12 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./GameShowcase.css";
+import { useTranslation } from "react-i18next";
 
 // Component con cho các nút phân trang (Không đổi)
 const ShowcasePagination = ({ currentPage, totalPages, onPageChange }) => {
   if (totalPages <= 1) return null;
+  const {t} = useTranslation();
   return (
     <div className="showcase-pagination">
       <button
@@ -15,7 +17,7 @@ const ShowcasePagination = ({ currentPage, totalPages, onPageChange }) => {
         &laquo;
       </button>
       <span>
-        Page {currentPage + 1} of {totalPages}
+        {t('Page')} {currentPage + 1} {t('of')} {totalPages}
       </span>
       <button
         onClick={() => onPageChange(currentPage + 1)}
@@ -36,7 +38,7 @@ const GameShowcase = ({ userId, gameCount }) => {
   const [totalGames, setTotalGames] = useState(0);
   const GAMES_PER_PAGE = 6;
   const CUR_USERID = localStorage.getItem("userId");
-
+  const {t} = useTranslation();
 
   const fetchLibraryPage = useCallback(async () => {
     if (!userId) return;
@@ -70,23 +72,23 @@ const GameShowcase = ({ userId, gameCount }) => {
   useEffect(() => {
     fetchLibraryPage();
   }, [fetchLibraryPage]);
-
+  
   return (
     <div className="game-showcase section-box">
       <div className="showcase-header">
         <h3>
-          Games <span>({totalGames})</span>
+          {t('Games')} <span>({totalGames})</span>
         </h3>
         {CUR_USERID == userId && (
           <Link to={`/library`} className="view-all-link">
-            View All
+            {t('View All')}
           </Link>
         )
         }
       </div>
       <div className="showcase-list">
         {loading ? (
-          <p>Loading games...</p>
+          <p>{t('Loading games...')}</p>
         ) : games.length > 0 ? (
           // === SỬA LỖI Ở ĐÂY ===
           games.map((libraryItem) => {
@@ -125,7 +127,7 @@ const GameShowcase = ({ userId, gameCount }) => {
             );
           })
         ) : (
-          <p>This user has no games to showcase.</p>
+          <p>{t('This user has no games to showcase')}.</p>
         )}
       </div>
       <ShowcasePagination

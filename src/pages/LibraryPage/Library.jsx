@@ -5,24 +5,26 @@ import { useNavigate } from "react-router-dom";
 import { isTokenExpired } from "../../utils/validators";
 import { useAuth } from "../../context/AuthContext";
 import { AppContext } from "../../context/AppContext";
+import { useTranslation } from "react-i18next";
 
-const sortOptions = [
-  { value: "az", label: "A-Z" },
-  { value: "za", label: "Z-A" },
-  { value: "priceLowHigh", label: "Price (Low to High)" },
-  { value: "priceHighLow", label: "Price (High to Low)" },
-];
+
 
 
 
 const Library = () => {
-
+  const {t} = useTranslation();
   const { token } = useAuth();
   const username = localStorage.getItem("username");
   const navigate = useNavigate();
   const [sortBy, setSortBy] = useState("az");
   const { library, libraryLoading } = useContext(AppContext);
-
+  
+  const sortOptions = [
+  { value: "az", label: "A-Z" },
+  { value: "za", label: "Z-A" },
+  { value: "priceLowHigh", label: t('Price (Low to High)') },
+  { value: "priceHighLow", label: t('Price (High to Low)') },
+];
   if (!token || isTokenExpired()) {
     navigate("/");
     return null;
@@ -52,7 +54,7 @@ const Library = () => {
   return (
     <div className="library-layout">
       <div className="library-sidebar">
-        <div className="library-sidebar-title">All Games ({library.length})</div>
+        <div className="library-sidebar-title">{t('All Games')} ({library.length})</div>
         <ul className="library-game-list">
           {getSortedGames().map((game) => (
             <li
@@ -67,11 +69,12 @@ const Library = () => {
       </div>
       <div className="library-content">
         <h2 className="library-title">
-          {username ? `${username}'s Library` : "My Library"}
+
+          {t(`'s Library`, {userName: username})}
         </h2>
         <div className="library-filter-row">
           <label htmlFor="library-sort" className="library-filter-label">
-            Sort by:
+            {t('Sort by:')}
           </label>
           <select
             id="library-sort"
@@ -87,10 +90,10 @@ const Library = () => {
           </select>
         </div>
         {libraryLoading ? (
-          <div className="library-loading">Loading...</div>
+          <div className="library-loading">{t('Loading...')}</div>
         ) : library.length === 0 ? (
           <div className="library-empty">
-            You have not purchased any games yet.
+            {t('You have not purchased any games yet.')}
           </div>
         ) : (
           <div className="library-grid">
@@ -115,7 +118,7 @@ const Library = () => {
                 </div>
                 <div className="library-game-name">{game.name}</div>
                 <div className="library-game-played-time">
-                  {(game.playtimeInMillis / 60000).toFixed(1)} minutes played
+                  {t('minutes played', {minute: (game.playtimeInMillis / 60000).toFixed(1)})}
                 </div>
               </div>
             ))}

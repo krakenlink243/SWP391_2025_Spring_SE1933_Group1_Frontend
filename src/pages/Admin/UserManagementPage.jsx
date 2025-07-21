@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import RequestItem from '../../components/RequestItem/RequestItem'
 import './GameApprovePage.css'
-
+import { useTranslation } from "react-i18next";
 /**
  * @author Phan NT Son
  * @description Mostly copy from Game Approve Page of @author HoangVube
@@ -14,6 +14,7 @@ function UserManagementPage() {
     const [page, setPage] = useState(0);
     const [selectedRequests, setSelectedRequests] = useState([]);
     const [isChecked, setIsChecked] = useState(false);
+    const { t } = useTranslation();
 
     const fetchData = async () => {
         try {
@@ -77,7 +78,7 @@ function UserManagementPage() {
     return (
         <div className='game-approve-container'>
             <div>
-                <div style={{ cursor: "pointer" }}>Banned User</div>
+                <div style={{ cursor: "pointer" }}>{t('Banned User')}</div>
             </div>
             <div className='request-item' style={{ backgroundColor: "#1B2438" }}>
                 <img

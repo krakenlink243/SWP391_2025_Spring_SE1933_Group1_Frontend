@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./SearchBar.css"; // Sẽ cập nhật file CSS này ở bước 2
+import { useTranslation } from "react-i18next";
 
 import axios from "axios";
 
@@ -11,6 +12,7 @@ const SearchBar = ({ onSearchSubmit }) => {
   const [loading, setLoading] = useState(false);
   const searchRef = useRef(null);
   const navigate = useNavigate();
+  const {t} = useTranslation();
 
   useEffect(() => {
     if (searchTerm.trim() === "") {
@@ -74,7 +76,7 @@ const SearchBar = ({ onSearchSubmit }) => {
       <input
         type="text"
         className="search-input"
-        placeholder="search"
+        placeholder={t("search")}
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         autoComplete="off"
@@ -95,7 +97,7 @@ const SearchBar = ({ onSearchSubmit }) => {
       {searchTerm && (
         <div className="suggestions-dropdown">
           {loading && (
-            <div className="suggestion-item loading">Searching...</div>
+            <div className="suggestion-item loading">{t('Searching...')}</div>
           )}
           {!loading &&
             suggestions.length > 0 &&
@@ -120,7 +122,7 @@ const SearchBar = ({ onSearchSubmit }) => {
               </Link>
             ))}
           {!loading && suggestions.length === 0 && (
-            <div className="suggestion-item no-results">No results found</div>
+            <div className="suggestion-item no-results">{t('No results found')}</div>
           )}
         </div>
       )}

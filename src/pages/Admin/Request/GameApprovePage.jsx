@@ -7,6 +7,7 @@ import './GameApprovePage.css'
 import { confirmAlert } from 'react-confirm-alert';
 import { createNotification } from '../../../services/notification';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function GameApprovePage() {
   const [totalPages, setTotalPages] = useState(1);
@@ -15,6 +16,7 @@ function GameApprovePage() {
   const [selectedRequests, setSelectedRequests] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const fetchData = async () => {
     try {
       const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/game/${page}`);
@@ -36,14 +38,14 @@ function GameApprovePage() {
   }, [page]);
 
   const handleApprove = async (requestId) => {
-    const confirmApprove = window.confirm("Are you sure you want to approve this game?");
+    const confirmApprove = window.confirm(t('Are you sure you want to approve this game?'));
     if (!confirmApprove) {
       return;
     }
     try {
       const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/game/approve/${requestId}`);
       console.log("Approved request:", response.data);
-      alert("Game Approved")
+      alert(t('Game Approved'))
       fetchData();
     } catch (err) {
       console.error("Error approving request:", err);
@@ -56,13 +58,13 @@ function GameApprovePage() {
       title: `Decline Game Request`,
       customUI: ({ onClose }) => (
         <div className="custom-ui">
-          <h2>Decline Game</h2>
-          <p>To:{publisherName}</p>
+          <h2>{t('Decline Game')}</h2>
+          <p>{t('To')}:{publisherName}</p>
           <textarea
             rows={5}
             style={{ width: '100%', marginBottom: '1rem' }}
             onChange={(e) => (answer = e.target.value)}
-            placeholder="Reason for declining..."
+            placeholder={t('Reason for declining...')}
           />
           <button className="blue-button"
             onClick={async () => {
@@ -79,18 +81,18 @@ function GameApprovePage() {
                     `${import.meta.env.VITE_API_URL}/request/game/reject/${requestId}`
                   );
                   console.log("Declined request:", response.data);
-                  alert("Game Declined");
+                  alert(t('Game Declined'));
                   fetchData(); // Refresh UI
                 } catch (err) {
                   console.error("Error declining request:", err);
                 }
                 onClose();
               } else {
-                alert("Please enter answer");
+                alert(t('Please enter answer'));
               }
             }}
           >
-            Submit
+            {t('Submit')}
           </button>
         </div>
       )
@@ -116,7 +118,7 @@ function GameApprovePage() {
   };
   const handleApproveSelected = async () => {
     console.log("ook")
-    const confirmApprove = window.confirm("Are you sure you want to approve these selected games?");
+    const confirmApprove = window.confirm(t('Are you sure you want to approve these selected games?'));
     if (!confirmApprove) {
       return;
     }
@@ -126,7 +128,7 @@ function GameApprovePage() {
         const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/game/approve/${requestId}`);
         console.log(`Processed approve for request ID:`, requestId);
       }
-      alert(`All selected requests have been approved`);
+      alert(t('All selected requests have been approved'));
       setSelectedRequests([]); // Clear selection after processing
       fetchData(); // Refresh data
     } catch (err) {
@@ -141,7 +143,7 @@ function GameApprovePage() {
         const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/game/reject/${requestId}`);
         console.log(`Processed approve for request ID:`, requestId);
       }
-      alert(`All selected requests have been declined`);
+      alert(t('All selected requests have been declined'));
       setSelectedRequests([]);
       fetchData();
     } catch (err) {
@@ -164,15 +166,15 @@ function GameApprovePage() {
             alt="Checkbox"
             onClick={handleTick}
           />
-          <div>Game Title</div>
-          <div>From</div>
-          <div>Date</div>
+          <div>{t('Game Title')}</div>
+          <div>{t('From')}</div>
+          <div>{t('Date')}</div>
           <div>
             <img src="/icons/Approve.png" alt="" onClick={handleApproveSelected} />
             {/* <img src="/icons/Decline.png" alt="" onClick={handleDeclineSelected} /> */}
           </div>
         </div>
-      ) : (<p>There is no game pending for approve at this time</p>)}
+      ) : (<p>{t('There is no game pending for approve at this time')}</p>)}
       {loadedRequest.map((request) => (
         <RequestItem
           key={request.requestId}
