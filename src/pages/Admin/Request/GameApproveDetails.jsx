@@ -12,11 +12,8 @@ import { createNotification } from '../../../services/notification';
 import Select, { components } from 'react-select'
 import { confirmAlert } from 'react-confirm-alert'
 import { useNavigate } from 'react-router-dom';
-<<<<<<< HEAD
 import { trimValue } from '../../../utils/validators'
-=======
 import { useTranslation } from 'react-i18next'
->>>>>>> bathanh
 
 function GameApproveDetails() {
   const { t } = useTranslation();
@@ -254,7 +251,6 @@ function GameApproveDetails() {
             <Button className='upload-button' label={t('Download Game File')} onClick={handleGetLinkDownload} color='blue-button'/>
           </a>
         </div>
-<<<<<<< HEAD
         {formData.updateLog && (
           <div className='update-log'>
             <PartHeading content='Update Log' />
@@ -273,12 +269,6 @@ function GameApproveDetails() {
             <pre>{formData.declineMessage}</pre>
           </div>
         )}
-=======
-        <div className='send-request-cancel'>
-          <Button className='cancel-button' label={t('Decline')} onClick={handleDecline} color={'red-button'} />
-          <Button className='send-button' label={t('Approve')} isApprove={'true'} onClick={handleApprove} color='green-button' />
-        </div>
->>>>>>> bathanh
       </div>
     </>
   )

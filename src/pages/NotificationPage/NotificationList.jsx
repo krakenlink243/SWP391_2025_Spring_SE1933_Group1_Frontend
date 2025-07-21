@@ -5,11 +5,8 @@ import "./NotificationList.css"
 import { Navigate, useNavigate } from "react-router-dom";
 import { isTokenExpired } from "../../utils/validators";
 import { AppContext } from "../../context/AppContext";
-<<<<<<< HEAD
 import { useAuth } from "../../context/AuthContext";
-=======
 import { useTranslation } from "react-i18next";
->>>>>>> bathanh
 
 /**
  *
@@ -25,11 +22,7 @@ function NotificationList() {
   const { token } = useAuth();
   const CUR_AVATAR_URL = localStorage.getItem("avatarUrl");
   const CUR_USERNAME = localStorage.getItem("username");
-<<<<<<< HEAD
-
-=======
   const {t} = useTranslation();
->>>>>>> bathanh
   // Get from context ↓
   const { notifications, setNotifications } = useContext(AppContext);
   const navigate = useNavigate();
@@ -54,12 +47,8 @@ function NotificationList() {
   };
 
   const handleDeleteAll = () => {
-<<<<<<< HEAD
     if (notifications.length === 0) return;
-    if (!window.confirm("Are you sure you want to delete all notifications?")) return;
-=======
-    if (!window.confirm(t('Are you sure you want to delete all notifications?'))) return;
->>>>>>> bathanh
+    if (!window.confirm(t("Are you sure you want to delete all notifications?"))) return;
     try {
       axios.delete(`${import.meta.env.VITE_API_URL}/notification/deleteall`)
         .then((resp) => {

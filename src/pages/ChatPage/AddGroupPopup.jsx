@@ -9,15 +9,11 @@ export default function AddGroupPopup({ setOpenPopup }) {
 
     const [newGroupName, setNewGroupName] = useState("");
     const [newGMembers, setNewGMembers] = useState([]);
-<<<<<<< HEAD
     const { friendList, groupChats } = useContext(AppContext);
     const isGroupFull = groupChats.length >= 10;
     const isBanned = localStorage.getItem("isBanned") === "true";
     // const isGroupFull = true;
-=======
-    const { friendList } = useContext(AppContext);
     const { t } = useTranslation();
->>>>>>> bathanh
 
     const handleAddGroupChat = () => {
         if (isGroupFull) {
@@ -116,16 +112,12 @@ export default function AddGroupPopup({ setOpenPopup }) {
                         setOpenPopup(false);
                     }
                     } color="grey-button" />
-<<<<<<< HEAD
                     <Button
                         label={`Create Group`}
                         onClick={() => handleAddGroupChat()}
                         color="gradient-blue-button"
                         disabled={isGroupFull || isBanned || newGroupName.trim() === "" || newGMembers.length === 0}
                     />
-=======
-                    <Button label={t('Create Group')} onClick={() => handleAddGroupChat()} color="gradient-blue-button" />
->>>>>>> bathanh
                 </div>
             </div>
         </div>

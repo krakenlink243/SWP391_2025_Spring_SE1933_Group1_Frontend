@@ -25,12 +25,9 @@ function ChatBodyRight({
 
     const meId = localStorage.getItem('userId');
     const [sortedMembers, setSortedMembers] = useState([]);
-<<<<<<< HEAD
     const isBanned = localStorage.getItem("banned") === "true";
 
-=======
     const { t } = useTranslation();
->>>>>>> bathanh
     useEffect(() => {
         setSortedMembers(
             [...members].sort((a, b) => (b.admin === true) - (a.admin === true))

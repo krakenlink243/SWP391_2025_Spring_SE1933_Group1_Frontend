@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 export default function AddMemberPopup({ setOpenPopup, groupId, groupMembers }) {
     const [newGMembers, setNewGMembers] = useState([]);
     const { friendList } = useContext(AppContext);
-<<<<<<< HEAD
     const isBanned = localStorage.getItem("isBanned") === "true";
     const [isGroupFull, setIsGroupFull] = useState(false);
 
@@ -18,9 +17,7 @@ export default function AddMemberPopup({ setOpenPopup, groupId, groupMembers }) 
 
     // const isGroupFull = true;
     // const isBanned = true;
-=======
     const { t } = useTranslation();
->>>>>>> bathanh
 
     const availableFriend = friendList.filter(
         (friend) => !groupMembers.some((member) => member.memberId === friend.friendId && friend.groupsTakeIn < 10)
@@ -118,11 +115,7 @@ export default function AddMemberPopup({ setOpenPopup, groupId, groupMembers }) 
                         setOpenPopup(false);
                     }
                     } color="grey-button" />
-<<<<<<< HEAD
                     <Button label={"Add Members"} onClick={() => handleAddMembers()} color="gradient-blue-button" disabled={isBanned || isGroupFull || newGMembers.length === 0} />
-=======
-                    <Button label={t('Add Members')} onClick={() => handleAddMembers()} color="gradient-blue-button" />
->>>>>>> bathanh
                 </div>
             </div>
         </div>

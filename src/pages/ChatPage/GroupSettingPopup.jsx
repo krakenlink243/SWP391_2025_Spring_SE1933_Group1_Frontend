@@ -9,7 +9,6 @@ export default function GroupSettingPopup({ groupSetting, setOpenPopup, setCurCh
     const [curTab, setCurTab] = useState(0);
     const curUserId = localStorage.getItem("userId");
     const [isLeaveGroup, setIsLeaveGroup] = useState(false);
-<<<<<<< HEAD
     const [kickMembers, setKickMembers] = useState([]);
 
     const [isGroupEmpty, setIsGroupEmpty] = useState(members.length === 1);
@@ -23,9 +22,7 @@ export default function GroupSettingPopup({ groupSetting, setOpenPopup, setCurCh
         setGroupMembers(members.filter(member => String(member.memberId) !== curUserId));
     }, [members, curUserId]);
 
-=======
     const { t } = useTranslation();
->>>>>>> bathanh
     const handleDeleteGroupChat = () => {
         if (!groupSetting.isAdmin) return;
         axios.delete(`${import.meta.env.VITE_API_URL}/user/groupchat/delete/${groupSetting.groupId}`);
@@ -70,15 +67,10 @@ export default function GroupSettingPopup({ groupSetting, setOpenPopup, setCurCh
         ),
         (
             <div className='delete-group wrapper'>
-<<<<<<< HEAD
                 <div className='pb-3'>
                     Are you sure you want to delete this group ?
                     <br></br>
                     All messages and members will be <u>removed</u>.
-=======
-                <div>
-                    {t('Are you sure you want to delete this group ?')}
->>>>>>> bathanh
                 </div>
                 <Button label={t('Delete')} color='red-button' onClick={() => handleDeleteGroupChat()} />
             </div>

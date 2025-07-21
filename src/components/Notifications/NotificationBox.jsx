@@ -3,12 +3,8 @@ import { FaBell } from 'react-icons/fa';
 import './NotificationBox.css';
 import { useNavigate } from "react-router-dom";
 import NotificationBoxItem from "./NotificationBoxItem";
-<<<<<<< HEAD
 import { AppContext } from "../../context/AppContext";
-=======
-import { useUnreadNotifications } from "../../hooks/useUnreadNotifications";
 import { useTranslation } from "react-i18next";
->>>>>>> bathanh
 
 /**
  * @author Phan NT Son
