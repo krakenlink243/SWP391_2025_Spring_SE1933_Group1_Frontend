@@ -174,6 +174,7 @@ function AppRoutes() {
             <Route path="publisher/game/detail/:requestId" element={<GameApproveDetails />} />
             <Route path="/community" element={<Community />} />
             <Route path="/community/threads/:threadId" element={<ThreadDetailPage />} />
+            <Route path="/community/create-thread" element={<CreateThreadModal />} />
           </Route>
 
           {/* Admin area */}
