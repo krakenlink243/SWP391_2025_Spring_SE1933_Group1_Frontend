@@ -10,7 +10,7 @@ export default function Community() {
     const [threads, setThreads] = useState([]);
     const [reviews, setReviews] = useState([]);
     const navigate = useNavigate();
-
+    const {t} =useTranslation();
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_API_URL}/api/discussions`)
             .then((res) => setThreads(res.data))
