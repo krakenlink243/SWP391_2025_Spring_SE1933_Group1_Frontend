@@ -1,0 +1,53 @@
+.community-page-container {
+    width: 60%;
+    margin: auto;
+    margin-bottom: 10px; /* mb-10 */
+}
+
+.review-section {
+  margin-bottom: 2.5rem; /* tương đương mb-10 */
+}
+
+.review-section-title {
+  font-size: 1.25rem; /* text-xl */
+  font-weight: 600;   /* font-semibold */
+  margin-bottom: 0.5rem; /* mb-2 */
+  color: white;
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.table-container {
+      width: 100%;
+      max-width: 64rem; /* max-w-4xl */
+      border-collapse: collapse;
+    }
+    .table-header-row {
+      text-align: left;
+      color: #6b7c93;
+      font-size: 0.875rem; /* text-sm */
+      font-weight: 600; /* font-semibold */
+      border-bottom: 1px solid #3e4a5e;
+    }
+    .table-header-cell {
+      padding: 0.75rem 1rem; /* py-3 px-4 */
+    }
+    .table-row {
+      border-bottom: 1px solid #3e4a5e;
+    }
+    .table-cell {
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      color: #a3b1c1;
+      cursor: default;
+    }
+    .table-cell.topic {
+      cursor: pointer;
+    }
+    .table-cell.topic:hover {
+      text-decoration: underline;
+    }
