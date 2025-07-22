@@ -1,49 +1,41 @@
 {
-  
+    "File 1": "",
     "pages/Admin/Request/FeedbackApproveDetails":"pages/Admin/Request/FeedbackApproveDetails",
-      "Error fetching feedback details":"Lỗi khi lấy chi tiết phản hồi",
       "Send answer to": "Gửi phản hồi tới",
       "Answer Feedback": "Trả lời phản hồi",
       "Answer For": "Trả lời cho",
       "Type your answer here...": "Viết câu trả lời của bạn vào đây...",
-      "Approved request": "Đề nghị được phê duyệt",
-      "Error approving request": "Lỗi khi phê duyệt yêu cầu",
       "Please enter answer": "Hãy nhập câu trả lời",
       "Submit": "Gửi",
       "Are you sure you want to decline this feedback?": "Bạn có chắc chắn muốn từ chối phản hồi này?",
-      "Feedback Answer": "Trả lời phản hồi",
-      "Your feedback": "Phản hồi của bạn",
-      "has been dismissed": "đã bị từ chối",
       "FEEDBACK": "PHẢN HỒI",
       "from": "từ",
       "Subject": "Chủ đề",
+      "Dismiss": "Từ chối",
+      "Answer": "Trả lời",
 
-
+    "File 2": "",
     "pages/Admin/Request/FeedbackApprovePage":"pages/Admin/Request/FeedbackApprovePage",
-      "Error fetching data": "Lỗi khi lấy dữ liệu",
-      "Answer for your feedback": "Câu trả lời cho phản hồi của bạn",
       "Feedback dismissed": "Phản hồi đã bị từ chối",
-      "Updated Tick Array": "Mảng Tick đã được cập nhật",
       "Are you sure you want to dissmiss all selected feedback?": "Bạn có chắc chắn muốn từ chối toàn bộ phản hồi đã chọn?",
-      "Processed approve for request ID": "Đã xử lý phê duyệt cho ID yêu cầu",
       "All selected feedback have been dissmiss": "Toàn bộ phản hồi đã chọn đã bị từ chối",
-      "Error during approve": "Lỗi trong quá trình phê duyệt",
       "Feedback Subject": "Chủ đề phản hồi",
       "From": "Từ",
       "Date": "Ngày",
       "There is no feedback at this time": "Không có phản hồi nào vào lúc này",
+      "Type your response...": "Nhập phản hồi của bạn...",
 
-
+  "File 3": "",
   "pages/Admin/Request/GameApproveDetails": "pages/Admin/Request/GameApproveDetails",
     "Are you sure you want to approve this game?": "Bạn có chắc chắn muốn phê duyệt trò chơi này?",
     "Game Approved": "Trò chơi đã được phê duyệt",
     "Decline Game Request": "Từ chối yêu cầu trò chơi",
     "To": "Tới",
-    "Game Approval Response": "Phản hồi phê duyệt trò chơi",
+    "Type your decline reason...": "Nhập lí do từ chối của bạn",
     "Answer for": "Trả lời cho",
     "Declined request": "Yêu cầu đã bị từ chối",
     "Error declining request": "Lỗi khi từ chối yêu cầu",
-    "'s  Game Application": "Đơn đăng ký trò chơi của",
+    "'s Game Application": "Đơn đăng ký trò chơi của {{publisherName}}",
     "Name(*)": "Tên(*)",
     "Price(*)": "Giá tiền(*)",
     "Tags(*)": "Thẻ(*)",
@@ -51,9 +43,9 @@
     "Processor(*)": "Bộ xử lý(*)",
     "Memory(*)": "Bộ nhớ(*)",
     "Graphics(*)": "Đồ họa(*)",
-    "Storage(*)": "Kho lưu trữ(*)",
+    "Storage(*)": "Lưu trữ(*)",
 
-
+  "File 4": "",
   "pages/Admin/Request/GameApprovePage": "pages/Admin/Request/GameApprovePage",
     "Decline Game": "Từ chối trò chơi",
     "Game Declined": "Trò chơi đã bị từ chối",
@@ -64,7 +56,7 @@
     "Game Title": "Tiêu đề trò chơi",
     "There is no game pending for approve at this time": "Hiện tại không có trò chơi nào đang chờ phê duyệt",
 
-
+  "File 5": "",
   "pages/Admin/Request/PublisherApproveDetails": "pages/Admin/Request/PublisherApproveDetails",
     "Error fetching publisher data": "Lỗi khi lấy dữ liệu nhà phát hành",
     "Are you sure you want to approve this publisher?": "Bạn có chắc chắn muốn phê duyệt nhà phát triển này không?",
@@ -72,14 +64,15 @@
     "Decline Publisher Request": "Từ chối yêu cầu nhà phát triển",
     "Publisher Apply Response": "Phản hồi đăng ký nhà phát triển",
     "Answer for your publisher apply": "Trả lời cho đăng ký thành nhà phát triển của bạn",
-    "Publisher Application": "Đơn đăng ký nhà phát triển",
+    "Publisher Application": "đơn đăng ký nhà phát triển",
     "Legal Name": "Tên pháp lý",
     "Publisher Name": "Tên nhà phát triển",
-    "Address": "Địa chỉ",
+    "Address": "địa chỉ",
     "Social ID": "Số ID thẻ xã hội",
     "Country": "Quốc gia",
+    "Approve": "Phê duyệt",
 
-
+  "File 6": "",
   "pages/Admin/Request/PublisherApprovePage": "pages/Admin/Request/PublisherApprovePage",
     "Decline Publisher": "Từ chối nhà phát triển",
     "Reason for declining...": "Lí do từ chối...",
@@ -89,29 +82,29 @@
     "All selected publishers have been declined": "Toàn bộ nhà phát triển đã chọn đã bị từ chối",
     "There is no one want to be publisher at this time": "Hiện tại không có ai muốn trở thành nhà phát triển",
 
-
+  "File 7": "",
   "pages/Admin/Request/RequestSection": "pages/Admin/Request/RequestSection",
     "Game Request": "Yêu cầu về trò chơi",
     "Publisher Request": "Yêu cầu về nhà phát triển",
     "Feedback": "Phản hồi",
 
-
+  "File 8": "",
   "pages/Admin/AdminDashboard": "pages/Admin/AdminDashboard",
     "DASHBOARD CONTENT HERE": "Nội dung bảng điều khiển ở đây",
 
-
+  "File 9": "",
   "pages/Admin/UserManagementPage": "pages/Admin/UserManagementPage",
     "Banned Users": "Những người dùng bị cấm",
 
-
+  "File 10": "",
   "pages/CartPage/Cart": "pages/CartPage/Cart",
     "Error removing game": "Lỗi khi xóa trò chơi",
-    "Purchase failed": "Giao dịch thất bại",
-    "Purchase successful": "Giao dịch thành công",
-    "Purchase failed due to an unknown error": "Giao dịch thất bại do lỗi không xác định",
+    "Purchase failed!": "Giao dịch thất bại!",
+    "Purchase successful!": "Giao dịch thành công!",
+    "Purchase failed due to an unknown error.": "Giao dịch thất bại do lỗi không xác định.",
     "Your Shopping Cart": "Giỏ mua hàng của bạn",
-    "Loading...": "Loading...",
-    "Your cart is empty": "Giỏ mua hàng của bạn đang trống",
+    "Loading...": "đang tải...",
+    "Your cart is empty.": "Giỏ mua hàng của bạn đang trống.",
     "Unnamed Game": "Trò chơi không tên",
     "Remove": "Xóa",
     "Estimated total": "Tổng tiền",
@@ -124,41 +117,96 @@
     "Purchase Result": "Kết quả giao dịch",
     "OK": "OK",
     "Remove Game": "Xóa trò chơi",
-    "Are you sure you want to remove": "Bạn có chắc chắn muốn xóa",
-    "from your cart?": "ra khỏi giỏ hàng của bạn?",
+    "Are you sure you want to remove gameName from your cart?": "Bạn có chắc chắn muốn loại bỏ {{gameName}} khỏi giỏ hàng của bạn không?",
 
-
+  "File 11": "",
   "pages/Community/ChatBody":"pages/Community/ChatBody",
   
+  "File 12": "",
+  "pages/ChatPage/AddGroupPopup": "pages/Chatpage/AddGroupPopup",
+    "Create Group Chat": "Tạo nhóm nhắn tin",
+    "Group Name": "Tên nhóm",
+    "Group Members": "Thành viên nhóm",
+    "Choose Friends": "Chọn bạn bè",
+    "Create Group": "Tạo nhóm",
 
-  "pages/Community/ChatBodyLeft":"pages/Community/ChatBodyLeft",
+  "File 13": "",
+  "pages/ChatPage/AddMemberPopup": "pages/ChatPage/AddMemberPopup",
+    "Add Member to Group Chat": "Thêm thành viên cho nhóm nhắn tin",
+    "Add Members": "Thêm thành viên",
+
+  "File 14": "",  
+  "pages/ChatPage/ChatBody": "pages/ChatPage/ChatBody",
+  
+
+
+  "File 15": "",
+  "pages/ChatPage/ChatBodyLeft":"pages/ChatPage/ChatBodyLeft",
     "Online": "Trực tuyến",
+    "Group Chats": "Nhóm nhắn tin",
+
+  "File 16": "",
+  "pages/ChatPage/ChatBodyRight":"pages/ChatPage/ChatBodyRight",
 
 
-  "pages/Community/ChatBodyRight":"pages/Community/ChatBodyRight",
-
-
-  "pages/Community/ChatHeader":"pages/Community/ChatHeader",
+  "File 17": "",
+  "pages/ChatPage/ChatHeader":"pages/ChatPage/ChatHeader",
+    "Store": "Cửa hàng",
+    "Community": "Cộng đồng",
     "STORE": "CỬA HÀNG",
     "COMMUNITY": "CỘNG ĐỒNG",
      "SUPPORT": "HỖ TRỢ",
 
+  "File 18": "",
+  "pages/ChatPage/ChatHistory":"pages/ChatPage/ChatHistory",
 
-  "pages/Community/ChatHistory":"pages/Community/ChatHistory",
+  "File 19": "",
+  "pages/ChatPage/ChatPage":"pages/ChatPage/ChatPage",
+
+  "File 20": "",
+  "pages/ChatPage/GroupAvatar": "pages/ChatPage/GroupAvatar",
 
 
-  "pages/Community/ChatPage":"pages/Community/ChatPage",
+
+  "File 21": "",
+  "pages/ChatPage/GroupSettingPopup": "pages/ChatPage/GroupSettingPopup",
+    "Name this Chat:": "đặt tên cho nhóm này",
+    "Save": "Lưu",
+    "Are you sure you want to leave this group ?": "Bạn có chắc muốn rời khỏi nhóm này không?",
+    "Leave": "Rời nhóm",
+    "Are you sure you want to delete this group ?": "Bạn có chắc muốn xóa nhóm này không?",
+    "Group Settings": "Thiết lập nhóm",
+    "General Settings": "Thiết lập chung",
+    "Leave Group": "Rời nhóm",
+    "Delete Group": "Xóa nhóm",
+    "Leave Group Chat": "Rời nhóm nhắn tin",
+    "Are you sure you want to leave this group chat?": "Bạn có chắc muốn rời khỏi nhóm nhắn tin này không?",
+    
+
+  "File 22": "",
+  "pages/CommunityPage/Community": "pages/CommunityPage/Community",
+    "Game Reviews": "Nhận xét về trò chơi",
+    "Discussions": "Thảo luận",
+    "Start New Thread": "Tạo một bài viết mới",
 
 
+  "File 23": "",
+  "pages/CommunityPage/ThreadDetailPage": "pages/CommunityPage/ThreadDetailPage",
+    "Loading thread...": "đang tải bài viết",
+    "by": "bởi",
+    "on": "vào",
+
+
+
+  "File 24": "",
   "pages/ForgotPassword/ChangePassword":"pages/ForgotPassword/ChangePassword",
-    "OTP sent to your email": "Mã OTP đã được gửi đến email của bạn",
-    "Failed to send OTP": "Lỗi gửi mã OTP",
-    "Please check your info": "Hãy kiểm tra thông tin của bạn",
-    "Password changed successfully": "Mật khẩu đã được thay đổi thành công",
-    "Failed to reset password": "Không thể đặt lại mật khẩu",
-    "Please check your OTP and input": "Hãy kiểm tra mã OTP và nhập lại",
+    "OTP sent to your email.": "Mã OTP đã được gửi đến email của bạn.",
+    "Failed to send OTP. Please check your info.": "Lỗi gửi mã OTP. Hãy kiểm tra thông tin của bạn",
+    "Password changed successfully!": "Mật khẩu đã được thay đổi thành công!",
+    "Failed to reset password. Please check your OTP and input.": "Không thể đặt lại mật khẩu. Hãy kiểm tra mã OTP và nhập lại",
     "Change Password": "Thay đổi mật khẩu",
     "Email": "Email",
+    "submit": "gửi",
     "Checking...": "Đang kiểm tra...",
     "Send OTP": "Gửi mã OTP",
     "OTP": "OTP",
@@ -166,29 +214,28 @@
     "Confirm New Password": "Xác nhận mật khẩu mới",
     "Confirm Password Change": "Xác nhận thay đổi mật khẩu",
 
-
+  "File 25": "",
   "pages/ForgotPassword/ForgotPasswordRequest":"pages/ForgotPassword/ForgotPasswordRequest",
-    "OTP sent successfully": "Gửi mã OTP thành công",
-    "Please check your email": "Hãy kiểm tra email của bạn",
-    "User or email not found": "Người dùng hoặc email không tồn tại",
-    "Something went wrong":"Có lỗi đã xảy ra",
-    "Please try again": "Xin hãy thử lại",
+    "Invalid email format.": "Cú pháp email không hợp lệ.",
+    "OTP sent successfully. Please check your email.": "Gửi mã OTP thành công. Hãy kiểm tra email của bạn",
+    "User or email not found.": "Người dùng hoặc email không tồn tại.",
+    "Something went wrong. Please try again.":"Có lỗi đã xảy ra. Xin hãy thử lại.",
     "Support": "Hỗ trợ",
     "Username": "Tên người dùng",
     "Confirm email address": "Xác nhận địa chỉ email",
     "Send": "Gửi",
 
-
+  "File 26": "",
   "pages/ForgotPassword/ResetPassword":"pages/ForgotPassword/ResetPassword",
-    "Passwords do not match": "Mật khẩu không khớp",
-    "Password reset successfully": "Mật khẩu đã được đặt lại thành công",
-    "Redirecting to login...": "Đang chuyển hướng về trang đăng nhập...",
-    "Invalid OTP or request failed": "Mã OTP không hợp lệ hoặc yêu cầu không thành công",
+    "Passwords do not match.": "Mật khẩu không khớp.",
+    "Password reset successfully. Redirecting to login...": "Mật khẩu đã được đặt lại thành công. Đang chuyển hướng về trang đăng nhập...",
+    "Invalid OTP or request failed.": "Mã OTP không hợp lệ hoặc yêu cầu không thành công.",
+    "Reset Password": "Thay đổi mật khẩu",
     "OTP Code": "Mã OTP",
     "Confirm Password": "Xác nhận mật khẩu",
     "Reset": "Đặt lại",
 
-
+  "File 27": "",
   "pages/Friend/AddFriendTab":"pages/Friend/AddFriendTab",
     "Friend": "Bạn bè",
     "send you an invite": "gửi cho bạn lời mời kết bạn",
@@ -197,41 +244,43 @@
     "Enter your friend's Friend Code to invite them to connect": "Nhập mã bạn bè của bạn để mời họ kết nối",
     "Enter a Friend Code": "Nhập mã bạn bè",
     "Send Invite": "Gửi lời mời",
+    "Copy": "sao chép",
+    "Copied": "đã sao chép",
 
-
+  "File 28": "",
   "pages/Friend/BlockedTab":"pages/Friend/BlockedTab",
-    "Blocked": "Đã bị chặn",
-    "Sorry, there are no blocked players to show": "Xin lỗi, hiện không có người chơi nào bị chặn để hiển thị",
+    "Blocked": "đã bị chặn",
+    "Sorry, there are no blocked players to show.": "Xin lỗi, hiện không có người chơi nào bị chặn để hiển thị.",
 
-
+  "File 29": "",
   "pages/Friend/FriendsPage":"pages/Friend/FriendsPage",
     "Friends": "Bạn bè",
     "Your Friends": "Bạn bè của bạn",
     "Add a Friend": "Thêm bạn",
     "Pending Invites": "Lời mời đang chờ",
 
-
+  "File 30": "",
   "pages/Friend/MainTab":"pages/Friend/MainTab",
     "You have no friends": "Bạn không có bạn bè nào",
 
-
+  "File 31": "",
   "pages/Friend/PendingInvitesTab":"pages/Friend/PendingInvitesTab",
     "has accepted your invites": "đã chấp nhận lời mời của bạn",
     "Received Invites": "Lời mời đã nhận",
-    "Sorry, there are no pending friend invites to show": "Xin lỗi, hiện đang không có lời mời kết bạn nào đang chờ để hiển thị",
+    "Sorry, there are no pending friend invites to show.": "Xin lỗi, hiện đang không có lời mời kết bạn nào đang chờ để hiển thị.",
     "Accept": "Chấp nhận",
     "Block": "Chặn",
     "Decline": "Từ chối",
     "Sent Invites": "Đã gửi lời mời",
     "Sorry, there are no pending sent invites to show": "Xin lỗi, hiện không có lời mời đã gửi nào đang chờ để hiển thị",
 
-
+  "File 32": "",
   "pages/GameDetail/DetailBody":"pages/GameDetail/DetailBody",
     "ABOUT THIS GAME": "MÔ TẢ VỀ TRÒ CHƠI NÀY",
 
-
+  "File 33": "",
   "pages/GameDetail/DetailHeader":"pages/GameDetail/DetailHeader",  
-    "Failed to add game to cart": "Thất bại khi thêm trò chơi vào giỏ hàng",
+    "Failed to add game to cart.": "Thất bại khi thêm trò chơi vào giỏ hàng.",
     "RELEASE DATE": "NGÀY RA MẮT",
     "PUBLISHER": "NHÀ PHÁT TRIỂN",
     "Reviews stuff": "Đánh giá",
@@ -241,7 +290,7 @@
     "Already in Cart": "Đã có trong giỏ hàng",
     "Already in Library": "Đã có trong thư viện",
 
-
+  "File 34": "",
   "pages/GameDetail/DetailSystem": "pages/GameDetail/DetailSystem",
     "SYSTEM REQUIREMENTS": "YÊU CẦU HỆ THỐNG",
     "MINIMUM": "TỐI THIỂU",
@@ -253,73 +302,124 @@
     "Additional Notes": "Ghi chú bổ sung",
     "RECOMMENDED": "KHUYẾN NGHỊ",
 
-
+  "File 35": "",
   "pages/GameDetail/GameDetail": "pages/GameDetail/GameDetail",
     "Loading game details...": "Đang tải thông tin trò chơi...",
-    "Error fetching game details": "Lỗi khi lấy thông tin trò chơi",
-    "Game not found": "Không tìm thấy trò chơi",
+    "Error fetching game details:": "Lỗi khi lấy thông tin trò chơi:",
+    "Game not found.": "Không tìm thấy trò chơi.",
 
-
+  "File 36": "",
   "pages/HomePage/HomePage": "pages/HomePage/HomePage",
     "Featured Video": "Video nổi bật",
 
-
+  "File 37": "",
   "pages/HomePage/BrowseByPublisher": "pages/HomePage/BrowseByPublisher",
     "Browse by Publisher": "Tìm theo nhà phát triển",
     "Previous": "Trước",
     "Next": "Sau",
 
-
+  "File 38": "",
   "pages/HomePage/BrowseByTag": "pages/HomePage/BrowseByTag",
     "Browse by Category": "Tìm theo thể loại",
 
-
+  "File 39": "",
   "pages/HomePage/YoutubePlayer": "pages/HomePage/YoutubePlayer",
     "Video ID is missing": "ID video bị thiếu",
 
-  
+  "File 40": "",
   "pages/LibraryPage/Library": "pages/LibraryPage/Library",
     "All Games": "Tất cả trò chơi",
-    "'s Library": "Thư viện của",
-    "My Library": "Thư viện của tôi",
-    "Sort by": "Sắp xếp theo",
-    "You have not purchased any games yet": "Bạn chưa mua trò chơi nào",
-    "minutes played": "số phút đã chơi",
+    "'s Library": "Thư viện của {{userName}}",
+    "Sort by:": "Sắp xếp theo",
+    "You have not purchased any games yet.": "Bạn chưa mua trò chơi nào.",
+    "minutes played": "đã chơi {{minute}} phút ",
     "A-Z": "A-Z",
     "Z-A": "Z-A",
     "Price (Low to High)": "Giá tiền (Thấp đến Cao)",
     "Price (High to Low)": "Giá tiền (Cao đến Thấp)",
 
-
+  "File 41": "",
   "pages/NotificationPage/NotificationItem": "pages/NotificationPage/NotificationItem",
 
-
+  "File 42": "",
   "pages/NotificationPage/NotificationList": "pages/NotificationPage/NotificationList",
     "Are you sure you want to delete all notifications?": "Bạn có chắc muốn xóa tất cả thông báo?",
+    "Notifications (count unread)": "Thông báo (chưa đọc {{count}} thông báo)",
     "Notifications": "Thông báo",
     "unread": "chưa đọc",
     "Mark All Read": "Đánh dấu tất cả đã đọc",
     "Delete All": "Xóa tất cả",
     "Filter to": "Lọc theo",
-    "You have no notifications at this time": "Bạn hiện không có thông báo nào",
-    "This is where you'll be able to see SteamCL notifications regarding your Friends, Games, and more": "Đây là nơi bạn có thể xem thông báo từ SteamCL liên quan đến bạn bè, trò chơi và nhiều thứ khác",
+    "You have no notifications at this time.": "Bạn hiện không có thông báo nào.",
+    "This is where you'll be able to see SteamCL notifications regarding your Friends, Games, and more.": "Đây là nơi bạn có thể xem thông báo từ SteamCL liên quan đến bạn bè, trò chơi và nhiều thứ khác.",
   
   
+  "File 43": "",
+  "pages/PolicyPage/Contact": "pages/PolicyPage/Contact",
+    "We are a small groups of 5 members who trying to learn how to create stuffs": "Chúng tôi là một nhóm nhỏ gồm 5 thành viên cố gắng học cách phát triển dự án",
+
+  "File 44": "",
+  "pages/PolicyPage/PrivacyPolicy": "pages/PolicyPage/PrivacyPolicy",
+    "Last updated: July 11, 2025": "Lần cập nhật gần nhất: 11 Tháng 7, năm 2025",
+    "This site is an educational project. We value your privacy and explain our practices below.": "Trang này chỉ là một dự án của một môn học. Chúng tôi trân trọng sự riêng tư của bạn và sẽ giải thích về dự án chúng tôi ở dưới.",
+    "1. Information We Collect": "1. Thông tin mà chúng tôi thu thập",
+    "We may collect your email, username, and activity data for demonstration purposes only.": "Chúng tôi thu thập thông tin về email, tên tài khoản và các hoạt động chỉ để trình diễn thôi.",
+    "2. How We Use Your Data": "2. Cách chúng tôi sử dụng thông tin của bạn",
+    "Data is used to simulate user profiles, game purchases, and basic account interactions. No data is sold or shared with third parties.": "Dữ liệu được dùng để mô phỏng trang cá nhân của người dùng, mua trò chơi và các thao tác cơ bản với tài khoản. Không có dữ liệu nào được bán hay chia sẻ cho bên thứ ba.",
+    "3. Data Storage": "3. Lưu trữ dữ liệu",
+    "Data is stored on temporary servers used only for this educational project. We do not apply commercial-level security or compliance.": "Dữ liệu được lưu trữ trên các server tạm thời chỉ được sử dụng cho dự án học tập này. Chúng tôi không áp dụng bảo mật hoặc tuân thủ ở cấp độ thương mại.",
+    "4. No Real-World Consequences": "4. Không có hậu quả thực tế",
+    "Since this is a simulation, your data has no real-world value and cannot be used outside of this project context.": "Bởi vì đây là mô phỏng, dữ liệu của bạn không hề có tí giá trị thực tế nào và không thể sử dụng ngoài dự án này.",
+    "5. Data Removal": "5. Xóa bỏ dữ liệu",
+    "If you'd like your data removed, contact us and we will delete it manually.": "Nếu bạn muốn gỡ dữ liệu của bạn, hãy liên hệ với chúng tôi và chúng tôi sẽ xóa dữ liệu.",
+    "6. Cookies and Local Storage": "6. Cookies và Bộ nhớ cục bộ",
+    "We use browser local storage to manage user sessions and preferences. No tracking or third-party cookies are used.": "Chúng tôi sử dụng bộ nhớ cục bộ của trình duyệt để quản lý phiên truy cập và tùy chọn của người dùng. Không sử dụng cookie theo dõi hoặc cookie của bên thứ ba.",
+    "While we take basic precautions, this project does not use HTTPS in all deployments, and stored data may not be encrypted. Use it at your own risk.": "Mặc dù chúng tôi áp dụng các biện pháp phòng ngừa cơ bản, dự án này không sử dụng HTTPS trong mọi lần triển khai và dữ liệu được lưu trữ có thể không được mã hóa. Vui lòng tự chịu rủi ro khi sử dụng.",
+    "Contact": "Liên hệ",
+    
+
+
+
+    "File 45:": "",
+    "pages/PolicyPage/TermsOfUse": "pages/PolicyPage/TermsOfUse",
+      "Terms of Use": "Chính sách sử dụng",
+      "This website is a non-commercial project built solely for educational purposes.": "website này là 1 dự án phi thương mại được dựng nên chỉ với một mục đích duy nhất là học tập.",
+      "1. Educational Purpose Only": "1. Mục đích duy nhất là học tập",
+      "This website simulates the behavior of a digital game store for learning purposes. No actual purchases are made, and no products are owned or delivered.": "Trang web này mô phỏng hoạt động của một cửa hàng trò chơi điện tử cho mục đích học tập. Không có giao dịch mua thực tế nào được thực hiện, và không có sản phẩm nào được sở hữu hoặc giao hàng.",
+      "2. Fake Transactions": "2. Giao dịch giả",
+      "All payment-related actions are sandboxed and use fake data. No real money is involved in any action performed on this site.": "Mọi hoạt động liên quan đến thanh toán đều được bảo mật và sử dụng dữ liệu giả. Không có bất kỳ giao dịch nào được thực hiện trên trang web này liên quan đến tiền thật.",
+      "3. No Ownership": "3. Không có quyền sở hữu",
+      "Any games, images, or content shown are for demo purposes. You do not own or obtain the right to use any game shown here beyond this site simulation.": "Mọi trò chơi, hình ảnh hoặc nội dung được hiển thị đều chỉ mang tính chất demo. Bạn không sở hữu hoặc có quyền sử dụng bất kỳ trò chơi nào được hiển thị ở đây ngoài mục đích mô phỏng trang web này.",
+      "4. No Affiliation": "4. Không có liên kết",
+      "This site is not affiliated with or endorsed by Steam, Valve Corporation, or any related entity. All logos, trademarks, and names are the property of their respective owners.": "Trang web này không liên kết hoặc được chứng thực bởi Steam, Valve Corporation hoặc bất kỳ tổ chức liên quan nào. Mọi logo, nhãn hiệu và tên đều thuộc sở hữu của chủ sở hữu tương ứng.",
+      "5. Responsible Usage": "5. Sử dụng có trách nhiệm",
+      "By using this website, you agree to use it responsibly and not to misrepresent it as a real product.": "Khi sử dụng trang web này, bạn đồng ý sử dụng nó một cách có trách nhiệm và không trình bày sai sự thật rằng đây là sản phẩm thật.",
+      "6. Disclaimer": "6. Tuyên bố miễn trừ trách nhiệm",
+      "This website is a student project created for educational demonstration only. It does not offer real products or services.": "Trang web này là một dự án của sinh viên được tạo ra chỉ nhằm mục đích trình diễn giáo dục. Trang web không cung cấp sản phẩm hoặc dịch vụ thực tế.",
+      "All actions simulated on this website, including purchases or account creation, are fictitious and not tied to any real business or transaction.": "Mọi hành động mô phỏng trên trang web này, bao gồm cả mua hàng hoặc tạo tài khoản, đều là hư cấu và không liên quan đến bất kỳ hoạt động kinh doanh hoặc giao dịch thực tế nào.",
+      "7. Changes to Terms": "7. Thay đổi điều khoản",
+      "We may update these terms at any time without notice. Continued usage of the website implies acceptance of the latest version.": "Chúng tôi có thể cập nhật các điều khoản này bất cứ lúc nào mà không cần thông báo trước. Việc tiếp tục sử dụng trang web đồng nghĩa với việc chấp nhận phiên bản mới nhất.",
+      "For questions, contact us at:": "Nếu bạn có thắc mắc gì, hãy liên hệ chúng tôi qua:",
+
+
+
+  "File 46": "",    
   "pages/TransactionPage/Transaction": "pages/TransactionPage/Transaction",
-    "No transactions found": "Không có giao dịch nào được tìm thấy",
+    "No transactions found.": "Không có giao dịch nào được tìm thấy.",
+    "'s Purchase History": "Lịch sử giao dịch của {{userName}}",
     "Game": "Trò chơi",
     "Type": "Thể loại",
     "Amount": "Giá tiền",
-    "Charges": "Chi phí",
+    "Changes": "Thay đổi",
     "Detail": "Chi tiết",
     "Unknown Item": "Mục không xác định",
     "Purchase Game": "Mua trò chơi",
 
-
+  "File 47": "",
   "pages/TransactionPage/TransactionDetail": "pages/TransactionPage/TransactionDetail",
     "Loading transaction detail...": "Đang tải chi tiết giao dịch...",
-    "Transaction not found": "Giao dịch không tìm thấy",
-    "'s Transaction Detail": "Chi tiết giao dịch của",
+    "Transaction not found.": "Giao dịch không tìm thấy.",
+    "'s Transaction Detail": "Chi tiết giao dịch của {{userName}}",
     "Back to Transaction History": "Quay lại lịch sử giao dịch",
     "Transaction ID": "ID giao dịch",
     "Owner": "Chủ sở hữu",
@@ -332,82 +432,94 @@
     "I have a question about this purchase": "Tôi có câu hỏi về giao dịch này",
     "I would like to view or print the receipt for this purchase": "Tôi muốn xem hoặc in biên lai cho giao dịch này",
 
-
+  "File 48": "",
   "pages/WalletPage/WalletPage": "pages/WalletPage/WalletPage",
-    "Please enter a valid amount": "Hãy nhập một số tiền hợp lệ",
-    "Error creating payment link": "Lỗi khi tạo liên kết thanh toán",
-    "Add funds to": "Nạp tiền vào",
-    "wallet": "ví tiền",
+    "Please enter a valid amount.": "Hãy nhập một số tiền hợp lệ.",
+    "Error creating payment link. Please try again.": "Lỗi khi tạo liên kết thanh toán. Xin vui lòng thử lại sau.",
+    "Add funds to wallet": "Nạp tiền vào ví của {{userName}}",
     "Add": "Thêm",
     "Add funds": "Nạp tiền",
-    "YOUR STEAMCL ACCOUNT":" TÀI KHOẢN STEAMCL CỦA BẠN",
+    "YOUR CENTURION ACCOUNT":" TÀI KHOẢN CENTURION CỦA BẠN",
     "Current Wallet balance": "Số dư tài khoản hiện tại",
 
-
+  "File 49": "",
   "pages/ApplyToPublisher": "pages/ApplyToPublisher",
-    "12 characters limit exceeded": "Vượt quá 12 kí tự",
-    "Social ID must be a positive number": "ID xã h hội phải là một số dương",
-    "64 characters limit exceeded": "Vượt quá 64 kí tự",
-    "Please select an image first": "Hãy chọn một hình ảnh trước",
+    "12 characters limit exceeded!": "Vượt quá 12 kí tự!",
+    "Social ID must be a positive number!": "ID xã h hội phải là một số dương!",
+    "64 characters limit exceeded!": "Vượt quá 64 kí tự!",
+    "Please select an image first!": "Hãy chọn một hình ảnh trước!",
     "Please fill in all fields": "Hãy điền vào tất cả các trường",
     "Are you sure you want to submit this application?": "Bạn có chắc muốn gửi đơn này không?",
     "Upload failed": "Tải lên thất bại",
     "Legal Name(*)": "Tên pháp lý(*)",
     "Publisher Name(*)": "Tên Nhà phát triển(*)",
-    "Address(*)": "Địa chỉ (*)",
+    "Address(*)": "địa chỉ (*)",
     "Social ID(*)": "ID xã hội(*)",
     "Country(*)": "Quốc gia(*)",
+    "Apply": "Ứng tuyển",
 
-
+  "File 50": "",
   "pages/ErrorPage": "pages/ErrorPage",
 
-
+  "File 51": "",
   "pages/FeedbackHub": "pages/FeedbackHub",
     "Are you sure you want to delete this feedback?": "Bạn có chắc muốn xóa phản hồi này không?",
     "Feedback Hub": "Trung tâm phản hồi",
+    "Write New Feedback": "Viết phản hồi mới",
     "Your Submitted Feedback": "Phản hồi bạn đã gửi",
-    "No feedback available": "Không có phản hồi nào",
+    "No feedback available.": "Không có phản hồi nào.",
+    "Pending": "đang đợi",
+    "Answered": "đã trả lời",
+    "Dismissed": "đã bị từ chối",
 
-
+  "File 52": "",
   "pages/Login": "pages/Login",
-    "Registration successful": "Đăng ký thành công",
+    "Registration successful!": "Đăng ký thành công!",
     "Login successful": "Đăng nhập thành công",
     "Invalid username or password": "Tên người dùng hoặc mật khẩu không hợp lệ",
     "Google login successful": "Đăng nhập Google thành công",
     "Google login failed": "Đăng nhập Google thất bại",
-    "Log in": "Đăng nhập",
-    "Log in with username": "Đăng nhập bằng tên người dùng",
+    "Sign in": "Đăng nhập",
+    "Sign in with username": "Đăng nhập bằng tên người dùng",
     "Password": "Mật khẩu",
+    "Log in": "Đăng nhập",
     "Forgot password?": "Quên mật khẩu?",
 
-
+  "File 53": "",
   "pages/OAuth2RedirectHandler": "pages/OAuth2RedirectHandler",
     "Logging in via Google...": "Đang đăng nhập qua Google...",
 
-    
+  "File 54": "",
   "pages/RegisterDetail": "pages/RegisterDetail",
-    "Username must not contain spaces": "Tên người dùng không được chứa khoảng trắng",
-    "Username is already taken": "Tên người dùng đã được dùng",
-    "Registration failed": "Đăng ký không thành công",
+    "Username must not contain spaces.": "Tên người dùng không được chứa khoảng trắng.",
+    "Username is already taken.": "Tên người dùng đã được dùng.",
+    "Registration failed.": "Đăng ký không thành công.",
     "CREATE YOUR ACCOUNT": "TẠO TÀI KHOẢN CỦA BẠN",
-    "Steam Account Name": "Tên tài khoản Steam",
-    "Username already taken": "Tên người dùng đã được dùng",
-    "Username is available": "Tên người dùng có thể sử dụng",
+    "Centurion Account Name": "Tên tài khoản Centurion",
+    "Username already taken.": "Tên người dùng đã được dùng.",
+    "Username is available.": "Tên người dùng có thể sử dụng.",
     "Choose Password": "Chọn mật khẩu",
     "Select a country": "Chọn quốc gia",
     "Vietnam": "Việt Nam",
     "United States": "Hoa Kỳ",
     "Continue": "Tiếp tục",
 
-
+  "File 55": "",
   "pages/RegisterEmail": "pages/RegisterEmail",
     "Invalid email format": "Định dạng email không hợp lệ",
-    "Email already in use": "Email đã được sử dụng",
-    "Error checking email": "Lỗi kiểm tra email",
+    "Email already in use.": "Email đã được sử dụng.",
+    "Error checking email.": "Lỗi kiểm tra email.",
     "Email address": "Địa chỉ email",
     "I'm 13 years old or older and agree with policies and SteamCL security policy": "Tôi đã đủ từ 13 tuổi trở lên và đồng ý với các chính sách và chính sách bảo mật của SteamCL",
-  
-  
+    "Terms of use": "trách nhiệm sử dụng",
+    "Privacy policy": "Chính sách bảo mật",
+    "Continue...": "Tiếp tục...",
+
+
+
+
+
+  "File 56": "",
   "pages/SendGameToAdmin": "pages/SendGameToAdmin",
     "Action": "Hành động",
     "Adventure": "Phiêu lưu",
@@ -440,7 +552,7 @@
     "Strategy": "Chiến thuật",
     "Surreal": "Siêu thực",
     "Survival": "Sinh tồn",
-    "Price of games must follow these rules": "Giá tiền của trò chơi phải tuân theo những luật sau",
+    "Price of games must follow these rules:\n1. Only numbers\n2. No space\n3. No special characters\n4. No empty string\n5. No negative number\n6. 2 digits after decimal point": "Giá tiền của trò chơi phải tuân theo những luật sau:\n1. Chỉ gồm số\n2. Không có khoảng trống\n3. Không kí tự đặc biệt\n4. Không chuỗi nhập trống\n5. Không chứa số âm\n6. Tối đa 2 số sau dấu chấm thập phân",
     "1. Only numbers": "1. Chỉ gồm số",
     "2. No space": "2. Không có khoảng trống",
     "3. No special characters": "3. Không kí tự đặc biệt",
@@ -451,30 +563,34 @@
     "1024 characters limit exceeded!": "Vượt quá 1024 kí tự!",
     "10000 characters limit exceeded!": "Vượt quá 10000 kí tự!",
     "Game price must be under or equals $1000!": "Giá tiền trò chơi phải bé hơn hoặc bằng 1000$!",
-    "Please fill in the required field": "Hãy nhập vào trường bắt buộc",
+    "Please fill in the required field.": "Hãy nhập vào trường bắt buộc.",
     "Memory of games must follow this rule: Number + (GB/MB)": "Bộ nhớ phải tuân theo luật sau: Số + (GB/MB)",
     "Game name already exists!": "Tên trò chơi đã tồn tại!",
     "Game Application": "Đơn đăng ký trò chơi",
+    "Confirm Crop": "Xác nhận cắt ảnh",
     "Additionnal Notes": "Ghi chú bổ sung",
     "Speed": "Tốc độ",
     "Time Remaining": "Thời gian còn lại",
+    "Calculating...": "đang tính toán...",
+    "Send Request": "Gửi yêu cầu",
 
-
+  "File 57": "",
   "pages/SendUserFeedback": "pages/SendUserFeedback",
     "Subject must be less than 256 characters": "Chủ đề phải dưới 256 kí tự",
     "Feedback must be less than 2048 characters": "Phản hồi phải dưới 2048 kí tự",
     "Please fill in all fields!": "Hãy điền vào toàn bộ các trường!",
     "Send Feedback": "Gửi phản hồi",
     "Hi,": "Xin chào,",
-    "If you have any thing to tell us to improve our products or any question, please tell us below": "Nếu bạn có gì để nói với chúng tôi để cải thiện sản phẩm của chúng tôi hay bất cứ câu hỏi gì, xin hãy nói cho chúng tôi ở bên dưới",
+    "If you have any thing to tell us to improve our products or any question, please tell us below.": "Nếu bạn có gì để nói với chúng tôi để cải thiện sản phẩm của chúng tôi hay bất cứ câu hỏi gì, xin hãy nói cho chúng tôi ở bên dưới.",
     "Subject(*)": "Chủ đề(*)",
     "Your Feedback(*)": "Phản hồi của bạn(*)",
 
-
+  "File 58": "",
   "pages/UserFeedback": "pages/UserFeedback",
     "your feedback": "phản hồi của bạn",
+    "Not yet answered": "Chưa được trả lời",
 
-
+  "File 59": "",
   "pages/VerifyEmail": "pages/VerifyEmail",
     "Email is required to verify. Please register first": "Cần có email để xác thực. Vui lòng đăng ký trước",
     "OTP must be a 6-digit number": "Mã OTP phải là số có 6 chữ số",
@@ -482,45 +598,46 @@
     "Verify Your Email": "Xác thực Email của bạn",
     "Verify": "Xác thực",
 
-
+  "File 60": "",
   "services/notification": "services/notification",
 
-
+  "File 61": "",
   "services/reviewNotif": "services/reviewNotif",
 
-
+  "File 62": "",
   "services/socketService": "services/socketService",
   
-  
+  "File 63": "",
   "App.jsx": "App.jsx",
     "The page you are looking for does not exist": "Trang bạn tìm kiếm không tồn tại",
     "Go back to Home": "Quay trở về màn hình chính",
   
-  
+  "File 64": "",
   "layouts/AdminLayout": "layouts/AdminLayout",
 
 
+  "File 65": "",
   "layouts/ChatLayout" : "layouts/ChatLayout",
 
-
+  "File 66": "",
   "layouts/ProfileLayout": "layouts/ProfileLayout",
 
-
+  "File 67": "",
   "layouts/MainLayout": "layouts/MainLayout",
 
-
+  "File 68": "",
   "context/AppContext": "context/AppContext",
 
-
+  "File 69": "",
   "context/AuthContext": "context/AuthContext",
 
-
+  "File 70": "",
   "components/AccountDetail/AccountDetailsPage":"components/AccountDetail/AccountDetailsPage",
-    "Minimum funding amount is $5":"Số tiền nạp tối thiểu phải là 5$",
+    "Minimum funding amount is $5.":"Số tiền nạp tối thiểu phải là 5$.",
     "Loading account details...": "Đang tải thông tin tài khoản...",
     "Account details": "Thông tin tài khoản",
     "Store preferences": "Tùy chọn cửa hàng",
-    "'s Account": "Tài khoản của",
+    "'s Account": "Tài khoản của {{userName}}",
     "STORE & PURCHASE HISTORY": "CỬA HÀNG VÀ LỊCH SỬ GIAO DỊCH",
     "Wallet Balance": "Số dư tài khoản",
     "Add funds to your Wallet": "Nạp tiền vào ví của bạn",
@@ -537,132 +654,152 @@
     "VISA": "VISA",
     "Add Funds": "Nạp tiền",
 
-
+  "File 71": "",
   "components/Button/Button": "components/Button/Button",
 
+  "File 72": "",
+  "components/Community/CommentSection": "components/Community/CommentSection",
+    "Failed to post comment.": "Thất bại khi đăng bình luận.",
+    "Comments": "Bình luận",
+    "No comments yet.": "Chưa có bình luận",
+    "Write a comment...": "Viết một bình luận...",
+    "Post Comment": "Đăng bình luận",
+  
 
+  "File 73": "",
+  "components/Community/ReviewCard": "components/Community/ReviewCard",
+  
+
+
+  "File 74": "",
+  "components/Community/CreateThreadModal": "components/Community/CreateThreadModal",
+    "Create New Thread": "Tạo chủ đề mới",
+    "What's on your mind?": "Bạn đang nghĩ gì",
+    "Title": "Tiêu đề",
+    "Content": "Nội dung",
+    "Post": "Đăng",
+
+
+  "File 75": "",
+  "components/Community/ThreadCard": "components/Community/ThreadCard",
+    "Posted by": "Đăng bởi",
+    
+  "File 76": "",
   "components/EmailChange/EmailSettings": "components/EmailChange/EmailSettings",
     "An error occurred": "Một lỗi đã xuất hiện",
-    "Email updated successfully!": "Cập nhật email thành công!",
-    "Please log in again to see the changes": "Vui lòng đăng nhập lại để thấy được thay đổi",
+    "Email updated successfully! Please log in again to see the changes.": "Cập nhật email thành công! Vui lòng đăng nhập lại để thấy được thay đổi",
     "Failed to verify code": "Xác thực mã không thành công",
-    "Manage your account's email address": "Quản lý địa chỉ email của tài khoản của bạn",
+    "Contact Info": "Thông tin liên hệ",
+    "Manage your account's email address.": "Quản lý địa chỉ email của tài khoản của bạn.",
     "Current Email": "Email hiện tại",
     "Change Email Address": "Thay đổi địa chỉ email",
     "New Email Address": "Địa chỉ email mới",
     "Enter your new email": "Nhập email mới của bạn",
+    "Sending...": "đang gửi",
+    "Request Change": "Yêu cầu thay đổi",
     "Enter Verification Code": "Nhập mã xác thực",
     "A code has been sent to": "Mã xác thực đã được gửi tới",
-    "Please enter it below": "Vui lòng nhập ở bên dưới",
+    "Please enter it below.": "Vui lòng nhập ở bên dưới",
     "Verification Code": "Mã xác thực",
     "6-digit code": "số có 6 chữ số",
+    "Verifying...": "đang xác thực",
+    "Confirm Change" : "Xác nhận thay đổi",
     "Back": "Quay về",
 
-
+  "File 77": "",
   "components/FeedbackItem/FeedbackItem": "components/FeedbackItem/FeedbackItem",
 
-  
+  "File 78": "",
   "components/FilterSideBar/FilterSidebar": "components/FilterSidebar/FilterSidebar",
     "Narrow by Price": "Thu hẹp theo giá",
     "Any Price": "Giá bất kỳ",
-    "Under": "Dưới",
+    "Under $": "Dưới ${{price}}",
     "Narrow by Tag": "Thu hẹp theo thẻ",
     "Search for tags": "Tìm theo thẻ",
     "Narrow by Publisher": "Thu hẹp theo nhà phát hành",
     "Search for publishers": "Tìm theo nhà phát hành",
 
-
+  "File 79": "",
   "components/Footer/Footer": "components/Footer/Footer",
-    "2024 Valve Corporation": "Công ty Valve 2024",
-    "All rights reserved": "Mọi quyền được bảo lưu",
-    "All trademarks are property of their respective owners in the US and other countries": "Tất cả thương hiệu là tài sản của chủ sở hữu tương ứng tại Mỹ và các quốc gia khác",
-    "VAT included in all prices where applicable": "đã bao gồm VAT trong tất cả các giao dịch",
-    "Privacy Policy": "Chính sách bảo mật",
-    "Legal": "Pháp lý",
-    "Steam Subscriber Agreement": "Thỏa thuận người dùng Steam",
-    "Refunds": "Hoàn tiền",
-    "Cookies": "Cookies",
-    "About Valve": "Về Valve",
-    "Jobs": "Công việc",
-    "Steamworks": "Steamworks",
-    "Steam Distribution": "Phân phối Steam",
-    "Gift Cards": "Thẻ quà tặng",
+    "Educational Project": "Dự án học tập",
 
-
+  "File 80": "",
   "components/GameCard/GameCard": "components/GameCard/GameCard",
     "Free": "Miễn phí",
 
-
+  "File 81": "not found",
   "components/GameDetail/GameDetail": "components/GameDetail/GameDetail",
     "Game added to cart successfully!": "Thêm trò chơi vào giỏ hàng thành công!",
     "Game already bought or not available": "Trò chơi đã được mua hoặc trò chơi không khả dụng",
     "CUSTOMER REVIEWS": "ĐÁNH GIÁ CỦA KHÁCH HÀNG",
 
-
+  "File 82": "",
   "components/GameList/GameList": "components/GameList/GameList",
     "Loading games...": "Đang tải trò chơi...",
     "Error":"Lỗi",
     "No games found": "Không tìm thấy trò chơi",
 
-
+  "File 83": "",
   "components/GamesPage/GamesPage": "components/GamesPage/GamesPage",
 
-
+  "File 84": "",
   "components/Header/Header": "components/Header/Header",
     "Profile": "Trang cá nhân",
+    "CHAT": "NHẮN TIN",
+    "ABOUT": "GIỚI THIỆU",
     "ADMIN TOOLS": "CÔNG CỤ QUẢN TRỊ",
     "Login": "Đăng nhập",
     "Register": "Đăng ký",
+    
 
-
+  "File 85": "",
   "components/Header/UserDropBox": "components/Header/UserDropBox",
     "View my profile": "Xem trang cá nhân của tôi",
     "Library": "Thư viện",
     "Request Add Game": "Yêu cầu thêm trò chơi",
     "Request Publisher": "Yêu cầu làm nhà phát triển",
     "View my wallet": "Xem ví của tôi",
-    "Sign out of account…": "Đang đăng xuất…",
+    "Change language": "Thay đổi ngôn ngữ",
+    "Sign out of account…": "Đăng xuất…",
 
-
+  "File 86": "",
   "components/LoadingScreen/LoadingScreen": "components/LoadingScreen/LoadingScreen",
 
-
+  "File 87": "",
   "components/Logout/Logout": "components/Logout/Logout",
     "Do you want to logout?": "Bạn có muốn đăng xuất không?",
+    "Logout": "Đăng xuất",
 
-
+  "File 88": "",
   "components/MainContent/MainContent": "components/MainContent/MainContent",
 
-
+  "File 89": "",
   "components/Navbar/Navbar": "components/Navbar/Navbar",
     "Cart": "Giỏ hàng",
     "Your Store": "Cửa hàng của bạn",
     "New & Noteworthy": "Mới & Đáng chú ý",
     "Categories": "Thể loại",
-    "Points Shop": "Cửa hàng điểm",
-    "News": "Tin mới",
-    "Labs": "Phòng thí nghiệm",
 
-
+  "File 90": "",
   "components/Notifications/NotificationBox": "components/Notifications/NotificationBox",
     "You have no new notifications at this time": "Hiện tại bạn không có thông báo gì mới",
 
-
+  "File 91": "",
   "components/Notifications/NotificationBoxItem": "components/Notifications/NotificationBoxItem",
 
-
+  "File 92": "",
   "components/Pagination/Pagination": "components/Pagination/Pagination",
     "Prev": "Trước",
     "Page": "Trang",
 
-
+  "File 93": "",
   "components/PartHeading/PartHeading": "components/PartHeading/PartHeading",
 
-
+  "File 94": "",
   "components/PaymentResultPage/PaymentResultPage": "components/PaymentResultPage/PaymentResultPage",
     "Processing your payment, please wait...": "Đang xử lý thanh toán của bạn, vui lòng đợi...",
-    "Your payment failed": "Thanh toán thất bại",
-    "Please try again or contact support": "Vui lòng thử lại hoặc liên hệ hỗ trợ",
+    "Your payment was successful!": "Thanh toán thành công!",
+    "Your payment failed. Please try again or contact support.": "Thanh toán thất bại. Vui lòng thử lại hoặc liên hệ hỗ trợ",
     "Please check your account balance for confirmation": "Vui lòng kiểm tra số dư tài khoản để xác nhận",
     "Transaction Details": "Lịch sử giao dịch",
     "Bank": "Ngân hàng",
@@ -671,78 +808,87 @@
     "Payment Time": "Thời gian thanh toán",
     "Return to Account": "Quay về tài khoản",
 
-
-  "components/popup/CartPopup": "components/popup/CartPopup",
+  "File 95": "",
+  "components/Popup/CartPopup": "components/popup/CartPopup",
     "Added to your cart!": "Đã thêm vào giỏ hàng!",
     "View My Cart": "Xem giỏ hàng của tôi",
 
+  "File 96": "",
+  "components/Popup/LegalPopup": "components/Popup/LegalPopup",
 
+
+  "File 97": "",
   "components/Profile/AvatarSettings/AvatarSettings": "components/Profile/AvatarSettings/AvatarSettings",
     "Avatar updated successfully!": "Thành công cập nhật ảnh đại diện!",
-    "Please try another image": "Vui lòng thử ảnh khác",
-    "Choose your avatar image": "Chọn ảnh đại diện của bạn",
-    "Your profile will be updated immediately after upload": "Trang cá nhân của bạn sẽ được cập nhật ngay lâp tức sau khi đăng",
+    "Upload failed. Please try another image.": "Tải lên không thành công. Vui lòng thử ảnh khác.",
+    "Choose your avatar image. Your profile will be updated immediately": "Chọn ảnh đại diện của bạn. Trang cá nhân của bạn sẽ được cập nhật ngay lâp tức sau khi đăng",
     "Crop Your New Avatar": "Cắt ảnh đại diện mới của bạn",
+    "Uploading...": "Đang tải...",
+    "Confirm & Upload": "Xác nhận và đăng lên",
     "CURRENT AVATAR": "ẢNH ĐẠI DIỆN HIỆN TẠI",
     "Upload a new image to change your avatar": "Tải lên ảnh mới để thay đổi ảnh đại diện của bạn",
     "Upload Image": "Tải ảnh lên",
     "Your Library": "Thư viện của bạn",
 
-
+  "File 98": "",
   "components/Profile/EditProfilePage": "components/EditProfilePage/EditProfilePage",
-    "Set your profile name and details": "Đặt tên trang cá nhân và chi tiết",
-    "This information is public": "Thông tin này là công khai",
+    "Set your profile name and details. This information is public.": "Đặt tên trang cá nhân và chi tiết. Thông tin này là công khai",
     "General": "Chung",
     "PROFILE NAME": "TÊN CÁ NHÂN",
     "COUNTRY": "QUỐC GIA",
     "Japan": "Nhật Bản",
     "GENDER":"GIỚI TÍNH",
+    "Unknown": "Không rõ",
     "Male":"Nam",
     "Female":"Nữ",
     "DATE OF BIRTH": "NGÀY SINH",
     "About": "Giới thiệu",
     "SUMMARY": "TÓM TẮT",
+    "Saving...": "Đang lưu",
     "User ID not found": "Không tìm thấy ID người dùng",
     "Failed to load user data": "Không thể tải dữ liệu người dùng",
-    "Profile Name cannot be empty": "Tên cá nhân không được để trống",
-    "Summary cannot exceed 500 characters": "Tóm tắt không thể vượt quá 500 kí tự",
-    "Date of Birth cannot be in the future": "Ngày sinh không thể là ngày ở tương lai",
+    "Profile Name cannot be empty.": "Tên cá nhân không được để trống.",
+    "Summary cannot exceed 500 characters.": "Tóm tắt không thể vượt quá 500 kí tự.",
+    "Date of Birth cannot be in the future.": "Ngày sinh không thể là ngày ở tương lai.",
     "Your profile has been saved successfully!": "Trang cá nhân của bạn đã được lưu thành công!",
-    "Failed to save profile": "Không thể lưu trang cá nhân",
+    "Failed to save profile. Please try again": "Không thể lưu trang cá nhân. Vui lòng thử lại sau",
     "Select a setting": "Chọn cài đặt",
-    "Avatar": "Ảnh đại diện",
+    "Avatar": "Ảnh đại diện", 
 
-
+  "File 99": "",
   "components/Profile/GameShowcase": "components/Profile/GameShowcase",
     "of": "của",
     "Games": "Trò chơi",
     "View All": "Xem tất cả",
     "This user has no games to showcase": "Người dùng này không có trò chơi để giới thiệu",
 
-
+  "File 100": "",
   "components/Profile/GeneralSettings": "components/Profile/GeneralSettings",
 
-
+  "File 101": "",
   "components/Profile/Profilepage": "components/Profile/ProfilePage",
+    "Anonymous User": "Người dùng ẩn danh",
+    "Location not set": "Chưa xét vị trí",
+    "Unfriend": "Hủy kết bạn",
     "Edit Profile": "Chỉnh sửa trang cá nhân",
     "Message": "Tin nhắn",
     "Add Friend": "Kết bạn",
-    "No profile to display": "Không có trang cá nhân để hiện thị",
-    "Please log in or specify a user ID": "Vui lòng đăng nhập hoặc chỉ định ID người dùng cụ thể",
+    "Block User": "Chặn người dùng",
+    "No profile to display. Please log in or specify a user ID.": "Không có trang cá nhân để hiện thị. Vui lòng đăng nhập hoặc chỉ định ID người dùng cụ thể.",
     "Could not fetch profile data": "Không thể lấy dữ liệu trang cá nhân",
     "The user may not exist":"Người dùng có thể không tồn tại",
-    "Friend request sent to": "Yêu cầu kết bạn gửi tới ",
+    "Friend request sent to": "Yêu cầu kết bạn gửi tới {{userName}}",
     "Loading Profile...": "Đang tải trang cá nhân...",
     "Profile not found": "Không tìm thấy trang cá nhân",
     "Bio": "Tiểu sử",
-    "This user has not written a summary yet": "Người dùng này chưa viết tóm tắt",
+    "This user has not written a summary yet.": "Người dùng này chưa viết tóm tắt gì cả.",
     "Reviews": "Đáng giá",
     "Inventory": "Kho đồ",
 
-
+  "File 102": "",
   "components/RequestItem/RequestItem": "components/RequestItem/RequestItem",
 
-
+  "File 103": "",
   "components/Review/Review": "components/Review/Review",
     "CUSTOMER REVIEWS FOR": "ĐÁNH GIÁ CỦA KHÁCH HÀNG VỀ",
     "Recommended": "Đề xuất",
@@ -751,29 +897,32 @@
     "Show more": "Xem thêm",
     "Show less": "Xem bớt",
 
-
+  "File 104": "",
   "components/Review/ReviewButtons": "components/Review/ReviewButtons",
 
-
+  "File 105": "",
   "components/Review/ReviewForm": "components/Review/ReviewForm",
-    "Please fill in all fields before submitting": "Vui lòng điền vào tất cả trường trước khi nộp",
-    "Your review contains inappropriate content": "Đánh giá của bạn chứa nội dung không phù hợp",
-    "Network error": "Lỗi mạng kết nối",
+    "Please fill in all fields before submitting.": "Vui lòng điền vào tất cả trường trước khi nộp.",
+    "Your review contains inappropriate content.": "Đánh giá của bạn chứa nội dung không phù hợp.",
+    "An error occurred:": "Xảy ra một lỗi",
+    "Unknown error.": "lỗi không xác định",
+    "Network error. Please try again later.": "Lỗi mạng kết nối. Vui lòng thử lại sau",
     "Please try again later": "Vui lòng thử lại sau",
     "Write a review for": "Viết đánh giá cho",
     "Write your review here...":"Viết đánh giá của bạn ở đây...",
     "Do you recommend this game?":"Bạn có đề xuất trò chơi này không?",
     "Yes": "Có",
     "No": "Không",
+    "Post Review": "Đăng bài nhận xét",
 
-
+  "File 105": "",
   "components/Review/ReviewListItem": "components/Review/ReviewListItem",
     "Posted on": "Được đăng vào",
     "Read more": "Đọc thêm",
     "Was this review helpful?": "Đánh giá này có hữu ích không?",
     "Edit": "Chỉnh sửa",
 
-
+  "File 106":"",
   "components/Review/ReviewUpdateForm": "components/Review/ReviewUpdateForm",
     "Are you sure you want to update this review?": "Bạn có chắc chắn muốn cập nhật đánh giá này?",
     "Unknown error": "Lỗi không xác định",
@@ -781,21 +930,22 @@
     "Delete": "Xóa",
     "Update Review": "Cập nhật đánh Giá",
 
-
+  "File 107": "",
   "components/SearchBar/SearchBar": "components/SearchBar/SearchBar",
     "Searching...": "Đang tìm kiếm...",
     "No results found for": "Không tìm thấy kết quả cho",
+    "search": "tìm kiếm",
 
-
+  "File 108": "",
   "components/SearchResultHeader/SearchResultHeader": "components/SearchResultHeader/SearchResultHeader",
     "Name (A-Z)":"Tên (A-Z)",
     "Name (Z-A)":"Tên (Z-A)",
     "Release Date (Newest)":"Thời gian ra mắt (Newest)",
     "Release Date (Oldest)":"Thời gian ra mắt (Oldest)",
     "Results for": "Kết quả cho",
-    "titles found": "tiêu đề được tìm thấy",
+    "titles found": "{{count}} tiêu đề được tìm thấy",
 
-
+  "File 109": "",
   "components/SplashScreen/SPlashScreen": "components/SplashScreen/SplashScreen",
     "STEAM SYSTEM GROUP 1": "STEAM SYSTEM GROUP 1"
 

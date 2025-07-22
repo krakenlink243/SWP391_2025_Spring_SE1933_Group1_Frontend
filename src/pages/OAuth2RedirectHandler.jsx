@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-
+import { useTranslation } from "react-i18next";
 /**
  * @author Loc Phan
  */
@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 const OAuth2RedirectHandler = () => {
   // const navigate = useNavigate();
   const location = useLocation();
-
+  const {t}=useTranslation();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -50,7 +50,7 @@ const OAuth2RedirectHandler = () => {
   const params = new URLSearchParams(location.search);
   const token = params.get("token");
   console.log("Token from URL:", token);
-  return <p>Logging in via Google...</p>;
+  return <p>{t('Logging in via Google...')}</p>;
 };
 
 export default OAuth2RedirectHandler;

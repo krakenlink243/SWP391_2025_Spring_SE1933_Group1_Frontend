@@ -9,6 +9,7 @@ import ImageUploading from 'react-images-uploading'
 import './ApplyToPublisher.css'
 import axios from 'axios'
 import { validateEmty } from '../utils/validators'
+import { useTranslation } from 'react-i18next'
 
 function ApplyToPublisher() {
   const publisherId = localStorage.getItem('userId')
@@ -22,6 +23,7 @@ function ApplyToPublisher() {
       imageUrl: ""
     }
   )
+  const {t}=useTranslation();
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
 
@@ -42,14 +44,14 @@ function ApplyToPublisher() {
     const { name, value } = e.target;
     console.log(formData.legalName)
     if (name === 'socialNumber' && value.length > 12) {
-      alert("12 characters limit exceeded!")
+      alert(t("12 characters limit exceeded!"))
       setFormData(prev => ({
         ...prev,
         [name]: value.slice(0, 12), // Truncate without trimming spaces
       }));
       return;
     } else if (name === 'socialNumber' && value[0] === '-') {
-      alert("Social ID must be a positive number!")
+      alert(t("Social ID must be a positive number!"))
       setFormData(prev => ({
         ...prev,
         [name]: value.slice(1, 12), // Truncate without trimming spaces
@@ -57,7 +59,7 @@ function ApplyToPublisher() {
       return;
     }
     if (value.length > 64) {
-      alert("64 characters limit exceeded!")
+      alert(t("64 characters limit exceeded!"))
       setFormData(prev => ({
         ...prev,
         [name]: value.slice(0, 64), // Truncate without trimming spaces
@@ -86,14 +88,14 @@ function ApplyToPublisher() {
   const handleUpload = async () => {
     if (!image && !formData.imageUrl) {
 
-      alert("Please select an image first!");
+      alert(t("Please select an image first!"));
       return;
     }
     if (!validateEmty(formData.legalName) || !validateEmty(formData.publisherName) || !validateEmty(formData.address) || !validateEmty(formData.socialNumber) || !validateEmty(formData.country)) {
-      alert("Please fill in all fields!");
+      alert(t("Please fill in all fields!"));
       return;
     }
-    const confirmSubmit = window.confirm("Are you sure you want to submit this application?");
+    const confirmSubmit = window.confirm(t("Are you sure you want to submit this application?"));
     if (!confirmSubmit) {
       return;
     }
@@ -115,7 +117,7 @@ function ApplyToPublisher() {
       navigate("/");
     } catch (err) {
       console.error("Upload failed:", err);
-      alert("Upload failed");
+      alert(t("Upload failed"));
     }
   };
   const handleCancel = () => {
@@ -124,22 +126,22 @@ function ApplyToPublisher() {
   return (
     <>
       <div className='apply-publisher-title'>
-        <h1>Publisher Application</h1>
+        <h1>{t('Publisher Application')}</h1>
         <div className='apply-publisher-container'>
           <div className='publisher-info'>
-            Legal Name(*)
+            {t('Legal Name(*)')}
             <input type="text" name="legalName" id="" onChange={handleChange} value={formData.legalName} onBlur={normalizeValue} />
-            Publisher Name(*)
+            {t('Publisher Name(*)')}
             <input type="text" name="publisherName" id="" onChange={handleChange} value={formData.publisherName} onBlur={normalizeValue} />
-            Address(*)
+            {t('Address(*)')}
             <input type="text" name='address' onChange={handleChange} value={formData.address} onBlur={normalizeValue} />
-            Social ID(*)
+            {t('Social ID(*)')}
             <input type="number" name="socialNumber" id="" onChange={handleChange} value={formData.socialNumber} />
-            Country(*)
+            {t('Country(*)')}
             <CountryDropdown value={formData.country} onChange={(e) => setFormData(prev => ({ ...prev, country: e }))}></CountryDropdown>
             <div className="publisher-button">
-              <Button label="Cancel" color="grey-button" onClick={handleCancel} />
-              <Button label="Apply" color="blue-button" onClick={handleUpload} />
+              <Button label={t("Cancel")} color="grey-button" onClick={handleCancel} />
+              <Button label={t("Apply")} color="blue-button" onClick={handleUpload} />
             </div>
           </div>
           <div className="publisher-image">

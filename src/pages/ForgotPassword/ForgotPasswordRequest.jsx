@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { useTranslation } from "react-i18next";
 
 const validateEmailFormat = (email) =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -10,7 +10,7 @@ function ForgotPasswordRequest() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-
+  const {t}= useTranslation();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
@@ -26,25 +26,25 @@ function ForgotPasswordRequest() {
         email,
       });
 
-      alert("OTP sent successfully. Please check your email.");
+      alert(t('OTP sent successfully. Please check your email.'));
       navigate("/reset-password", { state: { username, email } });
     } catch (error) {
       console.error(error);
       if (error.response?.status === 404) {
-        setMessage("User or email not found.");
+        setMessage(t('User or email not found.'));
       } else {
-        setMessage("Something went wrong. Please try again.");
+        setMessage(t('Something went wrong. Please try again.'));
       }
     }
   };
 
   return (
     <main className="support-form">
-      <h1 className="form-title">Support</h1>
+      <h1 className="form-title">{t('Support')}</h1>
       <form className="form-container" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="username" className="form-label username-label">
-            Username
+            {t('Username')}
           </label>
           <input
             id="username"
@@ -57,7 +57,7 @@ function ForgotPasswordRequest() {
         </div>
         <div>
           <label htmlFor="email" className="form-label email-label">
-            Confirm email address
+            {t('Confirm email address')}
           </label>
           <input
             id="email"
@@ -72,7 +72,7 @@ function ForgotPasswordRequest() {
           type="submit"
           className="submit-button"
         >
-          Send
+          {t('Send')}
         </button>
         
       </form>

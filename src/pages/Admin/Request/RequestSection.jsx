@@ -4,11 +4,12 @@ import PublisherApprovePage from "./PublisherApprovePage";
 import FeedbackApprovePage from "./FeedbackApprovePage";
 import { useNavigate, useParams } from "react-router-dom";
 import './RequestSection.css';
+import { useTranslation } from "react-i18next";
 
 export default function RequestSection() {
     const { tab } = useParams();
     const navigate = useNavigate();
-
+    const { t } = useTranslation();
     const tabKeys = ['game', 'publisher', 'feedback'];
     const curTab = tabKeys.indexOf(tab);
     const currentIndex = curTab === -1 ? 0 : curTab;
@@ -36,19 +37,19 @@ export default function RequestSection() {
                     className={`nav-item${currentIndex === 0 ? " active" : ""}`}
                     onClick={() => handleChangeTab(0)}
                 >
-                    Game Request
+                    {t('Game Request')}
                 </div>
                 <div
                     className={`nav-item${currentIndex === 1 ? " active" : ""}`}
                     onClick={() => handleChangeTab(1)}
                 >
-                    Publisher Request
+                    {t('Publisher Request')}
                 </div>
                 <div
                     className={`nav-item${currentIndex === 2 ? " active" : ""}`}
                     onClick={() => handleChangeTab(2)}
                 >
-                    Feedback
+                    {t('Feedback')}
                 </div>
             </div>
             <div className="request-section-body">

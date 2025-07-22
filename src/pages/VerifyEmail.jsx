@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './VerifyEmail.css';
+import { useTranslation } from 'react-i18next';
+import { useTransition } from 'react';
 /**
  * @author Loc Phan
  */
@@ -10,7 +12,7 @@ const VerifyEmailOtp = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const email = state?.email;
-
+  const {t}=useTranslation();
   const [otp, setOtp] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -18,7 +20,7 @@ const VerifyEmailOtp = () => {
   useEffect(() => {
     if (!email) {
       navigate('/register');
-      alert('Email is required to verify. Please register first.');
+      alert(t('Email is required to verify. Please register first.'));
     }
   }, [email, navigate]);
 
@@ -27,7 +29,7 @@ const VerifyEmailOtp = () => {
     setMessage('');
 
     if (otp.length !== 6 || !/^\d{6}$/.test(otp)) {
-      setMessage('OTP must be a 6-digit number.');
+      setMessage(t('OTP must be a 6-digit number.'));
       return;
     }
 
@@ -41,7 +43,7 @@ const VerifyEmailOtp = () => {
       navigate('/register-details', { state: { email } });
     } catch (err) {
       console.error(err);
-      setMessage('Invalid or expired OTP.');
+      setMessage(t('Invalid or expired OTP.'));
     } finally {
       setLoading(false);
     }
@@ -52,11 +54,11 @@ const VerifyEmailOtp = () => {
       <div className='row'>
         <div className='spacer col-lg-3'></div>
         <div className='main-content col-lg-6 h-100'>
-          <h1 className="verify-title">Verify Your Email</h1>
+          <h1 className="verify-title">{t('Verify Your Email')}</h1>
           <form onSubmit={handleSubmit} className='d-flex flex-column justify-content-center align-items-start'>
             {message && (<p className="message-text">{message}</p>)}
             <label htmlFor="otp" className="otp-label">
-              OTP Code
+              {t('OTP Code')}
             </label>
             <input
               id="otp"
@@ -67,7 +69,7 @@ const VerifyEmailOtp = () => {
               required
             />
             <button type="submit" className="submit-button">
-              Verify
+              {t('Verify')}
             </button>
           </form>
 

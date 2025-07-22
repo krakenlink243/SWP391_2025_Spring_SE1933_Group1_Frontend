@@ -22,6 +22,11 @@
     text-transform: uppercase;
 }
 
+.popup-wrapper .warning-text {
+    color: red;
+}
+
+
 .popup-wrapper .form-group {
     display: flex;
     flex-direction: column;

@@ -2,8 +2,10 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import "./EditProfilePage.css";
 import AvatarSettings from "./AvatarSettings/AvatarSettings";
+import { useTranslation } from "react-i18next";
 
 // Component con cho form "General", giờ đây nó nhận thêm prop `errors`
+
 const GeneralSettings = ({
   formData,
   handleInputChange,
@@ -12,20 +14,23 @@ const GeneralSettings = ({
   error,
   successMessage,
   errors,
+  
 }) => {
+  const {t} = useTranslation();
   return (
+    
     <form onSubmit={handleSubmit}>
       <div className="settings-section">
-        <h2>About</h2>
+        <h2>{t('About')}</h2>
         <p className="section-description">
-          Set your profile name and details. This information is public.
+          {t('Set your profile name and details. This information is public.')}
         </p>
       </div>
 
       <div className="settings-section">
-        <h3>General</h3>
+        <h3>{t('General')}</h3>
         <div className="form-group">
-          <label htmlFor="profileName">PROFILE NAME</label>
+          <label htmlFor="profileName">{t('PROFILE NAME')}</label>
           <input
             type="text"
             id="profileName"
@@ -40,7 +45,7 @@ const GeneralSettings = ({
         </div>
 
         <div className="form-group">
-          <label htmlFor="country">COUNTRY</label>
+          <label htmlFor="country">{t('COUNTRY')}</label>
           <select
             id="country"
             name="country"
@@ -48,26 +53,26 @@ const GeneralSettings = ({
             onChange={handleInputChange}
           >
             <option value="">(Do not display)</option>
-            <option value="Vietnam">Vietnam</option>
-            <option value="USA">United States</option>
-            <option value="Japan">Japan</option>
+            <option value="Vietnam">{t('Vietnam')}</option>
+            <option value="USA">{t('United States')}</option>
+            <option value="Japan">{t('Japan')}</option>
           </select>
         </div>
         <div className="form-group">
-          <label htmlFor="gender">GENDER</label>
+          <label htmlFor="gender">{t('GENDER')}</label>
           <select
             id="gender"
             name="gender"
             value={formData.gender}
             onChange={handleInputChange}
           >
-            <option value="">(Unknown)</option>
-            <option value="M">Male</option>
-            <option value="F">Female</option>
+            <option value="">({t('Unknown')})</option>
+            <option value="M">{t('Male')}</option>
+            <option value="F">{t('Female')}</option>
           </select>
         </div>
         <div className="form-group">
-          <label htmlFor="dob">DATE OF BIRTH</label>
+          <label htmlFor="dob">{t('DATE OF BIRTH')}</label>
           <input
             type="date"
             id="dob"
@@ -80,9 +85,9 @@ const GeneralSettings = ({
       </div>
 
       <div className="settings-section">
-        <h3>About</h3>
+        <h3>{t('About')}</h3>
         <div className="form-group">
-          <label htmlFor="summary">SUMMARY</label>
+          <label htmlFor="summary">{t('SUMMARY')}</label>
           <textarea
             id="summary"
             name="summary"
@@ -97,7 +102,7 @@ const GeneralSettings = ({
 
       <div className="form-actions">
         <button type="submit" className="save-btn" disabled={loading}>
-          {loading ? "Saving..." : "Save"}
+          {loading ? t("Saving...") : t("Save")}
         </button>
         {error && <p className="feedback-error">{error}</p>}
         {successMessage && <p className="feedback-success">{successMessage}</p>}
@@ -110,13 +115,14 @@ const EditProfilePage = () => {
   const [activeTab, setActiveTab] = useState("general");
   const [currentUser, setCurrentUser] = useState(null);
   const [formData, setFormData] = useState({
+    
     profileName: "",
     country: "",
     dob: "",
     gender: "",
     summary: "",
   });
-
+const {t} = useTranslation();
   // State mới để lưu các lỗi của form
   const [errors, setErrors] = useState({});
 
@@ -166,15 +172,16 @@ const EditProfilePage = () => {
 
   // Hàm để kiểm tra dữ liệu form
   const validateForm = () => {
+    
     const newErrors = {};
     if (!formData.profileName || formData.profileName.trim() === "") {
-      newErrors.profileName = "Profile Name cannot be empty.";
+      newErrors.profileName = t("Profile Name cannot be empty.");
     }
     if (formData.summary && formData.summary.length > 25) {
-      newErrors.summary = "Summary cannot exceed 500 characters.";
+      newErrors.summary = t("Summary cannot exceed 500 characters.");
     }
     if (formData.dob && new Date(formData.dob) > new Date()) {
-      newErrors.dob = "Date of Birth cannot be in the future.";
+      newErrors.dob = t("Date of Birth cannot be in the future.");
     }
     return newErrors;
   };
@@ -200,9 +207,9 @@ const EditProfilePage = () => {
         formData
       );
       setFormData(response.data);
-      setSuccessMessage("Your profile has been saved successfully!");
+      setSuccessMessage(t("Your profile has been saved successfully!"));
     } catch (err) {
-      setError("Failed to save profile. Please try again.");
+      setError(t("Failed to save profile. Please try again."));
     } finally {
       setLoading(false);
       setTimeout(() => setSuccessMessage(""), 3000);
@@ -228,12 +235,12 @@ const EditProfilePage = () => {
       case "avatar":
         return <AvatarSettings currentUser={currentUser} />;
       default:
-        return <h2>Select a setting</h2>;
+        return <h2>{t('Select a setting')}</h2>;
     }
   };
 
   if (loading && !currentUser) {
-    return <div className="edit-profile-status">Loading...</div>;
+    return <div className="edit-profile-status">{t('Loading...')}</div>;
   }
 
   return (
@@ -249,7 +256,7 @@ const EditProfilePage = () => {
                   setActiveTab("general");
                 }}
               >
-                General
+                {t('General')}
               </a>
             </li>
             <li className={activeTab === "avatar" ? "active" : ""}>
@@ -260,7 +267,7 @@ const EditProfilePage = () => {
                   setActiveTab("avatar");
                 }}
               >
-                Avatar
+                {t('Avatar')}
               </a>
             </li>
             {/* ... */}

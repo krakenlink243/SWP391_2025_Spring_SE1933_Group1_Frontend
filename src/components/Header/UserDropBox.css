@@ -59,3 +59,70 @@
   display: inline-block;
   vertical-align: bottom;
 }
+/* CHÉP THÊM VÀO CUỐI FILE UserDropBox.css */
+
+/* Language Switcher Styles */
+.language-switcher-container {
+  position: relative;
+  cursor: pointer;
+}
+
+.language-submenu {
+  position: absolute;
+  right: 100%;
+  top: 0;
+  margin-right: 8px;
+  background: #2a475e;
+  border: 1px solid #1e2328;
+  border-radius: 4px;
+  min-width: 180px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: slideInLeft 0.2s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.language-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  color: #c7d5e0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.language-item:hover {
+  background-color: #417a9b;
+  color: #ffffff;
+}
+
+.language-item.active {
+  background-color: #1999ff;
+  color: #ffffff;
+}
+
+.language-flag {
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+.language-name {
+  flex: 1;
+  font-size: 13px;
+}
+
+.language-check {
+  margin-left: 8px;
+  color: #90c695;
+  font-weight: bold;
+}

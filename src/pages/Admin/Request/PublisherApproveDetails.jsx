@@ -11,8 +11,10 @@ import axios from 'axios'
 import { createNotification } from '../../../services/notification'
 import { confirmAlert } from 'react-confirm-alert'
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next'
 
 function PublisherApproveDetails() {
+  const { t } = useTranslation();
   const publisherId = useParams().requestId;
   const navigate = useNavigate();
   const [formData, setFormData] = useState(
@@ -39,14 +41,14 @@ function PublisherApproveDetails() {
     fetchData();
   }, []);
   const handleApprove = async (requestId) => {
-    const confirmApprove = window.confirm("Are you sure you want to approve this publisher?");
+    const confirmApprove = window.confirm(t('Are you sure you want to approve this publisher?'));
     if (!confirmApprove) {
       return;
     }
     try {
       const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/publisher/approve/${requestId}`);
       console.log("Approved request:", response.data);
-      alert("Publisher Approved")
+      alert(t('Publisher Approved'))
       navigate("/admin/request/publisher");
       
     } catch (err) {
@@ -60,13 +62,13 @@ function PublisherApproveDetails() {
       title: `Send answer to ${formData.legalName} (${publisherId})`,
       customUI: ({ onClose }) => (
         <div className="custom-ui">
-          <h2>Decline Publisher Request</h2>
-          <p>Answer for: {formData.userName}</p>
+          <h2>{t('Decline Publisher Request')}</h2>
+          <p>{t('Answer for')}: {formData.userName}</p>
           <textarea
             rows={5}
             style={{ width: '100%', marginBottom: '1rem' }}
             onChange={(e) => (answer = e.target.value)}
-            placeholder="Type your decline reason..."
+            placeholder={t('Type your decline reason...')}
           />
           <button className="blue-button"
             onClick={async () => {
@@ -87,11 +89,11 @@ function PublisherApproveDetails() {
                 }
                 onClose();
               } else {
-                alert('Please enter answer');
+                alert(t('Please enter answer'));
               }
             }}
           >
-            Submit
+            {t('Submit')}
           </button>
         </div>
       )
@@ -101,22 +103,22 @@ function PublisherApproveDetails() {
   return (
     <>
       <div className='apply-publisher-title'>
-        <h1>Publisher Application</h1>
+        <h1>{t('Publisher Application')}</h1>
         <div className='apply-publisher-container'>
           <div className='publisher-info'>
-            Legal Name
+            {t('Legal Name')}
             <input type="text" name="legalName" value={formData.legalName} readOnly />
-            Publisher Name
+            {t('Publisher Name')}
             <input type="text" name="publisherName" id="" value={formData.publisherName} readOnly />
-            Address
+            {t('Address')}
             <input type="text" name='address' readOnly value={formData.address} />
-            Social ID
+            {t('Social ID')}
             <input type="number" name="socialNumber" id="" value={formData.socialNumber} readOnly />
-            Country
+            {t('Country')}
             <input type="text" name="country" id="" value={formData.country} readOnly />
             <div className="publisher-button">
-              <Button label="Decline" color="red-button" onClick={() => handleDecline(publisherId)} />
-              <Button label="Approve" color="green-button" onClick={() => handleApprove(publisherId)} />
+              <Button label={t('Decline')} color="red-button" onClick={() => handleDecline(publisherId)} />
+              <Button label={t('Approve')} color="green-button" onClick={() => handleApprove(publisherId)} />
             </div>
           </div>
           <div className="publisher-image">

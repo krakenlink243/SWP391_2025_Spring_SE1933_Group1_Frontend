@@ -2,12 +2,13 @@ import './RegisterDetails.css';
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 const RegisterDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const email = location.state?.email;
-
+  const {t}= useTranslation();
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -56,17 +57,17 @@ const RegisterDetails = () => {
     setMessage('');
 
     if (/\s/.test(formData.username)) {
-      setMessage('Username must not contain spaces.');
+      setMessage(t('Username must not contain spaces.'));
       return;
     }
 
     if (usernameAvailable === false) {
-      setMessage('Username is already taken.');
+      setMessage(t('Username is already taken.'));
       return;
     }
 
     if (formData.password !== formData.confirmPassword) {
-      setMessage('Passwords do not match.');
+      setMessage(t('Passwords do not match.'))
       return;
     }
 
@@ -86,7 +87,7 @@ const RegisterDetails = () => {
 
     } catch (error) {
       console.error(error);
-      setMessage('Registration failed.');
+      setMessage(t('Registration failed.'));
     }
   };
 
@@ -96,11 +97,11 @@ const RegisterDetails = () => {
         <div className='spacer col-lg-3'></div>
         <div className='main-content col-lg-6 p-3'>
           <form className="form" onSubmit={handleSubmit}>
-            <h1 className="form-title">Create Your Account</h1>
+            <h1 className="form-title">{t('Create Your Account')}</h1>
             {message && <p className="message">{message}</p>}
 
             <div className="form-group">
-              <label className="form-label" htmlFor="username">Steam Account Name</label>
+              <label className="form-label" htmlFor="username">{t('Centurion Account Name')}</label>
               <input
                 id="username"
                 name="username"
@@ -111,15 +112,15 @@ const RegisterDetails = () => {
                 required
               />
               {formData.username && usernameAvailable === false && (
-                <p className="message-error">Username already taken.</p>
+                <p className="message-error">{t('Username already taken.')}</p>
               )}
               {formData.username && usernameAvailable === true && (
-                <p className="message-success">Username is available.</p>
+                <p className="message-success">{t('Username is available.')}</p>
               )}
             </div>
 
             <div className="form-group">
-              <label className="form-label" htmlFor="password">Choose Password</label>
+              <label className="form-label" htmlFor="password">{t("Choose Password")}</label>
               <input
                 id="password"
                 name="password"
@@ -132,7 +133,7 @@ const RegisterDetails = () => {
             </div>
 
             <div className="form-group">
-              <label className="form-label" htmlFor="confirmPassword">Confirm Password</label>
+              <label className="form-label" htmlFor="confirmPassword">{t('Confirm Password')}</label>
               <input
                 id="confirmPassword"
                 name="confirmPassword"
@@ -145,7 +146,7 @@ const RegisterDetails = () => {
             </div>
 
             <div className="form-group">
-              <label className="form-label" htmlFor="country">Country</label>
+              <label className="form-label" htmlFor="country">{t('Country')}</label>
               <select
                 id="country"
                 name="country"
@@ -154,15 +155,15 @@ const RegisterDetails = () => {
                 onChange={handleChange}
                 required
               >
-                <option value="">Select a country</option>
-                <option value="Vietnam">Vietnam</option>
-                <option value="United States">United States</option>
+                <option value="">{t('Select a country')}</option>
+                <option value="Vietnam">{t('Vietnam')}</option>
+                <option value="United States">{t('United States')}</option>
               </select>
             </div>
 
             <div className='w-100 d-flex justify-content-center'>
               <button type="submit" className="submit-button">
-                Continue
+                {t('Continue')}
               </button>
             </div>
           </form>

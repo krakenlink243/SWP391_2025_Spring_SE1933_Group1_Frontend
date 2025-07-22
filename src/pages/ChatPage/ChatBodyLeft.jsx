@@ -4,11 +4,12 @@ import { AppContext } from "../../context/AppContext";
 import Split from "split.js";
 import { Link } from "react-router-dom";
 import GroupAvatar from "./GroupAvatar";
+import { useTranslation } from "react-i18next";
 
 function ChatBodyLeft({ setCurChat, setOpenPopup }) {
     const avatarUrl = localStorage.getItem("avatarUrl");
     const username = localStorage.getItem("username");
-
+    const { t } = useTranslation();
     const { friendList, groupChats, onlineUsers } = useContext(AppContext);
 
     const headerH = useRef(null);
@@ -59,24 +60,25 @@ function ChatBodyLeft({ setCurChat, setOpenPopup }) {
                             </div>
                             <div className="label-holder d-flex flex-column">
                                 <div className="name">{username}</div>
-                                <div className="status">Online</div>
+                                <div className="status">{t('Online')}</div>
                             </div>
                         </div>
                     </div>
 
                 </div>
 
-                <div id="middle-pane" className="d-flex split flex-column h-100" style={{ height: `${listH}` }}>
+                <div id="middle-pane" className="d-flex split flex-column " style={{ height: `${listH}` }}>
                     <div id="friend-pane" className="friend-list-content" >
-                        <div className="friend-list-wrapper">
-                            <div className="wrapper-header">
-                                Friends
-                                <div className="icon">
-                                    <Link to={"/profile/friends"}>
-                                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" className="SVGIcon_Button SVGIcon_AddFriend" x="0px" y="0px" width="256px" height="256px" viewBox="0 0 256 256"><g className="friendHead" transform="matrix(1.34048,0,0,1.34048,-10.0942,-5.50445)"><circle cx="86.296" cy="47.419" r="33.526" fill="currentcolor"></circle></g><path className="friendBody" d="M100.353,170.882c0-23.589,10.397-44.736,26.842-59.152c-3.352-0.423-6.773-0.649-10.257-0.649H94.231	c-39.775,0-56.481,28.271-56.481,63.099v41.88c0,0-0.3,16.369,35.917,21.813c36.217,5.444,73.651,5,73.651,5 C119.666,230.681,100.353,203.044,100.353,170.882z" fill="currentColor"></path><path className="plusCircle" d="M179.01,103.892c-36.998,0-66.99,29.992-66.99,66.99s29.994,66.989,66.99,66.989c36.997,0,66.99-29.991,66.99-66.989 S216.008,103.892,179.01,103.892z M217.893,175.882h-33.647v33.882c0,2.762-2.239,5-5,5s-5-2.238-5-5v-33.882h-33.647 c-2.762,0-5-2.238-5-5c0-2.763,2.238-5,5-5h33.647V132.47c0-2.762,2.239-5,5-5s5,2.238,5,5v33.412h33.647c2.762,0,5,2.237,5,5 C222.893,173.643,220.654,175.882,217.893,175.882z" fill="currentColor"></path></svg>
-                                    </Link>
-                                </div>
+                        <div className="wrapper-header">
+                            {t('Friends')}
+                            <div className="icon">
+                                <Link to={"/profile/friends"}>
+                                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" className="SVGIcon_Button SVGIcon_AddFriend" x="0px" y="0px" width="256px" height="256px" viewBox="0 0 256 256"><g className="friendHead" transform="matrix(1.34048,0,0,1.34048,-10.0942,-5.50445)"><circle cx="86.296" cy="47.419" r="33.526" fill="currentcolor"></circle></g><path className="friendBody" d="M100.353,170.882c0-23.589,10.397-44.736,26.842-59.152c-3.352-0.423-6.773-0.649-10.257-0.649H94.231	c-39.775,0-56.481,28.271-56.481,63.099v41.88c0,0-0.3,16.369,35.917,21.813c36.217,5.444,73.651,5,73.651,5 C119.666,230.681,100.353,203.044,100.353,170.882z" fill="currentColor"></path><path className="plusCircle" d="M179.01,103.892c-36.998,0-66.99,29.992-66.99,66.99s29.994,66.989,66.99,66.989c36.997,0,66.99-29.991,66.99-66.989 S216.008,103.892,179.01,103.892z M217.893,175.882h-33.647v33.882c0,2.762-2.239,5-5,5s-5-2.238-5-5v-33.882h-33.647 c-2.762,0-5-2.238-5-5c0-2.763,2.238-5,5-5h33.647V132.47c0-2.762,2.239-5,5-5s5,2.238,5,5v33.412h33.647c2.762,0,5,2.237,5,5 C222.893,173.643,220.654,175.882,217.893,175.882z" fill="currentColor"></path></svg>
+                                </Link>
                             </div>
+                        </div>
+                        <div className="friend-list-wrapper">
+
                             {onlineFriends.map(friend => (
                                 <div
                                     className="friend online"

@@ -1,9 +1,10 @@
 import { forwardRef } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const ChatHeader = forwardRef((props, ref) => {
     const username = localStorage.getItem("username");
-
+    const { t } = useTranslation();
     return (
         <div className="chat-header-container d-flex align-items-center" ref={ref}>
             <div className="chat-header-logo col-2 col-lg-1 align-content-center">
@@ -12,10 +13,10 @@ const ChatHeader = forwardRef((props, ref) => {
                 </Link>
             </div>
             <div className="chat-header-nav col-lg-11 d-flex gap-2">
-                <Link to={'/'}>Store</Link>
-                <Link to={'#'}>Community</Link>
+                <Link to={'/'}>{t('Store')}</Link>
+                <Link to={'/community'}>{t('Community')}</Link>
                 <Link to={'/profile'}>{username}</Link>
-                <Link to={'/feedbackhub'}>Support</Link>
+                <Link to={'/feedbackhub'}>{t('Support')}</Link>
             </div>
         </div>
     );

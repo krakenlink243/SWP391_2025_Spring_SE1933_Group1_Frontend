@@ -1,5 +1,6 @@
 import React, { useState, useEffect, forwardRef, useContext } from "react";
 import "./Header.css"; // Or use CSS Modules: import styles from './Header.module.css';
+import { useTranslation } from "react-i18next";
 // Added by Phan NT Son
 import NotificationBox from "../Notifications/NotificationBox";
 import UserDropBox from "./UserDropBox";
@@ -23,7 +24,7 @@ const Header = forwardRef((props, ref) => {
 
   const isMobile = useIsMobile();
 
-
+  const { t } = useTranslation();
 
   const activePathMap = [
     {

@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./ResetPassword.css";
+import { useTranslation } from "react-i18next";
+
+
+
 function ResetPassword() {
   const { state } = useLocation();
   const navigate = useNavigate();
-
+  const {t}=useTranslation();
   const [otp, setOtp] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -16,7 +20,7 @@ function ResetPassword() {
     setMessage("");
 
     if (newPassword !== confirmPassword) {
-      setMessage("Passwords do not match.");
+      setMessage(t('Passwords do not match.'));
       return;
     }
 
@@ -28,21 +32,21 @@ function ResetPassword() {
         confirmPassword,
       });
 
-      alert("Password reset successfully. Redirecting to login...");
+      alert(t('Password reset successfully. Redirecting to login...'));
       setTimeout(() => navigate("/login"), 2000);
     } catch (error) {
       console.error(error);
-      alert("Invalid OTP or request failed.");
+      alert(t('Invalid OTP or request failed.'));
     }
   };
 
   return (
     <main className="support-form">
-      <h1 className="form-title">Reset Password</h1>
+      <h1 className="form-title">{t('Reset Password')}</h1>
       <form className="form-container" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="otp" className="form-label username-label">
-            OTP Code
+            {t('OTP Code')}
           </label>
           <input
             id="otp"
@@ -56,7 +60,7 @@ function ResetPassword() {
 
         <div>
           <label htmlFor="newPassword" className="form-label username-label">
-            New Password
+            {t('New Password')}
           </label>
           <input
             id="newPassword"
@@ -70,7 +74,7 @@ function ResetPassword() {
 
         <div>
           <label htmlFor="confirmPassword" className="form-label username-label">
-            Confirm Password
+            {t('Confirm Password')}
           </label>
           <input
             id="confirmPassword"
@@ -82,7 +86,7 @@ function ResetPassword() {
           />
         </div>
 
-        <button type="submit" className="submit-button">Reset</button>
+        <button type="submit" className="submit-button">{t('Reset')}</button>
         {message && <p className="form-status">{message}</p>}
       </form>
     </main>

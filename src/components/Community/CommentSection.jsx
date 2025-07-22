@@ -1,10 +1,14 @@
 // src/components/CommentSection.jsx
 import { useState } from "react";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
+import Button from "../../components/Button/Button";
+import "./CommentSection.css";
+import { Link } from "react-router";
 export default function CommentSection({ threadId, comments, setComments }) {
   const [newComment, setNewComment] = useState("");
-
+  const {t}=useTranslation();
   const handleSubmit = async () => {
     const token = localStorage.getItem("token");
     try {
@@ -21,42 +25,51 @@ export default function CommentSection({ threadId, comments, setComments }) {
       setNewComment("");
     } catch (err) {
       console.error(err);
-      alert("Failed to post comment.");
+      alert(t("Failed to post comment."));
     }
   };
 
   return (
     <div>
-      <h3 className="text-lg font-semibold mb-3">Comments</h3>
+      <br />
       <div className="space-y-3 mb-4">
         {comments.length === 0 ? (
-          <p className="text-gray-500 italic">No comments yet.</p>
+          <p className="comment-empty">{t('No comments yet')}.</p>
         ) : (
           comments.map((c) => (
-            <div key={c.commentId} className="border p-3 rounded shadow-sm">
-              <p className="font-medium">{c.username}</p>
-              <p className="text-sm text-gray-600">
-                {new Date(c.createdAt).toLocaleString()}
-              </p>
-              <p className="mt-1 whitespace-pre-wrap">{c.content}</p>
+            <div key={c.commentId} className="post-container">
+              <div className="post-header">
+                <div className="post-id">{c.commentId}</div>
+                <div className="user-info">
+                  <div>{c.username}</div>
+                </div>
+              </div>
+              <div className="post-content">
+                {c.content.split("\n").map((line, index) => (
+                  <p key={index} class="post-text">{line}</p>
+                ))}
+              </div>
+              <div className="post-footer">
+                <span>{new Date(c.createdAt).toLocaleString()}</span>
+              </div>
             </div>
           ))
         )}
       </div>
-
-      <textarea
-        className="w-full p-2 border rounded mb-2"
-        rows="3"
-        placeholder="Write a comment..."
-        value={newComment}
-        onChange={(e) => setNewComment(e.target.value)}
-      />
-      <button
-        onClick={handleSubmit}
-        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-      >
-        Post Comment
-      </button>
+      <div className="new-comment-container">
+        <textarea
+          className="comment-textarea"
+          placeholder={t("Write a comment...")}
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+        />
+        <Button
+          label={t("Post Comment")}
+          onClick={handleSubmit}
+          color="blue-button"
+          disabled={!newComment.trim()}
+        />
+      </div>
     </div>
   );
 }

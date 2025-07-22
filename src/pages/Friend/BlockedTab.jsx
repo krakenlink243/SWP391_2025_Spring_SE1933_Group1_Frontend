@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import './BlockedTab.css';
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 function BlockedTab() {
 
     const [blockedList, setBlockedList] = useState([]);
     const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
-
+    const {t} = useTranslation();
     const getblockedList = () => {
         axios.get(`${import.meta.env.VITE_API_URL}/user/blocked`)
             .then((response) => { setBlockedList(response.data) })
@@ -21,12 +22,12 @@ function BlockedTab() {
         <div className="blocked-tab">
             <div className="blocked-tab-header">
                 <div className="status">
-                    Blocked
+                    {t('Blocked')}
                 </div>
             </div>
             <div className="blocked-tab-body d-flex flex-row gap-2 flex-wrap">
                 {blockedList.length == 0 && (
-                    <div className="result-not-found">Sorry, there are no blocked players to show.</div>
+                    <div className="result-not-found">{t('Sorry, there are no blocked players to show.')}</div>
                 )}
                 {
                     blockedList.map((blckU, idx) => (
@@ -39,7 +40,7 @@ function BlockedTab() {
                             </div>
                             <div className="d-flex flex-column" style={{ flexGrow: 1 }}>
                                 <div className="blocked-user-name">{blckU.friendName}</div>
-                                <div className="blocked-user-badge">Blocked</div>
+                                <div className="blocked-user-badge">{t('Blocked')}</div>
                             </div>
                         </div>
                     ))

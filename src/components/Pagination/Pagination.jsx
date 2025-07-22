@@ -1,5 +1,6 @@
 import React from "react";
 import "./Pagination.css"; // Sẽ tạo file CSS này sau
+import { useTranslation } from "react-i18next";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   if (totalPages <= 1) {
@@ -14,17 +15,17 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const handleNext = () => {
     onPageChange(currentPage - 1 + 1);
   };
-
+  const{t} = useTranslation();
   return (
     <div className="pagination">
       <button onClick={handlePrev} disabled={currentPage === 1}>
-        &laquo; Prev
+        &laquo; {t('Prev')}
       </button>
       <span>
-        Page {currentPage} of {totalPages}
+        {t('Page')} {currentPage} {t('of')} {totalPages}
       </span>
       <button onClick={handleNext} disabled={currentPage === totalPages}>
-        Next &raquo;
+        {t('Next')} &raquo;
       </button>
     </div>
   );

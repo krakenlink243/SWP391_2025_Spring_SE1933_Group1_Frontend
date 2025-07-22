@@ -2,16 +2,17 @@ import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import './ReviewForm.css';
 import Button from '../Button/Button';
+import { useTranslation } from 'react-i18next';
 function ReviewForm({ onReload, game }) {
     const [reviewContent, setReviewContent] = useState('');
     const [recommended, setRecommended] = useState(null);
     const CUR_USER_AVATAR = localStorage.getItem("avatarUrl");
     const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
-
+    const {t} = useTranslation();
 
     const handleSubmit = async () => {
         if (recommended === null || reviewContent.trim() === '') {
-            alert('Please fill in all fields before submitting.');
+            alert(t('Please fill in all fields before submitting.'));
             return false;
         }
         try {
@@ -31,12 +32,12 @@ function ReviewForm({ onReload, game }) {
                 const message = error.response.data.message;
 
                 if (status === 422) {
-                    alert(message || 'Your review contains inappropriate content.');
+                    alert(message || t('Your review contains inappropriate content.'));
                 } else {
-                    alert('An error occurred: ' + (message || 'Unknown error.'));
+                    alert(t('An error occurred:') + (message || t('Unknown error.')));
                 }
             } else {
-                alert('Network error. Please try again later.');
+                alert(t('Network error. Please try again later.'));
             }
             return false;
         }
@@ -46,7 +47,7 @@ function ReviewForm({ onReload, game }) {
         <>
             <div className='review-post-container'>
                 <div className='review-post-header'>
-                    <h2>Write a review for {game.name}</h2>
+                    <h2>{t('Write a review for')} {game.name}</h2>
                 </div>
                 <div className='review-post-body d-flex'>
                     <div className='review-post-body-avatar'>
@@ -55,7 +56,7 @@ function ReviewForm({ onReload, game }) {
                     <div className='review-post-body-actions w-100'>
                         <div className='actions-input-box'>
                             <textarea
-                                placeholder="Write your review here..."
+                                placeholder={t("Write your review here...")}
                                 value={reviewContent}
                                 maxLength={8000}
                                 onChange={(e) => setReviewContent(e.target.value)}
@@ -66,18 +67,18 @@ function ReviewForm({ onReload, game }) {
                         </div>
                         <div className='actions-buttons  d-flex justify-content-between align-items-center w-100'>
                             <div className="recommend-buttons">
-                                <div className='pb-1'>Do you recommend this game?</div>
+                                <div className='pb-1'>{t('Do you recommend this game?')}</div>
                                 <div onClick={() => {
                                     setRecommended(true);
                                 }} className={`btn button ${recommended === true ? 'selected' : ''}`}>
-                                    👍 Yes
+                                    👍 {t('Yes')}
                                 </div>
                                 <div onClick={() => setRecommended(false)} className={`btn button ${recommended === false ? 'selected' : ''}`}>
-                                    👎 No
+                                    👎 {t('No')}
                                 </div>
                             </div>
                             <div className='publish-button'>
-                                <Button label="Post Review" color="blue-button" onClick={async () => {
+                                <Button label={t("Post Review")} color="blue-button" onClick={async () => {
                                     const result = await handleSubmit();
                                     if (result) onReload();
                                 }} />

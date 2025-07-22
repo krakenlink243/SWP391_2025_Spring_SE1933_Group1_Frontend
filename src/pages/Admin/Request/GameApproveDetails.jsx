@@ -13,8 +13,10 @@ import Select, { components } from 'react-select'
 import { confirmAlert } from 'react-confirm-alert'
 import { useNavigate } from 'react-router-dom';
 import { trimValue } from '../../../utils/validators'
+import { useTranslation } from 'react-i18next'
 
 function GameApproveDetails() {
+  const { t } = useTranslation();
   const gameId = useParams().requestId;
   const [downloadLink, setDownloadLink] = useState('');
   const DropdownIndicator = () => null; // No dropdown arrow
@@ -42,37 +44,37 @@ function GameApproveDetails() {
     updateLog:'',
   })
   const tags = [
-    { value: 18, label: 'Action' },
-    { value: 17, label: 'Adventure' },
-    { value: 29, label: 'Anime' },
-    { value: 31, label: 'Casual' },
-    { value: 12, label: 'Choices Matter' },
-    { value: 4, label: 'Classic' },
-    { value: 27, label: 'Co-op' },
-    { value: 23, label: 'Crafting' },
-    { value: 15, label: 'Exploration' },
-    { value: 20, label: 'Fantasy' },
-    { value: 28, label: 'FPS' },
-    { value: 16, label: 'Free to Play' },
-    { value: 10, label: 'Great Soundtrack' },
-    { value: 3, label: 'Historical' },
-    { value: 14, label: 'Horror' },
-    { value: 8, label: 'Indie' },
-    { value: 6, label: 'Multiplayer' },
-    { value: 19, label: 'Open World' },
-    { value: 11, label: 'Pixel Graphics' },
-    { value: 25, label: 'Platformer' },
-    { value: 26, label: 'Puzzle' },
-    { value: 30, label: 'Racing' },
-    { value: 7, label: 'RPG' },
-    { value: 1, label: 'RTS' },
-    { value: 21, label: 'Sci-fi' },
+    { value: 18, label: t('Action') },
+    { value: 17, label: t('Adventure') },
+    { value: 29, label: t('Anime') },
+    { value: 31, label: t('Casual') },
+    { value: 12, label: t('Choices Matter') },
+    { value: 4, label: t('Classic') },
+    { value: 27, label: t('Co-op') },
+    { value: 23, label: t('Crafting') },
+    { value: 15, label: t('Exploration') },
+    { value: 20, label: t('Fantasy') },
+    { value: 28, label: t('FPS') },
+    { value: 16, label: t('Free to Play') },
+    { value: 10, label: t('Great Soundtrack') },
+    { value: 3, label: t('Historical') },
+    { value: 14, label: t('Horror') },
+    { value: 8, label: t('Indie') },
+    { value: 6, label: t('Multiplayer') },
+    { value: 19, label: t('Open World') },
+    { value: 11, label: t('Pixel Graphics') },
+    { value: 25, label: t('Platformer') },
+    { value: 26, label: t('Puzzle') },
+    { value: 30, label: t('Racing') },
+    { value: 7, label: t('RPG') },
+    { value: 1, label: t('RTS') },
+    { value: 21, label: t('Sci-fi') },
     { value: 24, label: 'Simulation' },
-    { value: 5, label: 'Singleplayer' },
-    { value: 9, label: 'Story Rich' },
-    { value: 2, label: 'Strategy' },
-    { value: 13, label: 'Surreal' },
-    { value: 22, label: 'Survival' },
+    { value: 5, label: t('Singleplayer') },
+    { value: 9, label: t('Story Rich') },
+    { value: 2, label: t('Strategy') },
+    { value: 13, label: t('Surreal') },
+    { value: 22, label: t('Survival') },
   ];
   useEffect(() => {
     const getGameDetails = async () => {
@@ -104,14 +106,14 @@ function GameApproveDetails() {
     console.log(tagLabels);
   }, [formData.tags]);
   const handleApprove = async () => {
-    const confirmApprove = window.confirm("Are you sure you want to approve this game?");
+    const confirmApprove = window.confirm(t('Are you sure you want to approve this game?'));
     if (!confirmApprove) {
       return;
     }
     try {
       const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/game/approve/${gameId}`);
       console.log(response.data);
-      alert("Game Approved");
+      alert(t('Game Approved'));
       navigate("/admin/request/game");
     } catch (error) {
       console.log(error);
@@ -124,13 +126,13 @@ function GameApproveDetails() {
       title: `Send answer to ${formData.publisherName}`,
       customUI: ({ onClose }) => (
         <div className="custom-ui">
-          <h2>Decline Game Request</h2>
-          <p>To: {formData.publisherName}</p>
+          <h2>{t('Decline Game Request')}</h2>
+          <p>{t('To')}: {formData.publisherName}</p>
           <textarea
             rows={5}
             style={{ width: '100%', marginBottom: '1rem' }}
             onChange={(e) => (answer = e.target.value)}
-            placeholder="Type your decline reason..."
+            placeholder={t('Type your decline reason...')}
           />
           <button className="blue-button"
             onClick={async () => {
@@ -154,11 +156,11 @@ function GameApproveDetails() {
                 }
                 onClose();
               } else {
-                alert('Please enter answer');
+                alert(t('Please enter answer'));
               }
             }}
           >
-            Submit
+            {t('Submit')}
           </button>
         </div>
       )
@@ -179,17 +181,17 @@ function GameApproveDetails() {
   return (
     <>
       <div className='form-border'>
-        <h1 >{formData.publisherName}'s  Game Application</h1>
+        <h1 >{t(`'s Game Application`, {publisherName: formData.publisherName})}</h1>
         <div className='game-mandatory-information'>
           <img className='game-avatar' src={formData.iconUrl} alt="" />
           <div className='name-price'>
-            Name(*)
+            {t('Name(*)')}
             <input type="text" name="gameName" id="" value={formData.gameName} readOnly />
-            Price(*)
+            {t('Price(*)')}
             <div>
               <input type="text" name="price" id="" value={'$'+formData.price} readOnly />
             </div>
-            Tags(*)
+            {t('Tags(*)')}
             <div className="tag-selector">
               <Select
                 isMulti
@@ -206,19 +208,19 @@ function GameApproveDetails() {
           <PartHeading content='System Requirements' />
           <div className='sys-req-col-container'>
             <div className='sys-req-col1'>
-              OS(*)
+              {t('OS(*)')}
               <input type="text" name="os" id="" value={formData.os} readOnly />
-              Processor(*)
+              {t('Processor(*)')}
               <input type="text" name="processor" id="" value={formData.processor} readOnly />
-              Memory(*)
+              {t('Memory(*)')}
               <input type="text" name="memory" id="" value={formData.memory} readOnly />
             </div>
             <div className='sys-req-col2'>
-              Graphics(*)
+              {t('Graphics(*)')}
               <input type="text" name="graphics" id="" value={formData.graphics} readOnly />
-              Storage(*)
+              {t('Storage(*)')}
               <input type="text" name="storage" id="" value={formData.storage} readOnly />
-              Additional Notes
+              {t('Additional Notes')}
               <textarea name="additionalNotes" id="" value={formData.additionalNotes} readOnly></textarea>
             </div>
           </div>
@@ -246,7 +248,7 @@ function GameApproveDetails() {
         <div className='game-file'>
           <PartHeading content='Files' />
           <a href={`${downloadLink}`}>
-            <Button className='upload-button' label="Download Game File" onClick={handleGetLinkDownload} color='blue-button'/>
+            <Button className='upload-button' label={t('Download Game File')} onClick={handleGetLinkDownload} color='blue-button'/>
           </a>
         </div>
         {formData.updateLog && (

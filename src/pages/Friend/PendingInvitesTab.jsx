@@ -4,6 +4,7 @@ import './PendingInvitesTab.css'
 import { createNotification } from "../../services/notification";
 import { useAuth } from "../../context/AuthContext";
 import { useFriendInvite } from "../../hooks/useFriendInvite";
+import { useTranslation } from "react-i18next";
 
 function PendingInvitesTab() {
     const CUR_USERNAME = localStorage.getItem("username");
@@ -14,7 +15,7 @@ function PendingInvitesTab() {
         setSentInvites,
         setReceivedInvites
     } = useFriendInvite(token);
-
+    const {t} = useTranslation();
     const handleAccept = (friendId) => {
         axios.patch(`${import.meta.env.VITE_API_URL}/user/acceptinvite/${friendId}`)
             .then((resp) => {
@@ -52,12 +53,12 @@ function PendingInvitesTab() {
         <div className="pending-invites-tab">
             <div className="received-invites-wrapper">
                 <div className="box-title">
-                    <span className="title">Received Invites</span>
+                    <span className="title">{t('Received Invites')}</span>
                 </div>
                 <div className="result">
                     {receivedInvites.length == 0 && (
                         <div className="result-not-found">
-                            Sorry, there are no pending friend invites to show.
+                            {t('Sorry, there are no pending friend invites to show.')}
                         </div>
                     )}
                     {receivedInvites.map((invite) => (
@@ -72,13 +73,13 @@ function PendingInvitesTab() {
                             </div>
                             <div className="friend-actions">
                                 <div className="actions-btn" onClick={() => handleAccept(invite.senderId)}>
-                                    <span>Accept</span>
+                                    <span>{t('Accept')}</span>
                                 </div>
                                 <div className="actions-btn" onClick={() => handleBlock(invite.senderId)}>
-                                    <span>Block</span>
+                                    <span>{t('Block')}</span>
                                 </div>
                                 <div className="actions-btn" onClick={() => handleDecline(invite.senderId)}>
-                                    <span>Decline</span>
+                                    <span>{t('Decline')}</span>
                                 </div>
                             </div>
                         </div>
@@ -90,12 +91,12 @@ function PendingInvitesTab() {
             </div>
             <div className="sent-invites-wrapper">
                 <div className="box-title">
-                    <span className="title">Sent Invites</span>
+                    <span className="title">{t('Sent Invites')}</span>
                 </div>
                 <div className="result">
                     {sentInvites.length == 0 && (
                         <div className="result-not-found">
-                            Sorry, there are no pending sent invites to show.
+                            {t('Sorry, there are no pending sent invites to show')}
                         </div>
                     )}
                     {sentInvites.map((invite) => (
@@ -110,7 +111,7 @@ function PendingInvitesTab() {
                             </div>
                             <div className="friend-actions">
                                 <div className="actions-btn" onClick={() => handleCancel(invite.receiverId)}>
-                                    <span>Cancel</span>
+                                    <span>{t('Cancel')}</span>
                                 </div>
                             </div>
                         </div>

@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./EmailSettings.css";
 import Button from "../Button/Button";
+import { useTranslation } from "react-i18next";
 
 const EmailSettings = ({ currentUser }) => {
   // State quản lý giao diện
   const [step, setStep] = useState(1);
-
+  const {t}=useTranslation();
   // State cho các giá trị trong form
   const [newEmail, setNewEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
@@ -54,7 +55,7 @@ const EmailSettings = ({ currentUser }) => {
       );
       setMessage(response.data.message);
       alert(
-        "Email updated successfully! Please log in again to see the changes."
+        t("Email updated successfully! Please log in again to see the changes.")
       );
       // Hoặc chuyển hướng
       // window.location.href = '/login';
@@ -71,29 +72,29 @@ const EmailSettings = ({ currentUser }) => {
         <div className="spacer col-lg-2"></div>
         <div className="main-content col-lg-8">
           <div className="settings-section">
-            <h2>Contact Info</h2>
+            <h2>{t('Contact Info')}</h2>
             <p className="section-description">
-              Manage your account's email address.
+              {t(`Manage your account's email address.`)}
             </p>
           </div>
 
           <div className="current-email-display">
             <p>
-              <strong>Current Email:</strong> {currentUser?.email}
+              <strong>{t('Current Email')}:</strong> {currentUser?.email}
             </p>
           </div>
 
           {step === 1 && (
             <form onSubmit={handleRequestChange} className="d-flex flex-column gap-3">
-              <h3 className="changeEmail">Change Email Address</h3>
+              <h3 className="changeEmail">{t('Change Email Address')}</h3>
               <div className="form-group d-flex flex-column">
-                <label htmlFor="newEmail" className="form-label">New Email Address</label>
+                <label htmlFor="newEmail" className="form-label">{t('New Email Address')}</label>
                 <input
                   type="email"
                   id="newEmail"
                   value={newEmail}
                   onChange={(e) => setNewEmail(e.target.value)}
-                  placeholder="Enter your new email"
+                  placeholder={t("Enter your new email")}
                   required
                   className="form-input"
                 />
@@ -102,7 +103,7 @@ const EmailSettings = ({ currentUser }) => {
                 {/* <button type="submit" className="save-btn" disabled={loading}>
                   {loading ? "Sending..." : "Request Change"}
                 </button> */}
-                <Button type={"submit"} disabled={loading} label={loading ? "Sending..." : "Request Change"} color="gradient-blue-button" />
+                <Button type={t("submit")} disabled={loading} label={loading ? t("Sending...") : t("Request Change")} color="gradient-blue-button" />
               </div>
 
             </form>
@@ -110,19 +111,19 @@ const EmailSettings = ({ currentUser }) => {
 
           {step === 2 && (
             <form onSubmit={handleConfirmChange} className="d-flex flex-column gap-4">
-              <h3>Enter Verification Code</h3>
+              <h3>{t('Enter Verification Code')}</h3>
               <p className="section-description">
-                A code has been sent to <strong>{currentUser?.email}</strong>.
-                Please enter it below.
+                {t('A code has been sent to')} <strong>{currentUser?.email}</strong>.
+                {t('Please enter it below.')}
               </p>
               <div className="form-group">
-                <label htmlFor="verificationCode" className="form-label">Verification Code</label>
+                <label htmlFor="verificationCode" className="form-label">{t('Verification Code')}</label>
                 <input
                   type="text"
                   id="verificationCode"
                   value={verificationCode}
                   onChange={(e) => setVerificationCode(e.target.value)}
-                  placeholder="6-digit code"
+                  placeholder={t("6-digit code")}
                   required
                   className="form-input"
 
@@ -132,7 +133,7 @@ const EmailSettings = ({ currentUser }) => {
               </div>
 
               <div className="form-actions d-flex flex-row justify-content-around">
-                <Button type={"submit"} disabled={loading} color="gradient-blue-button" label={loading ? "Verifying..." : "Confirm Change"} />
+                <Button type={"submit"} disabled={loading} color="gradient-blue-button" label={loading ? t("Verifying...") : t("Confirm Change")} />
                 <Button
                   type={"button"}
                   onClick={() => {
@@ -141,7 +142,7 @@ const EmailSettings = ({ currentUser }) => {
                     setMessage("");
                   }}
                   color="white-grey-button"
-                  label={"Cancel"}
+                  label={t("Cancel")}
                 />
               </div>
             </form>
