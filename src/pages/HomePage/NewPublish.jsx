@@ -21,9 +21,9 @@ export default function NewPublish() {
         handleGetNewPublish();
     }, [])
 
-    const chunkedTags = [];
+    const chunkedGames = [];
     for (let i = 0; i < games.length; i += 4) {
-        chunkedTags.push(games.slice(i, i + 4));
+        chunkedGames.push(games.slice(i, i + 4));
     }
 
     return (
@@ -32,7 +32,7 @@ export default function NewPublish() {
             <div className="conent-hub-carousel">
                 <div id="newPublishGame" className="carousel-container carousel-fade carousel slide" data-ride="false" data-pause="true">
                     <div className="carousel-items carousel-inner">
-                        {chunkedTags.map((group, index) => (
+                        {chunkedGames.map((group, index) => (
                             <div
                                 className={`carousel-item ${index === 0 ? "active" : ""}`}
                                 key={index}

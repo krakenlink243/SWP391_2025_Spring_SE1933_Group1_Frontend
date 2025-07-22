@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import GameUnder5 from "./GameUnder5";
 import NewPublish from "./NewPublish";
 import TopSelling from "./TopSelling";
+import MostRecommend from "./MostRecommend";
 /**
  * Origin belongs to @author TS Huy
  * Remake by Phan NT Son
@@ -59,6 +60,7 @@ const HomePage = () => {
             <BrowseByPublisher />
             <GameUnder5 />
             <NewPublish />
+            <MostRecommend />
           </div>
         </div>
         <div className="row"></div>

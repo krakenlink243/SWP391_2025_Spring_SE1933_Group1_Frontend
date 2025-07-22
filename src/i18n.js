@@ -15,7 +15,9 @@ i18n
     interpolation: {
       escapeValue: false,
     },
-    debug: true,
+    saveMissing: false,
+    missingKeyHandler: false,
+    debug: false, // tắt debug log hoàn toàn
   });
 
 export default i18n;
