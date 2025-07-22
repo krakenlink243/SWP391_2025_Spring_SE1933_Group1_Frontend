@@ -10,6 +10,7 @@ import BrowseByTag from "./BrowseByTag";
 import { useTranslation } from "react-i18next";
 import GameUnder5 from "./GameUnder5";
 import NewPublish from "./NewPublish";
+import TopSelling from "./TopSelling";
 /**
  * Origin belongs to @author TS Huy
  * Remake by Phan NT Son
@@ -44,6 +45,7 @@ const HomePage = () => {
         <div className="row">
           <div className="col-lg-2"></div>
           <div className="col-lg-8">
+            <TopSelling />
             <BrowseByTag />
             <div>
               <div className="video-section">
