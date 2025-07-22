@@ -37,6 +37,10 @@ function BrowseByTag() {
         chunkedTags.push(data.slice(i, i + 4));
     }
 
+    const handelSearchByTag = () => {
+        
+    }
+
 
     return (
         <div className="browse-tags">

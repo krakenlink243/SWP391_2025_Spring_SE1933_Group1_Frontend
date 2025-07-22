@@ -8,6 +8,8 @@ import YoutubePlayer from "./YoutubePlayer";
 import BrowseByPublisher from "./BrowseByPublisher";
 import BrowseByTag from "./BrowseByTag";
 import { useTranslation } from "react-i18next";
+import GameUnder5 from "./GameUnder5";
+import NewPublish from "./NewPublish";
 /**
  * Origin belongs to @author TS Huy
  * Remake by Phan NT Son
@@ -16,7 +18,7 @@ import { useTranslation } from "react-i18next";
  * @returns
  */
 const HomePage = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   return (
     <div className="container-fluid">
       <div className="row">
@@ -53,6 +55,8 @@ const HomePage = () => {
               </div>
             </div>
             <BrowseByPublisher />
+            <GameUnder5 />
+            <NewPublish />
           </div>
         </div>
         <div className="row"></div>
