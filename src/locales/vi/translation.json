@@ -915,14 +915,14 @@
     "No": "Không",
     "Post Review": "Đăng bài nhận xét",
 
-  "File 105": "",
+  "File 106": "",
   "components/Review/ReviewListItem": "components/Review/ReviewListItem",
     "Posted on": "Được đăng vào",
     "Read more": "Đọc thêm",
     "Was this review helpful?": "Đánh giá này có hữu ích không?",
     "Edit": "Chỉnh sửa",
 
-  "File 106":"",
+  "File 107":"",
   "components/Review/ReviewUpdateForm": "components/Review/ReviewUpdateForm",
     "Are you sure you want to update this review?": "Bạn có chắc chắn muốn cập nhật đánh giá này?",
     "Unknown error": "Lỗi không xác định",
@@ -930,13 +930,13 @@
     "Delete": "Xóa",
     "Update Review": "Cập nhật đánh Giá",
 
-  "File 107": "",
+  "File 108": "",
   "components/SearchBar/SearchBar": "components/SearchBar/SearchBar",
     "Searching...": "Đang tìm kiếm...",
     "No results found for": "Không tìm thấy kết quả cho",
     "search": "tìm kiếm",
 
-  "File 108": "",
+  "File 109": "",
   "components/SearchResultHeader/SearchResultHeader": "components/SearchResultHeader/SearchResultHeader",
     "Name (A-Z)":"Tên (A-Z)",
     "Name (Z-A)":"Tên (Z-A)",
@@ -945,7 +945,7 @@
     "Results for": "Kết quả cho",
     "titles found": "{{count}} tiêu đề được tìm thấy",
 
-  "File 109": "",
+  "File 110": "",
   "components/SplashScreen/SPlashScreen": "components/SplashScreen/SplashScreen",
     "STEAM SYSTEM GROUP 1": "STEAM SYSTEM GROUP 1"
 
