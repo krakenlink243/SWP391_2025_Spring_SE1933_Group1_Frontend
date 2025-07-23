@@ -4,7 +4,7 @@ import "./GameDetail.css";
 import Review from "../../components/Review/Review";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-
+import SimilarByTag from "../../components/Recommendations/SimilarByTags";
 // Added by Phan NT Son
 import DetailHeader from "./DetailHeader";
 import DetailBody from "./DetailBody";
@@ -60,12 +60,22 @@ const GameDetail = () => {
       }
     };
 
-    if (cachedGameDetail?.data && !isStale(cachedGameDetail.timestamp)) {
+    // if (cachedGameDetail?.data && !isStale(cachedGameDetail.timestamp)) {
+    //   setGame(cachedGameDetail.data);
+    //   setLoading(false);
+    // } else if (gameId) {
+    //   fetchGameDetails();
+    // }
+    if (
+      cachedGameDetail?.data?.id === Number(gameId) &&
+      !isStale(cachedGameDetail.timestamp)
+    ) {
       setGame(cachedGameDetail.data);
       setLoading(false);
     } else if (gameId) {
       fetchGameDetails();
     }
+    
   }, [gameId]);
 
   if (loading)
@@ -110,8 +120,8 @@ const GameDetail = () => {
       <div className="row">
         <div className="spacer col-lg-2"></div>
         <div className="col-lg-8">
-          <Review
-            game={game}
+          <SimilarByTag
+            gameId={gameId}
           />
         </div>
       </div>
