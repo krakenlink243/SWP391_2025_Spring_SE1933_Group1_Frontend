@@ -177,7 +177,9 @@ const Header = forwardRef((props, ref) => {
                       className="download-btn btn btn-success btn-sm d-flex align-items-center gap-1"
                       onClick={handleDownload}
                       title="Download Centurion App"
-                    ></button>
+                    >
+                      Download Centurion App
+                    </button>
                     <Link className="border-end" to="/login">
                       Login
                     </Link>
@@ -193,7 +195,9 @@ const Header = forwardRef((props, ref) => {
                       className="download-btn btn btn-success btn-sm d-flex align-items-center gap-1"
                       onClick={handleDownload}
                       title="Download Centurion App"
-                    ></button>
+                    >
+                      Download Centurion App
+                    </button>
                     <div className="w-25">
                       <NotificationBox />
                     </div>
