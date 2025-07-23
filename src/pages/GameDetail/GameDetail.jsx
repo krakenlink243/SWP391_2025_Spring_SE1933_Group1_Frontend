@@ -115,6 +115,14 @@ const GameDetail = () => {
           />
         </div>
       </div>
+      <div className="row">
+        <div className="spacer col-lg-2"></div>
+        <div className="col-lg-8">
+          <Review
+            game={game}
+          />
+        </div>
+      </div>
     </div>
   );
 };

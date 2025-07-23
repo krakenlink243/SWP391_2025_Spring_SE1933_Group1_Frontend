@@ -12,6 +12,7 @@ import GameUnder5 from "./GameUnder5";
 import NewPublish from "./NewPublish";
 import TopSelling from "./TopSelling";
 import MostRecommend from "./MostRecommend";
+import RecommendedFromLibrary from "../../components/Recommendations/RecommendedFromLibrary";
 /**
  * Origin belongs to @author TS Huy
  * Remake by Phan NT Son
@@ -61,6 +62,7 @@ const HomePage = () => {
             <GameUnder5 />
             <NewPublish />
             <MostRecommend />
+            <RecommendedFromLibrary userId={localStorage.getItem("userId")} />
           </div>
         </div>
         <div className="row"></div>

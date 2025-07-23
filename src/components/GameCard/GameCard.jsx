@@ -19,10 +19,17 @@ const GameCard = ({ game }) => {
         </div>
       </div>
 
-      <div className="game-card-info d-flex flex-row align-items-center mx-2">
+      {/* <div className="game-card-info d-flex flex-row align-items-center mx-2">
         <h3 className="game-card-title w-50">{game.title}</h3>
+        <div className="game-card-tag w-25">
+          {game.tags.map((tag) => (
+            <span key={tag} className="game-tag">
+              {tag},
+            </span>
+          ))}
+        </div>
         <div className="game-card-date w-25">
-          {formattedDate}
+          Released:{formattedDate}
         </div>
 
         {game.price < game.originalPrice ? (
@@ -53,7 +60,34 @@ const GameCard = ({ game }) => {
             )}
           </div>
         )}
-      </div>
+      </div> */}
+<div className="game-card-info d-flex flex-row align-items-center mx-2">
+  <div className="game-title-and-tags w-50">
+    <h3 className="game-card-title">{game.title}</h3>
+    <div className="game-card-tag">
+      {game.tags?.slice(0, 5).join(", ")}
+    </div>
+  </div>
+
+  <div className="game-card-date w-25">
+    Released: {formattedDate}
+  </div>
+
+  {game.price < game.originalPrice ? (
+    <div className="game-card-prices have-discount">
+      <div className="original-price">${game.originalPrice.toFixed(2)}</div>
+      <div className="current-price">${game.price.toFixed(2)}</div>
+    </div>
+  ) : (
+    <div className="game-card-prices">
+      {game.originalPrice === 0 ? (
+        <div className="current-price">{t('Free')}</div>
+      ) : (
+        <div className="current-price">${game.originalPrice.toFixed(2)}</div>
+      )}
+    </div>
+  )}
+</div>
     </div>
   );
 };

@@ -1,0 +1,23 @@
+.recommend-library {
+  margin: 40px 0;
+}
+
+.game-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.no-recommend-msg {
+  padding: 20px;
+  font-style: italic;
+  color: #999;
+}
+.recommend-library .game-card {
+  height: 65px;
+  overflow: hidden;
+}
+
+.recommend-library .game-card .game-card-thumbnail {
+  height: 100%;
+}

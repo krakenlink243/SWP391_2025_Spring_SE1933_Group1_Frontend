@@ -67,3 +67,12 @@
   color: #BEEE11;
   font-size: medium;
 }
+.game-card-tag {
+  font-size: 0.75rem;
+  color: #aaa;
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
