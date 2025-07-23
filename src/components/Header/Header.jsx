@@ -94,116 +94,131 @@ const Header = forwardRef((props, ref) => {
   if (!isMobile) {
     return (
       <div className="container-fluid" ref={ref}>
-        <div className="header row">
-          <div className={`col-lg-${section[0]}`}></div>
-          <div
-            className={`header-logo col-sm-4 col-lg-${section[1]} align-content-center`}
-          >
-            <Link to={"/"}>
-              <img
-                src="/Centurion.svg"
-                alt="Centurion Logo"
-                className="logo w-100"
-              />
-            </Link>
-          </div>
-          <div className={`header-nav col-lg-${section[2]}`}>
-            <Link
-              className={`header-nav-item ${isActive(0) ? "active" : ""}`}
-              to="/"
-            >
-              STORE
-            </Link>
-            <Link
-              className={`header-nav-item ${isActive(1) ? "active" : ""}`}
-              to={"/community"}
-            >
-              COMMUNITY
-            </Link>
-
-            {username && (
-              <div className="nav-user-dropdown-wrapper">
-                <Link
-                  className={`header-nav-item ${isActive(2) ? "active" : ""}`}
-                  to="/profile"
-                >
-                  {username}
-                </Link>
-                <div className="nav-box-dropdown">
-                  <Link className="submenuitem" to="/profile">
-                    Profile
-                  </Link>
-                  <Link className="submenuitem" to="/profile/friends">
-                    Friends
-                  </Link>
-                </div>
-              </div>
-            )}
-
-            <Link
-              className={`header-nav-item ${isActive(3) ? "active" : ""}`}
-              to={token ? "/chat" : "#"}
-            >
-              {token ? "CHAT" : "ABOUT"}
-            </Link>
-            {role != "Admin" && (
-              <Link
-                className={`header-nav-item ${isActive(4) ? "active" : ""}`}
-                to="/feedbackhub"
-              >
-                Support
-              </Link>
-            )}
-            {role === "Admin" && (
-              <Link
-                className={`header-nav-item ${isActive(5) ? "active" : ""}`}
-                to="/admin"
-              >
-                ADMIN TOOLS
-              </Link>
-            )}
-          </div>
-          <div className={`header-user-action col-lg-${section[3]}`}>
-            {!token ? (
-              <>
-                <div className="header-user-action-content d-flex flex-column align-items-end w-100 p-2">
-                  <div className="user-action-content">
-                    <Link className="border-end" to="/login">
-                      Login
-                    </Link>
-                    <Link to="/register">Register</Link>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="header-user-action-content d-flex flex-column align-items-end w-75 gap-2">
-                  <div className="user-action-content">
-                    <div className="w-25">
-                      <NotificationBox />
-                    </div>
-                    <div className="w-50 px-2 d-flex flex-row-reverse">
-                      <UserDropBox userBalance={walletBalance} />
-                    </div>
-                  </div>
-                  <div className="user-wallet w-100">
-                    {walletBalance.toLocaleString("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                    })}
-                  </div>
-                </div>
-                <div className="header-user-action-icon w-25">
-                  <Link to="/profile">
-                    <img src={localStorage.getItem("avatarUrl")}></img>
-                  </Link>
-                </div>
-              </>
-            )}
-          </div>
-
-          <div className={`col-lg-${section[4]}`}></div>
+      <div className="header row">
+        <div className={`col-lg-${section[0]}`}></div>
+        <div
+        className={`header-logo col-sm-4 col-lg-${section[1]} align-content-center`}
+        >
+        <Link to={"/"}>
+          <img
+          src="/Centurion.svg"
+          alt="Centurion Logo"
+          className="logo w-100"
+          />
+        </Link>
         </div>
+        <div className={`header-nav col-lg-${section[2]}`}>
+        <Link
+          className={`header-nav-item ${isActive(0) ? "active" : ""}`}
+          to="/"
+        >
+          STORE
+        </Link>
+        <Link
+          className={`header-nav-item ${isActive(1) ? "active" : ""}`}
+          to={"/community"}
+        >
+          COMMUNITY
+        </Link>
+
+        {username && (
+          <div className="nav-user-dropdown-wrapper">
+          <Link
+            className={`header-nav-item ${isActive(2) ? "active" : ""}`}
+            to="/profile"
+          >
+            {username}
+          </Link>
+          <div className="nav-box-dropdown">
+            <Link className="submenuitem" to="/profile">
+            Profile
+            </Link>
+            <Link className="submenuitem" to="/profile/friends">
+            Friends
+            </Link>
+          </div>
+          </div>
+        )}
+
+        <Link
+          className={`header-nav-item ${isActive(3) ? "active" : ""}`}
+          to={token ? "/chat" : "#"}
+        >
+          {token ? "CHAT" : "ABOUT"}
+        </Link>
+        {role != "Admin" && (
+          <Link
+          className={`header-nav-item ${isActive(4) ? "active" : ""}`}
+          to="/feedbackhub"
+          >
+          Support
+          </Link>
+        )}
+        {role === "Admin" && (
+          <Link
+          className={`header-nav-item ${isActive(5) ? "active" : ""}`}
+          to="/admin"
+          >
+          ADMIN TOOLS
+          </Link>
+        )}
+        </div>
+        <div className={`header-user-action col-lg-${section[3]}`}>
+        {!token ? (
+          <>
+          <div className="header-user-action-content d-flex flex-column align-items-end w-100 p-2">
+            <div className="user-action-content">
+            <Link className="border-end" to="/login">
+              Login
+            </Link>
+            <Link to="/register">Register</Link>
+            </div>
+          </div>
+          </>
+        ) : (
+          <>
+          <div className="header-user-action-content d-flex flex-column align-items-end w-75 gap-2">
+            <div className="user-action-content">
+            <div className="w-25">
+              <NotificationBox />
+            </div>
+            <div className="w-50 px-2 d-flex flex-row-reverse">
+              <UserDropBox userBalance={walletBalance} />
+            </div>
+            </div>
+            <div className="user-wallet w-100">
+            {walletBalance.toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+            })}
+            </div>
+          </div>
+          <div className="header-user-action-icon w-25">
+            <Link to="/profile">
+            <img src={localStorage.getItem("avatarUrl")}></img>
+            </Link>
+          </div>
+          <div>
+            <button
+            className="download-button"
+            onClick={() =>
+              window.open(
+              "https://steam.ce2d1d4b1db731e41135ed96b83b118b.r2.cloudflarestorage.com/68e4c40c-5e0b-4c27-9ed0-49064d4f42ea?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250723T161641Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=934064ef47d11dd8b033bbb7e58f74f3%2F20250723%2Fauto%2Fs3%2Faws4_request&X-Amz-Signature=c4cc9cc30f7f6b07a228b23cedb6185c6262ccaf820443187cbaca92e498be1a",
+              "_blank",
+              "noopener,noreferrer"
+              )
+            }
+            >
+            <img src="/download-icon.svg" alt="Download Icon" />
+            Download Launcher
+            </button>
+          </div>
+          </>
+        )}
+        </div>
+
+        <div className={`col-lg-${section[4]}`}></div>
+      </div>
       </div>
     );
   } else {
@@ -212,50 +227,62 @@ const Header = forwardRef((props, ref) => {
         <div class="offcanvas offcanvas-start" id="offcanvasNavbar">
           <div class="offcanvas-header">
             <h1 class="offcanvas-title">Heading</h1>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+            <button
+              type="button"
+              class="btn-close text-reset"
+              data-bs-dismiss="offcanvas"
+            ></button>
           </div>
           <div class="offcanvas-body">
-            {
-              token ? (
-                <div className="d-flex flex-column gap-2">
-                  <div className="user-area nav-item">
-                    <div className="user-info d-flex flex-row justify-content-start align-items-center">
-                      <Link to="/profile">
-                        <img
-                          src={localStorage.getItem("avatarUrl")}
-                          alt="User Avatar"
-                          className="user-avatar"
-                        />
-                      </Link>
-                      <span className="user-name">{username}</span>
-                    </div>
-                    <div className="user-waller">
-                      {walletBalance.toLocaleString("en-US", {
-                        style: "currency",
-                        currency: "USD",
-                      })}
-                    </div>
+            {token ? (
+              <div className="d-flex flex-column gap-2">
+                <div className="user-area nav-item">
+                  <div className="user-info d-flex flex-row justify-content-start align-items-center">
+                    <Link to="/profile">
+                      <img
+                        src={localStorage.getItem("avatarUrl")}
+                        alt="User Avatar"
+                        className="user-avatar"
+                      />
+                    </Link>
+                    <span className="user-name">{username}</span>
                   </div>
-                  <Link to={"/notifications"}> Notifications</Link>
-                  <Link to={"/"}>Store</Link>
-                  <Link to={'/Community'}>Community</Link>
-                  <div>
-                    <Link to={"/profile"}>Profile</Link>
-                    <Link to={"/profile/friends"}>Friends</Link>
+                  <div className="user-waller">
+                    {walletBalance.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                    })}
                   </div>
-                  <Link to={'/chat'}>Chat</Link>
-                  <Link to={'/feedbackhub'}>Support</Link>
                 </div>
-              ) : (
+                <Link to={"/notifications"}> Notifications</Link>
+                <Link to={"/"}>Store</Link>
+                <Link to={"/Community"}>Community</Link>
                 <div>
-                  <Link to={"/login"} className="nav-item">Login</Link>
-                  <Link to={"/"} className="nav-item">Store</Link>
-                  <Link to={"/community"} className="nav-item">Community</Link>
-                  <Link to={"#"} className="nav-item">About</Link>
-                  <Link to={"/feedbackhub"} className="nav-item">Support</Link>
+                  <Link to={"/profile"}>Profile</Link>
+                  <Link to={"/profile/friends"}>Friends</Link>
                 </div>
-              )
-            }
+                <Link to={"/chat"}>Chat</Link>
+                <Link to={"/feedbackhub"}>Support</Link>
+              </div>
+            ) : (
+              <div>
+                <Link to={"/login"} className="nav-item">
+                  Login
+                </Link>
+                <Link to={"/"} className="nav-item">
+                  Store
+                </Link>
+                <Link to={"/community"} className="nav-item">
+                  Community
+                </Link>
+                <Link to={"#"} className="nav-item">
+                  About
+                </Link>
+                <Link to={"/feedbackhub"} className="nav-item">
+                  Support
+                </Link>
+              </div>
+            )}
           </div>
         </div>
         <div className="header row">
@@ -264,10 +291,32 @@ const Header = forwardRef((props, ref) => {
             data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasNavbar"
             aria-controls="offcanvasNavbar"
-            role="button" aria-label="Toggle navigation"
-            style={{ cursor: 'pointer' }}
+            role="button"
+            aria-label="Toggle navigation"
+            style={{ cursor: "pointer" }}
           >
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 6H20M4 12H20M4 18H20" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                {" "}
+                <path
+                  d="M4 6H20M4 12H20M4 18H20"
+                  stroke="#ffffff"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                ></path>{" "}
+              </g>
+            </svg>
           </div>
           <div className="spacer col-3"></div>
           <div className="col-4 d-flex flex-column justify-content-center align-items-center">
@@ -283,7 +332,6 @@ const Header = forwardRef((props, ref) => {
       </div>
     );
   }
-
 });
 
 export default Header;
