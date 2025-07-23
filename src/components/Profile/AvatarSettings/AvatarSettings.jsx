@@ -13,7 +13,6 @@ function getCroppedImg(image, crop, fileName) {
   canvas.width = crop.width;
   canvas.height = crop.height;
   const ctx = canvas.getContext("2d");
-  const {t}=useTranslation();
   ctx.drawImage(
     image,
     crop.x * scaleX,
@@ -36,6 +35,7 @@ function getCroppedImg(image, crop, fileName) {
 }
 
 const AvatarSettings = ({ currentUser }) => {
+  const { t } = useTranslation();
   console.log(
     "AvatarSettings component rendered with currentUser:",
     currentUser

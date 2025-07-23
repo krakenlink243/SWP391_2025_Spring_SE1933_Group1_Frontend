@@ -178,7 +178,7 @@ const Header = forwardRef((props, ref) => {
                       onClick={handleDownload}
                       title="Download Centurion App"
                     >
-                      Download Centurion App
+                      Install Centurion
                     </button>
                     <Link className="border-end" to="/login">
                       Login
@@ -196,7 +196,7 @@ const Header = forwardRef((props, ref) => {
                       onClick={handleDownload}
                       title="Download Centurion App"
                     >
-                      Download Centurion App
+                      Install Centurion
                     </button>
                     <div className="w-25">
                       <NotificationBox />
