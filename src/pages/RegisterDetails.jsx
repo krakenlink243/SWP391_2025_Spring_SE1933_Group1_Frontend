@@ -8,7 +8,7 @@ const RegisterDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const email = location.state?.email;
-  const {t}= useTranslation();
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -56,18 +56,43 @@ const RegisterDetails = () => {
     e.preventDefault();
     setMessage('');
 
+    // Validate username length
+    if (formData.username.length < 2) {
+      setMessage(t('Username must be at least 2 characters long.'));
+      return;
+    }
+
+    // Validate username: no special characters
+    if (!/^[a-zA-Z0-9_]+$/.test(formData.username)) {
+      setMessage(t('Username must not contain special characters.'));
+      return;
+    }
+
+    // Username should not contain whitespace (you already had this)
     if (/\s/.test(formData.username)) {
       setMessage(t('Username must not contain spaces.'));
       return;
     }
 
+    // Username availability check
     if (usernameAvailable === false) {
       setMessage(t('Username is already taken.'));
       return;
     }
 
+    // Validate password complexity
+    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}/.test(formData.password)) {
+      setMessage(
+        t(
+          'Password must be at least 8 characters long and include a lowercase letter, an uppercase letter, a number, and a special character.'
+        )
+      );
+      return;
+    }
+
+    // Password match check
     if (formData.password !== formData.confirmPassword) {
-      setMessage(t('Passwords do not match.'))
+      setMessage(t('Passwords do not match.'));
       return;
     }
 

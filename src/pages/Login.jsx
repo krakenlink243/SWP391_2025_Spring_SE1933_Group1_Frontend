@@ -7,6 +7,8 @@ import { useEffect } from 'react';
 import { Navigate, useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from "../context/AuthContext";
 import { useTranslation } from "react-i18next";
+import { jwtDecode } from "jwt-decode";
+
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -15,7 +17,7 @@ const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { setToken } = useAuth();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (location.state?.fromRegister) {
@@ -47,8 +49,6 @@ const Login = () => {
 
       return <Navigate to="/" replace />;
 
-      // navigate('/');
-      // Optionally redirect or store auth token here
     } catch (err) {
       console.error(err);
       setMessage({
@@ -59,7 +59,7 @@ const Login = () => {
   };
 
   const handleGoogleSuccess = async (credentialResponse) => {
-    const decoded = jwt_decode(credentialResponse.credential);
+    const decoded = jwtDecode(credentialResponse.credential);
     const email = decoded.email;
     const name = decoded.name;
 
@@ -69,8 +69,7 @@ const Login = () => {
         { email, name }
       );
 
-      const token = response.data.token;
-      localStorage.setItem("token", token);
+      setToken(response.data.token);
       alert(t("Google login successful!"));
       navigate('/')
     } catch (err) {
@@ -80,75 +79,59 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <main>
-        <section className="form-section">
-          <form onSubmit={handleLogin} className="form">
-            <h1 className="form-title">{t('Sign in')}</h1>
-            <div className="form-item">
-              <label htmlFor="username" className="form-label username">
-                {t('Sign in with username')}
-              </label>
-              <input
-                id="username"
-                name="username"
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="form-input"
-                required
-              />
-              {message && <div className={`message ${message.type === "success" ? "success-message" : "error-message"}`}>{message.content}</div>}
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <div className="login-container">
+        <main>
+          <section className="form-section">
+            <form onSubmit={handleLogin} className="form">
+              <h1 className="form-title">{t('Sign in')}</h1>
+              <div className="form-item">
+                <label htmlFor="username" className="form-label username">
+                  {t('Sign in with username')}
+                </label>
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="form-input"
+                  required
+                />
+                {message && <div className={`message ${message.type === "success" ? "success-message" : "error-message"}`}>{message.content}</div>}
 
-            </div>
+              </div>
 
-            <div className="form-item">
-              <label htmlFor="password" className="form-label">
-                {t('Password')}
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="form-input"
-                required
-              />
-            </div>
+              <div className="form-item">
+                <label htmlFor="password" className="form-label">
+                  {t('Password')}
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="form-input"
+                  required
+                />
+              </div>
 
-            <div className="submit-container">
-              <button type="submit" className="submit-button">
-                {t('Log in')}
-              </button>
-              <Link to={"/forgot-password"} className="forgot-password-link">
-                {t('Forgot password?')}
-              </Link>
+              <div className="submit-container">
+                <button type="submit" className="submit-button">
+                  {t('Log in')}
+                </button>
+                <Link to={"/forgot-password"} className="forgot-password-link">
+                  {t('Forgot password?')}
+                </Link>
+                <GoogleLogin onSuccess={handleGoogleSuccess}/>
+              </div>
 
-              <Link to={`${import.meta.env.VITE_API_URL}/oauth2/authorization/google`}>
-                <img src="/google-logo.jpg" alt="Google login" className="google-logo" />
-              </Link>
-
-              {/* <div className="google-login">
-                  <GoogleLogin
-                    onSuccess={handleGoogleSuccess}
-                    onError={() => setMessage("Google login failed")}
-                  />
-                </div> */}
-              {/* <img
-                  src="/google-logo.jpg"
-                  alt="Google logo with red, yellow, green, and blue colors"
-                  class="google-logo"
-                  width="40"
-                  height="40"
-                /> */}
-            </div>
-
-          </form>
-        </section>
-      </main>
-    </div>
-
+            </form>
+          </section>
+        </main>
+      </div>
+    </GoogleOAuthProvider>
   );
 };
 
