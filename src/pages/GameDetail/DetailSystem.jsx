@@ -36,7 +36,7 @@ function DetailSystem({ game }) {
                 </div>
                 <div className="recommend-section">
                     <div className="req-row">
-                        <h3>{t("RECOMMENDED")}:</h3>
+                        {/* <h3>{t("RECOMMENDED")}:</h3> */}
                     </div>
                 </div>
             </div>

@@ -1,0 +1,205 @@
+.similar-carousel {
+  margin-top: 32px;
+  padding: 12px 0;
+  background-color: #1D2838;
+  font-family: "Segoe UI", sans-serif;
+  color: #ddd;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+}
+
+/* Title block stays left-aligned */
+.similar-carousel .section-title {
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #f3f3f3;
+  text-align: left;
+  margin-left: 16px;
+}
+
+/* Horizontal card layout centered */
+.similar-carousel .carousel-track {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 6px;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.similar-carousel .carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Individual card */
+.similar-carousel .carousel-card {
+  flex: 0 0 auto;
+  width: 220px;
+  background-color: #253446;
+  border: 1px solid #3d4e65;
+  border-radius: 12px;
+  padding: 10px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* ✅ Left-align inner content */
+}
+
+.similar-carousel .carousel-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+/* Thumbnail wrapper */
+.similar-carousel .carousel-thumbnail-wrapper {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.similar-carousel .carousel-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Discount badge */
+.similar-carousel .discount-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: #ff4f4f;
+  color: white;
+  font-size: 0.75rem;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+  z-index: 2;
+}
+
+/* Title */
+.similar-carousel .carousel-title {
+  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e0eaf5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+/* Price row */
+.similar-carousel .carousel-price {
+  font-size: 0.85rem;
+  margin-top: 6px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  color: #cbd6e2;
+}
+
+.similar-carousel .original {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.similar-carousel .discounted {
+  font-weight: bold;
+  color: #f3f3f3;
+}
+
+/* Paging controls */
+.similar-carousel .carousel-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.similar-carousel .carousel-controls button {
+  padding: 6px 14px;
+  background-color: #394b61;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.similar-carousel .carousel-controls button:hover:not(:disabled) {
+  background-color: #4e6280;
+}
+
+.similar-carousel .carousel-controls button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* 📱 Responsive scaling */
+@media (max-width: 1024px) {
+  .similar-carousel .carousel-card {
+    width: 190px;
+  }
+}
+
+@media (max-width: 768px) {
+  .similar-carousel .section-title {
+    font-size: 1.2rem;
+    margin-left: 12px;
+  }
+
+  .similar-carousel .carousel-card {
+    width: 160px;
+    padding: 8px;
+  }
+
+  .similar-carousel .carousel-thumbnail-wrapper {
+    height: 100px;
+  }
+
+  .similar-carousel .carousel-title {
+    font-size: 0.95rem;
+  }
+
+  .similar-carousel .carousel-price {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .similar-carousel {
+    padding: 8px 0;
+  }
+
+  .similar-carousel .carousel-card {
+    width: 130px;
+    padding: 6px;
+  }
+
+  .similar-carousel .carousel-thumbnail-wrapper {
+    height: 90px;
+  }
+
+  .similar-carousel .carousel-title {
+    font-size: 0.85rem;
+  }
+
+  .similar-carousel .discount-badge {
+    font-size: 0.65rem;
+    padding: 2px 4px;
+  }
+}
