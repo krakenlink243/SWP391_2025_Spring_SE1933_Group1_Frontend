@@ -21,6 +21,11 @@ const Header = forwardRef((props, ref) => {
   const section = [2, 2, 4, 2, 2];
   const location = useLocation();
   const CUR_PATHNAME = location.pathname;
+  const handleDownload = () => {
+    const downloadUrl =
+      "https://steam.ce2d1d4b1db731e41135ed96b83b118b.r2.cloudflarestorage.com/68e4c40c-5e0b-4c27-9ed0-49064d4f42ea?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250723T161641Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=934064ef47d11dd8b033bbb7e58f74f3%2F20250723%2Fauto%2Fs3%2Faws4_request&X-Amz-Signature=c4cc9cc30f7f6b07a228b23cedb6185c6262ccaf820443187cbaca92e498be1a";
+    window.open(downloadUrl, "_blank");
+  };
 
   const isMobile = useIsMobile();
 
@@ -94,131 +99,126 @@ const Header = forwardRef((props, ref) => {
   if (!isMobile) {
     return (
       <div className="container-fluid" ref={ref}>
-      <div className="header row">
-        <div className={`col-lg-${section[0]}`}></div>
-        <div
-        className={`header-logo col-sm-4 col-lg-${section[1]} align-content-center`}
-        >
-        <Link to={"/"}>
-          <img
-          src="/Centurion.svg"
-          alt="Centurion Logo"
-          className="logo w-100"
-          />
-        </Link>
-        </div>
-        <div className={`header-nav col-lg-${section[2]}`}>
-        <Link
-          className={`header-nav-item ${isActive(0) ? "active" : ""}`}
-          to="/"
-        >
-          STORE
-        </Link>
-        <Link
-          className={`header-nav-item ${isActive(1) ? "active" : ""}`}
-          to={"/community"}
-        >
-          COMMUNITY
-        </Link>
-
-        {username && (
-          <div className="nav-user-dropdown-wrapper">
-          <Link
-            className={`header-nav-item ${isActive(2) ? "active" : ""}`}
-            to="/profile"
+        <div className="header row">
+          <div className={`col-lg-${section[0]}`}></div>
+          <div
+            className={`header-logo col-sm-4 col-lg-${section[1]} align-content-center`}
           >
-            {username}
-          </Link>
-          <div className="nav-box-dropdown">
-            <Link className="submenuitem" to="/profile">
-            Profile
-            </Link>
-            <Link className="submenuitem" to="/profile/friends">
-            Friends
+            <Link to={"/"}>
+              <img
+                src="/Centurion.svg"
+                alt="Centurion Logo"
+                className="logo w-100"
+              />
             </Link>
           </div>
-          </div>
-        )}
-
-        <Link
-          className={`header-nav-item ${isActive(3) ? "active" : ""}`}
-          to={token ? "/chat" : "#"}
-        >
-          {token ? "CHAT" : "ABOUT"}
-        </Link>
-        {role != "Admin" && (
-          <Link
-          className={`header-nav-item ${isActive(4) ? "active" : ""}`}
-          to="/feedbackhub"
-          >
-          Support
-          </Link>
-        )}
-        {role === "Admin" && (
-          <Link
-          className={`header-nav-item ${isActive(5) ? "active" : ""}`}
-          to="/admin"
-          >
-          ADMIN TOOLS
-          </Link>
-        )}
-        </div>
-        <div className={`header-user-action col-lg-${section[3]}`}>
-        {!token ? (
-          <>
-          <div className="header-user-action-content d-flex flex-column align-items-end w-100 p-2">
-            <div className="user-action-content">
-            <Link className="border-end" to="/login">
-              Login
-            </Link>
-            <Link to="/register">Register</Link>
-            </div>
-          </div>
-          </>
-        ) : (
-          <>
-          <div className="header-user-action-content d-flex flex-column align-items-end w-75 gap-2">
-            <div className="user-action-content">
-            <div className="w-25">
-              <NotificationBox />
-            </div>
-            <div className="w-50 px-2 d-flex flex-row-reverse">
-              <UserDropBox userBalance={walletBalance} />
-            </div>
-            </div>
-            <div className="user-wallet w-100">
-            {walletBalance.toLocaleString("en-US", {
-              style: "currency",
-              currency: "USD",
-            })}
-            </div>
-          </div>
-          <div className="header-user-action-icon w-25">
-            <Link to="/profile">
-            <img src={localStorage.getItem("avatarUrl")}></img>
-            </Link>
-          </div>
-          <div>
-            <button
-            className="download-button"
-            onClick={() =>
-              window.open(
-              "https://steam.ce2d1d4b1db731e41135ed96b83b118b.r2.cloudflarestorage.com/68e4c40c-5e0b-4c27-9ed0-49064d4f42ea?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250723T161641Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=934064ef47d11dd8b033bbb7e58f74f3%2F20250723%2Fauto%2Fs3%2Faws4_request&X-Amz-Signature=c4cc9cc30f7f6b07a228b23cedb6185c6262ccaf820443187cbaca92e498be1a",
-              "_blank",
-              "noopener,noreferrer"
-              )
-            }
+          <div className={`header-nav col-lg-${section[2]}`}>
+            <Link
+              className={`header-nav-item ${isActive(0) ? "active" : ""}`}
+              to="/"
             >
-            <img src="/download-icon.svg" alt="Download Icon" />
-            Download Launcher
-            </button>
-          </div>
-          </>
-        )}
-        </div>
+              STORE
+            </Link>
+            <Link
+              className={`header-nav-item ${isActive(1) ? "active" : ""}`}
+              to={"/community"}
+            >
+              COMMUNITY
+            </Link>
 
-        <div className={`col-lg-${section[4]}`}></div>
-      </div>
+            {username && (
+              <div className="nav-user-dropdown-wrapper">
+                <Link
+                  className={`header-nav-item ${isActive(2) ? "active" : ""}`}
+                  to="/profile"
+                >
+                  {username}
+                </Link>
+                <div className="nav-box-dropdown">
+                  <Link className="submenuitem" to="/profile">
+                    Profile
+                  </Link>
+                  <Link className="submenuitem" to="/profile/friends">
+                    Friends
+                  </Link>
+                </div>
+              </div>
+            )}
+
+            <Link
+              className={`header-nav-item ${isActive(3) ? "active" : ""}`}
+              to={token ? "/chat" : "#"}
+            >
+              {token ? "CHAT" : "ABOUT"}
+            </Link>
+            {role != "Admin" && (
+              <Link
+                className={`header-nav-item ${isActive(4) ? "active" : ""}`}
+                to="/feedbackhub"
+              >
+                Support
+              </Link>
+            )}
+            {role === "Admin" && (
+              <Link
+                className={`header-nav-item ${isActive(5) ? "active" : ""}`}
+                to="/admin"
+              >
+                ADMIN TOOLS
+              </Link>
+            )}
+          </div>
+          <div className={`header-user-action col-lg-${section[3]}`}>
+            {!token ? (
+              <>
+                <div className="header-user-action-content d-flex flex-column align-items-end w-100 p-2">
+                  <div className="user-action-content">
+                    <button
+                      className="download-btn btn btn-success btn-sm d-flex align-items-center gap-1"
+                      onClick={handleDownload}
+                      title="Download Centurion App"
+                    ></button>
+                    <Link className="border-end" to="/login">
+                      Login
+                    </Link>
+                    <Link to="/register">Register</Link>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="header-user-action-content d-flex flex-column align-items-end w-75 gap-2">
+                  <div className="user-action-content">
+                    <button
+                      className="download-btn btn btn-success btn-sm d-flex align-items-center gap-1"
+                      onClick={handleDownload}
+                      title="Download Centurion App"
+                    ></button>
+                    <div className="w-25">
+                      <NotificationBox />
+                    </div>
+                    <div className="w-50 px-2 d-flex flex-row-reverse">
+                      <UserDropBox userBalance={walletBalance} />
+                    </div>
+                  </div>
+                  <div className="user-wallet w-100">
+                    {walletBalance.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                    })}
+                  </div>
+                </div>
+                <div className="header-user-action-icon w-25">
+                  <Link to="/profile">
+                    <img src={localStorage.getItem("avatarUrl")}></img>
+                  </Link>
+                </div>
+              </>
+            )}
+          </div>
+
+          <div className={`col-lg-${section[4]}`}></div>
+        </div>
       </div>
     );
   } else {

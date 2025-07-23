@@ -114,20 +114,23 @@
 .header-user-action-icon img {
   width: 100%;
 }
-.download-button {
-  color: #ffffff;
-  background-color: rgb(27, 158, 67);
-  text-decoration: none;
-  padding: 8px 12px;
-  font-size: 13px;
-  cursor: pointer;
-  border: none;
+.download-btn {
+  transition: all 0.2s ease;
   border-radius: 4px;
-  transition: background 0.2s;
+  font-weight: 500;
 }
 
-.download-button:hover {
-  background-color: #218c4c;
+.download-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.download-btn svg {
+  transition: transform 0.2s ease;
+}
+
+.download-btn:hover svg {
+  transform: translateY(1px);
 }
 
 /* Thêm CSS cho các phần tử khác như language selector nếu có */
