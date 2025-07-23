@@ -19,8 +19,11 @@ const GamesPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [totalGames, setTotalGames] = useState(0);
-  const [cachedTags, setCachedTags] = useLocalStorage('tags', []);
-  const [cachedPublishers, setCachedPublishers] = useLocalStorage('publisher', []);
+  const [cachedTags, setCachedTags] = useLocalStorage("tags", []);
+  const [cachedPublishers, setCachedPublishers] = useLocalStorage(
+    "publisher",
+    []
+  );
 
   const [filters, setFilters] = useState({
     searchTerm: "",
@@ -33,8 +36,6 @@ const GamesPage = () => {
   // --- LOGIC GỌI API ---
 
   useEffect(() => {
-
-
     if (cachedTags.length) setAllTags(cachedTags);
     if (cachedPublishers) setAllPublishers(cachedPublishers);
 
@@ -45,20 +46,20 @@ const GamesPage = () => {
           axios.get(`${import.meta.env.VITE_API_URL}/publisher/list`),
         ]);
         if (tagsResponse.data) {
-          const freshTags = tagsResponse.data.sort((a, b) => a.tagName.localeCompare(b.tagName));
+          const freshTags = tagsResponse.data.sort((a, b) =>
+            a.tagName.localeCompare(b.tagName)
+          );
           setAllTags(freshTags);
           setCachedTags(freshTags);
         }
 
         if (publishersResponse.data) {
-          const freshPublishers = publishersResponse.data
-            .sort((a, b) =>
-              a.publisherName.localeCompare(b.publisherName)
-            );
+          const freshPublishers = publishersResponse.data.sort((a, b) =>
+            a.publisherName.localeCompare(b.publisherName)
+          );
           setAllPublishers(freshPublishers);
           setCachedPublishers(freshPublishers);
         }
-
       } catch (e) {
         console.error("Failed to fetch filter data", e);
       }
@@ -75,8 +76,8 @@ const GamesPage = () => {
       ...filters,
       tagsIds: Array.from(filters.selectedTagIds),
       publisherIds: Array.from(filters.selectedPublisherIds),
-      page: currentPage
-    })}`
+      page: currentPage,
+    })}`;
 
     // 2: Try loading from cached
     const cached = localStorage.getItem(cacheKey);
@@ -88,7 +89,7 @@ const GamesPage = () => {
         setTotalGames(parsed.totalElements || 0);
         setLoading(false);
       } catch (error) {
-        console.warn("Failed to parse cached game data: ", error)
+        console.warn("Failed to parse cached game data: ", error);
       }
     }
 
@@ -113,42 +114,42 @@ const GamesPage = () => {
     const apiUrl = `${import.meta.env.VITE_API_URL}/game?${params.toString()}`;
 
     // 4: Delayed fresh fetch to update cache silently
-    setTimeout(async () => {
-      try {
-        const response = await axios.get(apiUrl);
-        const pageData = response.data;
+    setTimeout(
+      async () => {
+        try {
+          const response = await axios.get(apiUrl);
+          const pageData = response.data;
+          console.log("Fetched games:", pageData);
 
-        // If user already got cached, don't interrupt unless data changes
-        const oldData = cached ? JSON.stringify(JSON.parse(cached)) : null;
-        const newData = JSON.stringify(pageData);
+          // If user already got cached, don't interrupt unless data changes
+          const oldData = cached ? JSON.stringify(JSON.parse(cached)) : null;
+          const newData = JSON.stringify(pageData);
 
-        if (oldData !== newData) {
-          setGames(pageData.content || []);
-          setTotalPages(pageData.totalPages || 0);
-          setTotalGames(pageData.totalElements || 0);
+          if (oldData !== newData) {
+            setGames(pageData.content || []);
+            setTotalPages(pageData.totalPages || 0);
+            setTotalGames(pageData.totalElements || 0);
+          }
+
+          localStorage.setItem(cacheKey, newData);
+        } catch (e) {
+          console.error("Failed to fetch games:", e);
+          if (!cached) setError(e.message); // only show error if no cache
+        } finally {
+          if (!cached) setLoading(false); // if using cache, already set earlier
         }
-
-        localStorage.setItem(cacheKey, newData);
-      } catch (e) {
-        console.error("Failed to fetch games:", e);
-        if (!cached) setError(e.message); // only show error if no cache
-      } finally {
-        if (!cached) setLoading(false); // if using cache, already set earlier
-      }
-    }, cached ? 10000 : 0); // delay only if cached already shown
-
+      },
+      cached ? 10000 : 0
+    ); // delay only if cached already shown
   }, [filters, currentPage]); // Phụ thuộc vào `filters` và `currentPage`
 
   // 3. useEffect để trigger việc gọi API
   useEffect(() => {
-
     const run = async () => {
-
       await fetchGames();
     };
 
     run();
-
   }, [filters, currentPage]); // Chỉ phụ thuộc vào hàm fetchGames đã được useCallback tối ưu
 
   // --- CÁC HÀM XỬ LÝ SỰ KIỆN (Tối ưu với useCallback) ---
