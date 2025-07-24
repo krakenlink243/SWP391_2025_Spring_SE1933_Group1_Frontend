@@ -61,7 +61,7 @@ export default function GameApproved() {
   // Navigation handler
   const handleRedirect = (gameId, action) => {
     if (action === "Update") navigate(`/update-game/${gameId}`);
-    if (action === "View") navigate(`/game/${gameId}`);
+    if (action === "News") navigate(`/news/${gameId}`);
   };
 
   // Toggle Hide/Unhide logic
@@ -104,10 +104,10 @@ export default function GameApproved() {
             title={game.title}
             action1="Update"
             action2={game.state ? "Hide" : "Unhide"}
-            action3="View"
+            action3="News"
             onAction1Click={() => handleRedirect(game.id, "Update")}
             onAction2Click={() => toggleGameVisibility(game.id, game.state)}
-            onAction3Click={() => handleRedirect(game.id, "View")}
+            onAction3Click={() => handleRedirect(game.id, "News")}
             time={new Date(game.releaseDate).toLocaleDateString()}
           />
         ))}

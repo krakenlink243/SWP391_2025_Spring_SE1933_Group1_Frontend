@@ -21,6 +21,9 @@ import { PrivacyPolicy } from "./pages/PolicyPage/PrivacyPolicy";
 import { TermsOfUse } from "./pages/PolicyPage/TermsOfUse";
 import GameManagement from "./pages/Publisher/GameManagement/GameManagement";
 import UpdateGame from "./pages/UpdateGame";
+import GameNews from "./pages/GameNews/GameNews";
+import NewsEditor from "./pages/GameNews/NewsEditor";
+import NewsDetail from "./pages/GameNews/NewsDetail";
 
 // Profile & User Pages
 import Transaction from "./pages/TransactionPage/Transaction";
@@ -175,6 +178,10 @@ function AppRoutes() {
             <Route path="/community" element={<Community />} />
             <Route path="/community/threads/:threadId" element={<ThreadDetailPage />} />
             <Route path="/community/create-thread" element={<CreateThreadModal />} />
+            <Route path="/news/:gameId" element={<GameNews />} />
+            <Route path="/news/create/:gameId" element={<NewsEditor />} />
+            <Route path="/news/detail/:newsId" element={<NewsDetail />} />
+            <Route path="/news/edit/:newsId" element={<NewsEditor />} />
           </Route>
 
           {/* Admin area */}

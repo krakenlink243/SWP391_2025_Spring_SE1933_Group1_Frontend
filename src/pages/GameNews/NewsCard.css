@@ -1,0 +1,87 @@
+.news-card {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 16px;
+  border-radius: 10px;
+  background-color: #2d3b52; /* softened background */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  transition: box-shadow 0.3s ease;
+}
+
+.news-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.news-image {
+  width: 240px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.news-info {
+  margin-left: 20px;
+  flex-grow: 1;
+  color: #f0f4fc; /* lighter body text */
+}
+
+.news-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #ffffff; /* keep crisp for headlines */
+}
+
+.news-description {
+  font-size: 14px;
+  color: #d0d8e6; /* gentler contrast than #c0c8d7 */
+  line-height: 1.5;
+}
+
+.news-actions {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 4px;
+  background-color: #475577; /* softened button color */
+  color: #f0f4fc;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.edit-btn:hover {
+  background-color: #5a6b90; /* slightly brighter on hover */
+}
+
+.delete-btn:hover {
+  background-color: #a34e4e; /* deeper red without harshness */
+}
+.news-card {
+  position: relative;
+}
+
+.timestamp-placeholder {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  color: #333;
+  z-index: 1;
+}
