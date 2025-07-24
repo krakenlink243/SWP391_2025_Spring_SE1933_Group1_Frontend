@@ -10,7 +10,7 @@ export default function CreateThreadPage() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const {t}=useTranslation();
-    if (!isOpen) return null;
+    // if (!isOpen) return null;
     const navigate = useNavigate();
 
     const handleSubmit = async () => {

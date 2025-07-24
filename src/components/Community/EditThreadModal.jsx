@@ -9,9 +9,21 @@ export default function EditThreadModal({ thread, onCancel, onSave }) {
     const [content, setContent] = useState(thread.content);
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onSave({ ...thread, title, content });
+        try {
+            const res = await axios.put(`${import.meta.env.VITE_API_URL}/api/discussions/update/${thread.threadId}`, {
+                title,
+                content,
+            });
+
+            alert("Thread updated successfully.");
+            onSave(res.data);
+            onSave({ ...thread, title, content });
+        } catch (error) {
+            console.error("Update failed", error);
+            alert("Failed to update the thread. Please try again.");
+        }        
     };
 
 
