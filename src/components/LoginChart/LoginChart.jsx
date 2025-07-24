@@ -73,7 +73,7 @@ function LoginChart({ mode }) {
   }, [mode]);
 
   return (
-    <div style={{ height: '50%', width: '100%' }}>
+    <div style={{ height: '100%', width: '100%' }}>
       <canvas ref={canvasRef} style={{ height: '100%', width: '100%' }} />
     </div>
   );
