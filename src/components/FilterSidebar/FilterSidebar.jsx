@@ -3,12 +3,12 @@ import "./FilterSidebar.css";
 import { useTranslation } from "react-i18next";
 
 const FilterSidebar = ({ allTags, allPublishers, filters, onFilterChange }) => {
-  const {t}=useTranslation();
+  const { t } = useTranslation();
   const [localPrice, setLocalPrice] = useState(filters.maxPrice);
   const [tagSearchTerm, setTagSearchTerm] = useState("");
   const [publisherSearchTerm, setPublisherSearchTerm] = useState("");
   useEffect(() => {
-      onFilterChange("maxPrice", localPrice);
+    onFilterChange("maxPrice", localPrice);
   }, [localPrice, filters.maxPrice, onFilterChange]);
 
   const displayedTags = useMemo(() => {
@@ -58,7 +58,11 @@ const FilterSidebar = ({ allTags, allPublishers, filters, onFilterChange }) => {
           }}
         />
         <span className="price-label">
-          {localPrice >= 60 ? t("Any Price") : t(`Under $`, {price: localPrice})}
+          {localPrice === 0
+            ? t("Free to Play")
+            : localPrice >= 60
+              ? t("Any Price")
+              : t("Under ${{price}}", { price: localPrice })}
         </span>
       </div>
 
