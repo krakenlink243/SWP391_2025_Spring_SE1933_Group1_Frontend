@@ -103,8 +103,8 @@ function AdminDashboard({ tab }) {
           </div>
           <div className='col-md-4'>
             <div className='bg-dark p-3 rounded text-center shadow'>
-              <h5>New Users (Month)</h5>
-              <p className='fs-4 fw-bold text-info'>22</p>
+              <h5>Refund Rate</h5>
+              <p className='fs-4 fw-bold text-info'>5%</p>
             </div>
           </div>
           <div className='col-md-4'>
