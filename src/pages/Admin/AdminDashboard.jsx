@@ -15,7 +15,8 @@ function AdminDashboard({ tab }) {
     userCount: 0,
     publisherCount: 0,
     pendingCount: 0,
-    revenue: 0
+    revenue: 0,
+    refundRate: 0,
   })
   const fetchData = async()=>{
     try{
@@ -42,6 +43,12 @@ function AdminDashboard({ tab }) {
       setFormData(prev => ({
         ...prev,
         revenue: res.data.value
+      }));
+      res = await axios.get(`${import.meta.env.VITE_API_URL}/dashboard/transactions/refund/count`);
+      console.log(res.data);
+      setFormData(prev => ({
+        ...prev,
+        refundRate: res.data.value
       }));
           }catch(err){
             console.log(err);
@@ -104,7 +111,7 @@ function AdminDashboard({ tab }) {
           <div className='col-md-4'>
             <div className='bg-dark p-3 rounded text-center shadow'>
               <h5>Refund Rate</h5>
-              <p className='fs-4 fw-bold text-info'>5%</p>
+              <p className='fs-4 fw-bold text-info'>{formData.refundRate}%</p>
             </div>
           </div>
           <div className='col-md-4'>
