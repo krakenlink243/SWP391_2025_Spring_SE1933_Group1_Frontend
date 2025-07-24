@@ -23,7 +23,7 @@ const Header = forwardRef((props, ref) => {
   const CUR_PATHNAME = location.pathname;
   const handleDownload = () => {
     const downloadUrl =
-      "https://steam.ce2d1d4b1db731e41135ed96b83b118b.r2.cloudflarestorage.com/68e4c40c-5e0b-4c27-9ed0-49064d4f42ea?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250723T161641Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=934064ef47d11dd8b033bbb7e58f74f3%2F20250723%2Fauto%2Fs3%2Faws4_request&X-Amz-Signature=c4cc9cc30f7f6b07a228b23cedb6185c6262ccaf820443187cbaca92e498be1a";
+      "https://drive.google.com/file/d/1eGUIrk5u5qhwqv8ls69OwYHNypw_oWRW/view?usp=sharing";
     window.open(downloadUrl, "_blank");
   };
 
@@ -176,7 +176,7 @@ const Header = forwardRef((props, ref) => {
                     <button
                       className="download-btn btn btn-success btn-sm d-flex align-items-center gap-1"
                       onClick={handleDownload}
-                      title="Download Centurion App"
+                      title="Install Centurion"
                     >
                       Install Centurion
                     </button>
@@ -194,7 +194,7 @@ const Header = forwardRef((props, ref) => {
                     <button
                       className="download-btn btn btn-success btn-sm d-flex align-items-center gap-1"
                       onClick={handleDownload}
-                      title="Download Centurion App"
+                      title="Install Centurion"
                     >
                       Install Centurion
                     </button>
