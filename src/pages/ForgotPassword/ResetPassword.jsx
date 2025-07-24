@@ -14,11 +14,18 @@ function ResetPassword() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
-
+  const validateStrongPassword = (password) => {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+        return regex.test(password);
+    };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
 
+    if (!validateStrongPassword(newPassword)) {
+      setMessage(t('Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.'));
+      return;
+    }
     if (newPassword !== confirmPassword) {
       setMessage(t('Passwords do not match.'));
       return;
@@ -26,7 +33,7 @@ function ResetPassword() {
 
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/password/reset`, {
-        username: state.username,
+        email: state.email,
         otp,
         newPassword,
         confirmPassword,
@@ -43,6 +50,7 @@ function ResetPassword() {
   return (
     <main className="support-form">
       <h1 className="form-title">{t('Reset Password')}</h1>
+      {message && <p className="form-status" style={{ color: 'red' }}>{message}</p>}
       <form className="form-container" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="otp" className="form-label username-label">
@@ -87,7 +95,7 @@ function ResetPassword() {
         </div>
 
         <button type="submit" className="submit-button">{t('Reset')}</button>
-        {message && <p className="form-status">{message}</p>}
+        
       </form>
     </main>
   );

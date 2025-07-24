@@ -9,6 +9,11 @@ const ChangePassword = () => {
     const [step, setStep] = useState(1);
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const validateStrongPassword = (password) => {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+        return regex.test(password);
+    };
+
     const [form, setForm] = useState({
         username: localStorage.getItem('username') || '',
         email: '',
@@ -17,7 +22,7 @@ const ChangePassword = () => {
         confirmPassword: '',
     });
     const navigate = useNavigate();
-    const {t} = new useTranslation();
+    const { t } = new useTranslation();
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
@@ -27,7 +32,6 @@ const ChangePassword = () => {
         setLoading(true);
         try {
             await axios.post(`${import.meta.env.VITE_API_URL}/api/password/change/request`, {
-                username: form.username,
                 email: form.email,
             });
             alert(t('OTP sent to your email.'));
@@ -41,9 +45,20 @@ const ChangePassword = () => {
 
     const confirmPasswordChange = async (e) => {
         e.preventDefault();
+        // Validate password strength
+        if (!validateStrongPassword(form.newPassword)) {
+            setMessage(t('Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.'));
+            return;
+        }
+
+        // Check if passwords match
+        if (form.newPassword !== form.confirmPassword) {
+            setMessage(t('Passwords do not match.'));
+            return;
+        }
         try {
             await axios.post(`${import.meta.env.VITE_API_URL}/api/password/change/confirm`, {
-                username: form.username,
+                email: form.email,
                 otp: form.otp,
                 newPassword: form.newPassword,
                 confirmPassword: form.confirmPassword,
