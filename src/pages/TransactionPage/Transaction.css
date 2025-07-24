@@ -87,8 +87,14 @@
 .transaction-td-changes {
   padding: 10px;
   font-size: 16px;
-  color: #ff4444; /* Màu đỏ để chỉ tiền bị trừ */
   text-align: right;
+}
+
+.transaction-green {
+  color: #5aee7f; /* Màu xanh cho giao dịch nhận tiền */
+}
+.transaction-red {
+  color: #ff4d4d; /* Màu đỏ cho giao dịch mua game */
 }
 
 .transaction-td-type {
