@@ -9,8 +9,9 @@ import './Community.css';
 export default function Community() {
     const [threads, setThreads] = useState([]);
     const [reviews, setReviews] = useState([]);
+    const [visibleReviews, setVisibleReviews] = useState(5);
     const navigate = useNavigate();
-    const {t} =useTranslation();
+    const { t } = useTranslation();
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_API_URL}/api/discussions`)
             .then((res) => setThreads(res.data))
@@ -32,10 +33,19 @@ export default function Community() {
             <section className="review-section">
                 <h2 className="review-section-title" style={{ color: "white" }}>{t('Game Reviews')}</h2>
                 <div className="review-grid">
-                    {reviews.map((review, index) => (
+                    {reviews.slice(0, visibleReviews).map((review, index) => (
                         <ReviewCard key={index} review={review} />
                     ))}
                 </div>
+                {visibleReviews < reviews.length && (
+                    <div className="see-more-container">
+                        <Button
+                            label={t("See more")}
+                            onClick={() => setVisibleReviews(prev => prev + 5)}
+                            color="blue-button"
+                        />
+                    </div>
+                )}
             </section>
 
             {/* Threads Section */}
