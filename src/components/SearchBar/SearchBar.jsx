@@ -12,7 +12,7 @@ const SearchBar = ({ onSearchSubmit }) => {
   const [loading, setLoading] = useState(false);
   const searchRef = useRef(null);
   const navigate = useNavigate();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (searchTerm.trim() === "") {
@@ -53,6 +53,17 @@ const SearchBar = ({ onSearchSubmit }) => {
   // --- Xử lý khi submit form ---
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const trimmed = searchTerm.trim();
+
+    // Nếu không nhập gì thì chuyển về "/"
+    if (trimmed === "") {
+      navigate("/game");
+      setSuggestions([]);
+      return;
+    }
+
+
     onSearchSubmit(searchTerm);
     setSuggestions([]);
     // SỬA ĐỔI 3: Dùng navigate() thay cho history.push()
