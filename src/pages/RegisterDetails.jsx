@@ -57,8 +57,8 @@ const RegisterDetails = () => {
     setMessage('');
 
     // Validate username length
-    if (formData.username.length < 2) {
-      setMessage(t('Username must be at least 2 characters long.'));
+    if (formData.username.length < 3) {
+      setMessage(t('Username must be at least 3 characters long.'));
       return;
     }
 
@@ -68,7 +68,7 @@ const RegisterDetails = () => {
       return;
     }
 
-    // Username should not contain whitespace (you already had this)
+    // Username should not contain whitespace
     if (/\s/.test(formData.username)) {
       setMessage(t('Username must not contain spaces.'));
       return;
