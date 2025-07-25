@@ -8,7 +8,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import { createNotification } from '../../../services/notification';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
+import { trimValue } from '../../../utils/validators';
 function GameApprovePage() {
   const [totalPages, setTotalPages] = useState(1);
   const [loadedRequest, setLoadedRequest] = useState([]);
@@ -78,7 +78,9 @@ function GameApprovePage() {
                   );
                   // Reject the request via API
                   const response = await axios.patch(
-                    `${import.meta.env.VITE_API_URL}/request/game/reject/${requestId}`
+                    `${import.meta.env.VITE_API_URL}/request/game/reject/${requestId}`,{
+                      declineMessage:trimValue(answer)
+                    }
                   );
                   console.log("Declined request:", response.data);
                   alert(t('Game Declined'));

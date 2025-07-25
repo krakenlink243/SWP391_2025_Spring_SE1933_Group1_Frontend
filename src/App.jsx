@@ -21,6 +21,9 @@ import { PrivacyPolicy } from "./pages/PolicyPage/PrivacyPolicy";
 import { TermsOfUse } from "./pages/PolicyPage/TermsOfUse";
 import GameManagement from "./pages/Publisher/GameManagement/GameManagement";
 import UpdateGame from "./pages/UpdateGame";
+import GameNews from "./pages/GameNews/GameNews";
+import NewsEditor from "./pages/GameNews/NewsEditor";
+import NewsDetail from "./pages/GameNews/NewsDetail";
 
 // Profile & User Pages
 import Transaction from "./pages/TransactionPage/Transaction";
@@ -42,7 +45,7 @@ import FeedbackApproveDetails from "./pages/Admin/Request/FeedbackApproveDetails
 import GameApproveDetails from "./pages/Admin/Request/GameApproveDetails";
 import FeedbackHub from "./pages/FeedbackHub";
 import UserManagement from "./pages/Admin/UserManagement/UserManagementPage";
-
+import AdminGameManagement from "./pages/Admin/GameManagement/AdminGameManagement";
 // Community
 import ChatPage from "./pages/ChatPage/ChatPage";
 
@@ -182,6 +185,10 @@ function AppRoutes() {
             <Route path="/community" element={<Community />} />
             <Route path="/community/threads/:threadId" element={<ThreadDetailPage />} />
             <Route path="/community/create-thread" element={<CreateThreadModal />} />
+            <Route path="/news/:gameId" element={<GameNews />} />
+            <Route path="/news/create/:gameId" element={<NewsEditor />} />
+            <Route path="/news/detail/:newsId" element={<NewsDetail />} />
+            <Route path="/news/edit/:newsId" element={<NewsEditor />} />
           </Route>
 
           {/* Admin area */}
@@ -192,6 +199,7 @@ function AppRoutes() {
             <Route path="request/feedback/detail/:requestId" element={<FeedbackApproveDetails />} />
             <Route path="request/game/detail/:requestId" element={<GameApproveDetails />} />
             <Route path="user-management/:tab?" element={<UserManagement />} />
+            <Route path="game-management/:tab?" element={<AdminGameManagement />} />
           </Route>
 
         </Routes>

@@ -95,7 +95,7 @@ function UpdateGame() {
               fullDescription: gameData.fullDescription,
               mediaUrls: fetchedMediaUrlStrings, // Store only the string URLs
               tags: gameData.tags.map(tag => tag.tagId),
-              gameUrl: gameData.gameUrl,
+              gameUrl: "",
               iconUrl: fetchedIconUrl, // Use the directly fetched iconUrl
               gameId: gameId,
             });
@@ -127,7 +127,7 @@ function UpdateGame() {
           setOriginalIconUrl(fetchedIconUrl);
           setCroppedUrl(fetchedIconUrl);
 
-          if (gameData.gameUrl) {
+          if (gameData.gameUrl&&requestId) {
             setFileName(`Game ID: ${gameData.gameUrl.substring(0, 8)}...`);
           }
 
@@ -203,9 +203,6 @@ function UpdateGame() {
   }
 
   const handleSubmit = async () => {
-    if(requestId){
-      await axios.delete(`${import.meta.env.VITE_API_URL}/request/game/delete/${requestId}`);
-    }
     for (const key in formData) {
       if (!validateEmty(formData.memory) || !validateEmty(formData.processor) || !validateEmty(formData.storage) ||
         !validateEmty(formData.graphics) || !validateEmty(formData.shortDescription) || !validateEmty(formData.fullDescription) ||
@@ -251,6 +248,7 @@ function UpdateGame() {
         iconUrl: finalIconUrl,
         gameId: gameId||formData.gameId,
         updateLog:formData.updateLog,
+        gameUrl:formData.gameUrl,
       };
 
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/request/game/add`, payload);
@@ -290,7 +288,7 @@ function UpdateGame() {
   const handleGameUpload = async (e) => {
     const selectedFile = e.target.files[0];
     if (!selectedFile) return;
-
+    await handleDelete();
     setUploadProgress(0);
     setUploadSpeed(0);
     setTimeRemaining(null);
@@ -595,6 +593,10 @@ function UpdateGame() {
         </div>
         <div className='game-file'>
           <PartHeading content='Files(*)' />
+          Policies for uploading game: <br/>
+          - Game file must be .zip extension<br/>
+          - In the root of game file, the executable file must be launcher.exe<br/>
+          If these condition are not met, the game will be rejected.<br/>
           <input type="file" accept='.zip' style={{ display: "none" }} ref={fileRef} onChange={handleGameUpload} />
           <Button className='upload-button' label={fileName} onClick={() => fileRef.current.click()} color='blue-button' />
           {uploadProgress > 0 && uploadProgress < 100 && (

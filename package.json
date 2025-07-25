@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@blocknote/core": "^0.34.0",
+    "@blocknote/mantine": "^0.34.0",
+    "@blocknote/react": "^0.34.0",
     "@google/generative-ai": "^0.24.1",
     "@react-oauth/google": "^0.12.2",
     "@stomp/stompjs": "^7.1.1",

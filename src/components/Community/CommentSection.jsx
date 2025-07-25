@@ -8,9 +8,13 @@ import "./CommentSection.css";
 import { Link } from "react-router";
 export default function CommentSection({ threadId, comments, setComments }) {
   const [newComment, setNewComment] = useState("");
-  const {t}=useTranslation();
+  const { t } = useTranslation();
   const handleSubmit = async () => {
     const token = localStorage.getItem("token");
+    if (!token) {
+      alert(t("You must be logged in to comment."));
+      return;
+    }
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/discussions/${threadId}/comments`,

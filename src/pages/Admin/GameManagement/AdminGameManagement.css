@@ -1,0 +1,33 @@
+.admin-game-management-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.admin-game-management-container h4{
+    color: white;
+}
+.admin-game-management-container-nav .nav-item {
+    color: #ebebeb;
+    text-decoration: none;
+    cursor: pointer;
+    display: block;
+    padding: 10px 10px;
+}
+
+.admin-game-management-container-nav .nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.admin-game-management-container-nav .nav-item.active {
+    background-color: rgba(255, 255, 255, 0.1);
+
+}
+.admin-game-management-container {
+  overflow-y: auto;
+  position: relative;
+}
+
+
+

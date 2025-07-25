@@ -464,6 +464,10 @@ function SendGameToAdmin() {
         </div>
         <div className='game-file'>
           <PartHeading content='Files(*)' />
+          Policies for uploading game: <br/>
+          - Game file must be .zip extension<br/>
+          - In the root of game file, the executable file must be launcher.exe<br/>
+          If these condition are not met, the game will be rejected.<br/>
           <input type="file" accept='.zip' style={{ display: "none" }} ref={fileRef} onChange={handleGameUpload} />
           <Button className='upload-button' label={fileName} onClick={() => fileRef.current.click()} color='blue-button' />
           {uploadProgress > 0 && uploadProgress < 100 && (
