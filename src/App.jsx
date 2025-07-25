@@ -74,6 +74,8 @@ import ReviewCard from "./components/Community/ReviewCard";
 import ThreadCard from "./components/Community/ThreadCard";
 import CommentSection from "./components/Community/CommentSection";
 import AboutPage from "./pages/AboutPage/AboutPage";
+import ScrollToTop from "./components/ScrollOnTop";
+
 function AppRoutes() {
   // console.log("App component is rendering...");
   const [currentUser, setCurrentUser] = useState(null);
@@ -117,6 +119,7 @@ function AppRoutes() {
       <div className={`main-app-content`}>
         <LegalPopup />
 
+        <ScrollToTop />
         <Routes>
 
           {/* 404 - Error page */}
