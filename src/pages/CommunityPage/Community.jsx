@@ -3,14 +3,18 @@ import axios from "axios";
 import ThreadCard from "../../components/Community/ThreadCard";
 import ReviewCard from "../../components/Community/ReviewCard";
 import Button from "../../components/Button/Button";
+import { useAuth } from '../../context/AuthContext';
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import './Community.css';
+
+
 export default function Community() {
     const [threads, setThreads] = useState([]);
     const [reviews, setReviews] = useState([]);
     const [visibleReviews, setVisibleReviews] = useState(5);
     const navigate = useNavigate();
+    const { token } = useAuth();
     const { t } = useTranslation();
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_API_URL}/api/discussions`)
@@ -51,13 +55,20 @@ export default function Community() {
             {/* Threads Section */}
             <section>
                 <div className="flex justify-between items-center mb-2">
-                    <h2 className="text-xl font-semibold" style={{ color: "white" }}>{t('Discussions')}</h2>
 
-                    <Button
-                        label={t("Start New Thread")}
-                        onClick={() => navigate("/community/create-thread")}
-                        color="blue-button"
-                    />
+                    {
+                        token && (
+                            <>
+                                <h2 className="text-xl font-semibold" style={{ color: "white" }}>{t('Discussions')}</h2>
+                                <Button
+                                    label={t("Start New Thread")}
+                                    onClick={() => navigate("/community/create-thread")}
+                                    color="blue-button"
+                                />
+                            </>
+                        )
+                    }
+
                 </div>
                 {
                     threads.length > 0 && (
