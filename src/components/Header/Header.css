@@ -33,6 +33,7 @@
   position: relative;
   max-width: 130px;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .header-nav-item.active {
