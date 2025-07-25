@@ -1,0 +1,71 @@
+.news-editor-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 24px;
+  color: #f0f4ff;
+}
+
+.editor-section-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: #ffffff;
+}
+
+.news-title-input {
+  width: 100%;
+  font-size: 16px;
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: 6px;
+  border: none;
+  background-color: #2e3d56;
+  color: #f0f4ff;
+}
+
+.news-title-input::placeholder {
+  color: #a0acc9;
+}
+
+.news-summary-textarea {
+  width: 100%;
+  font-size: 15px;
+  padding: 12px;
+  min-height: 100px;
+  margin-bottom: 24px;
+  border-radius: 6px;
+  border: none;
+  background-color: #2e3d56;
+  color: #f0f4ff;
+  resize: vertical;
+}
+
+.news-summary-textarea::placeholder {
+  color: #a0acc9;
+}
+
+.blocknote-wrapper {
+  background-color: #1d2838;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+}
+.blocknote-editor [contenteditable] {
+  min-height: 300px;
+  padding-bottom: 24px;
+}
+.news-actions-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+.thumbnail-preview {
+  max-width: 200px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+.thumbnail-section {
+  margin-bottom: 20px;
+}
+

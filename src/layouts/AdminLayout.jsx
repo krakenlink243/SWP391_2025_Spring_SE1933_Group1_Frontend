@@ -11,7 +11,8 @@ export default function AdminLayout() {
     const items = [
         { title: "Dashboard", url: "/admin/" },
         { title: "Request", url: "/admin/request/game" },
-        { title: "Users Management", url: "/admin/user-management/active" }
+        { title: "Users Management", url: "/admin/user-management/active" },
+        { title: "Game Management", url: "/admin/game-management/listed" }
     ]
 
     return (
