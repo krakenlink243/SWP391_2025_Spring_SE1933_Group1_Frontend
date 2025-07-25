@@ -85,3 +85,9 @@
   color: #333;
   z-index: 1;
 }
+.news-title,
+.news-description {
+  white-space: normal;      /* Allows text to wrap */
+  word-break: break-word;   /* Break long words if needed */
+  overflow-wrap: break-word; /* Ensures wrapping in all cases */
+}

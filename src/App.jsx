@@ -45,7 +45,7 @@ import FeedbackApproveDetails from "./pages/Admin/Request/FeedbackApproveDetails
 import GameApproveDetails from "./pages/Admin/Request/GameApproveDetails";
 import FeedbackHub from "./pages/FeedbackHub";
 import UserManagement from "./pages/Admin/UserManagement/UserManagementPage";
-
+import AdminGameManagement from "./pages/Admin/GameManagement/AdminGameManagement";
 // Community
 import ChatPage from "./pages/ChatPage/ChatPage";
 
@@ -192,6 +192,7 @@ function AppRoutes() {
             <Route path="request/feedback/detail/:requestId" element={<FeedbackApproveDetails />} />
             <Route path="request/game/detail/:requestId" element={<GameApproveDetails />} />
             <Route path="user-management/:tab?" element={<UserManagement />} />
+            <Route path="game-management/:tab?" element={<AdminGameManagement />} />
           </Route>
 
         </Routes>

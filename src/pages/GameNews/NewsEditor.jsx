@@ -7,10 +7,15 @@ import "@blocknote/mantine/style.css";
 import "@blocknote/core/fonts/inter.css";
 import "./NewsEditor.css";
 import axios from "axios";
+import { trimValue } from "../../utils/validators";
+
+const MAX_TITLE_LENGTH = 255;
+const MAX_SUMMARY_LENGTH = 255;
 
 function NewsEditor() {
   const navigate = useNavigate();
   const { newsId, gameId } = useParams();
+
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [thumbnail, setThumbnail] = useState("");
@@ -26,6 +31,7 @@ function NewsEditor() {
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
+
       const imageUrls = response.data.imageUrls;
       if (!imageUrls?.length) throw new Error("No image URL returned");
 
@@ -45,6 +51,7 @@ function NewsEditor() {
       formData,
       { headers: { "Content-Type": "multipart/form-data" } }
     );
+
     const url = response.data.imageUrls?.[0];
     if (!url) throw new Error("No thumbnail image URL returned");
     return url;
@@ -74,9 +81,26 @@ function NewsEditor() {
   }, [newsId]);
 
   const handleSubmit = async () => {
+    const finalTitle = trimValue(title);
+    const finalSummary = trimValue(summary);
+
+    if (!finalTitle) {
+      alert("Title cannot be empty.");
+      return;
+    }
+    if (!finalSummary) {
+      alert("Summary cannot be empty.");
+      return;
+    }
+
     try {
       const markdown = await editor.blocksToMarkdownLossy(editor.document);
-      const payload = { title, summary, markdown, thumbnail };
+      const payload = {
+        title: finalTitle,
+        summary: finalSummary,
+        markdown,
+        thumbnail,
+      };
 
       const url = newsId
         ? `${import.meta.env.VITE_API_URL}/game/news/edit/${newsId}`
@@ -95,7 +119,9 @@ function NewsEditor() {
 
   return (
     <div className="news-editor-container">
-      <h2 className="editor-section-title">{newsId ? "Edit News" : "Create News"}</h2>
+      <h2 className="editor-section-title">
+        {newsId ? "Edit News" : "Create News"}
+      </h2>
 
       <input
         className="news-title-input"
@@ -103,6 +129,10 @@ function NewsEditor() {
         placeholder="Enter title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        onBlur={(e) => {
+          const trimmed = trimValue(e.target.value);
+          setTitle(trimmed.length > MAX_TITLE_LENGTH ? trimmed.slice(0, MAX_TITLE_LENGTH) : trimmed);
+        }}
       />
 
       <textarea
@@ -110,9 +140,12 @@ function NewsEditor() {
         placeholder="Write a short summary..."
         value={summary}
         onChange={(e) => setSummary(e.target.value)}
+        onBlur={(e) => {
+          const trimmed = trimValue(e.target.value);
+          setSummary(trimmed.length > MAX_SUMMARY_LENGTH ? trimmed.slice(0, MAX_SUMMARY_LENGTH) : trimmed);
+        }}
       />
 
-      {/* 🌄 Thumbnail uploader */}
       <div className="thumbnail-section">
         <label htmlFor="thumbnail">Thumbnail Image:</label>
         <input
@@ -127,7 +160,11 @@ function NewsEditor() {
           }}
         />
         {thumbnail && (
-          <img src={thumbnail} alt="Thumbnail preview" className="thumbnail-preview" />
+          <img
+            src={thumbnail}
+            alt="Thumbnail preview"
+            className="thumbnail-preview"
+          />
         )}
       </div>
 
@@ -145,11 +182,7 @@ function NewsEditor() {
             }
           }}
         />
-        <Button
-          label="Save"
-          color="blue-button"
-          onClick={handleSubmit}
-        />
+        <Button label="Save" color="blue-button" onClick={handleSubmit} />
       </div>
     </div>
   );

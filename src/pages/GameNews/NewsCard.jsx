@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './NewsCard.css';
 
-function NewsCard({ news, onClick, onDelete }) {
+function NewsCard({ news, onClick, onDelete,mode }) {
   const [hovered, setHovered] = useState(false);
   const navigate = useNavigate();
 
@@ -58,7 +58,7 @@ function NewsCard({ news, onClick, onDelete }) {
         </p>
       </div>
 
-      {hovered && (
+      {hovered && mode !== "customer" && (
         <div className="news-actions">
           <button className="edit-btn" onClick={handleEditClick}>Edit</button>
           <button className="delete-btn" onClick={handleDeleteClick}>Delete</button>

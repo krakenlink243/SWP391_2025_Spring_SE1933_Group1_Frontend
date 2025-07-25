@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './SearchBarPublisher.css';
 
-function SearchBarPublisher({ onSearch, delay = 300, placeholder = "Search games by name..." }) {
+function SearchBarPublisher({ onSearch, delay = 300, placeholder = "Search by name..." }) {
   const [input, setInput] = useState("");
 
   useEffect(() => {

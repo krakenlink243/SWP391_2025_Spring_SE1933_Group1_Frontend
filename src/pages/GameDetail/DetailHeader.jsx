@@ -10,7 +10,7 @@ import { Navigation, Thumbs, Scrollbar } from 'swiper/modules';
 import { useTranslation } from "react-i18next"; // Thêm useTranslation
 import CartPopup from "../../components/Popup/CartPopup";
 import { isTokenExpired } from "../../utils/validators";
-
+import Button from "../../components/Button/Button";
 /**
  * @author Phan NT Son
  * @param {*} param0 
@@ -124,8 +124,20 @@ function DetailHeader({ game, setIsOpenPopup }) {
                                 onRemoveSuccess={() => checkGameInCart()}
                             />
                         )}
-
-                        <h1 className="game-name">{game.name}</h1>
+                        <div className="d-flex justify-content-between">
+                            <h1 className="game-name">{game.name}</h1>
+                            <div className="d-flex">
+                                <Button
+                                    className="btn-cart"
+                                    label={"To News Page"}
+                                    onClick={() => navigate(`/news/${game.gameId}`, {
+                                    state: { mode: "customer" }
+                                    })}   
+                                    color="white-grey-button"
+                                >
+                                </Button>
+                            </div>
+                        </div>
                         <div className="content d-flex my-3">
                             <div className="left-col d-flex flex-column">
                                 {/** 1) Big slider container **/}
