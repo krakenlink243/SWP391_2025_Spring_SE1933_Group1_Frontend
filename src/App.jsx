@@ -73,6 +73,7 @@ import CreateThreadModal from "./components/Community/CreateThreadModal";
 import ReviewCard from "./components/Community/ReviewCard";
 import ThreadCard from "./components/Community/ThreadCard";
 import CommentSection from "./components/Community/CommentSection";
+import AboutPage from "./pages/AboutPage/AboutPage";
 function AppRoutes() {
   // console.log("App component is rendering...");
   const [currentUser, setCurrentUser] = useState(null);
@@ -131,6 +132,7 @@ function AppRoutes() {
             <Route path="/terms-of-use" element={<TermsOfUse />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/about-us" element={<AboutPage />} />
 
             {/* fallback */}
           </Route>

@@ -1,14 +1,13 @@
-import React, { useState, useEffect, forwardRef, useContext } from "react";
+import React, { useState, useEffect, forwardRef, useContext, useRef } from "react";
 import "./Header.css"; // Or use CSS Modules: import styles from './Header.module.css';
 import { useTranslation } from "react-i18next";
-// Added by Phan NT Son
 import NotificationBox from "../Notifications/NotificationBox";
 import UserDropBox from "./UserDropBox";
 import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import useIsMobile from "../../hooks/useIsMobile";
-import Button from "../Button/Button";
+import { useAuth } from "../../context/AuthContext";
 
 /**
  * @author Origin belongs to TS Huy
@@ -16,7 +15,9 @@ import Button from "../Button/Button";
  * @returns header of website
  */
 const Header = forwardRef((props, ref) => {
-  const token = localStorage.getItem("token");
+
+  const { token } = useAuth();
+
   const username = localStorage.getItem("username");
   const role = localStorage.getItem("role");
   const section = [2, 2, 4, 2];
@@ -53,7 +54,10 @@ const Header = forwardRef((props, ref) => {
     },
     {
       index: 3, // CHAT
-      paths: ["/chat"],
+      paths: ["/chat",
+        "/about-us",
+      ],
+
     },
     {
       index: 4, // SUPPORT
@@ -90,13 +94,10 @@ const Header = forwardRef((props, ref) => {
 
   const isActive = (index) => currentIndex === index;
 
-  /**
-   * @author Bathanh
-   *add methods allows to get user balance from backend
-   *create a separate api for wallet balance
-   * @returns user balance
-   */
   const { walletBalance } = useContext(AppContext);
+
+  const [isHover, setIsHover] = useState(false);
+
   if (!isMobile) {
     return (
       <div className="container-fluid" ref={ref}>
@@ -126,14 +127,24 @@ const Header = forwardRef((props, ref) => {
             </Link>
 
             {username && (
-              <div className="nav-user-dropdown-wrapper">
-                <Link
-                  className={`header-nav-item ${isActive(2) ? "active" : ""}`}
-                  to="/profile"
+              <Link
+                className={`header-nav-item ${isActive(2) ? "active" : ""} `}
+                to="/profile"
+                onMouseEnter={() => setIsHover(true)}
+                onMouseLeave={() => setIsHover(false)}
+
+              >
+                {username}
+              </Link>
+            )}
+
+            {
+              token && (
+                <div className="nav-box-dropdown"
+                  style={{ opacity: isHover ? "1" : "0" }}
+                  onMouseEnter={() => setIsHover(true)}
+                  onMouseLeave={() => setIsHover(false)}
                 >
-                  {username}
-                </Link>
-                <div className="nav-box-dropdown">
                   <Link className="submenuitem" to="/profile">
                     Profile
                   </Link>
@@ -141,12 +152,12 @@ const Header = forwardRef((props, ref) => {
                     Friends
                   </Link>
                 </div>
-              </div>
-            )}
+              )
+            }
 
             <Link
               className={`header-nav-item ${isActive(3) ? "active" : ""}`}
-              to={token ? "/chat" : "#"}
+              to={token ? "/chat" : "/about-us"}
             >
               {token ? "CHAT" : "ABOUT"}
             </Link>
@@ -171,13 +182,10 @@ const Header = forwardRef((props, ref) => {
                 <>
                   <div className="header-user-action-content ">
                     <div className="user-action-content">
-                      {/* <button
-                        className="download-btn btn btn-success btn-sm d-flex align-items-center gap-1"
-                        onClick={handleDownload}
-                        title="Install Centurion"
-                      >
+                      <div className="header-download-btn" onClick={() => handleDownload()}>
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ height: "21px" }} className="mw-1"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 5H7C5.89543 5 5 5.89543 5 7V16H19V12.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M3 16H21V17C21 18.1046 20.1046 19 19 19H5C3.89543 19 3 18.1046 3 17V16Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M18.5 3V9M18.5 9L16 6.5M18.5 9L21 6.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                         Install Centurion
-                      </button> */}
+                      </div>
                       <Link className="border-end" to="/login">
                         Login
                       </Link>

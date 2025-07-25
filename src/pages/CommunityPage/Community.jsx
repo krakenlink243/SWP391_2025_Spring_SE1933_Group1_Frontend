@@ -59,34 +59,39 @@ export default function Community() {
                         color="blue-button"
                     />
                 </div>
-                <div className="thread-card">
-                    <table className="table-container" role="table" aria-label="Forum topics table">
-                        <thead>
-                            <tr className="table-header-row">
-                                <th className="table-header-cell">Topic</th>
-                                <th className="table-header-cell">Author</th>
-                                <th className="table-header-cell">Posted on</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {threads.map((thread) => (
-                                <tr className="table-row" key={thread.threadId}>
-                                    <td className="table-cell topic">
-                                        <Link to={`/community/threads/${thread.threadId}`}>
-                                            {thread.title}
-                                        </Link>
-                                    </td>
-                                    <td className="table-cell">
-                                        <Link to={`/profile/${thread.userId}`}>
-                                            {thread.username}
-                                        </Link>
-                                    </td>
-                                    <td className="table-cell">{new Date(thread.createdAt).toLocaleString()}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                {
+                    threads.length > 0 && (
+                        <div className="thread-card">
+                            <table className="table-container" role="table" aria-label="Forum topics table">
+                                <thead>
+                                    <tr className="table-header-row">
+                                        <th className="table-header-cell">Topic</th>
+                                        <th className="table-header-cell">Author</th>
+                                        <th className="table-header-cell">Posted on</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {threads.map((thread) => (
+                                        <tr className="table-row" key={thread.threadId}>
+                                            <td className="table-cell topic">
+                                                <Link to={`/community/threads/${thread.threadId}`}>
+                                                    {thread.title}
+                                                </Link>
+                                            </td>
+                                            <td className="table-cell">
+                                                <Link to={`/profile/${thread.userId}`}>
+                                                    {thread.username}
+                                                </Link>
+                                            </td>
+                                            <td className="table-cell">{new Date(thread.createdAt).toLocaleString()}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )
+                }
+
             </section>
         </div>
     );
