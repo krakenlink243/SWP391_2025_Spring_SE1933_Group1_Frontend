@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import "./ForgotPasswordRequest.css";
 
 const validateEmailFormat = (email) =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -10,24 +11,24 @@ function ForgotPasswordRequest() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const {t}= useTranslation();
+  const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
-
+    setLoading(true);
     if (!validateEmailFormat(email)) {
       setMessage("Invalid email format.");
       return;
     }
 
     try {
-      const response = await axios.post(`/api/password/request`, {
-        username,
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/password/request`, {
         email,
       });
 
       alert(t('OTP sent successfully. Please check your email.'));
-      navigate("/reset-password", { state: { username, email } });
+      navigate("/reset-password", { state: { email } });
     } catch (error) {
       console.error(error);
       if (error.response?.status === 404) {
@@ -35,6 +36,8 @@ function ForgotPasswordRequest() {
       } else {
         setMessage(t('Something went wrong. Please try again.'));
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -42,7 +45,7 @@ function ForgotPasswordRequest() {
     <main className="support-form">
       <h1 className="form-title">{t('Support')}</h1>
       <form className="form-container" onSubmit={handleSubmit}>
-        <div>
+        {/* <div>
           <label htmlFor="username" className="form-label username-label">
             {t('Username')}
           </label>
@@ -54,7 +57,7 @@ function ForgotPasswordRequest() {
             className="form-input"
             required
           />
-        </div>
+        </div> */}
         <div>
           <label htmlFor="email" className="form-label email-label">
             {t('Confirm email address')}
@@ -71,10 +74,11 @@ function ForgotPasswordRequest() {
         <button
           type="submit"
           className="submit-button"
+          disabled={loading}
         >
-          {t('Send')}
+          {loading ? t("Sending...") : t("Send")}
         </button>
-        
+
       </form>
     </main>
   );

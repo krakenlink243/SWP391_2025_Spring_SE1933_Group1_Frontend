@@ -2,8 +2,9 @@
   position: relative;
   display: inline-block;
   z-index: 11;
-  width: 100%;
-
+  width: 46px;
+  font-size: 16px;
+  white-space: wrap;
 }
 
 .notifbox-container .notifbox-bell {
@@ -11,7 +12,8 @@
   cursor: pointer;
   font-size: 14px;
   color: #c7d5e0;
-  background-color: #1b2838;
+  background-color: rgba(103, 112, 123, 0.2);
+
 }
 
 .notifbox-container .notifbox-bell:hover {

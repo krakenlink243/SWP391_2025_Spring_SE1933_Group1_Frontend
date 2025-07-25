@@ -23,7 +23,7 @@ function ApplyToPublisher() {
       imageUrl: ""
     }
   )
-  const {t}=useTranslation();
+  const { t } = useTranslation();
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
 
@@ -35,14 +35,12 @@ function ApplyToPublisher() {
     try {
       const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/publisher/user/details/${publisherId}`);
       setFormData(response.data);
-      console.log(response.data)
     } catch (error) {
       console.error("Error fetching publisher data:", error);
     }
   }
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(formData.legalName)
     if (name === 'socialNumber' && value.length > 12) {
       alert(t("12 characters limit exceeded!"))
       setFormData(prev => ({

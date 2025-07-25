@@ -16,14 +16,12 @@ function ReviewForm({ onReload, game }) {
             return false;
         }
         try {
-            console.log('recommended:', recommended);
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/review/post`, {
                 recommended: recommended,
                 reviewContent: reviewContent,
                 gameId: game.gameId,
             });
             setReviewContent('');
-            console.log(response);
             return true;
         } catch (error) {
 

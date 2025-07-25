@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Outlet, useLocation, Navigate } from "react-router-dom";
 import { AppProvider } from "./context/AppContext";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 import axios from "axios";
 import './App.css';
 // Layouts
@@ -76,10 +76,16 @@ import CreateThreadModal from "./components/Community/CreateThreadModal";
 import ReviewCard from "./components/Community/ReviewCard";
 import ThreadCard from "./components/Community/ThreadCard";
 import CommentSection from "./components/Community/CommentSection";
+import AboutPage from "./pages/AboutPage/AboutPage";
+import ScrollToTop from "./components/ScrollOnTop";
+
 function AppRoutes() {
   // console.log("App component is rendering...");
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const {token} = useAuth();
+
   useEffect(() => {
 
     if (isTokenExpired()) {
@@ -87,7 +93,6 @@ function AppRoutes() {
     }
 
     const fetchCurrentUser = async () => {
-      const token = localStorage.getItem("token");
       if (token && !isTokenExpired()) {
         try {
           const userId = localStorage.getItem("userId");
@@ -119,6 +124,7 @@ function AppRoutes() {
       <div className={`main-app-content`}>
         <LegalPopup />
 
+        <ScrollToTop />
         <Routes>
 
           {/* 404 - Error page */}
@@ -134,6 +140,7 @@ function AppRoutes() {
             <Route path="/terms-of-use" element={<TermsOfUse />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/about-us" element={<AboutPage />} />
 
             {/* fallback */}
           </Route>

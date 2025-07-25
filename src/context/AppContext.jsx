@@ -10,6 +10,7 @@ export const AppContext = createContext({
     cartTotal: 0,
     onlineUsers: [],
     friendList: [],
+    blockedList: [],
     groupChats: [],
     library: []
 })
@@ -23,9 +24,10 @@ export function AppProvider({ children }) {
     const [libraryLoading, setLibraryLoading] = useState(true);
 
     const [friendList, setFriendList] = useState([]);
+    const [blockedList, setBlockedList] = useState([]);
     const [groupChats, setGroupChats] = useState([]);
 
-    const { token: CUR_TOKEN } = useAuth();
+    const { token: CUR_TOKEN, logout } = useAuth();
     const userId = localStorage.getItem("userId");
 
     useEffect(() => {
@@ -67,6 +69,13 @@ export function AppProvider({ children }) {
                 .then(r => setFriendList(r.data))
                 .catch(console.error);
 
+            // Initial Blocked list
+            axios.get(`${import.meta.env.VITE_API_URL}/user/blocked`)
+                .then(r => {
+                    setBlockedList(r.data);
+                })
+                .catch(console.error);
+
             // Initial GroupChats
             axios.get(`${import.meta.env.VITE_API_URL}/user/groupchat`)
                 .then(r => setGroupChats(r.data.data))
@@ -81,9 +90,22 @@ export function AppProvider({ children }) {
             SocketService.subscribe(
                 `/topic/friends.${userId}.removed`,
                 removedId => {
-
-                    console.log("Removed friend:", removedId);
                     setFriendList(prev => prev.filter(f => f.friendId !== removedId));
+                }
+            );
+
+            // --- Subscribe realtime block (chặn) events ---
+            SocketService.subscribe(
+                `/topic/blocks.${userId}.added`,
+                newBlock => setBlockedList(prev => [...prev, newBlock])
+            );
+
+            SocketService.subscribe(
+                `/topic/blocks.${userId}.removed`,
+                removedId => {
+                    setBlockedList(prev => prev.filter(
+                        b => b.blockerId !== removedId && b.blockedId !== removedId
+                    ));
                 }
             );
 
@@ -104,9 +126,12 @@ export function AppProvider({ children }) {
                     setNotifications(data);
                 } else {
                     // single new notification
-                    console.log("New notification received:", data);
                     // Add new notification to the top of the list
                     setNotifications(prev => [data, ...prev]);
+                    if (data.notificationType === "Publisher Apply: Approved") {
+                        window.confirm("Congratulations. You have been approved to become Publisher. Automatic Signout →");
+                        logout();
+                    }
                 }
             })
 
@@ -174,6 +199,7 @@ export function AppProvider({ children }) {
                 library,
                 libraryLoading,
                 friendList,
+                blockedList,
                 groupChats
             }}>
             {children}

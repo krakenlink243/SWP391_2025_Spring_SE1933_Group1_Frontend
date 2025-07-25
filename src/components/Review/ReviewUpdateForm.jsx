@@ -17,7 +17,6 @@ function ReviewUpdateForm({ originalReview, onReload, onCancel, gameId, userId }
                     recommended: updateRecommended
                 }
             );
-            console.log('Update response:', resp.data);
             onReload();
             onCancel();
         } catch (error) {

@@ -34,7 +34,6 @@ function Review({ game }) {
       .get(`${import.meta.env.VITE_API_URL}/review/list/${game.gameId}`)
       .then((response) => {
         setReviewList(response.data);
-        console.log(response.data);
       })
       .catch((error) => console.error("Error fetching reviews:", error));
 

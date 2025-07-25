@@ -27,6 +27,12 @@
   flex: 2;
 }
 
+.error-message {
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
 
 
 .game-detail-header-container {

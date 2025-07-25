@@ -24,12 +24,12 @@ const Transaction = () => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(false);
 
-   const types = [
-     { type: "Add", description: t("Receive") },
-     { type: "Subtract", description: t("Purchase") },
-     { type: "Refund Add", description: t("Refund Add") },
-     { type: "Refund Subtract", description: t("Refund Subtract") },
-   ];
+  const types = [
+    { type: "Add", description: t("Receive") },
+    { type: "Subtract", description: t("Purchase") },
+    { type: "Refund Add", description: t("Refund Add") },
+    { type: "Refund Subtract", description: t("Refund Subtract") },
+  ];
 
   // Fetch and sort transaction history from backend
   const fetchTransactions = async () => {
@@ -38,7 +38,6 @@ const Transaction = () => {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/user/transaction`
       );
-      console.log("Transactions API response:", response.data);
       let transactions = response.data.data || [];
 
       // Sort transactions by transactionId in descending order (highest ID first)
@@ -67,7 +66,6 @@ const Transaction = () => {
   }, []);
 
   const handleDetailClick = (transactionId) => {
-    console.log(`Detail clicked for transaction ID: ${transactionId}`);
     navigate(`/account/history/detail/${transactionId}`);
   };
 
@@ -75,7 +73,7 @@ const Transaction = () => {
     <div className="transaction-steam-bg">
       <div className="transaction-main-steam">
         <h2 className="transaction-title-steam">
-          {t(`'s Purchase History`, { userName: username })}
+          {t(`'s Transactions History`, { userName: username })}
         </h2>
         <div className="transaction-list-steam">
           {loading ? (
@@ -101,15 +99,18 @@ const Transaction = () => {
                   {transactions.map((tx, idx) => {
                     const amount = tx.price ?? tx.amount ?? tx.totalAmount ?? 0;
                     const typeObj = types.find((type) => type.type === tx.type);
-                    const typeLabel = typeObj ? typeObj.description : t("Unknown");
+                    const typeLabel = typeObj
+                      ? typeObj.description
+                      : t("Unknown");
                     const changesLabel =
                       amount === 0
-                      ? ""
-                      : (tx.type === "Add" || tx.type === "Refund Add")
-                      ? `+ $${amount.toFixed(2)}`
-                      : (tx.type === "Subtract" || tx.type === "Refund Subtract")
-                      ? `- $${amount.toFixed(2)}`
-                      : "";
+                        ? ""
+                        : tx.type === "Add" || tx.type === "Refund Add"
+                        ? `+ $${amount.toFixed(2)}`
+                        : tx.type === "Subtract" ||
+                          tx.type === "Refund Subtract"
+                        ? `- $${amount.toFixed(2)}`
+                        : "";
                     return (
                       <tr key={idx} className="transaction-row-steam">
                         <td className="transaction-td-date">
