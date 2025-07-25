@@ -141,7 +141,7 @@ const Header = forwardRef((props, ref) => {
             {
               token && (
                 <div className="nav-box-dropdown"
-                  style={{ opacity: isHover ? "1" : "0" }}
+                  style={{ opacity: isHover ? "1" : "0", pointerEvents: isHover ? "auto" : "none" }}
                   onMouseEnter={() => setIsHover(true)}
                   onMouseLeave={() => setIsHover(false)}
                 >

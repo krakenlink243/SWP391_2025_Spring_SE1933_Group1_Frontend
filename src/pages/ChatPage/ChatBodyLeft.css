@@ -103,6 +103,16 @@
     overflow-y: auto;
 }
 
+#friend-pane .search-friend-bar {
+    transition: opacity 0.2s ease;
+    background: transparent;
+}
+
+#friend-pane .search-friend-bar .search-bar input {
+    background: transparent;
+    color: #b7ccd5;
+
+}
 
 #middle-pane .wrapper-header {
     background-color: #434953;
@@ -122,6 +132,8 @@
     padding: 0 10px;
     position: relative;
 }
+
+
 
 #middle-pane .wrapper-header .icon {
     height: 100%;

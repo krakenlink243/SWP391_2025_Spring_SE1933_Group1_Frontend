@@ -23,7 +23,7 @@ function ApplyToPublisher() {
       imageUrl: ""
     }
   )
-  const {t}=useTranslation();
+  const { t } = useTranslation();
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
 
