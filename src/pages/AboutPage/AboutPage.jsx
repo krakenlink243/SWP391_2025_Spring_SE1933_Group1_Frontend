@@ -7,28 +7,26 @@ export default function AboutPage() {
       linkedin: "https://www.linkedin.com/in/sonphannguyentruong/",
       github: "https://github.com/PhanNTSon",
       avatar:
-        "https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4",
+        "https://res.cloudinary.com/davzqwcoq/image/upload/v1753006843/tra5rhfqhevzwfrydbnp.jpg",
       description:
         "I'm a Student of an University and I'm love to learn new things about the world and technology",
       role: "",
     },
     {
       name: "Đỗ Bá Thành",
-      linkedin: "https://www.linkedin.com/in/sonphannguyentruong/",
-      github: "https://github.com/PhanNTSon",
-      avatar:
-        "https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4",
-      description: "",
-      role: "",
+      linkedin: '',
+            github: 'https://github.com/thanhnowa',
+            avatar: 'https://res.cloudinary.com/dnl5vjr6b/image/upload/v1753461534/zzz_nmkzci.jpg',
+            description: `An introvert boy who is a FPT student majoring in JS`,
+            role: 'Full Stack dev'
     },
     {
       name: "Phan Gia Lộc",
-      linkedin: "https://www.linkedin.com/in/sonphannguyentruong/",
-      github: "https://github.com/PhanNTSon",
-      avatar:
-        "https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4",
-      description: "",
-      role: "",
+      linkedin: 'https://www.linkedin.com/in/sonphannguyentruong/',
+            github: 'https://github.com/Loc-Phan-ravennsi',
+            avatar: 'https://res.cloudinary.com/dlml9t9fg/image/upload/v1753467154/me_hkolld.jpg',
+            description: 'A student of FPT University majoring in Software Engineering.',
+            role: ''
     },
     {
       name: "Trần Sỹ Huy",
@@ -42,12 +40,11 @@ export default function AboutPage() {
     },
     {
       name: "Vũ Quốc Hoàng",
-      linkedin: "https://www.linkedin.com/in/sonphannguyentruong/",
-      github: "https://github.com/PhanNTSon",
-      avatar:
-        "https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4",
-      description: "",
-      role: "",
+      linkedin: '',
+            github: 'https://github.com/krakenlink243',
+            avatar: 'https://res.cloudinary.com/davzqwcoq/image/upload/v1753450794/afockdsa8tvwmbz1c5fu.png',
+            description: 'Student of FPT University. Now studying JS',
+            role: 'FullStack Developers, Hosting Support'
     },
   ];
 
