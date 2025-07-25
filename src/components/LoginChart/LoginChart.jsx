@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import Chart from 'chart.js/auto';
+import {useAuth} from '../../context/AuthContext';
 
 function LoginChart({ mode }) {
+  const { token } = useAuth();
   const canvasRef = useRef(null);
   const [chartInstance, setChartInstance] = useState(null);
-
   useEffect(() => {
+    if (!token) return;
     axios.get(`${import.meta.env.VITE_API_URL}/dashboard/chart`, { params: { mode } })
       .then(res => {
         const labels = res.data.map(item => {
@@ -28,44 +30,44 @@ function LoginChart({ mode }) {
               borderRadius: 4
             }]
           },
-            options: {
+          options: {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-                x: {
+              x: {
                 title: {
-                    display: true,
-                    text: 'Date',
-                    color: 'white'
+                  display: true,
+                  text: 'Date',
+                  color: 'white'
                 },
                 ticks: {
-                    color: 'white'
+                  color: 'white'
                 }
-                },
-                y: {
+              },
+              y: {
                 beginAtZero: true,
                 title: {
-                    display: false,
-                    text: 'Users',
-                    color: 'white'
+                  display: false,
+                  text: 'Users',
+                  color: 'white'
                 },
                 ticks: {
-                    color: 'white',
-                    precision: 0
+                  color: 'white',
+                  precision: 0
                 }
-                }
+              }
             },
             plugins: {
-                legend: {
+              legend: {
                 labels: {
-                    color: 'white'
+                  color: 'white'
                 }
-                },
-                title: {
+              },
+              title: {
                 color: 'white'
-                }
+              }
             }
-            }
+          }
         });
 
         setChartInstance(newChart);

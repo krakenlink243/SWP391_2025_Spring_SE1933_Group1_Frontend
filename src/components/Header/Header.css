@@ -28,11 +28,12 @@
   font-size: 16px;
   font-weight: 500;
   transition: color 0.2s ease-in-out;
-  max-width: 130px;
   overflow-x: hidden;
-  text-overflow: ellipsis;
   font-family: "Motiva Sans", "Twemoji", "Noto Sans", Helvetica, sans-serif;
   position: relative;
+  max-width: 130px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .header-nav-item.active {
@@ -59,27 +60,21 @@
   /* Sáng hơn khi hover */
 }
 
-.nav-user-dropdown-wrapper {
-  max-width: 130px;
-  position: relative;
-}
 
 .nav-box-dropdown {
-  display: none;
+  display: flex;
   flex-direction: column;
   background: white;
   position: absolute;
-  top: calc(100% + 5px);
-  left: 0;
+  top: 70%;
+  left: 195px;
   z-index: 11;
   background: #3d4450;
   box-shadow: 3px 3px 5px -3px #000;
   text-align: left;
+  transition: opacity 0.2s ease;
 }
 
-.nav-user-dropdown-wrapper:hover .nav-box-dropdown {
-  display: flex;
-}
 
 .nav-box-dropdown .submenuitem {
   text-decoration: none;

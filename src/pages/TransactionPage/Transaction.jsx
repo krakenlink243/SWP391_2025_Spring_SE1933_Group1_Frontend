@@ -38,7 +38,6 @@ const Transaction = () => {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/user/transaction`
       );
-      console.log("Transactions API response:", response.data);
       let transactions = response.data.data || [];
 
       // Sort transactions by transactionId in descending order (highest ID first)
@@ -67,7 +66,6 @@ const Transaction = () => {
   }, []);
 
   const handleDetailClick = (transactionId) => {
-    console.log(`Detail clicked for transaction ID: ${transactionId}`);
     navigate(`/account/history/detail/${transactionId}`);
   };
 

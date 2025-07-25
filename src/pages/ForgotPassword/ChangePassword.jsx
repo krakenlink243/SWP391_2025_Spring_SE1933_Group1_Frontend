@@ -9,6 +9,8 @@ const ChangePassword = () => {
     const [step, setStep] = useState(1);
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
+
+
     const validateStrongPassword = (password) => {
         const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
         return regex.test(password);
@@ -22,7 +24,7 @@ const ChangePassword = () => {
         confirmPassword: '',
     });
     const navigate = useNavigate();
-    const {t} = new useTranslation();
+    const { t } = useTranslation();
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };

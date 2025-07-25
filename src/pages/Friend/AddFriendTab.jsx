@@ -1,8 +1,9 @@
 import axios from "axios";
 import './AddFriendTab.css'
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { createNotification } from "../../services/notification";
 import { useTranslation } from "react-i18next";
+import { AppContext } from "../../context/AppContext";
 
 function AddFriendTab() {
 
@@ -10,10 +11,11 @@ function AddFriendTab() {
     const curUsername = localStorage.getItem("username");
     const [searchFriendCode, setSearchFriendCode] = useState("");
     const [searchResult, setSearchResult] = useState(null);
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const [friendList, setFriendList] = useState([]);
     const [sentInvitesList, setSentInvitesList] = useState([]);
-    const [blockList, setBlockList] = useState([]);
+
+    const { blockedList: blockList } = useContext(AppContext);
 
     const [copied, setCopied] = useState(false);
     const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
@@ -30,13 +32,6 @@ function AddFriendTab() {
             .then((response) => { setSentInvitesList(response.data.data) })
             .catch((err) => { console.log("Error get received Invites: " + err) });
 
-    }
-
-
-    const getBlockList = () => {
-        axios.get(`${import.meta.env.VITE_API_URL}/user/blocked`)
-            .then((response) => { setBlockList(response.data) })
-            .catch((err) => { console.log("Error get block list: " + err) });
     }
 
     const handleSendInvite = (friendId) => {
@@ -68,14 +63,17 @@ function AddFriendTab() {
         return sentInvitesList.some(invite => invite.receiverId === friendId);
     }
 
-    function handleCheckBlockFriend(friendId) {
-        return blockList.some(blckUser => blckUser.friendId === friendId);
+    function handleCheckBlockFriend(otherId) {
+        const curUserId = Number(localStorage.getItem("userId"));
+        return blockList.some(blckUser =>
+            (blckUser.blockerId === curUserId && blckUser.blockedId === otherId) ||  // bạn đã block họ
+            (blckUser.blockerId === otherId && blckUser.blockedId === curUserId)    // họ block bạn
+        );
     }
 
     useEffect(() => {
         getFriendList();
         getSentInvitesList();
-        getBlockList();
     }, [])
 
     useEffect(() => {

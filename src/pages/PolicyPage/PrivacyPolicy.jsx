@@ -1,13 +1,22 @@
 import './Policy.css';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import Button from '../../components/Button/Button';
 
 export function PrivacyPolicy() {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
+    const navigate = useNavigate();
     return (
         <div className="policy-container container-fluid">
             <div className='row'>
                 <div className='spacer col-lg-2'></div>
                 <div className='main-content col-lg-8'>
+
+                    <div className='d-flex flex-row justify-content-between p-2'>
+                        <Button label={'Back'} onClick={() => navigate('/')} color='grey-button' />
+                        <Button label={'Terms of Use →'} onClick={() => navigate('/terms-of-use')} color='gradient-blue-button' />
+                    </div>
+
                     <h1>{t('Privacy Policy')}</h1>
                     <p>{t('Last updated: July 11, 2025')}</p>
 
