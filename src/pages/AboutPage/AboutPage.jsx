@@ -37,11 +37,11 @@ export default function AboutPage() {
         },
         {
             name: 'Vũ Quốc Hoàng',
-            linkedin: 'https://www.linkedin.com/in/sonphannguyentruong/',
-            github: 'https://github.com/PhanNTSon',
-            avatar: 'https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4',
-            description: '',
-            role: ''
+            linkedin: '',
+            github: 'https://github.com/krakenlink243',
+            avatar: 'https://res.cloudinary.com/davzqwcoq/image/upload/v1753450794/afockdsa8tvwmbz1c5fu.png',
+            description: 'Student of FPT University. Now studying JS',
+            role: 'FullStack Developers, Hosting Support'
         },
     ]
 
