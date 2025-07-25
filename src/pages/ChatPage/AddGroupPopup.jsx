@@ -13,6 +13,13 @@ export default function AddGroupPopup({ setOpenPopup }) {
     const isGroupFull = groupChats.length >= 10;
     const isBanned = localStorage.getItem("isBanned") === "true";
 
+    const [isHover, setIsHover] = useState(false);
+    const [searchKeyword, setSearchKeyword] = useState("");
+    const filteredFriends = friendList.filter(friend =>
+        friend.friendName.toLowerCase().includes(searchKeyword.toLowerCase())
+    );
+
+
     // const isGroupFull = true;
     const { t } = useTranslation();
 
@@ -76,9 +83,36 @@ export default function AddGroupPopup({ setOpenPopup }) {
 
                 {/* Friend list to choose */}
                 <div className="form-group">
-                    <label>{t('Choose Friends')}</label>
+                    <div className="d-flex flex-row align-items-center justify-content-between py-2">
+                        <label>{t('Choose Friends')}</label>
+                        <div className="d-flex flex-row align-items-center">
+                            <div className={`search-friend-bar h-100`}
+                                style={{ opacity: isHover ? "1" : "0" }}
+                                onMouseEnter={() => setIsHover(true)}
+                                onMouseLeave={() => (
+                                    searchKeyword === "" && setIsHover(false)
+                                )}
+                            >
+                                <div className="search-bar d-flex flex-row justify-content-center align-items-center h-100"
+                                    style={{ pointerEvents: isHover ? "auto" : "none" }}
+
+                                >
+                                    <input
+                                        type="text"
+                                        placeholder="search friend"
+                                        value={searchKeyword}
+                                        onChange={(e) => setSearchKeyword(e.target.value)}
+                                    >
+                                    </input>
+
+                                </div>
+                            </div>
+                            <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ padding: '5px', width: '30px' }} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => (searchKeyword === "" && setIsHover(false))}><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path clip-rule="evenodd" d="M12.2852 4.05704C7.74092 4.05704 4.05704 7.74092 4.05704 12.2852C4.05704 16.8295 7.74092 20.5134 12.2852 20.5134C16.8295 20.5134 20.5134 16.8295 20.5134 12.2852C20.5134 7.74092 16.8295 4.05704 12.2852 4.05704ZM2 12.2852C2 6.60485 6.60485 2 12.2852 2C17.9656 2 22.5704 6.60485 22.5704 12.2852C22.5704 17.9656 17.9656 22.5704 12.2852 22.5704C6.60485 22.5704 2 17.9656 2 12.2852Z" fill="#fcfcfc" fill-rule="evenodd"></path><path d="M19.8786 18.3487L25.6829 24.153C26.1057 24.5758 26.1057 25.2613 25.6829 25.6841C25.2601 26.1069 24.5746 26.1069 24.1518 25.6841L18.3475 19.8798L19.8786 18.3487Z" fill="#fcfcfc"></path></g></svg>
+
+                        </div>
+                    </div>
                     <div className="friend-list">
-                        {friendList.map((friend) => {
+                        {searchKeyword === "" && friendList.map((friend) => {
                             const isSelected = newGMembers.some((m) => m.memberId === friend.friendId);
                             return (
                                 <div
@@ -106,6 +140,36 @@ export default function AddGroupPopup({ setOpenPopup }) {
                                 </div>
                             );
                         })}
+                        {
+                            searchKeyword !== "" && filteredFriends.map((friend) => {
+                                const isSelected = newGMembers.some((m) => m.memberId === friend.friendId);
+                                return (
+                                    <div
+                                        key={friend.friendId}
+                                        className={`friend-item ${isSelected ? 'selected' : ''}`}
+                                        onClick={() => {
+                                            if (isSelected) {
+                                                setNewGMembers((prev) =>
+                                                    prev.filter((m) => m.memberId !== friend.friendId)
+                                                );
+                                            } else {
+                                                setNewGMembers((prev) => [...prev, {
+                                                    memberId: friend.friendId,
+                                                    isAdmin: false,
+                                                    memberName: friend.friendName,
+                                                    memberAvatar: friend.friendAvatarUrl
+                                                }]);
+                                            }
+                                        }}
+                                    >
+                                        <div className="avatar">
+                                            <img src={friend.friendAvatarUrl}></img>
+                                        </div>
+                                        {friend.friendName}
+                                    </div>
+                                );
+                            })
+                        }
                     </div>
                 </div>
 
@@ -114,6 +178,8 @@ export default function AddGroupPopup({ setOpenPopup }) {
                         setNewGMembers([]);
                         setNewGroupName("");
                         setOpenPopup(false);
+                        setSearchKeyword("");
+                    setIsHover(false);
                     }
                     } color="grey-button" />
                     <Button

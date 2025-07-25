@@ -2,7 +2,6 @@ import React, { useState, useMemo, useEffect } from "react";
 import './ChatBodyRight.css'
 import ChatHistory from "./ChatHistory";
 import { useAuth } from "../../context/AuthContext";
-import { useConversation } from "../../hooks/useConversation";
 import GroupAvatar from "./GroupAvatar";
 import { useTranslation } from "react-i18next";
 

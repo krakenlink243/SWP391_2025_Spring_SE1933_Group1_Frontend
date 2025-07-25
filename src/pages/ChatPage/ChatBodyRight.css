@@ -116,6 +116,8 @@
     flex-direction: row;
     gap: 5px;
     position: relative;
+    user-select: none;
+
 }
 
 .group-chat-detail .member .total-members {
