@@ -22,7 +22,7 @@ const ChangePassword = () => {
         confirmPassword: '',
     });
     const navigate = useNavigate();
-    const {t} = new useTranslation();
+    const { t } = useTranslation();
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
