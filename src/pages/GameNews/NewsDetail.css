@@ -98,7 +98,15 @@
   word-break: break-word;
   white-space: normal;
 }
-
+  .news-detail-wrapper table,td {
+  border: 1px solid white !important;
+  border-collapse: collapse;
+  padding: 8px;
+  margin: 0 auto;
+}
+.news-detail-wrapper thead{
+  display: none;
+}
 /* Optional: Responsive font sizes */
 @media (max-width: 600px) {
   .news-detail-title {
@@ -112,4 +120,6 @@
   .news-detail-content {
     font-size: 14px;
   }
+
+
 }
