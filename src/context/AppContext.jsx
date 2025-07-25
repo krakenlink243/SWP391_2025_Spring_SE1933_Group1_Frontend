@@ -25,7 +25,7 @@ export function AppProvider({ children }) {
     const [friendList, setFriendList] = useState([]);
     const [groupChats, setGroupChats] = useState([]);
 
-    const { token: CUR_TOKEN } = useAuth();
+    const { token: CUR_TOKEN, logout } = useAuth();
     const userId = localStorage.getItem("userId");
 
     useEffect(() => {
@@ -107,6 +107,10 @@ export function AppProvider({ children }) {
                     console.log("New notification received:", data);
                     // Add new notification to the top of the list
                     setNotifications(prev => [data, ...prev]);
+                    if (data.notificationType === "Publisher Apply: Approved") {
+                        window.confirm("Congratulations. You have been approved to become Publisher. Automatic Signout →");
+                        logout();
+                    }
                 }
             })
 
