@@ -88,7 +88,7 @@ const AccountDetailsPage = () => {
             <main className="account-info-panel">
               <h1>{t(`'s Account`, {userName: account.username})}</h1>
               <section className="info-section purchase-history">
-                <h3>{t('STORE & PURCHASE HISTORY')}</h3>
+                <h3>{t('STORE & TRANSACTIONS HISTORY')}</h3>
                 <div className="wallet-balance">
                   <span>{t('Wallet Balance')}</span>
                   <strong>
@@ -105,7 +105,7 @@ const AccountDetailsPage = () => {
                   >
                     {t('Add funds to your Wallet')}
                   </button>
-                  <Link to="/account/history">{t('View purchase history')}</Link>
+                  <Link to="/account/history">{t('View transactions history')}</Link>
                 </div>
               </section>
               <section className="info-section contact-info">
