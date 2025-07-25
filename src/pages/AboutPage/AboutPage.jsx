@@ -23,8 +23,8 @@ export default function AboutPage() {
             name: 'Phan Gia Lộc',
             linkedin: 'https://www.linkedin.com/in/sonphannguyentruong/',
             github: 'https://github.com/Loc-Phan-ravennsi',
-            avatar: 'https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4',
-            description: '',
+            avatar: 'https://res.cloudinary.com/dlml9t9fg/image/upload/v1753467154/me_hkolld.jpg',
+            description: 'A student of FPT University majoring in Software Engineering.',
             role: ''
         },
         {
