@@ -14,7 +14,7 @@ export default function GameApproved() {
   const [hasMore, setHasMore] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const size = 5;
+  const size = 10;
 
   // Fetch paginated game list
   const fetchGames = async () => {

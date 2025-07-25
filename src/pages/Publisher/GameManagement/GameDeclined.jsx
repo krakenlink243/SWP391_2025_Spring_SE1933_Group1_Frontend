@@ -14,7 +14,7 @@ function GameDeclined() {
   const [hasMore, setHasMore] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const size = 5;
+  const size = 10;
 
   const fetchGames = async () => {
     try {
