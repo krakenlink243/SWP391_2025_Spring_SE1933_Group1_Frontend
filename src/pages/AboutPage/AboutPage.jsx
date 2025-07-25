@@ -13,11 +13,11 @@ export default function AboutPage() {
         },
         {
             name: 'Đỗ Bá Thành',
-            linkedin: 'https://www.linkedin.com/in/sonphannguyentruong/',
-            github: 'https://github.com/PhanNTSon',
-            avatar: 'https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4',
-            description: '',
-            role: ''
+            linkedin: '',
+            github: 'https://github.com/thanhnowa',
+            avatar: 'https://res.cloudinary.com/dnl5vjr6b/image/upload/v1753461534/zzz_nmkzci.jpg',
+            description: `An introvert boy who is a FPT student majoring in JS`,
+            role: 'Full Stack dev'
         },
         {
             name: 'Phan Gia Lộc',
