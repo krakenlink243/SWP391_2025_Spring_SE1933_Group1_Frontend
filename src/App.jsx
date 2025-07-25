@@ -226,11 +226,11 @@ function LoginF() {
 
     >
       <div className="row">
-        <div className="spacer col-lg-4"></div>
-        <div className="col-lg-4">
+        <div className="spacer col-lg-3"></div>
+        <div className="col-lg-6">
           <Login />
         </div>
-        <div className="spacer col-lg-4"></div>
+        <div className="spacer col-lg-3"></div>
       </div>
     </div>
   );

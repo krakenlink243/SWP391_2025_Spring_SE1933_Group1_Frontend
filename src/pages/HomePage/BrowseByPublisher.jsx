@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./BrowseByPublisher.css";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useTranslation } from "react-i18next";
@@ -11,11 +11,21 @@ import { useTranslation } from "react-i18next";
 function BrowseByPublisher() {
   const [data, setData] = useState([]);
   const [cachedPublishers, setCachedPublishers] = useLocalStorage('publisher', []);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   useEffect(() => {
     if (cachedPublishers) setData(cachedPublishers);
     getPublishersList();
   }, []);
+
+  const [itemSize, setItemSize] = useState(0);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      setItemSize(ref.current.offsetWidth);
+    }
+  }, [data]);
+
 
   const getPublishersList = async () => {
     try {
@@ -52,7 +62,7 @@ function BrowseByPublisher() {
               >
                 <div className="d-flex justify-content-around">
                   {group.map((publisher) => (
-                    <a key={publisher.publisherId} className="capsule-cnt">
+                    <a key={publisher.publisherId} className="capsule-cnt" ref={index === 0 ? ref : null} style={{ height: `${itemSize}px` }}>
                       <img
                         src={publisher.imageUrl}
                         alt={publisher.publisherName}
