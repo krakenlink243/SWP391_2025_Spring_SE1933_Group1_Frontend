@@ -22,7 +22,7 @@ export default function AboutPage() {
         {
             name: 'Phan Gia Lộc',
             linkedin: 'https://www.linkedin.com/in/sonphannguyentruong/',
-            github: 'https://github.com/PhanNTSon',
+            github: 'https://github.com/Loc-Phan-ravennsi',
             avatar: 'https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4',
             description: '',
             role: ''
