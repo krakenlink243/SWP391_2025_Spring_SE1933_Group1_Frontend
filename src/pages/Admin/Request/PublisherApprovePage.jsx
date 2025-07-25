@@ -42,6 +42,7 @@ function PublisherApprovePage() {
     if (!confirmApprove) {
       return;
     }
+    createNotification(userId, "Publisher Apply: Approved", "You are now Publisher");
     try {
       const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/publisher/approve/${requestId}`);
       console.log("Approved request:", response.data);
@@ -73,7 +74,7 @@ function PublisherApprovePage() {
                   // Send notification
                   createNotification(
                     userId,
-                    "Publisher Apply Response",
+                    "Publisher Apply: Reject",
                     `Answer for your publisher apply ${publisherName}: ${answer}`
                   );
 
