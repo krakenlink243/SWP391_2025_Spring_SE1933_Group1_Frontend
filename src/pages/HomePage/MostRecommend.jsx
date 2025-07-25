@@ -15,7 +15,6 @@ export default function MostRecommend() {
     const handleGetNewPublish = () => {
         axios.get(`${import.meta.env.VITE_API_URL}/game/most-rated`)
             .then((resp) => {
-                console.log("Fetched games:", resp.data.data);
                 setGames(resp.data.data)
             })
             .catch((err) => console.log("Error: ", err));

@@ -24,7 +24,6 @@ function BrowseByPublisher() {
           setData(response.data);
           setCachedPublishers(response.data);
         });
-      console.log(resp.data);
     } catch (error) {
       console.log(error);
     }

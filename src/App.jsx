@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Outlet, useLocation, Navigate } from "react-router-dom";
 import { AppProvider } from "./context/AppContext";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 import axios from "axios";
 import './App.css';
 // Layouts
@@ -80,6 +80,9 @@ function AppRoutes() {
   // console.log("App component is rendering...");
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const {token} = useAuth();
+
   useEffect(() => {
 
     if (isTokenExpired()) {
@@ -87,7 +90,6 @@ function AppRoutes() {
     }
 
     const fetchCurrentUser = async () => {
-      const token = localStorage.getItem("token");
       if (token && !isTokenExpired()) {
         try {
           const userId = localStorage.getItem("userId");

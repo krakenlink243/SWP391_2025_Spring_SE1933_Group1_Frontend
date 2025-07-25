@@ -59,7 +59,6 @@ function DetailHeader({ game, setIsOpenPopup }) {
                 //adjust add by Bathanh
                 `${import.meta.env.VITE_API_URL}/user/cart/add?gameId=${game.gameId}`
             );
-            console.log("Add to cart response:", response.data);
 
             // @author Phan NT Son
             // Tạo thông báo khi người dùng thêm game vào giỏ hàng
