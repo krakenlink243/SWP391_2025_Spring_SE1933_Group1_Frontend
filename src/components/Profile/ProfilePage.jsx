@@ -23,18 +23,23 @@ const ProfileHeader = ({
 
   const isOnline = onlineUsers.includes(user.username);
 
-  const [friendList, setFriendList] = useState([]);
-  const getFriendList = () => {
-    axios.get(`${import.meta.env.VITE_API_URL}/user/friends`)
-      .then((response) => { setFriendList(response.data) })
-      .catch((err) => { console.log("Error fetching friends list: " + err) })
-  };
+  const { friendList, blockedList } = useContext(AppContext);
+  const { token } = useAuth();
+  const curUserId = localStorage.getItem("userId");
+
+  const [isFriend, setIsFriend] = useState(false);
+  const [isBlock, setIsBlock] = useState(false);
+  const [isBeingBlocked, setIsBeingBlocked] = useState(false);
+
+  useEffect(() => {
+    setIsFriend(friendList.some(friend => friend.friendName === user.username));
+    setIsBlock(blockedList.some(b => b.blockerId === Number(curUserId) && b.blockedId === user.userId));
+    setIsBeingBlocked(blockedList.some(b => b.blockerId === user.userId && b.blockedId === Number(curUserId)));
+  }, [friendList, blockedList, user, curUserId]);
 
   const handleUnfriend = (friendId) => {
+    if (!token) return;
     axios.delete(`${import.meta.env.VITE_API_URL}/user/unfriend/${friendId}`)
-      .then((resp) => {
-        setFriendList(prev => prev.filter(friend => friend.friendId !== friendId));
-      })
       .catch((err) => {
         console.log("Error unfriend: ", err);
       })
@@ -44,13 +49,15 @@ const ProfileHeader = ({
     axios.patch(`${import.meta.env.VITE_API_URL}/user/block/${friendId}`);
   }
 
-  const CUR_TOKEN = useAuth();
-  useEffect(() => {
-    if (CUR_TOKEN && !isTokenExpired()) {
-      getFriendList();
-    }
-  }, [])
-   const {t} = useTranslation();
+  const handleUnBlock = (friendId) => {
+    if (!token) return;
+    axios.delete(`${import.meta.env.VITE_API_URL}/user/unblock/${friendId}`)
+      .catch((err) => {
+        console.log("Error unfriend: ", err);
+      })
+  }
+
+  const { t } = useTranslation();
   return (
     <div className="profile-header">
       <div className="profile-info-container">
@@ -76,7 +83,17 @@ const ProfileHeader = ({
             </button>
           ) : (
             <>
-              {friendList.some(friend => friend.friendName === user.username) ? (
+              {isBeingBlocked ? (
+                <div className="text-white">
+                  {t('You are blocked by this user')}
+                </div>
+              ) : isBlock ? (
+                <div className="d-flex flex-row gap-3">
+                  <button className="action-btn warning" onClick={() => handleUnBlock(user.userId)}>
+                    {t('Unblock')}
+                  </button>
+                </div>
+              ) : isFriend ? (
                 <div className="d-flex flex-row gap-3">
                   <button className="action-btn secondary" onClick={onMessageClick}>
                     {t('Message')}
@@ -84,7 +101,6 @@ const ProfileHeader = ({
                   <button className="action-btn secondary" onClick={() => handleUnfriend(user.userId)}>
                     {t('Unfriend')}
                   </button>
-
                 </div>
               ) : (
                 <div className="d-flex flex-row gap-3">
@@ -108,7 +124,7 @@ const ProfilePage = () => {
   // Lấy ID của profile đang được xem từ URL (ví dụ: /profile/123)
   const { userId: profileId } = useParams();
   const navigate = useNavigate();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -169,7 +185,7 @@ const ProfilePage = () => {
       `${import.meta.env.VITE_API_URL}/user/sendinvite/${profileData.userId}`
     );
     alert(
-      t(`Friend request sent to`, {userName: profileData.profileName})
+      t(`Friend request sent to`, { userName: profileData.profileName })
     );
   };
 
