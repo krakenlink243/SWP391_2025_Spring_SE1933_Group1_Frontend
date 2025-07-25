@@ -7,7 +7,7 @@ export default function AboutPage() {
             name: 'Phan Nguyễn Trường Sơn',
             linkedin: 'https://www.linkedin.com/in/sonphannguyentruong/',
             github: 'https://github.com/PhanNTSon',
-            avatar: 'https://play-lh.googleusercontent.com/EicDCzuN6l-9g4sZ6uq0fkpB-1AcVzd6HeZ6urH3KIGgjw-wXrrtpUZapjPV2wgi5R4',
+            avatar: 'https://res.cloudinary.com/davzqwcoq/image/upload/v1753006843/tra5rhfqhevzwfrydbnp.jpg',
             description: 'I\'m a Student of an University and I\'m love to learn new things about the world and technology',
             role: ''
         },
