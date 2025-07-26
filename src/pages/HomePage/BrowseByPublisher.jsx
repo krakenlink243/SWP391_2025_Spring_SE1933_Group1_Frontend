@@ -27,6 +27,7 @@ function BrowseByPublisher() {
     if (ref.current) {
       setItemSize(ref.current.offsetWidth);
     }
+    console.log("Pub", data)
   }, [data]);
 
   const getPublishersList = async () => {
@@ -75,6 +76,7 @@ function BrowseByPublisher() {
                       onClick={() =>
                         handlePublisherClick(publisher.publisherId)
                       }
+                      ref={index === 0 ? ref : null}
                       style={{ cursor: "pointer", height: `${itemSize}px` }}
                     >
                       <img

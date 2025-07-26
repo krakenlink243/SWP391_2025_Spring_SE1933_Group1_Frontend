@@ -53,7 +53,7 @@ export default function GroupSettingPopup({ groupSetting, setOpenPopup, setCurCh
                 <div>
                     {t('Name this Chat:')}
                 </div>
-                <input type='text' max={100} />
+                <input type='text' max={100} disabled={true} />
                 <Button label={t('Save')} color='gradient-blue-button' onClick={() => handleChangeGroupName()} />
             </div>
         ),
