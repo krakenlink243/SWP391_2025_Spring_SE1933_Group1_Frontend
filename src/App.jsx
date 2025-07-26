@@ -1,9 +1,16 @@
 import { React, useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, Outlet, useLocation, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Outlet,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 import { AppProvider } from "./context/AppContext";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import axios from "axios";
-import './App.css';
+import "./App.css";
 // Layouts
 import MainLayout from "./layouts/MainLayout";
 import AdminLayout from "./layouts/AdminLayout";
@@ -65,6 +72,8 @@ import ApplyToPublisher from "./pages/ApplyToPublisher";
 import ProfileLayout from "./layouts/ProfileLayout";
 import UserFeedback from "./pages/UserFeedback";
 import LegalPopup from "./components/Popup/LegalPopup";
+import TagPage from "./components/TagPage/TagPage";
+import PublisherPage from "./components/PublisherPage/PublisherPage";
 
 import { isTokenExpired } from "./utils/validators";
 import RequestSection from "./pages/Admin/Request/RequestSection";
@@ -84,10 +93,9 @@ function AppRoutes() {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const {token} = useAuth();
+  const { token } = useAuth();
 
   useEffect(() => {
-
     if (isTokenExpired()) {
       localStorage.clear();
     }
@@ -118,7 +126,6 @@ function AppRoutes() {
     return config;
   });
 
-
   return (
     <div className={`app-container`}>
       <div className={`main-app-content`}>
@@ -126,7 +133,6 @@ function AppRoutes() {
 
         <ScrollToTop />
         <Routes>
-
           {/* 404 - Error page */}
           <Route path="*" element={<ErrorPage />} />
 
@@ -154,56 +160,109 @@ function AppRoutes() {
           <Route element={<ProfileLayout />}>
             <Route path="/profile/friends" element={<FriendsPageContainer />} />
             <Route path="/sendfeedback" element={<SendUserFeedback />} />
-            <Route path="/publisher/game-management/:tab?" element={<GameManagement />} />
+            <Route
+              path="/publisher/game-management/:tab?"
+              element={<GameManagement />}
+            />
             <Route path="/account/history" element={<Transaction />} />
             <Route path="/apply-publisher" element={<ApplyToPublisher />} />
             <Route path="/notifications" element={<NotifPage />} />
             <Route path="/library" element={<Library />} />
             <Route path="/sendgame" element={<RequestAddGame />} />
-            <Route path="/profile/:userId/edit/avatar" element={<AvatarSettings />} />
+            <Route
+              path="/profile/:userId/edit/avatar"
+              element={<AvatarSettings />}
+            />
             <Route path="/account" element={<AccountDetailsPage />} />
             <Route path="/payment-result" element={<PaymentResultPage />} />
-            <Route path="/change-email" element={<EmailSettings currentUser={currentUser} />} />
-            <Route path="/profile/:userId/edit/info" element={<EditProfilePage />} />
+            <Route
+              path="/change-email"
+              element={<EmailSettings currentUser={currentUser} />}
+            />
+            <Route
+              path="/profile/:userId/edit/info"
+              element={<EditProfilePage />}
+            />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/profile/:userId" element={<ProfilePage />} />
-            <Route path="/sendpublisher" element={<SendPublisher publiserId={localStorage.getItem("userId")} />} />
+            <Route
+              path="/sendpublisher"
+              element={
+                <SendPublisher publiserId={localStorage.getItem("userId")} />
+              }
+            />
             <Route path="feedbackhub" element={<FeedbackHub />}></Route>
-            <Route path="feedbackhub/:feedbackId" element={<UserFeedbackDetails />} />
-            <Route path="/account/history/detail/:transactionId" element={<TransactionDetail />} />
+            <Route
+              path="feedbackhub/:feedbackId"
+              element={<UserFeedbackDetails />}
+            />
+            <Route
+              path="/account/history/detail/:transactionId"
+              element={<TransactionDetail />}
+            />
             <Route path="/register" element={<RegisterF />} />
             <Route path="/register-details" element={<RegisterDetailsF />} />
             <Route path="/login" element={<LoginF />} />
             <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/forgot-password" element={<ForgotPasswordRequest />} />
+            <Route
+              path="/forgot-password"
+              element={<ForgotPasswordRequest />}
+            />
             <Route path="/change-password" element={<ChangePassword />} />
-            <Route path="/oauth2/callback" element={<OAuth2RedirectHandler />} />
+            <Route
+              path="/oauth2/callback"
+              element={<OAuth2RedirectHandler />}
+            />
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/update-game/:gameId" element={<UpdateGame />} />
             <Route path="/edit-game/:requestId" element={<UpdateGame />} />
-            <Route path="publisher/game/detail/:requestId" element={<GameApproveDetails />} />
+            <Route
+              path="publisher/game/detail/:requestId"
+              element={<GameApproveDetails />}
+            />
             <Route path="/community" element={<Community />} />
-            <Route path="/community/threads/:threadId" element={<ThreadDetailPage />} />
-            <Route path="/community/create-thread" element={<CreateThreadModal />} />
+            <Route
+              path="/community/threads/:threadId"
+              element={<ThreadDetailPage />}
+            />
+            <Route
+              path="/community/create-thread"
+              element={<CreateThreadModal />}
+            />
             <Route path="/news/:gameId" element={<GameNews />} />
             <Route path="/news/create/:gameId" element={<NewsEditor />} />
             <Route path="/news/detail/:newsId" element={<NewsDetail />} />
             <Route path="/news/edit/:newsId" element={<NewsEditor />} />
+            <Route path="/tags/:tagId" element={<TagPage />} />
+            <Route
+              path="/publisher/:publisherId"
+              element={<PublisherPage />}
+            />
           </Route>
 
           {/* Admin area */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
             <Route path="request/:tab?" element={<RequestSection />} />
-            <Route path="request/publisher/detail/:requestId" element={<PublisherApproveDetails />} />
-            <Route path="request/feedback/detail/:requestId" element={<FeedbackApproveDetails />} />
-            <Route path="request/game/detail/:requestId" element={<GameApproveDetails />} />
+            <Route
+              path="request/publisher/detail/:requestId"
+              element={<PublisherApproveDetails />}
+            />
+            <Route
+              path="request/feedback/detail/:requestId"
+              element={<FeedbackApproveDetails />}
+            />
+            <Route
+              path="request/game/detail/:requestId"
+              element={<GameApproveDetails />}
+            />
             <Route path="user-management/:tab?" element={<UserManagement />} />
-            <Route path="game-management/:tab?" element={<AdminGameManagement />} />
+            <Route
+              path="game-management/:tab?"
+              element={<AdminGameManagement />}
+            />
           </Route>
-
         </Routes>
-
       </div>
     </div>
   );
@@ -219,11 +278,12 @@ function UserFeedbackDetails() {
 
 function LoginF() {
   return (
-    <div className="container-fluid py-3"
+    <div
+      className="container-fluid py-3"
       style={{
-        background: "radial-gradient(rgba(24, 26, 33, 0) 0%, #181A21 100%) fixed no-repeat, url(https://cdnphoto.dantri.com.vn/4ydXR7ZhWF5ViH60xAFvBolm3JQ=/2021/02/01/khu-cach-ly-dai-hoc-fpt-13-1612154602281.jpg) center center no-repeat, #181A21"
+        background:
+          "radial-gradient(rgba(24, 26, 33, 0) 0%, #181A21 100%) fixed no-repeat, url(https://cdnphoto.dantri.com.vn/4ydXR7ZhWF5ViH60xAFvBolm3JQ=/2021/02/01/khu-cach-ly-dai-hoc-fpt-13-1612154602281.jpg) center center no-repeat, #181A21",
       }}
-
     >
       <div className="row">
         <div className="spacer col-lg-4"></div>
@@ -242,7 +302,11 @@ function RegisterDetailsF() {
   return <RegisterDetails />;
 }
 function RequestAddGame() {
-  return <div><SendGameToAdmin /></div>;
+  return (
+    <div>
+      <SendGameToAdmin />
+    </div>
+  );
 }
 function List() {
   return (
@@ -257,7 +321,6 @@ function List() {
   );
 }
 
-
 function Wallet() {
   return (
     <div className="container-fluid">
@@ -271,9 +334,7 @@ function Wallet() {
 
 function NotifPage() {
   return (
-    <div
-      className="container-fluid h-100"
-    >
+    <div className="container-fluid h-100">
       <div className="row">
         <div className="spacer col-lg-2"></div>
         <NotificationList />

@@ -34,6 +34,10 @@ function BrowseByPublisher() {
     chunkedPublishers.push(data.slice(i, i + 4));
   }
 
+  const handlePublisherClick = (publisherId) => {
+    window.location.href = `/publisher/${publisherId}`;
+  };
+
   return (
     <div className="browse-publishers">
       <div className="title">{t('Browse by Publisher')}</div>
@@ -52,12 +56,17 @@ function BrowseByPublisher() {
               >
                 <div className="d-flex justify-content-around">
                   {group.map((publisher) => (
-                    <a key={publisher.publisherId} className="capsule-cnt">
+                    <a
+                      key={publisher.publisherId}
+                      className="capsule-cnt"
+                      onClick={() => handlePublisherClick(publisher.publisherId)}
+                      style={{ cursor: "pointer" }}
+                    >
                       <img
                         src={publisher.imageUrl}
                         alt={publisher.publisherName}
                         className="publisher-image"
-                      ></img>
+                      />
                       <div className="gradient"></div>
                       <div className="label-ctn">
                         <span className="label">{publisher.publisherName}</span>

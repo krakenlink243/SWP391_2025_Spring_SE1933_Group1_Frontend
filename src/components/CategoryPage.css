@@ -1,0 +1,32 @@
+.category-page {
+    max-width: 1280px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.category-header {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #36495f;
+}
+
+.category-header h1 {
+    font-size: 32px;
+    font-weight: 300;
+    color: #fff;
+}
+
+.category-page-status {
+    text-align: center;
+    padding: 80px;
+    font-size: 1.5em;
+    color: #c7d5e0;
+}
+.category-page-status.error {
+    color: #ff6b6b;
+}
+
+/* Đảm bảo Pagination nằm ở giữa */
+.category-page .pagination {
+    margin-top: 30px;
+}
