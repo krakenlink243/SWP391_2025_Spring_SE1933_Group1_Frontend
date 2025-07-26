@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./BrowseByPublisher.css";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useTranslation } from "react-i18next";
@@ -10,16 +10,29 @@ import { useTranslation } from "react-i18next";
  */
 function BrowseByPublisher() {
   const [data, setData] = useState([]);
-  const [cachedPublishers, setCachedPublishers] = useLocalStorage('publisher', []);
-  const {t} = useTranslation();
+  const [cachedPublishers, setCachedPublishers] = useLocalStorage(
+    "publisher",
+    []
+  );
+  const { t } = useTranslation();
   useEffect(() => {
     if (cachedPublishers) setData(cachedPublishers);
     getPublishersList();
   }, []);
 
+  const [itemSize, setItemSize] = useState(0);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      setItemSize(ref.current.offsetWidth);
+    }
+  }, [data]);
+
   const getPublishersList = async () => {
     try {
-      await axios.get(`${import.meta.env.VITE_API_URL}/publisher/list`)
+      await axios
+        .get(`${import.meta.env.VITE_API_URL}/publisher/list`)
         .then((response) => {
           setData(response.data);
           setCachedPublishers(response.data);
@@ -40,7 +53,7 @@ function BrowseByPublisher() {
 
   return (
     <div className="browse-publishers">
-      <div className="title">{t('Browse by Publisher')}</div>
+      <div className="title">{t("Browse by Publisher")}</div>
       <div className="conent-hub-carousel">
         <div
           id="browseCarousel1"
@@ -59,8 +72,10 @@ function BrowseByPublisher() {
                     <a
                       key={publisher.publisherId}
                       className="capsule-cnt"
-                      onClick={() => handlePublisherClick(publisher.publisherId)}
-                      style={{ cursor: "pointer" }}
+                      onClick={() =>
+                        handlePublisherClick(publisher.publisherId)
+                      }
+                      style={{ cursor: "pointer", height: `${itemSize}px` }}
                     >
                       <img
                         src={publisher.imageUrl}
@@ -99,7 +114,7 @@ function BrowseByPublisher() {
               className="carousel-control-prev-icon"
               aria-hidden="true"
             ></span>
-            <span className="visually-hidden">{t('Previous')}</span>
+            <span className="visually-hidden">{t("Previous")}</span>
           </button>
           <button
             className="carousel-control-next"
@@ -111,7 +126,7 @@ function BrowseByPublisher() {
               className="carousel-control-next-icon"
               aria-hidden="true"
             ></span>
-            <span className="visually-hidden">{t('Next')}</span>
+            <span className="visually-hidden">{t("Next")}</span>
           </button>
         </div>
       </div>

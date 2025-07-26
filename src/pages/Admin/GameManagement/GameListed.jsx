@@ -48,7 +48,7 @@ function GameListed() {
     setPage(0);
     console.log(term)
   };
-  const handleHide = async (gameId,publisherId) => {
+  const handleHide = async (gameId,publisherId,gameName) => {
     const confirm = window.confirm('Are you sure you want to hide this game?');
     if (!confirm) {
       return;
@@ -56,7 +56,7 @@ function GameListed() {
     try {
       await axios.patch(`${import.meta.env.VITE_API_URL}/game/hide/${gameId}`, {
       });
-      createNotification(publisherId,"Game Management","Someone reported that your game has violated the Term of Service.To object this report, send feedback to us.")
+      createNotification(publisherId,"Game Management",`Someone reported that your game ${gameName} has violated the Term of Service.To object this report, send feedback to us.`)
       setGames(prev => prev.filter(game => game.id !== gameId));
     } catch (error) {
       console.error('Error hiding game:', error);
@@ -83,7 +83,7 @@ function GameListed() {
             title={game.title}
             action1="View"
             action2="Hide"
-            onAction2Click={() => handleHide(game.id,game.publisherId)}
+            onAction2Click={() => handleHide(game.id,game.publisherId,game.title)}
             onAction1Click={() => redirect(game.id)}
           />
         ))}
