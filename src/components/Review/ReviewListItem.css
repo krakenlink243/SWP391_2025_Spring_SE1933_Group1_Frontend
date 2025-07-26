@@ -4,7 +4,7 @@
 }
 
 .review-content .author-profile {
-    flex: 1;
+    width: 20%;
     padding: 8px;
     opacity: 0.6;
 }
@@ -33,7 +33,7 @@
 
 .review-content .content-detail {
     position: relative;
-    flex: 4;
+    width: 80%;
 }
 
 .content-detail .judge-section {
@@ -84,6 +84,7 @@
     color: #acb2b8;
     overflow-wrap: break-word;
     position: relative;
+    white-space: normal;
 }
 
 .content-detail .partical {

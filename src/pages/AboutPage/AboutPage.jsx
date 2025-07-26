@@ -15,18 +15,18 @@ export default function AboutPage() {
     {
       name: "Đỗ Bá Thành",
       linkedin: '',
-            github: 'https://github.com/thanhnowa',
-            avatar: 'https://res.cloudinary.com/dnl5vjr6b/image/upload/v1753461534/zzz_nmkzci.jpg',
-            description: `An introvert boy who is a FPT student majoring in JS`,
-            role: 'Full Stack dev'
+      github: 'https://github.com/thanhnowa',
+      avatar: 'https://res.cloudinary.com/dnl5vjr6b/image/upload/v1753461534/zzz_nmkzci.jpg',
+      description: `An introvert boy who is a FPT student majoring in JS`,
+      role: 'Full Stack dev'
     },
     {
       name: "Phan Gia Lộc",
-      linkedin: 'https://www.linkedin.com/in/sonphannguyentruong/',
-            github: 'https://github.com/Loc-Phan-ravennsi',
-            avatar: 'https://res.cloudinary.com/dlml9t9fg/image/upload/v1753467154/me_hkolld.jpg',
-            description: 'A student of FPT University majoring in Software Engineering.',
-            role: ''
+      linkedin: '',
+      github: 'https://github.com/Loc-Phan-ravennsi',
+      avatar: 'https://res.cloudinary.com/dlml9t9fg/image/upload/v1753467154/me_hkolld.jpg',
+      description: 'A student of FPT University majoring in Software Engineering.',
+      role: ''
     },
     {
       name: "Trần Sỹ Huy",
@@ -41,10 +41,10 @@ export default function AboutPage() {
     {
       name: "Vũ Quốc Hoàng",
       linkedin: '',
-            github: 'https://github.com/krakenlink243',
-            avatar: 'https://res.cloudinary.com/davzqwcoq/image/upload/v1753450794/afockdsa8tvwmbz1c5fu.png',
-            description: 'Student of FPT University. Now studying JS',
-            role: 'FullStack Developers, Hosting Support'
+      github: 'https://github.com/krakenlink243',
+      avatar: 'https://res.cloudinary.com/davzqwcoq/image/upload/v1753450794/afockdsa8tvwmbz1c5fu.png',
+      description: 'Student of FPT University. Now studying JS',
+      role: 'FullStack Developers, Hosting Support'
     },
   ];
 
@@ -89,9 +89,8 @@ export default function AboutPage() {
             return (
               <div
                 key={indx}
-                className={`member d-flex flex-column flex-md-row ${
-                  indx % 2 === 1 ? "flex-md-row-reverse" : ""
-                } align-items-center mb-5 w-100 gap-3`}
+                className={`member d-flex flex-column flex-md-row ${indx % 2 === 1 ? "flex-md-row-reverse" : ""
+                  } align-items-center mb-5 w-100 gap-3`}
               >
                 <div className="avatar">
                   <img
@@ -103,9 +102,8 @@ export default function AboutPage() {
                   <div className="name">{member.name}</div>
                   <div className="description">{member.description}</div>
                   <div
-                    className={`d-flex flex-row ${
-                      indx % 2 === 1 ? "flex-md-row-reverse" : ""
-                    } align-items-center gap-3 py-2`}
+                    className={`d-flex flex-row ${indx % 2 === 1 ? "flex-md-row-reverse" : ""
+                      } align-items-center gap-3 py-2`}
                   >
                     <div
                       className="contact-link"

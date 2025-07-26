@@ -8,8 +8,9 @@ function ReviewListItem({ review, game, CUR_USERID, setEditingId }) {
   const contentSection = useRef(null);
   const [contentH, setContentH] = useState(0);
   const [revealAll, setRevealAll] = useState(false);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
+  console.log("Review: ", review);
 
   useEffect(() => {
     if (contentSection) {
@@ -20,8 +21,10 @@ function ReviewListItem({ review, game, CUR_USERID, setEditingId }) {
   return (
     <div className="review-content d-flex flex-row gap-1">
       <div className="author-profile">
-        <img src={review.authorAvatarUrl} ></img>
-        <strong>{review.authorName}</strong>
+        <div className="w-100 d-flex flex-row align-items-center">
+          <img src={review.authorAvatarUrl} ></img>
+          <strong>{review.authorName}</strong>
+        </div>
       </div>
       <div className="content-detail d-flex flex-column align-items-start">
         <div className="judge-section w-100 d-flex flex-row">
