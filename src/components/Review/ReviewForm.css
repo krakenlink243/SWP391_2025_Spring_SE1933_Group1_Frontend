@@ -35,6 +35,27 @@
     flex: 4;
 }
 
+.actions-input-box {
+    position: relative;
+}
+
+.actions-input-box .ban-message {
+    position: absolute;
+
+    backdrop-filter: blur(3px);
+    font-weight: 500;
+    font-size: 16px;
+    color: red;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    user-select: none;
+}
+
 
 .actions-input-box textarea {
     border: 1px solid #233c51;
@@ -81,4 +102,21 @@
     text-decoration: none;
     color: #fff !important;
     background: rgba(103, 193, 245, 0.6);
+}
+
+.review-post-container .spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #fff;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    display: inline-block;
+    animation: spin 0.8s linear infinite;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useContext } from "react";
 import ReviewForm from "./ReviewForm";
 import ReviewListItem from "./ReviewListItem";
 import ReviewUpdateForm from "./ReviewUpdateForm";
@@ -6,6 +6,8 @@ import axios from "axios";
 import './Review.css';
 import { useReview } from "../../hooks/useReview";
 import { useTranslation } from "react-i18next";
+import { AppContext } from '../../context/AppContext';
+
 
 /**
  * @author Phan NT Son
@@ -16,13 +18,19 @@ import { useTranslation } from "react-i18next";
 function Review({ game }) {
   const [reloadSignal, setReloadSignal] = useState(0);
   const triggerReload = () => setReloadSignal(prev => prev + 1);
+
   const CUR_USERID = Number(localStorage.getItem("userId"));
+
+  const { library } = useContext(AppContext);
+  const isOwnedGame = library.some((oG => oG.name === game.name));
+
+
   const [reviewList, setReviewList] = useState([]);
   const [visibleCount, setVisibleCount] = useState(5);
   const [editingId, setEditingId] = useState(null);
   const shownReviews = reviewList.slice(0, visibleCount);
   const dto = useReview(game.gameId);
-  
+
 
   useEffect(() => {
     console.log("[State] reviewList changed:", reviewList);
@@ -94,13 +102,13 @@ function Review({ game }) {
   }, [reviewList, CUR_USERID]);
 
 
-const {t} = useTranslation();
+  const { t } = useTranslation();
   return (
     <div className="review-container w-100">
       <h2>{t('CUSTOMER REVIEWS FOR')} {game.name}</h2>
       <div className="line-seperate w-100"></div>
 
-      {CUR_USERID && !isHavingReview && (
+      {CUR_USERID && !isHavingReview && isOwnedGame && (
         <ReviewForm
           onReload={triggerReload}
           game={game} />
