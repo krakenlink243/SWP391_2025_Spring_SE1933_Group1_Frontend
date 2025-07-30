@@ -151,6 +151,9 @@ const Header = forwardRef((props, ref) => {
                   <Link className="submenuitem" to="/profile/friends">
                     Friends
                   </Link>
+                  <Link className="submenuitem" to="/profile/family">
+                    Family
+                  </Link>
                 </div>
               )
             }

@@ -12,20 +12,16 @@ function AddFriendTab() {
     const [searchFriendCode, setSearchFriendCode] = useState("");
     const [searchResult, setSearchResult] = useState(null);
     const { t } = useTranslation();
-    const [friendList, setFriendList] = useState([]);
+
     const [sentInvitesList, setSentInvitesList] = useState([]);
 
-    const { blockedList: blockList } = useContext(AppContext);
+    const { friendList, blockedList: blockList } = useContext(AppContext);
+    const isFull = friendList.length + sentInvitesList.length === 285;
+    // const isFull = 284 + sentInvitesList.length === 285;
 
     const [copied, setCopied] = useState(false);
     const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
 
-
-    const getFriendList = () => {
-        axios.get(`${import.meta.env.VITE_API_URL}/user/friends`)
-            .then((response) => { setFriendList(response.data) })
-            .catch((err) => { console.log("Error fetching friends list: " + err) })
-    };
 
     const getSentInvitesList = () => {
         axios.get(`${import.meta.env.VITE_API_URL}/user/pendinginvite/init`)
@@ -35,6 +31,7 @@ function AddFriendTab() {
     }
 
     const handleSendInvite = (friendId) => {
+        if (isFull) return;
         axios.post(`${import.meta.env.VITE_API_URL}/user/sendinvite/${friendId}`)
             .then((response) => {
                 createNotification(friendId, "Friend", `${curUsername} send you an invite`);
@@ -72,7 +69,6 @@ function AddFriendTab() {
     }
 
     useEffect(() => {
-        getFriendList();
         getSentInvitesList();
     }, [])
 
@@ -121,18 +117,22 @@ function AddFriendTab() {
                     </div>
                     <div className="enter-friend-code-wrapper">
                         <div className="enter-friend-code-title">
-                            {t(`Enter your friend's Friend Code to invite them to connect`)}
+                            {!isFull ? t(`Enter your friend's Friend Code to invite them to connect`) : "You have reach your Friends Limitations"}
                         </div>
-                        <div className="enter-friend-code-input-box d-flex flex-column">
-                            <input
-                                type="text"
-                                placeholder={t('Enter a Friend Code')}
-                                value={searchFriendCode}
-                                onChange={(e) => {
-                                    setSearchFriendCode(e.target.value);
-                                }}
-                            />
-                        </div>
+                        {
+                            !isFull && (
+                                <div className="enter-friend-code-input-box d-flex flex-column">
+                                    <input
+                                        type="text"
+                                        placeholder={t('Enter a Friend Code')}
+                                        value={searchFriendCode}
+                                        onChange={(e) => {
+                                            setSearchFriendCode(e.target.value);
+                                        }}
+                                    />
+                                </div>
+                            )
+                        }
                         <div
                             className="search-result-box d-flex flex-row justify-content-between align-items-center"
                             style={{
@@ -157,7 +157,8 @@ function AddFriendTab() {
                                     {(searchResult &&
                                         (handleCheckFriend(searchResult.userId) ||
                                             handleCheckSentInvite(searchResult.userId) ||
-                                            handleCheckBlockFriend(searchResult.userId))) ? (
+                                            handleCheckBlockFriend(searchResult.userId) ||
+                                            isFull)) ? (
                                         <div className="send-invite-btn btn-disable">
                                             {t('Send Invite')}
                                         </div>

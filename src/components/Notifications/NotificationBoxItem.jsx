@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import './NotificationBox.css';
+import { useNavigate } from "react-router-dom";
 
 /**
  * @author Phan NT Son
@@ -10,6 +11,7 @@ import './NotificationBox.css';
  */
 function NotificationBoxItem({ notification, markRead }) {
     const [read, setRead] = useState(notification.read);
+    const navigate = useNavigate();
 
     const handleClick = () => {
         if (!read) {
@@ -19,6 +21,7 @@ function NotificationBoxItem({ notification, markRead }) {
                     markRead(notification.notifId);
                 })
                 .catch((error) => console.error("Error marking notification as read:", error));
+                
         }
     };
 

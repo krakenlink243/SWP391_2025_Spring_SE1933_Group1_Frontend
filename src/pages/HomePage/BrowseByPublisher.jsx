@@ -27,7 +27,7 @@ function BrowseByPublisher() {
     if (ref.current) {
       setItemSize(ref.current.offsetWidth);
     }
-    console.log("Pub", data)
+    // console.log("Pub", data)
   }, [data]);
 
   const getPublishersList = async () => {

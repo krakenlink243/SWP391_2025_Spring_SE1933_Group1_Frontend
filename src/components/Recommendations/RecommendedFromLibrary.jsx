@@ -15,7 +15,6 @@ const RecommendedFromLibrary = ({ userId }) => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/game/related/owned/${userId}`);
         setGames(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching library-based recommendations:", error);
       } finally {

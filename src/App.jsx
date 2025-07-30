@@ -44,6 +44,7 @@ import AvatarSettings from "./components/Profile/AvatarSettings/AvatarSettings";
 import AccountDetailsPage from "./components/AccountDetail/AccountDetailsPage";
 import EmailSettings from "./components/EmailChange/EmailSettings";
 import ChangePassword from "./pages/ForgotPassword/ChangePassword";
+import FamilyPage from "./pages/FamilyPage/FamilyPage";
 
 // Admin pages
 import AdminDashboard from "./pages/Admin/AdminDashboard";
@@ -159,6 +160,7 @@ function AppRoutes() {
           {/* User Profile and related Pages */}
           <Route element={<ProfileLayout />}>
             <Route path="/profile/friends" element={<FriendsPageContainer />} />
+            <Route path="/profile/family" element={<FamilyPageContainer />} />
             <Route path="/sendfeedback" element={<SendUserFeedback />} />
             <Route
               path="/publisher/game-management/:tab?"
@@ -361,6 +363,25 @@ function FriendsPageContainer() {
         <div className="spacer col-lg-1"></div>
         <div className="col-lg-10">
           <FriendsPage />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FamilyPageContainer() {
+  return (
+    <div
+      className="container-fluid h-100"
+      style={{
+        background:
+          "url(https://community.fastly.steamstatic.com/public/images/friends/colored_body_top2.png?v=2) center top no-repeat #1b2838",
+      }}
+    >
+      <div className="row">
+        <div className="spacer col-lg-1"></div>
+        <div className="col-lg-10">
+          <FamilyPage />
         </div>
       </div>
     </div>

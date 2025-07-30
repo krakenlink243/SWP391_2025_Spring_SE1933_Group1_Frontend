@@ -21,7 +21,6 @@ class SocketService {
                 webSocketFactory: () => new SockJS(`${import.meta.env.VITE_API_URL}/ws-community?token=${token}`),
                 reconnectDelay: 5000,
                 onConnect: () => {
-                    console.log('Socket connected');
                     setTimeout(() => {
                         onConnected?.();
                     }, 500);
@@ -43,7 +42,7 @@ class SocketService {
 
         try {
             if (!this.subscriptions[topic]) {
-                console.log(`[SocketService] Subscribing to ${topic}`);
+                // console.log(`[SocketService] Subscribing to ${topic}`);
                 this.subscriptions[topic] = this.client.subscribe(topic, frame =>
                     callback(JSON.parse(frame.body))
                 );
@@ -55,7 +54,7 @@ class SocketService {
 
     unsubscribe(topic) {
         this.subscriptions[topic]?.unsubscribe();
-        console.log(`[SocketService] Unsubscribing to ${topic}`);
+        // console.log(`[SocketService] Unsubscribing to ${topic}`);
         delete this.subscriptions[topic];
     }
 
