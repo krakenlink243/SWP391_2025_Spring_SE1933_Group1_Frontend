@@ -6,6 +6,7 @@ import BlockedTab from "./BlockedTab";
 import { useState } from "react";
 import './FriendPage.css';
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 function FriendsPage() {
     const token = localStorage.getItem("token");
@@ -34,7 +35,8 @@ function FriendsPage() {
             <div className="friend-page-container">
                 <div className="friend-page-header d-flex flex-row align-items-center">
                     <img src={avatarUrl} alt="avatar" className="avatar" onClick={() => navigate("/profile")} />
-                    <a className="username" href="/profile">{username}</a>
+                        <Link to="/profile" className='username'>{username}</Link>
+
                 </div>
                 <div className="friend-page-content d-flex flex-row">
                     <div className="content-left-nav d-flex flex-column w-25">

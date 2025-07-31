@@ -1,0 +1,113 @@
+
+
+.family-invitation-tab .box-title {
+    width: 100%;
+    padding: 5px 10px;
+    background-color: #015e80;
+    display: flex;
+    align-items: center;
+}
+
+.family-invitation-tab .box-title .title {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 14px;
+    color: #fff;
+    font-weight: normal;
+    min-width: 250px;
+}
+
+
+.family-invitation-tab .result {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.family-invitation-tab .result-not-found {
+    padding: 16px;
+    font-size: 17px;
+    background: rgba(0, 0, 0, 0.2);
+    color: #969696;
+    margin: 8px 0px 0px 0px;
+    flex-grow: 1;
+}
+
+.family-invitation-tab .box-item {
+    display: flex;
+    justify-content: space-between;
+    flex: 1 100%;
+    margin-top: 4px;
+    background: rgba(29, 31, 36, .8);
+    padding: 8px;
+    position: relative;
+    flex-wrap: wrap;
+}
+
+.family-invitation-tab .box-item .friend-box {
+    display: flex;
+    gap: .5rem;
+}
+
+.family-invitation-tab .box-item .friend-box .avatar {
+    width: 36px;
+}
+
+.family-invitation-tab .box-item .friend-box .avatar img {
+    width: 100%;
+}
+
+.family-invitation-tab .box-item .friend-box .description {
+    color: #ebebeb;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.family-invitation-tab .box-item .friend-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .5rem;
+}
+
+.family-invitation-tab .box-item .friend-actions .actions-btn {
+    border-radius: 2px;
+    border: none;
+    padding: 1px;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none !important;
+    color: #67c1f5 !important;
+    background: rgba(103, 193, 245, 0.2);
+}
+
+.family-invitation-tab .box-item .friend-actions .actions-btn:hover {
+    background: linear-gradient(-60deg, #417a9b 5%, #67c1f5 95%);
+    color: #fff !important;
+}
+
+.friend-actions .actions-btn span {
+    padding: 0 30px;
+    font-size: 12px;
+    line-height: 24px;
+    border-radius: 2px;
+    display: block;
+    background: transparent;
+}
+
+.tab-spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #555;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

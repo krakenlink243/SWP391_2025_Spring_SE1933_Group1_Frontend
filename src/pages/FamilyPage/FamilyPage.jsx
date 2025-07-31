@@ -7,7 +7,7 @@ import FamilyInvitationTab from './FamilyInvitationTab';
 import FamilySettingTab from './FamilySettingTab';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
-import { AppContext } from '../../context/AppContext';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 export default function FamilyPage() {
@@ -52,7 +52,7 @@ export default function FamilyPage() {
     }, [token, navigate, curTab]);
 
     const tabs = familyData ? [
-        <FamilyMemberTab members={familyData.members} isOwner={isOwner} setCurTab={setCurTab} />,
+        <FamilyMemberTab members={familyData.members} isOwner={isOwner} />,
         <FamilyLibraryTab familyData={familyData} />,
         <FamilyInvitationTab />,
         <FamilySettingTab />
@@ -94,7 +94,7 @@ export default function FamilyPage() {
                 <div className="family-page-container" >
                     <div className="family-page-header d-flex flex-row align-items-center">
                         <img src={avatarUrl} alt="avatar" className="avatar" onClick={() => navigate("/profile")} />
-                        <a className="username" href="/profile">{username}</a>
+                        <Link to="/profile" className='username'>{username}</Link>
                     </div>
                     <div className="family-page-content d-flex flex-row">
                         <div className="content-left-nav d-flex flex-column w-25">
