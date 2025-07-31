@@ -1,5 +1,195 @@
-export default function FamilySettingTab(){
-    return(
-        <div></div>
+import React, { useState, useEffect, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+import { AppContext } from '../../context/AppContext';
+import './FamilySettingTab.css';
+import Button from '../../components/Button/Button';
+import axios from 'axios';
+
+export default function FamilySettingTab({ members, isOwner }) {
+
+    const [curTab, setCurTab] = useState(0);
+    const tabs = [
+        <SubscribePlan isOwner={isOwner} />,
+        <FamilyManagement members={members} />
+    ];
+
+    return (
+        <div className="family-setting-tab d-flex flex-column align-items-center justify-content-center">
+            <div className="setting-nav d-flex flex-row justify-content-around w-100 align-items-center ">
+                <div className="nav-item" onClick={() => setCurTab(0)}>Subscription Plans</div>
+                {
+                    isOwner && (
+                        <div className="nav-item" onClick={() => setCurTab(1)}>Family Management</div>
+                    )
+                }
+            </div>
+            <div className="setting-content w-100">
+                {tabs[curTab]}
+            </div>
+        </div>
     );
 }
+
+function SubscribePlan({ isOwner }) {
+    const { t } = useTranslation();
+    const { walletBalance } = useContext(AppContext);
+
+    const handleSubscription = (plan) => {
+        if (!isOwner) {
+            alert(t('You do not have privileges to subscribe to a plan.'));
+            return;
+        }
+        if (walletBalance < plan.price) {
+            alert(t('You do not have enough balance to subscribe to this plan.'));
+            return;
+        }
+
+        axios.post(`${import.meta.env.VITE_API_URL}/api/family/subscribe`, {
+            planName: plan.name,
+            price: plan.price,
+            duration: plan.duration
+        }).then((response) => {
+            console.log("Subscription successful:", response.data);
+            // Optionally, you can refresh the family data or redirect the user
+            setIsHaveFamily(true);
+            setFamilyData(response.data.data);
+        }).catch((error) => {
+            console.error("Error subscribing to plan:", error);
+            // Handle error, show notification, etc.
+        })
+    }
+
+    return (
+        <div className='subscribe-plan-container d-flex flex-row flex-wrap align-items-center justify-content-center'>
+            <div className='d-flex flex-row flex-wrap w-100 justify-content-around gap-2 py-3'>
+                <div className="plan-card border rounded p-4 text-center shadow-sm"
+                    onClick={() => handleSubscription({ name: 'Bronze', price: 3, duration: 30 })}
+                >
+                    <h4>{t('Bronze')}</h4>
+                    <p>30 {t('days')}</p>
+                    <p className="fw-bold" style={{ color: '#cd7f32' }}>{(3).toLocaleString("en-US", { style: "currency", currency: "USD" })}</p>
+                    <button className="btn btn-outline-bronze mt-2">
+                        {t('Subscribe')}
+                    </button>
+                </div>
+                <div className="plan-card border rounded p-4 text-center shadow-sm"
+                    onClick={() => handleSubscription({ name: 'Silver', price: 5, duration: 30 })}
+                >
+                    <h4>{t('Silver')}</h4>
+                    <p>30 {t('days')}</p>
+                    <p className="fw-bold text-secondary">{(5).toLocaleString("en-US", { style: "currency", currency: "USD" })}</p>
+                    <button className="btn btn-outline-secondary mt-2">
+                        {t('Subscribe')}
+                    </button>
+                </div>
+                <div className="plan-card border rounded p-4 text-center shadow-sm"
+                    onClick={() => handleSubscription({ name: 'Gold', price: 50, duration: 30 })}
+                >
+                    <h4>{t('Gold')}</h4>
+                    <p>30 {t('days')}</p>
+                    <p className="fw-bold text-warning">{(50).toLocaleString("en-US", { style: "currency", currency: "USD" })}</p>
+                    <button className="btn btn-outline-warning mt-2">
+                        {t('Subscribe')}
+                    </button>
+                </div>
+                <div className="plan-card border rounded p-4 text-center shadow-sm"
+                    onClick={() => handleSubscription({ name: 'Platinum', price: 100, duration: 30 })}
+                >
+                    <h4>{t('Platinum')}</h4>
+                    <p>30 {t('days')}</p>
+                    <p className="fw-bold" style={{ color: '#AF40FF' }}>{(100).toLocaleString("en-US", { style: "currency", currency: "USD" })}</p>
+                    <button className="btn btn-outline-platinum mt-2">
+                        {t('Subscribe')}
+                    </button>
+                </div>
+            </div>
+            <div>
+                Note: You can only subscribe to one plan at a time. If you subscribe to a new plan, it will replace your current subscription.
+            </div>
+        </div>
+    );
+}
+
+function FamilyManagement({ members }) {
+    const { t } = useTranslation();
+    const [kickMembers, setKickMembers] = useState([]);
+    const [isGroupEmpty, setIsGroupEmpty] = useState(false);
+
+    const [familyMembers, setFamilyMembers] = useState(members.filter(member => member.isOwner === false));
+
+    useEffect(() => {
+        setFamilyMembers(members.filter(member => member.isOwner === false));
+        setIsGroupEmpty(familyMembers.length === 0);
+    }, [members]);
+
+    return (
+        <div className='member-management-container d-flex flex-column align-items-start justify-content-center'>
+            <h3>Kick Members</h3>
+            <div className="form-group">
+                <label>Choosed Group Members</label>
+                <div className="selected-members-list d-flex flex-row flex-wrap align-items-center">
+                    {kickMembers.map((member) => (
+                        <div
+                            key={member.id}
+                            className="selected-member"
+                            onClick={() =>
+                                setKickMembers((prev) =>
+                                    prev.filter((m) => m.id !== member.id)
+                                )
+                            }
+                        >
+                            <span className="selected-member-name">{member.name}</span>
+                            ✕
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div className="form-group">
+                <label>Choose Members</label>
+                <div className="member-list">
+                    {familyMembers.map((member) => {
+                        const isSelected = kickMembers.some((g) => g.id === member.id);
+                        return (
+                            <div
+                                key={member.id}
+                                className={`member-item ${isSelected ? 'selected' : ''}`}
+                                onClick={() => {
+                                    if (isSelected) {
+                                        setKickMembers((prev) =>
+                                            prev.filter((m) => m.id !== member.id)
+                                        );
+                                    } else {
+                                        setKickMembers((prev) => [...prev, member]);
+                                    }
+                                }}
+                            >
+                                <div className="avatar">
+                                    <img src={member.avatar}></img>
+                                </div>
+                                {member.name}
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+
+            <div className="d-flex w-100 flex-row justify-content-around align-items-center py-2">
+                <Button label={"Reset"} onClick={() => {
+                    setKickMembers([]);
+                }}
+                    color="grey-button"
+                    disabled={kickMembers.length === 0}
+                />
+                <Button
+                    label={`Kick ${kickMembers.length} Member${kickMembers.length > 1 ? 's' : ''}`}
+                    onClick={() => handleKickMember()}
+                    color="gradient-blue-button"
+                    disabled={isGroupEmpty || kickMembers.length === 0}
+                />
+            </div>
+        </div>
+    );
+}
+
+// function 

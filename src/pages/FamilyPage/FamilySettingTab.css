@@ -1,0 +1,33 @@
+.family-setting-tab {
+    background: radial-gradient(circle at top left, rgba(74, 81, 92, 0.4) 0%, rgba(75, 81, 92, 0) 60%), #25282e;
+    color: #acb2b8;
+
+}
+
+.family-setting-tab .setting-nav{
+    padding: 5px;   
+}
+
+.family-setting-tab .setting-nav .nav-item{
+    cursor: pointer;
+    margin: 5px 10px;
+    user-select: none;
+    font-size: 16px;
+}
+
+.family-setting-tab .setting-nav .nav-item:hover{
+    filter: brightness(1.5);
+}
+
+.family-setting-tab .setting-content{
+    padding: 5px;
+    border-top: #acb2b8 1px solid;
+}
+
+.family-setting-tab .member-management-container{
+    width: 100%;
+}
+.family-setting-tab .member-management-container .form-group{
+    width: 100%;
+}
+

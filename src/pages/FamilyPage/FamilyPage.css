@@ -2,6 +2,8 @@
     font-family: "Motiva Sans", Sans-serif;
     font-weight: 300;
     padding-bottom: 128px;
+    color: #ebebeb;
+
 }
 
 .family-page-container .family-page-header {
@@ -16,10 +18,10 @@
     cursor: pointer;
 }
 
-.family-page-header a {
-    color: #ebebeb;
+.family-page-header .username {
     text-decoration: none;
     cursor: pointer;
+    font-size: 24px;
 }
 
 .family-page-container .family-page-content {

@@ -68,12 +68,16 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    // Khi app mount, kiểm tra lại token 1 lần duy nhất
-    const expDate = localStorage.getItem("expDate");
-    const now = Math.floor(Date.now() / 1000);
-    if (expDate && Number(expDate) < now) {
-      logout();
-    }
+    const interval = setInterval(() => {
+      const expDate = localStorage.getItem("expDate");
+      const now = Math.floor(Date.now() / 1000);
+      if (expDate && Number(expDate) < now) {
+        console.warn("Token expired — logging out...");
+        logout();
+      }
+    }, 30 * 1000); // mỗi 30 giây
+
+    return () => clearInterval(interval); // clear khi component unmount
   }, []);
 
   return (
