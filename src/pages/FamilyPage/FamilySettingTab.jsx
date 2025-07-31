@@ -5,11 +5,11 @@ import './FamilySettingTab.css';
 import Button from '../../components/Button/Button';
 import axios from 'axios';
 
-export default function FamilySettingTab({ members, isOwner, handleDeleteFamily }) {
+export default function FamilySettingTab({ members, isOwner, handleDeleteFamily, setFamilyData, curPlan, setPlan }) {
 
     const [curTab, setCurTab] = useState(0);
     const tabs = [
-        <SubscribePlan isOwner={isOwner} />,
+        <SubscribePlan isOwner={isOwner} setFamilyData={setFamilyData} setPlan={setPlan} curPlan={curPlan} />,
         <FamilyManagement members={members} handleDeleteFamily={handleDeleteFamily} />
     ];
 
@@ -30,20 +30,43 @@ export default function FamilySettingTab({ members, isOwner, handleDeleteFamily 
     );
 }
 
-function SubscribePlan({ isOwner }) {
+function SubscribePlan({ isOwner, setFamilyData, setPlan, curPlan }) {
     const { t } = useTranslation();
     const { walletBalance } = useContext(AppContext);
 
-    const handleSubscription = (plan) => {
+    const handleSubscription = async (plan) => {
+        if (curPlan) {
+            if (curPlan && curPlan.planName === plan.name) {
+                alert(t('You are already subscribed to this plan.'));
+                return;
+            }
+            if (curPlan.price > plan.price) {
+                alert(t('You cannot downgrade your plan. Please choose a plan with a higher price.'));
+                return;
+            }
+        }
+
+
         if (!isOwner) {
-            alert(t('You do not have privileges to subscribe to a plan.'));
+            alert(t('Only family owner can subscribe to a plan.'));
             return;
         }
         if (walletBalance < plan.price) {
-            alert(t('You do not have enough balance to subscribe to this plan.'));
+            const params = {
+                amount: plan.price,
+                language: "en",
+            };
+            const response = await axios.post(
+                `${import.meta.env.VITE_API_URL}/api/v1/payments/create-vnpay-payment`,
+                null,
+                { params: params }
+            );
+            const { paymentUrl } = response.data;
+            if (paymentUrl) {
+                window.location.href = paymentUrl;
+            }
             return;
         }
-
         axios.post(`${import.meta.env.VITE_API_URL}/api/family/subscribe`, {
             planName: plan.name,
             price: plan.price,
@@ -51,13 +74,15 @@ function SubscribePlan({ isOwner }) {
         }).then((response) => {
             console.log("Subscription successful:", response.data);
             // Optionally, you can refresh the family data or redirect the user
-            setIsHaveFamily(true);
             setFamilyData(response.data.data);
+            setPlan(response.data.data.subscriptionPlan);
+            alert(t('Subscription successful!'));
         }).catch((error) => {
             console.error("Error subscribing to plan:", error);
             // Handle error, show notification, etc.
         })
     }
+
 
     return (
         <div className='subscribe-plan-container d-flex flex-row flex-wrap align-items-center justify-content-center'>
@@ -213,7 +238,7 @@ function FamilyManagement({ members, handleDeleteFamily }) {
             <div className='section'>
                 <h3>Delete Family</h3>
                 <p>By deleting this family, your current plan will also be remove and there is no refund.</p>
-                <Button label={'Delete Family'} color='red-button' onClick={() => handleDeleteFamily()}/>
+                <Button label={'Delete Family'} color='red-button' onClick={() => handleDeleteFamily()} />
             </div>
         </div>
     );

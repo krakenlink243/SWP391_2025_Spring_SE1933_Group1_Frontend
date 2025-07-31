@@ -74,7 +74,14 @@ export default function FamilyPage() {
         <FamilyMemberTab members={familyData.members} isOwner={isOwner} />,
         <FamilyLibraryTab familyData={familyData} />,
         <FamilyInvitationTab />,
-        <FamilySettingTab members={familyData.members} isOwner={familyData.isOwner} handleDeleteFamily={() => handleDeleteFamily()} />
+        <FamilySettingTab
+            members={familyData.members}
+            isOwner={familyData.isOwner}
+            handleDeleteFamily={() => handleDeleteFamily()}
+            setFamilyData={setFamilyData}
+            setPlan={setPlan}
+            curPlan={plan}
+        />
     ] : [];
 
 
@@ -175,8 +182,12 @@ export default function FamilyPage() {
                         <img src={avatarUrl} alt="avatar" className="avatar" onClick={() => navigate("/profile")} />
                         <div className='d-flex flex-column justify-content-start align-items-start'>
                             <Link to="/profile" className='username'>{username}</Link>
-                            <div>Current plan: {plan.planName}</div>
-                            <div>Plan end at: {familyData.expDate}</div>
+                            <div>Current plan: {plan ? plan.planName : "None"}</div>
+                            {
+                                plan && (
+                                    <div>Plan end at: {familyData.expDate}</div>
+                                )
+                            }
                         </div>
                     </div>
                     <div className="family-page-content d-flex flex-row">
