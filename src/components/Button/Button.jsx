@@ -8,15 +8,19 @@ import './Button.css'
  * @param {{color: 'red-button'|'grey-button'|'blue-button'|'green-button'|'white-button'|'white-grey-button'|'gradient-blue-button'|'gradient-green-button'}} this.props.color
  * @returns a button component with customizable label, click handler, disabled state, and color
  */
-function Button({ label, onClick, disabled, color, type }) {
+function Button({ label, onClick, disabled, color, type, loading = false }) {
   return (
     <button
       onClick={onClick}
-      disabled={disabled}
-      className={`${color} ${disabled === true ? "disabled-button" : ""}`} // Adjusted by Phan NT Son
+      disabled={disabled || loading}
+      className={`${color} ${disabled || loading ? "disabled-button" : ""}`} // Adjusted by Phan NT Son
       type={type ? type : ""}
     >
-      {label}
+      {loading ? (
+        <span className="custom-spinner" />
+      ) : (
+        label
+      )}
     </button>
   );
 }

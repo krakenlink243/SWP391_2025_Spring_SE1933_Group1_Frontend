@@ -20,9 +20,14 @@ export default function FamilyPage() {
     const avatarUrl = localStorage.getItem("avatarUrl");
     const [curTab, setCurTab] = useState(0);
     const [fadeClass, setFadeClass] = useState("fade-in");
+
     const [loading, setLoading] = useState(true);
     const [familyData, setFamilyData] = useState(null);
     const [isHaveFamily, setIsHaveFamily] = useState(false);
+
+    
+    const [isOwner, setIsOwner] = useState(false);
+    
 
     useEffect(() => {
         if (!token) {
@@ -34,6 +39,7 @@ export default function FamilyPage() {
                 const data = response.data.data;
                 setFamilyData(data);
                 setIsHaveFamily(data && data.familyId && data.familyId !== -1);
+                setIsOwner(data && data.isOwner);
             })
             .catch((error) => {
                 console.error("Error fetching family data:", error);
@@ -43,14 +49,15 @@ export default function FamilyPage() {
                 setLoading(false);
             });
 
-    }, [token, navigate]);
+    }, [token, navigate, curTab]);
 
-    const tabs = [
-        <FamilyMemberTab setCurTab={setCurTab} />,
-        <FamilyLibraryTab />,
+    const tabs = familyData ? [
+        <FamilyMemberTab members={familyData.members} isOwner={isOwner} setCurTab={setCurTab} />,
+        <FamilyLibraryTab familyData={familyData} />,
         <FamilyInvitationTab />,
         <FamilySettingTab />
-    ];
+    ] : [];
+
 
     const handleChangeTab = (indx) => {
         setFadeClass("fade-out");
@@ -104,12 +111,16 @@ export default function FamilyPage() {
                             >
                                 {t('Family Libary')}
                             </div>
-                            <div
-                                className={`nav-item${curTab === 2 ? " active" : ""}`}
-                                onClick={() => handleChangeTab(2)}
-                            >
-                                {t('Pending Invitations')}
-                            </div>
+                            {
+                                isOwner && (
+                                    <div
+                                        className={`nav-item${curTab === 2 ? " active" : ""}`}
+                                        onClick={() => handleChangeTab(2)}
+                                    >
+                                        {t('Pending Invitations')}
+                                    </div>
+                                )
+                            }
                             <div
                                 className={`nav-item${curTab === 3 ? " active" : ""}`}
                                 onClick={() => handleChangeTab(3)}

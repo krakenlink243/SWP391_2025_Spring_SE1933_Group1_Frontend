@@ -1,0 +1,194 @@
+.family-library-tab {
+    position: relative;
+
+}
+
+.family-library-tab .box-title {
+    width: 100%;
+    padding: 5px 10px;
+    background-color: #015e80;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.family-library-tab .box-title .title {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 14px;
+    color: #fff;
+    font-weight: normal;
+    min-width: 250px;
+}
+
+.family-library-tab .box-title .vertical-dots-icon {
+    width: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+.family-library-wrapper {
+    margin-top: 30px;
+}
+
+.family-library-tab .result {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.family-library-tab .result-not-found {
+    padding: 16px;
+    font-size: 17px;
+    background: rgba(0, 0, 0, 0.2);
+    color: #969696;
+    margin: 8px 0px 0px 0px;
+    flex-grow: 1;
+}
+
+.family-library-tab .box-item {
+    display: flex;
+    justify-content: space-between;
+    flex: 1 100%;
+    margin-top: 4px;
+    background: rgba(29, 31, 36, .8);
+    padding: 8px;
+    position: relative;
+    flex-wrap: wrap;
+}
+
+.family-library-tab .box-item .game-box {
+    display: flex;
+    gap: .5rem;
+}
+
+.family-library-tab .box-item .game-box .game-avatar {
+    width: 36px;
+}
+
+.family-library-tab .box-item .game-box .game-avatar img {
+    width: 100%;
+}
+
+.family-library-tab .box-item .game-box .game-name {
+    color: #ebebeb;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.family-library-tab .popup {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    color: white;
+}
+
+.family-library-tab .popup.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.family-library-tab .popup.open .actions {
+    display: flex;
+    flex-direction: row-reverse;
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.family-library-tab .popup.open .actions span:hover {
+    color: tomato;
+}
+
+.family-library-tab .popup.open .left-col {
+    width: 25%;
+    padding: 10px 20px;
+    background: #2a2d34;
+
+}
+
+.family-library-tab .popup.open .left-col .popup-item {
+    cursor: pointer;
+
+}
+
+
+.family-library-tab .popup.open .right-col {
+    width: 75%;
+    padding: 10px 20px;
+    background: radial-gradient(circle at top left, rgba(74, 81, 92, 0.4) 0%, rgba(75, 81, 92, 0) 60%), #25282e;
+
+
+}
+
+/*
+### Popup Tab 1
+*/
+
+.popup-tab {
+    user-select: none;
+    color: white;
+    padding: 20px;
+}
+
+.popup-tab .form-group {
+    display: flex;
+    flex-direction: column;
+    color: #969696;
+}
+
+.popup-tab .form-group .selected-items {
+    padding: 10px 5px;
+    min-height: 25px;
+}
+
+
+.popup-tab .form-group .selected-item {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    margin: 4px;
+    border-radius: 4px;
+    background: #1f8dfe;
+    padding: 0 8px;
+    color: #dfe3e6;
+    cursor: pointer;
+}
+
+.popup-tab .form-group .available-items {}
+
+.popup-tab .form-group .available-items .game-item {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    height: 150px;
+    padding: 25px;
+    cursor: pointer;
+}
+
+.popup-tab .form-group .available-items .game-item.selected {
+    background: #596168;
+
+}
+
+.popup-tab .form-group .available-items .game-item img {
+    width: 100%;
+    height: calc(100% - 50px);
+}
+
+.popup-tab .form-group .available-items .game-item .game-name {}
+
+.popup-tab .form-group .available-items .game-item:hover {
+    filter: brightness(1.5);
+    transition: filter 0.3s ease-in;
+}

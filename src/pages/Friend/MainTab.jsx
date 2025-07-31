@@ -28,7 +28,7 @@ function MainTab({ setCurTab }) {
                 <div className="btn-add-friend" onClick={() => setCurTab(1)}>
                     <span>
                         <i className="icon"></i>
-                        {t('Your Friends')}
+                        {t('Add Friends')}
                     </span>
                 </div>
             </div>
