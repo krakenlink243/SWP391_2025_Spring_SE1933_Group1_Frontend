@@ -74,7 +74,7 @@ export default function FamilyPage() {
         <FamilyMemberTab members={familyData.members} isOwner={isOwner} />,
         <FamilyLibraryTab familyData={familyData} />,
         <FamilyInvitationTab />,
-        <FamilySettingTab members={familyData.members} isOwner={familyData.isOwner} />
+        <FamilySettingTab members={familyData.members} isOwner={familyData.isOwner} handleDeleteFamily={() => handleDeleteFamily()} />
     ] : [];
 
 
@@ -87,9 +87,21 @@ export default function FamilyPage() {
         }, 300);
     };
 
-    const handleSubscription = (plan) => {
+    const handleSubscription = async (plan) => {
         if (walletBalance < plan.price) {
-            alert(t('You do not have enough balance to subscribe to this plan.'));
+            const params = {
+                amount: plan.price,
+                language: "en",
+            };
+            const response = await axios.post(
+                `${import.meta.env.VITE_API_URL}/api/v1/payments/create-vnpay-payment`,
+                null,
+                { params: params }
+            );
+            const { paymentUrl } = response.data;
+            if (paymentUrl) {
+                window.location.href = paymentUrl;
+            }
             return;
         }
         axios.post(`${import.meta.env.VITE_API_URL}/api/family/subscribe`, {
@@ -101,6 +113,9 @@ export default function FamilyPage() {
             // Optionally, you can refresh the family data or redirect the user
             setIsHaveFamily(true);
             setFamilyData(response.data.data);
+            setPlan(response.data.data.subscriptionPlan);
+            setIsOwner(true);
+            alert(t('Subscription successful!'));
         }).catch((error) => {
             console.error("Error subscribing to plan:", error);
             // Handle error, show notification, etc.
@@ -113,6 +128,8 @@ export default function FamilyPage() {
                 const data = response.data.data;
                 setFamilyData(data);
                 setIsHaveFamily(true);
+                setIsOwner(data.isOwner);
+                setPlan(data.subscriptionPlan);
                 setInvitations(invitations.filter(invite => invite.inviteId !== inviteId));
                 alert(t('Invitation accepted successfully!'));
             })
@@ -122,6 +139,28 @@ export default function FamilyPage() {
             });
     }
 
+    const handleDeleteFamily = () => {
+        if (!isOwner) {
+            alert(t('You do not have privileges to delete the family.'));
+            return;
+        }
+        if (window.confirm(t('Are you sure you want to delete your family? This action cannot be undone.'))) {
+            axios.delete(`${import.meta.env.VITE_API_URL}/api/family/delete`)
+                .then((response) => {
+                    console.log("Family deleted successfully:", response.data);
+                    setFamilyData(null);
+                    setIsHaveFamily(false);
+                    setIsOwner(false);
+                    setPlan(null);
+                    alert(t('Family deleted successfully!'));
+                }
+                ).catch((error) => {
+                    console.error("Error deleting family:", error);
+                    alert(t('Failed to delete family.'));
+                }
+                );
+        }
+    }
 
 
     return (
@@ -130,7 +169,7 @@ export default function FamilyPage() {
                 <div className='loading-spinner'></div>
             </div>
         ) : (
-            isHaveFamily ? (
+            isHaveFamily && familyData ? (
                 <div className="family-page-container" >
                     <div className="family-page-header d-flex flex-row align-items-center">
                         <img src={avatarUrl} alt="avatar" className="avatar" onClick={() => navigate("/profile")} />

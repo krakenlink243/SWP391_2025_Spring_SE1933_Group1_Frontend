@@ -5,12 +5,12 @@ import './FamilySettingTab.css';
 import Button from '../../components/Button/Button';
 import axios from 'axios';
 
-export default function FamilySettingTab({ members, isOwner }) {
+export default function FamilySettingTab({ members, isOwner, handleDeleteFamily }) {
 
     const [curTab, setCurTab] = useState(0);
     const tabs = [
         <SubscribePlan isOwner={isOwner} />,
-        <FamilyManagement members={members} />
+        <FamilyManagement members={members} handleDeleteFamily={handleDeleteFamily} />
     ];
 
     return (
@@ -110,7 +110,7 @@ function SubscribePlan({ isOwner }) {
     );
 }
 
-function FamilyManagement({ members }) {
+function FamilyManagement({ members, handleDeleteFamily }) {
     const { t } = useTranslation();
     const [kickMembers, setKickMembers] = useState([]);
     const [isGroupEmpty, setIsGroupEmpty] = useState(false);
@@ -122,71 +122,98 @@ function FamilyManagement({ members }) {
         setIsGroupEmpty(familyMembers.length === 0);
     }, [members]);
 
+    const handleKickMember = () => {
+        if (kickMembers.length === 0) {
+            alert(t('No members selected to kick.'));
+            return;
+        }
+        const memberIds = kickMembers.map(member => member.id);
+        axios.post(`${import.meta.env.VITE_API_URL}/api/family/remove-member`, memberIds)
+            .then((response) => {
+                console.log("Members kicked successfully:", response.data);
+                setFamilyMembers((prev) => prev.filter(member => !memberIds.includes(member.id)));
+                setKickMembers([]);
+                setIsGroupEmpty(familyMembers.length === 0);
+            }
+            ).catch((error) => {
+                console.error("Error kicking members:", error);
+                alert(t('Failed to kick members. Please try again.'));
+            }
+            );
+    }
+
     return (
         <div className='member-management-container d-flex flex-column align-items-start justify-content-center'>
-            <h3>Kick Members</h3>
-            <div className="form-group">
-                <label>Choosed Group Members</label>
-                <div className="selected-members-list d-flex flex-row flex-wrap align-items-center">
-                    {kickMembers.map((member) => (
-                        <div
-                            key={member.id}
-                            className="selected-member"
-                            onClick={() =>
-                                setKickMembers((prev) =>
-                                    prev.filter((m) => m.id !== member.id)
-                                )
-                            }
-                        >
-                            <span className="selected-member-name">{member.name}</span>
-                            ✕
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            <div className="form-group">
-                <label>Choose Members</label>
-                <div className="member-list">
-                    {familyMembers.map((member) => {
-                        const isSelected = kickMembers.some((g) => g.id === member.id);
-                        return (
+            <div className='section'>
+                <h3>Kick Members</h3>
+                <div className="form-group">
+                    <label>Choosed Group Members</label>
+                    <div className="selected-members-list d-flex flex-row flex-wrap align-items-center">
+                        {kickMembers.map((member) => (
                             <div
                                 key={member.id}
-                                className={`member-item ${isSelected ? 'selected' : ''}`}
-                                onClick={() => {
-                                    if (isSelected) {
-                                        setKickMembers((prev) =>
-                                            prev.filter((m) => m.id !== member.id)
-                                        );
-                                    } else {
-                                        setKickMembers((prev) => [...prev, member]);
-                                    }
-                                }}
+                                className="selected-member"
+                                onClick={() =>
+                                    setKickMembers((prev) =>
+                                        prev.filter((m) => m.id !== member.id)
+                                    )
+                                }
                             >
-                                <div className="avatar">
-                                    <img src={member.avatar}></img>
-                                </div>
-                                {member.name}
+                                <span className="selected-member-name">{member.name}</span>
+                                ✕
                             </div>
-                        );
-                    })}
+                        ))}
+                    </div>
+                </div>
+
+                <div className="form-group">
+                    <label>Choose Members</label>
+                    <div className="member-list">
+                        {familyMembers.map((member) => {
+                            const isSelected = kickMembers.some((g) => g.id === member.id);
+                            return (
+                                <div
+                                    key={member.id}
+                                    className={`member-item ${isSelected ? 'selected' : ''}`}
+                                    onClick={() => {
+                                        if (isSelected) {
+                                            setKickMembers((prev) =>
+                                                prev.filter((m) => m.id !== member.id)
+                                            );
+                                        } else {
+                                            setKickMembers((prev) => [...prev, member]);
+                                        }
+                                    }}
+                                >
+                                    <div className="avatar">
+                                        <img src={member.avatar}></img>
+                                    </div>
+                                    {member.name}
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+
+                <div className="d-flex w-100 flex-row justify-content-around align-items-center py-2">
+                    <Button label={"Reset"} onClick={() => {
+                        setKickMembers([]);
+                    }}
+                        color="grey-button"
+                        disabled={kickMembers.length === 0}
+                    />
+                    <Button
+                        label={`Kick ${kickMembers.length} Member${kickMembers.length > 1 ? 's' : ''}`}
+                        onClick={() => handleKickMember()}
+                        color="gradient-blue-button"
+                        disabled={isGroupEmpty || kickMembers.length === 0}
+                    />
                 </div>
             </div>
-
-            <div className="d-flex w-100 flex-row justify-content-around align-items-center py-2">
-                <Button label={"Reset"} onClick={() => {
-                    setKickMembers([]);
-                }}
-                    color="grey-button"
-                    disabled={kickMembers.length === 0}
-                />
-                <Button
-                    label={`Kick ${kickMembers.length} Member${kickMembers.length > 1 ? 's' : ''}`}
-                    onClick={() => handleKickMember()}
-                    color="gradient-blue-button"
-                    disabled={isGroupEmpty || kickMembers.length === 0}
-                />
+            <div className='section'>
+                <h3>Delete Family</h3>
+                <p>By deleting this family, your current plan will also be remove and there is no refund.</p>
+                <Button label={'Delete Family'} color='red-button' onClick={() => handleDeleteFamily()}/>
             </div>
         </div>
     );
