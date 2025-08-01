@@ -4,11 +4,12 @@ import { useTranslation } from "react-i18next";
 import './FamilyLibraryTab.css';
 import axios from "axios";
 import Button from "../../components/Button/Button";
+import { useNavigate } from "react-router-dom";
 
 export default function FamilyLibraryTab({ familyData }) {
     const { t } = useTranslation();
     const [openPopup, setOpenPopup] = useState(false);
-
+    const navigate = useNavigate();
     const [familyLibrary, setFamilyLibrary] = useState([]);
 
     useEffect(() => {
@@ -22,9 +23,13 @@ export default function FamilyLibraryTab({ familyData }) {
             <div className="family-library-wrapper">
                 <div className="box-title">
                     <span className="title">{t('Library')}</span>
-                    <span className="vertical-dots-icon" title={t('More options')} onClick={() => setOpenPopup(!openPopup)}>
-                        &#8942;
-                    </span>
+                    {
+                        familyData.isOwner && !openPopup && (
+                            <span className="vertical-dots-icon" title={t('More options')} onClick={() => setOpenPopup(!openPopup)}>
+                                &#8942;
+                            </span>
+                        )
+                    }
                 </div>
                 {
                     !openPopup && (
@@ -35,7 +40,7 @@ export default function FamilyLibraryTab({ familyData }) {
                                 </div>
                             )}
                             {familyLibrary.map((game) => (
-                                <div className="box-item" key={game.id}>
+                                <div className="box-item" key={game.id} onClick={() => navigate(`/game/${game.id}`)}>
                                     <div className="game-box">
                                         <div className="game-avatar">
                                             <img src={`${game.media[0].url}`} alt={`${game.name}`} />
@@ -67,22 +72,29 @@ function Popup({ openPopup, setOpenPopup, familyLibrary, t }) {
     return (
         <div className={`popup ${openPopup ? "open" : ""}`}>
             <div className="actions">
-                <span onClick={() => setOpenPopup(false)}>X</span>
+                <div className="close-btn" onClick={() => setOpenPopup(false)} title={t('Close')}>
+                    &times;
+                </div>
             </div>
             <div className="d-flex flex-row">
-                <div className="left-col d-flex flex-column gap-2 ">
-                    <div className="popup-item" onClick={() => setCurTab(0)}>
-                        <span>{t('Add Game')}</span>
+                <div className="left-col d-flex flex-column gap-2">
+                    <div
+                        className={`popup-item${curTab === 0 ? " active" : ""}`}
+                        onClick={() => setCurTab(0)}
+                    >
+                        {t('Add Game')}
                     </div>
-                    <div className="popup-item" onClick={() => setCurTab(1)}>
-                        <span>{t('Remove Game')}</span>
+                    <div
+                        className={`popup-item${curTab === 1 ? " active" : ""}`}
+                        onClick={() => setCurTab(1)}
+                    >
+                        {t('Remove Game')}
                     </div>
                 </div>
                 <div className="right-col">
                     {renderPopupTab()}
                 </div>
             </div>
-
         </div>
     );
 }

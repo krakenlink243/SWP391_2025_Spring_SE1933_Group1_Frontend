@@ -9,28 +9,75 @@ export default function FamilySettingTab({ members, isOwner, handleDeleteFamily,
 
     const [curTab, setCurTab] = useState(0);
     const tabs = [
-        <SubscribePlan isOwner={isOwner} setFamilyData={setFamilyData} setPlan={setPlan} curPlan={curPlan} />,
-        <FamilyManagement members={members} handleDeleteFamily={handleDeleteFamily} />
+        <SubscribePlan setFamilyData={setFamilyData} setPlan={setPlan} curPlan={curPlan} />,
+        <FamilyManagement members={members} handleDeleteFamily={handleDeleteFamily} />,
+        <SubscriptionHistory />
     ];
+
+    const handleLeaveFamily = () => {
+        if (window.confirm("Are you sure you want to leave the family?")) {
+            axios.post(`${import.meta.env.VITE_API_URL}/api/family/leave`)
+                .then((response) => {
+                    console.log("Left family successfully:", response.data);
+                    setFamilyData(null);
+                    setPlan(null);
+                    alert("You have left the family successfully.");
+                })
+                .catch((error) => {
+                    console.error("Error leaving family:", error);
+                    alert("Failed to leave the family. Please try again.");
+                });
+        }
+    };
 
     return (
         <div className="family-setting-tab d-flex flex-column align-items-center justify-content-center">
-            <div className="setting-nav d-flex flex-row justify-content-around w-100 align-items-center ">
-                <div className="nav-item" onClick={() => setCurTab(0)}>Subscription Plans</div>
-                {
-                    isOwner && (
-                        <div className="nav-item" onClick={() => setCurTab(1)}>Family Management</div>
-                    )
-                }
-            </div>
-            <div className="setting-content w-100">
-                {tabs[curTab]}
-            </div>
+            {isOwner ? (
+                <>
+                    <div className="setting-nav d-flex flex-row justify-content-around w-100 align-items-center ">
+                        <div
+                            className={`nav-item ${curTab === 0 ? 'active' : ''}`}
+                            onClick={() => setCurTab(0)}
+                        >
+                            Subscription Plans
+                        </div>
+                        <div
+                            className={`nav-item ${curTab === 1 ? 'active' : ''}`}
+                            onClick={() => setCurTab(1)}
+                        >
+                            Family Management
+                        </div>
+                        <div
+                            className={`nav-item ${curTab === 2 ? 'active' : ''}`}
+                            onClick={() => setCurTab(2)}
+                        >
+                            Subscription History
+                        </div>
+                    </div>
+                    <div className="setting-content w-100">
+                        {tabs[curTab]}
+                    </div>
+                </>
+            ) : (
+                <div className='w-100 p-5 text-white'>
+                    <h3>Leave Family</h3>
+                    <p>
+                        You are currently a member of this family. If you leave, you will lose access to the family's subscription plan and features.
+                    </p>
+                    <p>
+                        After leaving, you will be suspended from joining any family for <u>3 months</u>.
+                    </p>
+                    <p>
+                        Are you sure you want to leave the family?
+                    </p>
+                    <Button label={'Leave Family'} color='red-button' onClick={handleLeaveFamily} />
+                </div>
+            )}
         </div>
     );
 }
 
-function SubscribePlan({ isOwner, setFamilyData, setPlan, curPlan }) {
+function SubscribePlan({ setFamilyData, setPlan, curPlan }) {
     const { t } = useTranslation();
     const { walletBalance } = useContext(AppContext);
 
@@ -44,12 +91,6 @@ function SubscribePlan({ isOwner, setFamilyData, setPlan, curPlan }) {
                 alert(t('You cannot downgrade your plan. Please choose a plan with a higher price.'));
                 return;
             }
-        }
-
-
-        if (!isOwner) {
-            alert(t('Only family owner can subscribe to a plan.'));
-            return;
         }
         if (walletBalance < plan.price) {
             const params = {
@@ -73,7 +114,8 @@ function SubscribePlan({ isOwner, setFamilyData, setPlan, curPlan }) {
             duration: plan.duration
         }).then((response) => {
             console.log("Subscription successful:", response.data);
-            // Optionally, you can refresh the family data or redirect the user
+            alert(t('You have successfully subscribed to the plan.'));
+
             setFamilyData(response.data.data);
             setPlan(response.data.data.subscriptionPlan);
             alert(t('Subscription successful!'));
@@ -244,4 +286,76 @@ function FamilyManagement({ members, handleDeleteFamily }) {
     );
 }
 
-// function 
+function SubscriptionHistory() {
+    const { t } = useTranslation();
+
+    const [history, setHistory] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        axios.get(`${import.meta.env.VITE_API_URL}/api/family/subscription-history`)
+            .then((response) => {
+                console.log("Subscription history fetched successfully:", response.data);
+                setHistory(response.data.data);
+                setLoading(false);
+            }
+            ).catch((error) => {
+                console.error("Error fetching subscription history:", error);
+                alert(t('Failed to fetch subscription history. Please try again.'));
+                setLoading(false);
+            }
+            );
+    }, []);
+
+    if (loading) {
+        return <div className='loading'>{t('Loading...')}</div>;
+    }
+
+    // Helper function to get color style by plan name
+    const getPlanColorStyle = (planName) => {
+        switch (planName) {
+            case 'Bronze':
+                return { color: '#cd7f32', fontWeight: 'bold' };
+            case 'Silver':
+                return { color: '#6c757d', fontWeight: 'bold' };
+            case 'Gold':
+                return { color: '#ffc107', fontWeight: 'bold' };
+            case 'Platinum':
+                return { color: '#AF40FF', fontWeight: 'bold' };
+            default:
+                return {};
+        }
+    };
+
+    return (
+        <div className='subscription-history-container p-3'>
+            <h3>{t('Subscription History')}</h3>
+            {
+                history.length > 0 ? (
+                    <table className='subscription-history-table w-100'>
+                        <thead>
+                            <tr>
+                                <th>{t('Plan Name')}</th>
+                                <th>{t('Price')}</th>
+                                <th>{t('Duration')}</th>
+                                <th>{t('Date')}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {history.map((item, index) => (
+                                <tr key={index}>
+                                    <td style={getPlanColorStyle(item.planName)}>{item.planName}</td>
+                                    <td>{item.price.toLocaleString("en-US", { style: "currency", currency: "USD" })}</td>
+                                    <td>{item.duration} {t('days')}</td>
+                                    <td>{new Date(item.startAt).toLocaleDateString()}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <p>{t('No subscription history available.')}</p>
+                )
+            }
+        </div>
+    );
+}

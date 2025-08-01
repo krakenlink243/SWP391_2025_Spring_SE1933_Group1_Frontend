@@ -10,10 +10,16 @@
 
 .family-setting-tab .setting-nav .nav-item {
     cursor: pointer;
-    margin: 5px 10px;
+    padding: 5px 10px;
     user-select: none;
     font-size: 16px;
 }
+
+.family-setting-tab .setting-nav .nav-item.active {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);;
+}
+
 
 .family-setting-tab .setting-nav .nav-item:hover {
     filter: brightness(1.5);

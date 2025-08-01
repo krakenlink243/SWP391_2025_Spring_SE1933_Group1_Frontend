@@ -20,8 +20,6 @@ export default function FamilyPage() {
 
     const { walletBalance } = useContext(AppContext);
 
-    const username = localStorage.getItem("username");
-    const avatarUrl = localStorage.getItem("avatarUrl");
     const [curTab, setCurTab] = useState(0);
     const [fadeClass, setFadeClass] = useState("fade-in");
 
@@ -179,16 +177,40 @@ export default function FamilyPage() {
             isHaveFamily && familyData ? (
                 <div className="family-page-container" >
                     <div className="family-page-header d-flex flex-row align-items-center">
-                        <img src={avatarUrl} alt="avatar" className="avatar" onClick={() => navigate("/profile")} />
-                        <div className='d-flex flex-column justify-content-start align-items-start'>
-                            <Link to="/profile" className='username'>{username}</Link>
-                            <div>Current plan: {plan ? plan.planName : "None"}</div>
-                            {
-                                plan && (
-                                    <div>Plan end at: {familyData.expDate}</div>
-                                )
-                            }
-                        </div>
+                        {/* Show owner's avatar and info */}
+                        {(() => {
+                            const owner = familyData.members.find(m => m.isOwner);
+                            return owner ? (
+                                <>
+                                    <img src={owner.avatar} alt="owner-avatar" className="avatar" />
+                                    <div className='d-flex flex-column justify-content-start align-items-start ms-3'>
+                                        <span className='username'>{owner.name || t('Owner')}'s Family</span>
+                                        <div>
+                                            {t('Current plan')}:{" "}
+                                            <span
+                                                style={{
+                                                    color:
+                                                        plan?.planName === "Bronze"
+                                                            ? "#cd7f32"
+                                                            : plan?.planName === "Silver"
+                                                            ? "#6c757d"
+                                                            : plan?.planName === "Gold"
+                                                            ? "#ffc107"
+                                                            : plan?.planName === "Platinum"
+                                                            ? "#AF40FF"
+                                                            : "inherit"
+                                                }}
+                                            >
+                                                {plan ? plan.planName : t("None")}
+                                            </span>
+                                        </div>
+                                        {plan && (
+                                            <div>{t('Plan end at')}: {familyData.expDate}</div>
+                                        )}
+                                    </div>
+                                </>
+                            ) : null;
+                        })()}
                     </div>
                     <div className="family-page-content d-flex flex-row">
                         <div className="content-left-nav d-flex flex-column w-25">
@@ -203,7 +225,7 @@ export default function FamilyPage() {
                                 className={`nav-item${curTab === 1 ? " active" : ""}`}
                                 onClick={() => handleChangeTab(1)}
                             >
-                                {t('Family Libary')}
+                                {t('Family Library')}
                             </div>
                             {
                                 isOwner && (
@@ -273,18 +295,17 @@ export default function FamilyPage() {
                                 {t('Subscribe')}
                             </button>
                         </div>
-
                     </div>
                     {
                         invitations.length > 0 && (
                             <div className='w-100 py-5'>
-                                <p>Or join to other Families via Invitations here:</p>
+                                <p>{t('Or join to other Families via Invitations here:')}</p>
                                 <div className='d-flex flex-column align-items-center justify-content-center'>
                                     {invitations.map((invitation) => (
                                         <div key={invitation.inviteId} className='invitation-card w-100 border rounded p-3 mb-3 w-50 text-center d-flex flex-row justify-content-between'>
                                             <h5>{invitation.senderName}'s Family</h5>
                                             <p>{t('Invited by')}: {invitation.senderName}</p>
-                                            <Button label={'Accept'} color='gradient-green-button' onClick={() => handleAcceptInvitation(invitation.inviteId)} />
+                                            <Button label={t('Accept')} color='gradient-green-button' onClick={() => handleAcceptInvitation(invitation.inviteId)} />
                                         </div>
                                     ))}
                                 </div>
@@ -294,7 +315,6 @@ export default function FamilyPage() {
                 </div>
             )
         )
-
     );
 
 
