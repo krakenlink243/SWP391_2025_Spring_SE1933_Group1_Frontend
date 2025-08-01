@@ -18,7 +18,7 @@ export default function CreateThreadPage() {
         const userId = localStorage.getItem("userId");
 
         try {
-            if (!title || !content) {
+            if (!title.trim() || !content.trim()) {
                 alert("Title and content are required.");
                 return;
             }
