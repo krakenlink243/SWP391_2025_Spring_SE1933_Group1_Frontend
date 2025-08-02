@@ -7,7 +7,6 @@ import FamilyInvitationTab from './FamilyInvitationTab';
 import FamilySettingTab from './FamilySettingTab';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { AppContext } from '../../context/AppContext';
 import Button from '../../components/Button/Button';
@@ -32,19 +31,41 @@ export default function FamilyPage() {
 
     const [isOwner, setIsOwner] = useState(false);
 
+    const FAMILY_CACHE_KEY = "cachedFamilyData";
+    const CACHE_DURATION = 5 * 60 * 1000; // 5 phút
+
 
     useEffect(() => {
         if (!token) {
             navigate("/");
+            return;
         }
+
+        const cachedData = loadFamilyFromCache();
+        if (cachedData) {
+            setFamilyData(cachedData);
+            setIsHaveFamily(cachedData && cachedData.familyId && cachedData.familyId !== -1);
+            setIsOwner(cachedData && cachedData.isOwner);
+            setPlan(cachedData.subscriptionPlan);
+            setLoading(false);
+        } else {
+            fetchFamilyData();
+        }
+
+        handleGetInvitations();
+    }, [token]);
+
+    const fetchFamilyData = () => {
+        setLoading(true); // hiển thị loading lại nếu cần
 
         axios.get(`${import.meta.env.VITE_API_URL}/api/family`)
             .then((response) => {
                 const data = response.data.data;
+                saveFamilyToCache(data);
                 setFamilyData(data);
                 setIsHaveFamily(data && data.familyId && data.familyId !== -1);
                 setIsOwner(data && data.isOwner);
-                setPlan(data.subscriptionPlan)
+                setPlan(data.subscriptionPlan);
                 console.log("Family data fetched successfully:", data);
             })
             .catch((error) => {
@@ -54,10 +75,34 @@ export default function FamilyPage() {
             .finally(() => {
                 setLoading(false);
             });
+    };
 
-        handleGetInvitations();
+    const loadFamilyFromCache = () => {
+        const cached = localStorage.getItem(FAMILY_CACHE_KEY);
+        if (!cached) return null;
 
-    }, [token, navigate, curTab]);
+        try {
+            const parsed = JSON.parse(cached);
+            const now = Date.now();
+
+            if (now - parsed.timestamp < CACHE_DURATION) {
+                return parsed.data;
+            }
+        } catch (e) {
+            console.error("Failed to parse cached family data", e);
+        }
+
+        return null;
+    };
+
+    const saveFamilyToCache = (data) => {
+        const wrapped = {
+            timestamp: Date.now(),
+            data,
+        };
+        localStorage.setItem(FAMILY_CACHE_KEY, JSON.stringify(wrapped));
+    };
+
 
     const handleGetInvitations = () => {
         axios.get(`${import.meta.env.VITE_API_URL}/api/family/invitation`)
@@ -70,7 +115,10 @@ export default function FamilyPage() {
     }
     const tabs = familyData ? [
         <FamilyMemberTab members={familyData.members} isOwner={isOwner} />,
-        <FamilyLibraryTab familyData={familyData} />,
+        <FamilyLibraryTab
+            familyData={familyData}
+            setFamilyData={setFamilyData}
+        />,
         <FamilyInvitationTab />,
         <FamilySettingTab
             members={familyData.members}
@@ -79,6 +127,7 @@ export default function FamilyPage() {
             setFamilyData={setFamilyData}
             setPlan={setPlan}
             curPlan={plan}
+            fetchFamilyData={fetchFamilyData}
         />
     ] : [];
 
@@ -116,10 +165,12 @@ export default function FamilyPage() {
         }).then((response) => {
             console.log("Subscription successful:", response.data);
             // Optionally, you can refresh the family data or redirect the user
+            const data = res.data.data;
             setIsHaveFamily(true);
-            setFamilyData(response.data.data);
-            setPlan(response.data.data.subscriptionPlan);
+            setFamilyData(data);
+            setPlan(data.subscriptionPlan);
             setIsOwner(true);
+            saveFamilyToCache(data);
             alert(t('Subscription successful!'));
         }).catch((error) => {
             console.error("Error subscribing to plan:", error);
@@ -135,6 +186,7 @@ export default function FamilyPage() {
                 setIsHaveFamily(true);
                 setIsOwner(data.isOwner);
                 setPlan(data.subscriptionPlan);
+                saveFamilyToCache(data);
                 setInvitations(invitations.filter(invite => invite.inviteId !== inviteId));
                 alert(t('Invitation accepted successfully!'));
             })
@@ -157,6 +209,7 @@ export default function FamilyPage() {
                     setIsHaveFamily(false);
                     setIsOwner(false);
                     setPlan(null);
+                    localStorage.removeItem(FAMILY_CACHE_KEY);
                     alert(t('Family deleted successfully!'));
                 }
                 ).catch((error) => {
@@ -184,7 +237,33 @@ export default function FamilyPage() {
                                 <>
                                     <img src={owner.avatar} alt="owner-avatar" className="avatar" />
                                     <div className='d-flex flex-column justify-content-start align-items-start ms-3'>
-                                        <span className='username'>{owner.name || t('Owner')}'s Family</span>
+                                        <div className='username d-flex flex-row gap-3'>{owner.name || t('Owner')}'s Family
+                                            <span
+                                                onClick={() => {
+                                                    localStorage.removeItem(FAMILY_CACHE_KEY);
+                                                    fetchFamilyData();
+                                                }}
+                                                className="reload-icon"
+                                                title="Reload"
+                                                style={{width: '20px'}}
+                                            >
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    className="w-5 h-5 text-gray-500 hover:text-gray-800"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    stroke="currentColor"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={2}
+                                                        d="M4 4v5h.582M20 20v-5h-.581m.581 0a9 9 0 11-1.598-9.363"
+                                                    />
+                                                </svg>
+                                            </span>
+
+                                        </div>
                                         <div>
                                             {t('Current plan')}:{" "}
                                             <span
@@ -193,12 +272,12 @@ export default function FamilyPage() {
                                                         plan?.planName === "Bronze"
                                                             ? "#cd7f32"
                                                             : plan?.planName === "Silver"
-                                                            ? "#6c757d"
-                                                            : plan?.planName === "Gold"
-                                                            ? "#ffc107"
-                                                            : plan?.planName === "Platinum"
-                                                            ? "#AF40FF"
-                                                            : "inherit"
+                                                                ? "#6c757d"
+                                                                : plan?.planName === "Gold"
+                                                                    ? "#ffc107"
+                                                                    : plan?.planName === "Platinum"
+                                                                        ? "#AF40FF"
+                                                                        : "inherit"
                                                 }}
                                             >
                                                 {plan ? plan.planName : t("None")}
@@ -208,6 +287,14 @@ export default function FamilyPage() {
                                             <div>{t('Plan end at')}: {familyData.expDate}</div>
                                         )}
                                     </div>
+                                    {/* <Button
+                                        label={t("Reload")}
+                                        color='gradient-green-button'
+                                        onClick={() => {
+                                            localStorage.removeItem(FAMILY_CACHE_KEY); // clear cache nếu muốn
+                                            fetchFamilyData();
+                                        }}
+                                    /> */}
                                 </>
                             ) : null;
                         })()}

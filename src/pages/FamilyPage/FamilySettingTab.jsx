@@ -5,14 +5,17 @@ import './FamilySettingTab.css';
 import Button from '../../components/Button/Button';
 import axios from 'axios';
 
-export default function FamilySettingTab({ members, isOwner, handleDeleteFamily, setFamilyData, curPlan, setPlan }) {
+export default function FamilySettingTab({ members, isOwner, handleDeleteFamily, setFamilyData, curPlan, setPlan, fetchFamilyData }) {
 
     const [curTab, setCurTab] = useState(0);
     const tabs = [
-        <SubscribePlan setFamilyData={setFamilyData} setPlan={setPlan} curPlan={curPlan} />,
+        <SubscribePlan fetchFamilyData={fetchFamilyData} curPlan={curPlan} />,
         <FamilyManagement members={members} handleDeleteFamily={handleDeleteFamily} />,
         <SubscriptionHistory />
     ];
+
+    const FAMILY_CACHE_KEY = "cachedFamilyData";
+
 
     const handleLeaveFamily = () => {
         if (window.confirm("Are you sure you want to leave the family?")) {
@@ -21,6 +24,7 @@ export default function FamilySettingTab({ members, isOwner, handleDeleteFamily,
                     console.log("Left family successfully:", response.data);
                     setFamilyData(null);
                     setPlan(null);
+                    localStorage.removeItem(FAMILY_CACHE_KEY);
                     alert("You have left the family successfully.");
                 })
                 .catch((error) => {
@@ -77,7 +81,7 @@ export default function FamilySettingTab({ members, isOwner, handleDeleteFamily,
     );
 }
 
-function SubscribePlan({ setFamilyData, setPlan, curPlan }) {
+function SubscribePlan({ fetchFamilyData, curPlan }) {
     const { t } = useTranslation();
     const { walletBalance } = useContext(AppContext);
 
@@ -116,9 +120,7 @@ function SubscribePlan({ setFamilyData, setPlan, curPlan }) {
             console.log("Subscription successful:", response.data);
             alert(t('You have successfully subscribed to the plan.'));
 
-            setFamilyData(response.data.data);
-            setPlan(response.data.data.subscriptionPlan);
-            alert(t('Subscription successful!'));
+            fetchFamilyData();
         }).catch((error) => {
             console.error("Error subscribing to plan:", error);
             // Handle error, show notification, etc.
@@ -185,8 +187,9 @@ function FamilyManagement({ members, handleDeleteFamily }) {
     const [familyMembers, setFamilyMembers] = useState(members.filter(member => member.isOwner === false));
 
     useEffect(() => {
-        setFamilyMembers(members.filter(member => member.isOwner === false));
-        setIsGroupEmpty(familyMembers.length === 0);
+        const nonOwners = members.filter(m => !m.isOwner);
+        setFamilyMembers(nonOwners);
+        setIsGroupEmpty(nonOwners.length === 0);
     }, [members]);
 
     const handleKickMember = () => {

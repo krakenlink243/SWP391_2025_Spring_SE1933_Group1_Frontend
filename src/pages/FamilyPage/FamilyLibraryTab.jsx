@@ -30,7 +30,7 @@ public class FamilyGameDTO extends LibraryGameDTO{
 }
 */
 
-export default function FamilyLibraryTab({ familyData }) {
+export default function FamilyLibraryTab({ familyData, setFamilyData }) {
     const { t } = useTranslation();
     const [openPopup, setOpenPopup] = useState(false);
     const navigate = useNavigate();
@@ -88,18 +88,18 @@ export default function FamilyLibraryTab({ familyData }) {
                     )
                 }
 
-                {openPopup && <Popup setOpenPopup={setOpenPopup} familyLibrary={familyLibrary} openPopup={openPopup} t={t} />}
+                {openPopup && <Popup setOpenPopup={setOpenPopup} familyLibrary={familyLibrary} openPopup={openPopup} t={t} setFamilyData={setFamilyData} />}
             </div>
 
         </div>
     );
 }
 
-function Popup({ openPopup, setOpenPopup, familyLibrary, t }) {
+function Popup({ openPopup, setOpenPopup, familyLibrary, t, setFamilyData }) {
     const [curTab, setCurTab] = useState(0);
     const renderPopupTab = () => {
-        if (curTab === 0) return <PopupTab1 familyLibrary={familyLibrary} setOpenPopup={setOpenPopup} />;
-        if (curTab === 1) return <PopupTab2 familyLibrary={familyLibrary} setOpenPopup={setOpenPopup} />;
+        if (curTab === 0) return <PopupTab1 familyLibrary={familyLibrary} setOpenPopup={setOpenPopup} setFamilyData={setFamilyData} />;
+        if (curTab === 1) return <PopupTab2 familyLibrary={familyLibrary} setOpenPopup={setOpenPopup} setFamilyData={setFamilyData} />;
         return null;
     };
     return (
@@ -133,13 +133,16 @@ function Popup({ openPopup, setOpenPopup, familyLibrary, t }) {
 }
 
 
-function PopupTab1({ familyLibrary, setOpenPopup }) {
+function PopupTab1({ familyLibrary, setOpenPopup, setFamilyData }) {
 
     const { library: privateLibrary } = useContext(AppContext);
     const [remainingGames, setRemainingGames] = useState([]);
     const [selectedGames, setSelectedGames] = useState([]);
     const [loading, setLoading] = useState(false);
     const { t } = useTranslation();
+
+    const FAMILY_CACHE_KEY = "cachedFamilyData";
+
 
     useEffect(() => {
         if (familyLibrary && familyLibrary.length > 0) {
@@ -150,6 +153,14 @@ function PopupTab1({ familyLibrary, setOpenPopup }) {
             setRemainingGames(privateLibrary);
         }
     }, [familyLibrary, privateLibrary]);
+
+    const saveFamilyToCache = (data) => {
+        const wrapped = {
+            timestamp: Date.now(),
+            data,
+        };
+        localStorage.setItem(FAMILY_CACHE_KEY, JSON.stringify(wrapped));
+    };
 
     const handleShareGames = () => {
         if (selectedGames.length === 0) return;
@@ -162,6 +173,9 @@ function PopupTab1({ familyLibrary, setOpenPopup }) {
             .then((res) => {
                 console.log("Shared games:", res.data);
                 setSelectedGames([]);
+                const data = res.data.data;
+                saveFamilyToCache(data);
+                setFamilyData(data);
                 setOpenPopup(false);
             })
             .catch(err => {
@@ -236,10 +250,20 @@ function PopupTab1({ familyLibrary, setOpenPopup }) {
         </div>
     );
 }
-function PopupTab2({ familyLibrary, setOpenPopup }) {
+function PopupTab2({ familyLibrary, setOpenPopup, setFamilyData }) {
     const [selectedGames, setSelectedGames] = useState([]);
     const [loading, setLoading] = useState(false);
     const { t } = useTranslation();
+
+    const FAMILY_CACHE_KEY = "cachedFamilyData";
+
+    const saveFamilyToCache = (data) => {
+        const wrapped = {
+            timestamp: Date.now(),
+            data,
+        };
+        localStorage.setItem(FAMILY_CACHE_KEY, JSON.stringify(wrapped));
+    };
 
     const handleUnshareGames = () => {
         if (selectedGames.length === 0) return;
@@ -254,6 +278,9 @@ function PopupTab2({ familyLibrary, setOpenPopup }) {
             .then((res) => {
                 console.log("Unshared games:", res.data);
                 setSelectedGames([]);
+                const data = res.data.data;
+                saveFamilyToCache(data);
+                setFamilyData(data);
                 setOpenPopup(false);
             })
             .catch(err => {
