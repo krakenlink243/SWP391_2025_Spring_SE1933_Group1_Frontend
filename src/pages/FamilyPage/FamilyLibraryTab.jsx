@@ -6,6 +6,30 @@ import axios from "axios";
 import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 
+/*
+public class FamilyInfoDTO {
+    private Long familyId;
+    private Long ownerId;
+    private Boolean isOwner;
+    private List<FamilyMemberDTO> members;
+    private List<FamilyGameDTO> games;
+    private SubscriptionPlanDTO subscriptionPlan;
+    private LocalDate expDate;
+}
+
+public class FamilyGameDTO extends LibraryGameDTO{
+    private Boolean isPlayable;
+
+    public FamilyGameDTO(LibraryGameDTO libraryGameDTO, Boolean isPlayable) {
+        this.setGameDetail(libraryGameDTO.getGameDetail());
+        this.setDateAdded(libraryGameDTO.getDateAdded());
+        this.setPlaytimeInMillis(libraryGameDTO.getPlaytimeInMillis());
+        this.setLastTimePlayed(libraryGameDTO.getLastTimePlayed());
+        this.isPlayable = isPlayable;
+    }
+}
+*/ 
+
 export default function FamilyLibraryTab({ familyData }) {
     const { t } = useTranslation();
     const [openPopup, setOpenPopup] = useState(false);
@@ -40,13 +64,13 @@ export default function FamilyLibraryTab({ familyData }) {
                                 </div>
                             )}
                             {familyLibrary.map((game) => (
-                                <div className="box-item" key={game.id} onClick={() => navigate(`/game/${game.id}`)}>
+                                <div className="box-item" key={game.gameDetail.gameId} onClick={() => navigate(`/game/${game.gameDetail.gameId}`)}>
                                     <div className="game-box">
                                         <div className="game-avatar">
-                                            <img src={`${game.media[0].url}`} alt={`${game.name}`} />
+                                            <img src={`${game.gameDetail.media[0].url}`} alt={`${game.name}`} />
                                         </div>
                                         <div className="game-name">
-                                            {game.name}
+                                            {game.gameDetail.name}
                                         </div>
                                     </div>
                                 </div>
@@ -110,7 +134,7 @@ function PopupTab1({ familyLibrary, setOpenPopup }) {
 
     useEffect(() => {
         if (familyLibrary && familyLibrary.length > 0) {
-            const familyGameIds = familyLibrary.map(game => game.id);
+            const familyGameIds = familyLibrary.map(game => game.gameDetail.gameId);
             const availableGames = privateLibrary.filter(game => !familyGameIds.includes(game.gameId));
             setRemainingGames(availableGames);
         } else {
@@ -212,7 +236,7 @@ function PopupTab2({ familyLibrary, setOpenPopup }) {
         if (selectedGames.length === 0) return;
         setLoading(true);
 
-        const gameIds = selectedGames.map(game => game.id);
+        const gameIds = selectedGames.map(game => game.gameDetail.gameId);
         // console.log("Unsharing games:", gameIds);
         // setLoading(false);
         axios.post(`${import.meta.env.VITE_API_URL}/api/family/library/remove`, {
@@ -231,7 +255,7 @@ function PopupTab2({ familyLibrary, setOpenPopup }) {
             });
     };
 
-    const isSelected = (id) => selectedGames.some(g => g.id === id);
+    const isSelected = (id) => selectedGames.some(g => g.gameDetail.gameId === id);
     return (
         <div className="popup-tab">
             <div className="form-group">
@@ -240,11 +264,11 @@ function PopupTab2({ familyLibrary, setOpenPopup }) {
                     {
                         selectedGames.map(game => (
                             <div
-                                key={game.id}
+                                key={game.gameDetail.gameId}
                                 className="selected-item"
-                                onClick={() => setSelectedGames(prev => prev.filter(g => g.id !== game.id))}
+                                onClick={() => setSelectedGames(prev => prev.filter(g => g.gameDetail.gameId !== game.gameDetail.gameId))}
                             >
-                                {game.name} ✕
+                                {game.gameDetail.name} ✕
                             </div>
                         ))
                     }
@@ -260,18 +284,18 @@ function PopupTab2({ familyLibrary, setOpenPopup }) {
                     {
                         familyLibrary.map(game => (
                             <div
-                                key={game.id}
-                                className={`game-item ${isSelected(game.id) ? "selected" : ""}`}
+                                key={game.gameDetail.gameId}
+                                className={`game-item ${isSelected(game.gameDetail.gameId) ? "selected" : ""}`}
                                 onClick={() => {
-                                    if (isSelected(game.id)) {
-                                        setSelectedGames(prev => prev.filter(g => g.id !== game.id));
+                                    if (isSelected(game.gameDetail.gameId)) {
+                                        setSelectedGames(prev => prev.filter(g => g.gameDetail.gameId !== game.gameDetail.gameId));
                                     } else {
                                         setSelectedGames(prev => [...prev, game]);
                                     }
                                 }}
                             >
-                                <img src={game.media[0].url} alt={game.name} />
-                                <div className="game-name">{game.name}</div>
+                                <img src={game.gameDetail.media[0].url} alt={game.gameDetail.name} />
+                                <div className="game-name">{game.gameDetail.name}</div>
                             </div>
                         ))
                     }
