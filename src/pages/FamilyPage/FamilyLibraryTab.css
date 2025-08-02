@@ -80,11 +80,49 @@
 .family-library-tab .box-item .game-box .game-avatar {
     width: 100%;
     height: 100px;
+    position: relative;
+    overflow: hidden;
 }
 
 .family-library-tab .box-item .game-box .game-avatar img {
     width: 100%;
     height: 100%;
+}
+
+.family-library-tab .box-item .game-box .suspended-banner {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 24px;
+    background: rgba(0, 0, 0, 0.6);
+    color: yellow;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    border-bottom: 2px solid yellow;
+    border-top: 2px solid yellow;
+}
+
+.suspended-text {
+    white-space: nowrap;
+    display: inline-block;
+    padding-left: 100%;
+
+    animation: scroll-left 8s linear infinite;
+}
+
+
+@keyframes scroll-left {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
 }
 
 .family-library-tab .box-item .game-box .game-name {

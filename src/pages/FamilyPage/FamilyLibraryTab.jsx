@@ -28,7 +28,7 @@ public class FamilyGameDTO extends LibraryGameDTO{
         this.isPlayable = isPlayable;
     }
 }
-*/ 
+*/
 
 export default function FamilyLibraryTab({ familyData }) {
     const { t } = useTranslation();
@@ -63,18 +63,27 @@ export default function FamilyLibraryTab({ familyData }) {
                                     {t('Sorry, there are no shared games yet.')}
                                 </div>
                             )}
-                            {familyLibrary.map((game) => (
-                                <div className="box-item" key={game.gameDetail.gameId} onClick={() => navigate(`/game/${game.gameDetail.gameId}`)}>
-                                    <div className="game-box">
-                                        <div className="game-avatar">
-                                            <img src={`${game.gameDetail.media[0].url}`} alt={`${game.name}`} />
-                                        </div>
-                                        <div className="game-name">
-                                            {game.gameDetail.name}
+                            {familyLibrary
+                                .sort((a, b) => b.isPlayable - a.isPlayable)
+                                .map((game) => (
+                                    <div className="box-item" key={game.gameDetail.gameId} onClick={() => navigate(`/game/${game.gameDetail.gameId}`)}>
+                                        <div className="game-box">
+                                            <div className="game-avatar">
+                                                <img src={`${game.gameDetail.media[0].url}`} alt={`${game.name}`} />
+                                                {!game.isPlayable && (
+                                                    <div className="suspended-banner">
+                                                        <div className="suspended-text">
+                                                            Not allowed
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className="game-name">
+                                                {game.gameDetail.name}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
                         </div>
                     )
                 }

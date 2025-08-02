@@ -214,7 +214,7 @@ export default function FamilyPage() {
                     </div>
                     <div className="family-page-content d-flex flex-row">
                         <div className="content-left-nav d-flex flex-column w-25">
-                            <h4 className="nav-title">{t('Friends')}</h4>
+                            <h4 className="nav-title">{t('Family')}</h4>
                             <div
                                 className={`nav-item${curTab === 0 ? " active" : ""}`}
                                 onClick={() => handleChangeTab(0)}
