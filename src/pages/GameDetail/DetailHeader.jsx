@@ -23,93 +23,37 @@ function DetailHeader({ game, setIsOpenPopup }) {
   const CUR_USERID = localStorage.getItem("userId");
   const [gameInCart, setGameInCart] = useState(false);
   const [gameInLib, setGameInLib] = useState(false);
-  const { t } = useTranslation(); // Thêm hook useTranslation
-  const [showPopup, setShowPopup] = useState(false);
+  const { t } = useTranslation();
+  const [showPopup, setShowPopup] = useState(null);
   const navigate = useNavigate();
 
-    useEffect(() => {
-        const extractMediaUrl = () => {
-            game.media.map((m) => {
-                if (!mediaUrlArr.includes(m.url)) {
-                    mediaUrlArr.push(m.url);
-                }
-            })
-        }
-        if (game?.gameId && Array.isArray(game.media)) {
-            setMediaUrlArr(() => {
-                const urls = game.media.map(m => m.url);
-                return Array.from(new Set(urls)); // Loại trùng
-            });
+  useEffect(() => {
+    if (game && Array.isArray(game.media)) {
+      const urls = game.media.map((m) => m.url).filter(Boolean);
+      setMediaUrlArr(Array.from(new Set(urls)));
+    } else {
+      setMediaUrlArr([]);
+    }
 
-            if (CUR_USERID) {
-                checkGameInCart();
-                checkGameInLib();
-            }
-        }
-    }, [game])
+    if (game?.gameId && CUR_USERID) {
+      checkGameInCart();
+      checkGameInLib();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [game, CUR_USERID]);
 
+  const addCartHandler = async () => {
+    if (!CUR_USERID || isTokenExpired()) {
+      navigate("/login");
+      return;
+    }
 
-    const addCartHandler = async () => {
-        if (!CUR_USERID || isTokenExpired()) {
-            navigate("/login");
-            return;
-        }
-        try {
-            const response = await axios.post(
-                //adjust add by Bathanh
-                `${import.meta.env.VITE_API_URL}/user/cart/add?gameId=${game.gameId}`
-            );
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/user/cart/add?gameId=${game.gameId}`
+      );
 
-            // @author Phan NT Son
-            // Tạo thông báo khi người dùng thêm game vào giỏ hàng
-            if (response.data.success) {
-                setShowPopup(game);
-                setIsOpenPopup(true);
-                checkGameInCart();
-                checkGameInLib();
-            } else {
-                alert(t('Failed to add game to cart.'));
-            }
-            // ---
-
-        } catch (err) {
-            console.error("Error adding to cart:", err);
-            alert(t('Failed to add game to cart.'));
-        }
-      });
-    };
-    if (game?.gameId && Array.isArray(game.media)) {
-      setMediaUrlArr(() => {
-        const urls = game.media.map((m) => m.url);
-        return Array.from(new Set(urls)); // Loại trùng
-      });
-
-    const checkGameInCart = () => {
-        axios.get(`${import.meta.env.VITE_API_URL}/user/cart/contain/${game.gameId}`)
-            .then(response => {
-                if (response.data === true) setGameInCart(true)
-                else setGameInCart(false);
-            })
-            .catch(error => {
-                console.error("Error checking cart:", error);
-                setGameInCart(false);
-            });
-    };
-
-    const checkGameInLib = () => {
-        axios.get(`${import.meta.env.VITE_API_URL}/user/library/contain/${game.gameId}`)
-            .then(response => {
-                if (response.data === true) setGameInLib(true);
-            })
-            .catch(error => {
-                console.error("Error checking library:", error);
-                setGameInLib(false);
-            });
-    };
-
-      // @author Phan NT Son
-      // Tạo thông báo khi người dùng thêm game vào giỏ hàng
-      if (response.data.success) {
+      if (response?.data?.success) {
         setShowPopup(game);
         setIsOpenPopup(true);
         checkGameInCart();
@@ -117,7 +61,6 @@ function DetailHeader({ game, setIsOpenPopup }) {
       } else {
         alert(t("Failed to add game to cart."));
       }
-      // ---
     } catch (err) {
       console.error("Error adding to cart:", err);
       alert(t("Failed to add game to cart."));
