@@ -32,12 +32,7 @@ function BrowseByPublisher() {
 
   const getPublishersList = async () => {
     try {
-<<<<<<< Updated upstream
-      await axios
-        .get(`${import.meta.env.VITE_API_URL}/publisher/list`)
-=======
       await axios.get(`${import.meta.env.VITE_API_URL}/publisher/list`)
->>>>>>> Stashed changes
         .then((response) => {
           setData(response.data);
           setCachedPublishers(response.data);
