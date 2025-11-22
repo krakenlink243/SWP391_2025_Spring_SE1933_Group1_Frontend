@@ -35,7 +35,7 @@ const VerifyEmailOtp = () => {
 
     setLoading(true);
     try {
-      await axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/api/auth/verify-otp`, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/verify-otp`, {
         email,
         otp,
       });

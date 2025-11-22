@@ -23,7 +23,7 @@ export default function CreateThreadPage() {
                 return;
             }
             await axios.post(
-                `swp3912025springse1933group1backend-productionnewgen.up.railway.app/api/community/thread/create/${userId}`,
+                `${import.meta.env.VITE_API_URL}/api/community/thread/create/${userId}`,
                 {
                     title,
                     content

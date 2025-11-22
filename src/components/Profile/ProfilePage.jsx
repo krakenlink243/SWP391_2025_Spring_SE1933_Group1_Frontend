@@ -39,19 +39,19 @@ const ProfileHeader = ({
 
   const handleUnfriend = (friendId) => {
     if (!token) return;
-    axios.delete(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/unfriend/${friendId}`)
+    axios.delete(`${import.meta.env.VITE_API_URL}/user/unfriend/${friendId}`)
       .catch((err) => {
         console.log("Error unfriend: ", err);
       })
   }
 
   const handleBlock = (friendId) => {
-    axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/block/${friendId}`);
+    axios.patch(`${import.meta.env.VITE_API_URL}/user/block/${friendId}`);
   }
 
   const handleUnBlock = (friendId) => {
     if (!token) return;
-    axios.delete(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/unblock/${friendId}`)
+    axios.delete(`${import.meta.env.VITE_API_URL}/user/unblock/${friendId}`)
       .catch((err) => {
         console.log("Error unfriend: ", err);
       })
@@ -155,7 +155,7 @@ const ProfilePage = () => {
       try {
         // Luôn fetch dữ liệu của profileId trên URL
         const response = await axios.get(
-          `swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/profile/${profileId}`
+          `${import.meta.env.VITE_API_URL}/user/profile/${profileId}`
         );
         setProfileData(response.data);
       } catch (err) {
@@ -182,7 +182,7 @@ const ProfilePage = () => {
 
   const handleAddFriend = () => {
     axios.post(
-      `swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/sendinvite/${profileData.userId}`
+      `${import.meta.env.VITE_API_URL}/user/sendinvite/${profileData.userId}`
     );
     alert(
       t(`Friend request sent to`, { userName: profileData.profileName })

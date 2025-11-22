@@ -64,7 +64,7 @@ function DetailHeader({ game, setIsOpenPopup }) {
         try {
             const response = await axios.post(
                 //adjust add by Bathanh
-                `swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/cart/add?gameId=${game.gameId}`
+                `${import.meta.env.VITE_API_URL}/user/cart/add?gameId=${game.gameId}`
             );
 
             // @author Phan NT Son
@@ -112,7 +112,7 @@ function DetailHeader({ game, setIsOpenPopup }) {
       );
 =======
     const checkGameInCart = () => {
-        axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/cart/contain/${game.gameId}`)
+        axios.get(`${import.meta.env.VITE_API_URL}/user/cart/contain/${game.gameId}`)
             .then(response => {
                 if (response.data === true) setGameInCart(true)
                 else setGameInCart(false);
@@ -124,7 +124,7 @@ function DetailHeader({ game, setIsOpenPopup }) {
     };
 
     const checkGameInLib = () => {
-        axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/library/contain/${game.gameId}`)
+        axios.get(`${import.meta.env.VITE_API_URL}/user/library/contain/${game.gameId}`)
             .then(response => {
                 if (response.data === true) setGameInLib(true);
             })

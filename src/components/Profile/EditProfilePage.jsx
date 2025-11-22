@@ -141,7 +141,7 @@ const {t} = useTranslation();
       }
       try {
         const response = await axios.get(
-          `swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/profile/${userId}`
+          `${import.meta.env.VITE_API_URL}/user/profile/${userId}`
         );
         setCurrentUser(response.data);
         const { profileName, country, dob, gender, summary } = response.data;
@@ -203,7 +203,7 @@ const {t} = useTranslation();
     try {
       const userId = localStorage.getItem("userId");
       const response = await axios.put(
-        `swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/profile/${userId}/edit/info`,
+        `${import.meta.env.VITE_API_URL}/user/profile/${userId}/edit/info`,
         formData
       );
       setFormData(response.data);

@@ -13,7 +13,7 @@ const RecommendedFromLibrary = ({ userId }) => {
       if (!userId) return;
       
       try {
-        const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/related/owned/${userId}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/game/related/owned/${userId}`);
         setGames(response.data);
       } catch (error) {
         console.error("Error fetching library-based recommendations:", error);

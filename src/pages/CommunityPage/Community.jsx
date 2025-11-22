@@ -17,11 +17,11 @@ export default function Community() {
     const { token } = useAuth();
     const { t } = useTranslation();
     useEffect(() => {
-        axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/api/discussions`)
+        axios.get(`${import.meta.env.VITE_API_URL}/api/discussions`)
             .then((res) => setThreads(res.data))
             .catch((err) => console.error(err));
 
-        axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/review/list-all`)
+        axios.get(`${import.meta.env.VITE_API_URL}/review/list-all`)
             .then((res) => {
                 console.log("Review API response:", res.data);
                 setReviews(res.data);

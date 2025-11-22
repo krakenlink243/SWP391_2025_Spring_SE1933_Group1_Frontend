@@ -32,7 +32,7 @@ function ReviewForm({ onReload, game }) {
 <<<<<<< Updated upstream
             await axios.post(`${import.meta.env.VITE_API_URL}/review/post`, {
 =======
-            const response = await axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/review/post`, {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/review/post`, {
 >>>>>>> Stashed changes
                 recommended: recommended,
                 reviewContent: reviewContent,

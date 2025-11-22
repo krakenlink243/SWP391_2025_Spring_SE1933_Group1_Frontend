@@ -153,15 +153,15 @@ function SendGameToAdmin() {
     try {
       const uploadImage = new FormData();
       files.forEach(file => uploadImage.append('files', file));
-      const responseMedia = await axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/image/upload`, uploadImage, {
+      const responseMedia = await axios.post(`${import.meta.env.VITE_API_URL}/request/image/upload`, uploadImage, {
         header: { "Content-Type": "multipart/form-data" },
       });
       const croppedUpload = new FormData();
       croppedUpload.append('files', croppedFile);
-      const croppedResponse = await axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/image/upload`, croppedUpload, {
+      const croppedResponse = await axios.post(`${import.meta.env.VITE_API_URL}/request/image/upload`, croppedUpload, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-      const response = await axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/game/add`, { ...formData, mediaUrls: responseMedia.data.imageUrls,iconUrl: croppedResponse.data.imageUrls[0] });
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/request/game/add`, { ...formData, mediaUrls: responseMedia.data.imageUrls,iconUrl: croppedResponse.data.imageUrls[0] });
       console.log(response);
       alert(response.data.message);
       navigate("/");
@@ -185,7 +185,7 @@ function SendGameToAdmin() {
       if (formData.gameUrl === "") {
         return;
       }
-      const response = await axios.delete(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/file/delete/${formData.gameUrl}`);
+      const response = await axios.delete(`${import.meta.env.VITE_API_URL}/request/file/delete/${formData.gameUrl}`);
       console.log(response.data.message);
     } catch (error) {
       console.log(error);
@@ -206,7 +206,7 @@ function SendGameToAdmin() {
     try {
       // 🔐 Step 1: Get presigned upload URL + fileId + fileName
       const response = await axios.post(
-        `swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/file/upload`,
+        `${import.meta.env.VITE_API_URL}/request/file/upload`,
         new URLSearchParams({
           fileName: selectedFile.name,
           contentType: selectedFile.type
@@ -270,7 +270,7 @@ function SendGameToAdmin() {
   const normalizeValue = async (e) => {
     const { name, value } = e.target;
     if (name === 'gameName') {
-      const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/game/exist/check`, { params: { gameName: value } });
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/game/exist/check`, { params: { gameName: value } });
       console.log(response.data.message)
       console.log(response.data.debug)
       if (response.data.message === true) {

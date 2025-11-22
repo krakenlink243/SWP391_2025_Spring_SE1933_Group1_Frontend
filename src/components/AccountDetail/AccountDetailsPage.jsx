@@ -21,7 +21,7 @@ const AccountDetailsPage = () => {
     const userId = localStorage.getItem("userId");
     if (userId) {
       axios
-        .get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/profile/${userId}`)
+        .get(`${import.meta.env.VITE_API_URL}/user/profile/${userId}`)
         .then((res) => setAccount(res.data))
         .catch((err) => console.error(err))
         .finally(() => setLoading(false));
@@ -47,7 +47,7 @@ const AccountDetailsPage = () => {
       }
 
       const response = await axios.post(
-        `swp3912025springse1933group1backend-productionnewgen.up.railway.app/api/v1/payments/create-vnpay-payment`,
+        `${import.meta.env.VITE_API_URL}/api/v1/payments/create-vnpay-payment`,
         null,
         { params: params }
       );

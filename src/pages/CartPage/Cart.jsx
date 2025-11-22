@@ -29,7 +29,7 @@ const Cart = () => {
   const fetchCart = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/cart`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/user/cart`);
       const data = response.data;
       if (data.success && Array.isArray(data.data)) {
         setCartItems(data.data);
@@ -58,7 +58,7 @@ const Cart = () => {
   const handleRemove = async (gameId) => {
     setLoading(true);
     try {
-      await axios.delete(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/cart/remove?gameId=${gameId}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/user/cart/remove?gameId=${gameId}`);
       await fetchCart();
     } catch (error) {
       console.error('Error removing game:', error);
@@ -71,12 +71,12 @@ const Cart = () => {
     setShowConfirmModal(false);
     setLoading(true);
     try {
-      const response = await axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/cart/checkout`);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/user/cart/checkout`);
       if (!response.data.success) throw new Error(t('Purchase failed!'));
       setResultMessage(t('Purchase successful!'));
       setCartItems([]);
       await fetchCart();
-      const userRes = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/wallet`);
+      const userRes = await axios.get(`${import.meta.env.VITE_API_URL}/user/wallet`);
       setBalance(Number(userRes.data) || 0);
       setShowResultModal(true); // chỉ hiển thị modal khi thành công
     } catch (error) {
@@ -86,7 +86,7 @@ const Cart = () => {
           language: "en",
         };
         const response = await axios.post(
-          `swp3912025springse1933group1backend-productionnewgen.up.railway.app/api/v1/payments/create-vnpay-payment`,
+          `${import.meta.env.VITE_API_URL}/api/v1/payments/create-vnpay-payment`,
           null,
           { params: params }
         );

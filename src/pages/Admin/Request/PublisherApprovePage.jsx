@@ -20,7 +20,7 @@ function PublisherApprovePage() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/publisher/${page}`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/publisher/${page}`);
       setLoadedRequest(response.data.content);
       setTotalPages(response.data.totalPages);
       console.log(response.data);
@@ -44,7 +44,7 @@ function PublisherApprovePage() {
     }
     createNotification(userId, "Publisher Apply: Approved", "You are now Publisher");
     try {
-      const response = await axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/publisher/approve/${requestId}`);
+      const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/publisher/approve/${requestId}`);
       console.log("Approved request:", response.data);
       alert(t('Publisher Approved'))
       fetchData();
@@ -80,7 +80,7 @@ function PublisherApprovePage() {
 
                   // API call to reject request
                   const response = await axios.patch(
-                    `swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/publisher/reject/${requestId}`
+                    `${import.meta.env.VITE_API_URL}/request/publisher/reject/${requestId}`
                   );
                   console.log("Declined request:", response.data);
 
@@ -126,7 +126,7 @@ function PublisherApprovePage() {
     try {
       for (let i = 0; i < selectedRequests.length; i++) {
         const requestId = selectedRequests[i];
-        const response = await axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/publisher/approve/${requestId}`);
+        const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/publisher/approve/${requestId}`);
         console.log(`Processed approve for request ID:`, requestId);
       }
       alert(t('All selected publishers have been approved'));
@@ -141,7 +141,7 @@ function PublisherApprovePage() {
     try {
       for (let i = 0; i < selectedRequests.length; i++) {
         const requestId = selectedRequests[i];
-        const response = await axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/publisher/reject/${requestId}`);
+        const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/publisher/reject/${requestId}`);
         console.log(`Processed approve for request ID:`, requestId);
       }
       alert(t('All selected publishers have been declined'));

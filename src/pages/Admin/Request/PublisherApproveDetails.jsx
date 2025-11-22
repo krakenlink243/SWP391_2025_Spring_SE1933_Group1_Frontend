@@ -31,7 +31,7 @@ function PublisherApproveDetails() {
   )
   const fetchData = async () => {
     try {
-      const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/publisher/details/${publisherId}`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/publisher/details/${publisherId}`);
       setFormData(response.data);
     } catch (error) {
       console.error("Error fetching publisher data:", error);
@@ -47,7 +47,7 @@ function PublisherApproveDetails() {
     }
     createNotification(formData.userId, "Publisher Apply: Approved", "You are now Publisher");
     try {
-      const response = await axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/publisher/approve/${requestId}`);
+      const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/publisher/approve/${requestId}`);
       console.log("Approved request:", response.data);
       alert(t('Publisher Approved'))
       navigate("/admin/request/publisher");
@@ -81,7 +81,7 @@ function PublisherApproveDetails() {
                     `Answer for your publisher apply ${formData.publisherName}: ${answer}`
                   );
                   const response = await axios.patch(
-                    `swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/publisher/reject/${requestId}`
+                    `${import.meta.env.VITE_API_URL}/request/publisher/reject/${requestId}`
                   );
                   console.log("Declined request:", response.data);
                   navigate("/admin/request/publisher");

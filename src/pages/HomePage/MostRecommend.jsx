@@ -13,7 +13,7 @@ export default function MostRecommend() {
     const [chunkedSlides, setChunkedSlides] = useState([]);
 
     const handleGetNewPublish = () => {
-        axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/most-rated`)
+        axios.get(`${import.meta.env.VITE_API_URL}/game/most-rated`)
             .then((resp) => {
                 setGames(resp.data.data)
             })

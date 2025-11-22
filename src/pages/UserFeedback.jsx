@@ -25,7 +25,7 @@ function UserFeedback() {
     useEffect(() => {
         async function fetchFeedbackDetails() {
             try {
-                const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/feedback/user/details/${feedbackId}`);
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/feedback/user/details/${feedbackId}`);
                 setFormData(response.data);
                 setArr(response.data.mediaUrls);
                 setUserName(response.data.userName);
@@ -38,7 +38,7 @@ function UserFeedback() {
     const handleDeleteClick = async (feedbackId) => {
         if (window.confirm(t(t("Are you sure you want to delete this feedback?")))) {
             try {
-                await axios.delete(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/feedback/user/${feedbackId}`);
+                await axios.delete(`${import.meta.env.VITE_API_URL}/request/feedback/user/${feedbackId}`);
                 navigate(`/feedbackhub`);
             } catch (error) {
                 console.error('Error deleting feedback:', error);

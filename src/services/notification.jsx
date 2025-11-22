@@ -8,7 +8,7 @@ import axios from "axios"
 export const createNotification = async (receiverId, type, message) => {
     try {
         const response = await axios.post(
-            `swp3912025springse1933group1backend-productionnewgen.up.railway.app/notification/create`,
+            `${import.meta.env.VITE_API_URL}/notification/create`,
             {
                 receiverId: receiverId,
                 notificationType: type,

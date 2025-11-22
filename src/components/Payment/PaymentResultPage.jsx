@@ -32,7 +32,7 @@ const PaymentResultPage = () => {
       setMessage(t("Your payment was successful!"));
 
       axios.post(
-        `swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/wallet/add?amount=${
+        `${import.meta.env.VITE_API_URL}/user/wallet/add?amount=${
           params.get("vnp_Amount") / 2450000
         }`
       );

@@ -51,7 +51,7 @@ const GameShowcase = ({ userId, gameCount }) => {
       });
 
       const response = await axios.get(
-        `swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/library?userId=${userId}&${params.toString()}`,
+        `${import.meta.env.VITE_API_URL}/user/library?userId=${userId}&${params.toString()}`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }

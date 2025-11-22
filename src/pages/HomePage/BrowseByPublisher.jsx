@@ -36,7 +36,7 @@ function BrowseByPublisher() {
       await axios
         .get(`${import.meta.env.VITE_API_URL}/publisher/list`)
 =======
-      await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/publisher/list`)
+      await axios.get(`${import.meta.env.VITE_API_URL}/publisher/list`)
 >>>>>>> Stashed changes
         .then((response) => {
           setData(response.data);

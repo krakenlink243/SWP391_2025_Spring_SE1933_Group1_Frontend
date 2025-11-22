@@ -33,7 +33,7 @@ const ChangePassword = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            await axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/api/password/change/request`, {
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/password/change/request`, {
                 email: form.email,
             });
             alert(t('OTP sent to your email.'));
@@ -59,7 +59,7 @@ const ChangePassword = () => {
             return;
         }
         try {
-            await axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/api/password/change/confirm`, {
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/password/change/confirm`, {
                 email: form.email,
                 otp: form.otp,
                 newPassword: form.newPassword,

@@ -63,9 +63,9 @@ function UpdateGame() {
         try {
           let response;
           if(gameId){
-            response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/detail/${gameId}`);
+            response = await axios.get(`${import.meta.env.VITE_API_URL}/game/detail/${gameId}`);
           }else{
-            response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/game/details/${requestId}`);
+            response = await axios.get(`${import.meta.env.VITE_API_URL}/request/game/details/${requestId}`);
           }
           const gameData = response.data;
           console.log("Fetched Game Data (raw from BE):", gameData); // IMPORTANT: Check this in console
@@ -222,7 +222,7 @@ function UpdateGame() {
       if (files.length > 0) {
         const uploadImage = new FormData();
         files.forEach(file => uploadImage.append('files', file));
-        const responseMedia = await axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/image/upload`, uploadImage, {
+        const responseMedia = await axios.post(`${import.meta.env.VITE_API_URL}/request/image/upload`, uploadImage, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         // Assuming responseMedia.data.imageUrls is already an array of string URLs
@@ -233,7 +233,7 @@ function UpdateGame() {
       if (croppedFile) {
         const croppedUpload = new FormData();
         croppedUpload.append('files', croppedFile);
-        const croppedResponse = await axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/image/upload`, croppedUpload, {
+        const croppedResponse = await axios.post(`${import.meta.env.VITE_API_URL}/request/image/upload`, croppedUpload, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         finalIconUrl = croppedResponse.data.imageUrls[0];
@@ -251,7 +251,7 @@ function UpdateGame() {
         gameUrl:formData.gameUrl,
       };
 
-      const response = await axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/game/add`, payload);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/request/game/add`, payload);
 
       console.log(response);
       alert(response.data.message);
@@ -278,7 +278,7 @@ function UpdateGame() {
       if (formData.gameUrl === "") {
         return;
       }
-      const response = await axios.delete(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/file/delete/${formData.gameUrl}`);
+      const response = await axios.delete(`${import.meta.env.VITE_API_URL}/request/file/delete/${formData.gameUrl}`);
       console.log(response.data.message);
     } catch (error) {
       console.error("Error deleting file:", error);
@@ -297,7 +297,7 @@ function UpdateGame() {
 
     try {
       const response = await axios.post(
-        `swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/file/upload`,
+        `${import.meta.env.VITE_API_URL}/request/file/upload`,
         new URLSearchParams({
           fileName: selectedFile.name,
           contentType: selectedFile.type
@@ -367,7 +367,7 @@ function UpdateGame() {
     const { name, value } = e.target;
     if (name === 'gameName') {
       if (!gameId || (gameId && value !== formData.gameName)) {
-        const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/game/exist/check`, { params: { gameName: value } });
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/game/exist/check`, { params: { gameName: value } });
         console.log(response.data.message)
         console.log(response.data.debug)
         if (response.data.message === true) {

@@ -23,7 +23,7 @@ function ForgotPasswordRequest() {
     }
 
     try {
-      const response = await axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/api/password/request`, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/password/request`, {
         email,
       });
 

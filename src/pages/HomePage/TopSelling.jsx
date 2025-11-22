@@ -12,7 +12,7 @@ export default function TopSelling() {
     const [hoverImageUrl, setHoverImageUrl] = useState({});
 
     const handleGetTopSelling = () => {
-        axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/top-selling`)
+        axios.get(`${import.meta.env.VITE_API_URL}/game/top-selling`)
             .then((resp) => { setGames(resp.data.data) })
             .catch((err) => console.log("Error: ", err));
     }

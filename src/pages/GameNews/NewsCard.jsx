@@ -15,7 +15,7 @@ function NewsCard({ news, onClick, onDelete,mode }) {
     const confirmDelete = window.confirm("Are you sure you want to delete this news?");
     if (!confirmDelete) return;
     try {
-      await axios.delete(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/news/delete/${news.newsId}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/game/news/delete/${news.newsId}`);
       console.log('News deleted successfully');
       onDelete?.(news.newsId);
     } catch (error) {

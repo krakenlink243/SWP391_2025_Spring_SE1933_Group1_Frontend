@@ -24,7 +24,7 @@ const SearchBar = ({ onSearchSubmit }) => {
     const delayDebounceFn = setTimeout(async () => {
       try {
         const response = await axios.get(
-          `swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/search?term=${searchTerm}`
+          `${import.meta.env.VITE_API_URL}/game/search?term=${searchTerm}`
         );
         setSuggestions(response.data || []);
       } catch (error) {

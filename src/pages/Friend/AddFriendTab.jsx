@@ -26,14 +26,14 @@ function AddFriendTab() {
 <<<<<<< Updated upstream
 =======
     const getFriendList = () => {
-        axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/friends`)
+        axios.get(`${import.meta.env.VITE_API_URL}/user/friends`)
             .then((response) => { setFriendList(response.data) })
             .catch((err) => { console.log("Error fetching friends list: " + err) })
     };
 
 >>>>>>> Stashed changes
     const getSentInvitesList = () => {
-        axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/pendinginvite/init`)
+        axios.get(`${import.meta.env.VITE_API_URL}/user/pendinginvite/init`)
             .then((response) => { setSentInvitesList(response.data.data) })
             .catch((err) => { console.log("Error get received Invites: " + err) });
 
@@ -44,7 +44,7 @@ function AddFriendTab() {
         if (isFull) return;
         axios.post(`${import.meta.env.VITE_API_URL}/user/sendinvite/${friendId}`)
 =======
-        axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/sendinvite/${friendId}`)
+        axios.post(`${import.meta.env.VITE_API_URL}/user/sendinvite/${friendId}`)
 >>>>>>> Stashed changes
             .then((response) => {
                 createNotification(friendId, "Friend", `${curUsername} send you an invite`);
@@ -58,7 +58,7 @@ function AddFriendTab() {
             setSearchResult(null);
         }
 
-        axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/find/${friendId}`)
+        axios.get(`${import.meta.env.VITE_API_URL}/user/find/${friendId}`)
             .then((resp) => { setSearchResult(resp.data) })
             .catch(() => {
                 setSearchResult(null);

@@ -11,7 +11,7 @@ function NotificationItem({ notification, onClick, onDelete }) {
 
   const handleClick = () => {
     if (!notification.read) {
-      axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/notification/markread/${notification.notifId}`)
+      axios.patch(`${import.meta.env.VITE_API_URL}/notification/markread/${notification.notifId}`)
         .then(() => {
           onClick();
         })
@@ -20,7 +20,7 @@ function NotificationItem({ notification, onClick, onDelete }) {
   };
 
   const handleDelete = () => {
-    axios.delete(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/notification/delete/${notification.notifId}`)
+    axios.delete(`${import.meta.env.VITE_API_URL}/notification/delete/${notification.notifId}`)
       .then(() => {
         // Optionally, you can refresh the notification list or remove the item from the UI
         onDelete();

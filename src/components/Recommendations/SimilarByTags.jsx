@@ -10,7 +10,7 @@ const SimilarByTag = ({ gameId }) => {
   useEffect(() => {
     const fetchRecommendations = async () => {
       try {
-        const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/related/tags/${gameId}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/game/related/tags/${gameId}`);
         setGames(response.data);
       } catch (error) {
         console.error("Error fetching similar games:", error);

@@ -19,13 +19,13 @@ export default function ThreadDetailPage() {
 
 
   useEffect(() => {
-    axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/api/discussions/${threadId}`)
+    axios.get(`${import.meta.env.VITE_API_URL}/api/discussions/${threadId}`)
       .then((res) => {
         setThread(res.data);
         console.log(res.data);
       })
       .catch((err) => console.error(err));
-    axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/api/discussions/${threadId}/comments`)
+    axios.get(`${import.meta.env.VITE_API_URL}/api/discussions/${threadId}/comments`)
       .then((res) => setComments(res.data))
       .catch((err) => console.error(err));
   }, [threadId]);

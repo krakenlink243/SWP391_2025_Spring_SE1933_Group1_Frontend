@@ -12,7 +12,7 @@ export default function NewPublish() {
     const navigate = useNavigate();
 
     const handleGetNewPublish = () => {
-        axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/new-publish`)
+        axios.get(`${import.meta.env.VITE_API_URL}/game/new-publish`)
             .then((resp) => { setGames(resp.data.data) })
             .catch((err) => console.log("Error: ", err));
     }

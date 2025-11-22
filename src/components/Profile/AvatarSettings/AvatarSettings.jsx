@@ -61,7 +61,7 @@ const AvatarSettings = ({ currentUser }) => {
   useEffect(() => {
     async function fetchAvatars() {
       const response = await axios.get(
-        `swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/profile/${currentUser}`
+        `${import.meta.env.VITE_API_URL}/user/profile/${currentUser}`
       );
       const placeholderLibrary = [...response.data.avatarUrl].filter(Boolean);
       setCurrentAvatar(response.data.avatarUrl || ""); 
@@ -105,7 +105,7 @@ const AvatarSettings = ({ currentUser }) => {
 
       // SỬ DỤNG API POST DUY NHẤT MÀ BẠN CUNG CẤP
       const response = await axios.post(
-        `swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/profile/${userId}/avatar/upload`, // URL từ controller của bạn
+        `${import.meta.env.VITE_API_URL}/user/profile/${userId}/avatar/upload`, // URL từ controller của bạn
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );

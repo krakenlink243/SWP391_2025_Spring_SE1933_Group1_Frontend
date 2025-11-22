@@ -12,7 +12,7 @@ export default function EditThreadModal({ thread, onCancel, onSave }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.put(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/api/discussions/update/${thread.threadId}`, {
+            const res = await axios.put(`${import.meta.env.VITE_API_URL}/api/discussions/update/${thread.threadId}`, {
                 title,
                 content,
             });
@@ -32,7 +32,7 @@ export default function EditThreadModal({ thread, onCancel, onSave }) {
         if (!confirmed) return;
 
         try {
-            await axios.delete(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/api/discussions/delete/${thread.threadId}`);
+            await axios.delete(`${import.meta.env.VITE_API_URL}/api/discussions/delete/${thread.threadId}`);
             alert("Thread deleted successfully.");
             navigate("/community");
         } catch (error) {

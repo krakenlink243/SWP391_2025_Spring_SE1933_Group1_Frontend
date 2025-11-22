@@ -32,7 +32,7 @@ function ResetPassword() {
     }
 
     try {
-      const response = await axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/api/password/reset`, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/password/reset`, {
         email: state.email,
         otp,
         newPassword,

@@ -48,7 +48,7 @@ function WalletPage() {
 
   const getUserBalance = () => {
     axios
-      .get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/wallet`)
+      .get(`${import.meta.env.VITE_API_URL}/user/wallet`)
       .then((response) => setBalance(response.data))
       .catch((error) => alert(error));
   };

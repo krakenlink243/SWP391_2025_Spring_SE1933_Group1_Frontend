@@ -18,7 +18,7 @@ function UserManagementPage() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/admin/banned-users/${page}`);
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/admin/banned-users/${page}`);
             setLoadedRequest(response.data.content);
             setTotalPages(response.data.totalPages);
             console.log(response.data);
