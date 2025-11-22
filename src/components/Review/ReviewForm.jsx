@@ -29,11 +29,7 @@ function ReviewForm({ onReload, game }) {
         setIsSubmitting(true);
 
         try {
-<<<<<<< Updated upstream
-            await axios.post(`${import.meta.env.VITE_API_URL}/review/post`, {
-=======
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/review/post`, {
->>>>>>> Stashed changes
                 recommended: recommended,
                 reviewContent: reviewContent,
                 gameId: game.gameId,

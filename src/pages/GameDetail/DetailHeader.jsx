@@ -27,13 +27,6 @@ function DetailHeader({ game, setIsOpenPopup }) {
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
 
-<<<<<<< Updated upstream
-  useEffect(() => {
-    const extractMediaUrl = () => {
-      game.media.map((m) => {
-        if (!mediaUrlArr.includes(m.url)) {
-          mediaUrlArr.push(m.url);
-=======
     useEffect(() => {
         const extractMediaUrl = () => {
             game.media.map((m) => {
@@ -82,7 +75,6 @@ function DetailHeader({ game, setIsOpenPopup }) {
         } catch (err) {
             console.error("Error adding to cart:", err);
             alert(t('Failed to add game to cart.'));
->>>>>>> Stashed changes
         }
       });
     };
@@ -92,25 +84,6 @@ function DetailHeader({ game, setIsOpenPopup }) {
         return Array.from(new Set(urls)); // Loại trùng
       });
 
-<<<<<<< Updated upstream
-      if (CUR_USERID) {
-        checkGameInCart();
-        checkGameInLib();
-      }
-    }
-  }, [game]);
-
-  const addCartHandler = async () => {
-    if (!CUR_USERID || isTokenExpired()) {
-      navigate("/login");
-      return;
-    }
-    try {
-      const response = await axios.post(
-        //adjust add by Bathanh
-        `${import.meta.env.VITE_API_URL}/user/cart/add?gameId=${game.gameId}`
-      );
-=======
     const checkGameInCart = () => {
         axios.get(`${import.meta.env.VITE_API_URL}/user/cart/contain/${game.gameId}`)
             .then(response => {
@@ -133,7 +106,6 @@ function DetailHeader({ game, setIsOpenPopup }) {
                 setGameInLib(false);
             });
     };
->>>>>>> Stashed changes
 
       // @author Phan NT Son
       // Tạo thông báo khi người dùng thêm game vào giỏ hàng

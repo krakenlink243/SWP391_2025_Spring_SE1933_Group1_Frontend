@@ -23,15 +23,12 @@ function AddFriendTab() {
     const UNKNOW_AVATAR_URL = localStorage.getItem("unknowAvatar");
 
 
-<<<<<<< Updated upstream
-=======
     const getFriendList = () => {
         axios.get(`${import.meta.env.VITE_API_URL}/user/friends`)
             .then((response) => { setFriendList(response.data) })
             .catch((err) => { console.log("Error fetching friends list: " + err) })
     };
 
->>>>>>> Stashed changes
     const getSentInvitesList = () => {
         axios.get(`${import.meta.env.VITE_API_URL}/user/pendinginvite/init`)
             .then((response) => { setSentInvitesList(response.data.data) })
@@ -40,12 +37,7 @@ function AddFriendTab() {
     }
 
     const handleSendInvite = (friendId) => {
-<<<<<<< Updated upstream
-        if (isFull) return;
         axios.post(`${import.meta.env.VITE_API_URL}/user/sendinvite/${friendId}`)
-=======
-        axios.post(`${import.meta.env.VITE_API_URL}/user/sendinvite/${friendId}`)
->>>>>>> Stashed changes
             .then((response) => {
                 createNotification(friendId, "Friend", `${curUsername} send you an invite`);
                 setSentInvitesList(prev => [...prev, { receiverId: friendId }]);
