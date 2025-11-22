@@ -36,7 +36,7 @@ const Transaction = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/user/transaction`
+        `swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/transaction`
       );
       let transactions = response.data.data || [];
 

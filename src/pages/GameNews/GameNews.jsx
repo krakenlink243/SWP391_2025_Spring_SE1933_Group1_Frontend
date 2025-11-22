@@ -24,11 +24,11 @@ function GameNews() {
   const fetchNews = async (page = 0) => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/game/news/${gameId}`,
+        `swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/news/${gameId}`,
         { params: { page, size: pageSize } }
       );
       console.log(response.data);
-      setGameName((await axios.get(`${import.meta.env.VITE_API_URL}/game/detail/${gameId}`)).data.name);
+      setGameName((await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/detail/${gameId}`)).data.name);
       console.log(gameName);
       setNewsPage(response.data);
       setCurrentPage(response.data.number);

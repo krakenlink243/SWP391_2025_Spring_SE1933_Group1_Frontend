@@ -17,7 +17,7 @@ export default function CommentSection({ threadId, comments, setComments }) {
     }
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/discussions/${threadId}/comments`,
+        `swp3912025springse1933group1backend-productionnewgen.up.railway.app/api/discussions/${threadId}/comments`,
         { content: newComment },
         {
           headers: {

@@ -42,8 +42,8 @@ const GamesPage = () => {
     const fetchFilterData = async () => {
       try {
         const [tagsResponse, publishersResponse] = await Promise.all([
-          axios.get(`${import.meta.env.VITE_API_URL}/tags`),
-          axios.get(`${import.meta.env.VITE_API_URL}/publisher/list`),
+          axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/tags`),
+          axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/publisher/list`),
         ]);
         if (tagsResponse.data) {
           const freshTags = tagsResponse.data.sort((a, b) =>
@@ -111,7 +111,7 @@ const GamesPage = () => {
     params.append("page", currentPage);
     params.append("size", GAMES_PER_PAGE);
 
-    const apiUrl = `${import.meta.env.VITE_API_URL}/game?${params.toString()}`;
+    const apiUrl = `swp3912025springse1933group1backend-productionnewgen.up.railway.app/game?${params.toString()}`;
 
     // 4: Delayed fresh fetch to update cache silently
     setTimeout(

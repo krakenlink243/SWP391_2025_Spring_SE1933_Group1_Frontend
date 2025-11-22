@@ -33,7 +33,7 @@ function ApplyToPublisher() {
   }, []);
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/publisher/user/details/${publisherId}`);
+      const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/publisher/user/details/${publisherId}`);
       setFormData(response.data);
     } catch (error) {
       console.error("Error fetching publisher data:", error);
@@ -101,15 +101,15 @@ function ApplyToPublisher() {
       if (image) {
         const imgData = new FormData();
         imgData.append("files", image.file); // Use actual file object
-        const res = await axios.post(`${import.meta.env.VITE_API_URL}/request/image/upload`, imgData, {
+        const res = await axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/image/upload`, imgData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         console.log("Uploaded image URL:", res.data);
         setFormData(prev => ({ ...prev, imageUrl: res.data.imageUrls }));
-        const response = await axios.post(`${import.meta.env.VITE_API_URL}/request/publisher/send`, { ...formData, imageUrl: res.data.imageUrls[0] });
+        const response = await axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/publisher/send`, { ...formData, imageUrl: res.data.imageUrls[0] });
         alert(response.data.message)
       } else {
-        const response = await axios.post(`${import.meta.env.VITE_API_URL}/request/publisher/send`, formData);
+        const response = await axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/publisher/send`, formData);
         alert(response.data.message)
       }
       navigate("/");

@@ -73,7 +73,7 @@ function SendUserFeedback() {
         const uploadImage = new FormData();
         files.forEach((file) => uploadImage.append("files", file));
         responseMedia = await axios.post(
-          `${import.meta.env.VITE_API_URL}/request/image/upload`,
+          `swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/image/upload`,
           uploadImage,
           {
             header: { "Content-Type": "multipart/form-data" },
@@ -87,7 +87,7 @@ function SendUserFeedback() {
         }));
       }
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/request/feedback/send`,
+        `swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/feedback/send`,
         {
           ...formData,
           mediaUrls: responseMedia?.data?.imageUrls || [],

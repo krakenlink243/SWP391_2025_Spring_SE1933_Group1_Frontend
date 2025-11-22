@@ -12,7 +12,7 @@ export default function GameUnder5() {
     const navigate = useNavigate();
 
     const handleGetGameUnder5 = () => {
-        axios.get(`${import.meta.env.VITE_API_URL}/game/under5`)
+        axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/under5`)
             .then((resp) => { setGames(resp.data.data) })
             .catch((err) => console.log("Error: ", err));
     }

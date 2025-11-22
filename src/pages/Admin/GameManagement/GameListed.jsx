@@ -15,7 +15,7 @@ function GameListed() {
     const size = 10;
     const fetchGames = async () => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/game/listed`, {
+            const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/listed`, {
                 params: {
                     page,
                     size,
@@ -54,7 +54,7 @@ function GameListed() {
       return;
     }
     try {
-      await axios.patch(`${import.meta.env.VITE_API_URL}/game/hide/${gameId}`, {
+      await axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/hide/${gameId}`, {
       });
       createNotification(publisherId,"Game Management",`Someone reported that your game ${gameName} has violated the Term of Service.To object this report, send feedback to us.`)
       setGames(prev => prev.filter(game => game.id !== gameId));

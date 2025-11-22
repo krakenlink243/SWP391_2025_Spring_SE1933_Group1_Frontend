@@ -27,7 +27,7 @@ function NewsEditor() {
       formData.append("files", file);
 
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/request/image/upload`,
+        `swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/image/upload`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
@@ -47,7 +47,7 @@ function NewsEditor() {
     formData.append("files", file);
 
     const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/request/image/upload`,
+      `swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/image/upload`,
       formData,
       { headers: { "Content-Type": "multipart/form-data" } }
     );
@@ -61,7 +61,7 @@ function NewsEditor() {
     const fetchNews = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/game/news/view/${newsId}`
+          `swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/news/view/${newsId}`
         );
         const data = response.data;
         setTitle(data.title || "");
@@ -103,8 +103,8 @@ function NewsEditor() {
       };
 
       const url = newsId
-        ? `${import.meta.env.VITE_API_URL}/game/news/edit/${newsId}`
-        : `${import.meta.env.VITE_API_URL}/game/news/${gameId}/create`;
+        ? `swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/news/edit/${newsId}`
+        : `swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/news/${gameId}/create`;
       const method = newsId ? "put" : "post";
 
       await axios[method](url, payload);

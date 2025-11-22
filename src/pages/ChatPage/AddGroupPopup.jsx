@@ -27,7 +27,7 @@ export default function AddGroupPopup({ setOpenPopup }) {
         if (isGroupFull) {
             return;
         }
-        axios.post(`${import.meta.env.VITE_API_URL}/user/groupchat/add`, {
+        axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/groupchat/add`, {
             groupName: newGroupName,
             members: newGMembers
         })

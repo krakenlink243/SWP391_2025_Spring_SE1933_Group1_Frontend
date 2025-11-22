@@ -27,11 +27,62 @@ function DetailHeader({ game, setIsOpenPopup }) {
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
 
+<<<<<<< Updated upstream
   useEffect(() => {
     const extractMediaUrl = () => {
       game.media.map((m) => {
         if (!mediaUrlArr.includes(m.url)) {
           mediaUrlArr.push(m.url);
+=======
+    useEffect(() => {
+        const extractMediaUrl = () => {
+            game.media.map((m) => {
+                if (!mediaUrlArr.includes(m.url)) {
+                    mediaUrlArr.push(m.url);
+                }
+            })
+        }
+        if (game?.gameId && Array.isArray(game.media)) {
+            setMediaUrlArr(() => {
+                const urls = game.media.map(m => m.url);
+                return Array.from(new Set(urls)); // Loại trùng
+            });
+
+            if (CUR_USERID) {
+                checkGameInCart();
+                checkGameInLib();
+            }
+        }
+    }, [game])
+
+
+    const addCartHandler = async () => {
+        if (!CUR_USERID || isTokenExpired()) {
+            navigate("/login");
+            return;
+        }
+        try {
+            const response = await axios.post(
+                //adjust add by Bathanh
+                `swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/cart/add?gameId=${game.gameId}`
+            );
+
+            // @author Phan NT Son
+            // Tạo thông báo khi người dùng thêm game vào giỏ hàng
+            if (response.data.success) {
+                setShowPopup(game);
+                setIsOpenPopup(true);
+                checkGameInCart();
+                checkGameInLib();
+            } else {
+                alert(t('Failed to add game to cart.'));
+            }
+            // ---
+
+        } catch (err) {
+            console.error("Error adding to cart:", err);
+            alert(t('Failed to add game to cart.'));
+>>>>>>> Stashed changes
         }
       });
     };
@@ -41,6 +92,7 @@ function DetailHeader({ game, setIsOpenPopup }) {
         return Array.from(new Set(urls)); // Loại trùng
       });
 
+<<<<<<< Updated upstream
       if (CUR_USERID) {
         checkGameInCart();
         checkGameInLib();
@@ -58,6 +110,30 @@ function DetailHeader({ game, setIsOpenPopup }) {
         //adjust add by Bathanh
         `${import.meta.env.VITE_API_URL}/user/cart/add?gameId=${game.gameId}`
       );
+=======
+    const checkGameInCart = () => {
+        axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/cart/contain/${game.gameId}`)
+            .then(response => {
+                if (response.data === true) setGameInCart(true)
+                else setGameInCart(false);
+            })
+            .catch(error => {
+                console.error("Error checking cart:", error);
+                setGameInCart(false);
+            });
+    };
+
+    const checkGameInLib = () => {
+        axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/library/contain/${game.gameId}`)
+            .then(response => {
+                if (response.data === true) setGameInLib(true);
+            })
+            .catch(error => {
+                console.error("Error checking library:", error);
+                setGameInLib(false);
+            });
+    };
+>>>>>>> Stashed changes
 
       // @author Phan NT Son
       // Tạo thông báo khi người dùng thêm game vào giỏ hàng

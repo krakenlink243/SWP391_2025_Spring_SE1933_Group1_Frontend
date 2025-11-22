@@ -15,7 +15,7 @@ function ActiveUser() {
     const size = 10;
     const fetchUsers = async () => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/user/active`, {
+            const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/active`, {
                 params: {
                     page,
                     size,
@@ -54,7 +54,7 @@ function ActiveUser() {
       return;
     }
     try {
-      await axios.patch(`${import.meta.env.VITE_API_URL}/user/ban/${userId}`, {
+      await axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/ban/${userId}`, {
       });
       createNotification(userId,"User Management","Someone reported that you have violated the Term of Service.To object this report, send feedback to us.")
       setUsers(prev => prev.filter(user => user.userId !== userId));

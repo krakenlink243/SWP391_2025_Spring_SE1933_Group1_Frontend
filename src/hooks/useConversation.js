@@ -23,13 +23,13 @@ export function useConversation(token, curChat) {
 
     // 2) Fetch history
     if (curChat.type === 'friend') {
-      axios.get(`${import.meta.env.VITE_API_URL}/user/conversation/${curChat.id}`)
+      axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/conversation/${curChat.id}`)
         .then(resp => {
           setConversation(resp.data);
           setMessages(resp.data.messages || []);
         });
     } else {
-      axios.get(`${import.meta.env.VITE_API_URL}/user/groupchat/${curChat.id}`)
+      axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/groupchat/${curChat.id}`)
         .then(resp => {
           setMembers(resp.data.data.members || []);
           setMessages(resp.data.data.messages || []);

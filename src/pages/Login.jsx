@@ -40,7 +40,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
+      const res = await axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/api/auth/login`, {
         username: username,
         password: password,
       });
@@ -65,7 +65,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/public/oauth2/login`,
+        `swp3912025springse1933group1backend-productionnewgen.up.railway.app/api/public/oauth2/login`,
         { email, name }
       );
 

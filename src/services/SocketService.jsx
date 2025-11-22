@@ -18,7 +18,7 @@ class SocketService {
             };
 
             this.client = new Client({
-                webSocketFactory: () => new SockJS(`${import.meta.env.VITE_API_URL}/ws-community?token=${token}`),
+                webSocketFactory: () => new SockJS(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/ws-community?token=${token}`),
                 reconnectDelay: 5000,
                 onConnect: () => {
                     setTimeout(() => {

@@ -19,7 +19,7 @@ function GameApprovePage() {
   const { t } = useTranslation();
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/game/${page}`);
+      const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/game/${page}`);
       setLoadedRequest(response.data.content);
       console.log(response.data.content)
       setTotalPages(response.data.totalPages);
@@ -43,7 +43,7 @@ function GameApprovePage() {
       return;
     }
     try {
-      const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/game/approve/${requestId}`);
+      const response = await axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/game/approve/${requestId}`);
       console.log("Approved request:", response.data);
       alert(t('Game Approved'))
       fetchData();
@@ -78,7 +78,7 @@ function GameApprovePage() {
                   );
                   // Reject the request via API
                   const response = await axios.patch(
-                    `${import.meta.env.VITE_API_URL}/request/game/reject/${requestId}`,{
+                    `swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/game/reject/${requestId}`,{
                       declineMessage:trimValue(answer)
                     }
                   );
@@ -127,7 +127,7 @@ function GameApprovePage() {
     try {
       for (let i = 0; i < selectedRequests.length; i++) {
         const requestId = selectedRequests[i];
-        const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/game/approve/${requestId}`);
+        const response = await axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/game/approve/${requestId}`);
         console.log(`Processed approve for request ID:`, requestId);
       }
       alert(t('All selected requests have been approved'));
@@ -142,7 +142,7 @@ function GameApprovePage() {
     try {
       for (let i = 0; i < selectedRequests.length; i++) {
         const requestId = selectedRequests[i];
-        const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/game/reject/${requestId}`);
+        const response = await axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/game/reject/${requestId}`);
         console.log(`Processed approve for request ID:`, requestId);
       }
       alert(t('All selected requests have been declined'));

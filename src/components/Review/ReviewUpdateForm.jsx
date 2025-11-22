@@ -11,7 +11,7 @@ function ReviewUpdateForm({ originalReview, onReload, onCancel, gameId, userId }
 
         try {
             const resp = await axios.put(
-                `${import.meta.env.VITE_API_URL}/review/update/${gameId}`,
+                `swp3912025springse1933group1backend-productionnewgen.up.railway.app/review/update/${gameId}`,
                 {
                     reviewContent: updateReviewContent,
                     recommended: updateRecommended
@@ -38,7 +38,7 @@ function ReviewUpdateForm({ originalReview, onReload, onCancel, gameId, userId }
         if (!window.confirm('Are you sure you want to delete this review?')) {
             return false;
         }
-        await axios.delete(`${import.meta.env.VITE_API_URL}/review/delete/${gameId}`).catch((err) => { console.log("Error: " + err) });
+        await axios.delete(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/review/delete/${gameId}`).catch((err) => { console.log("Error: " + err) });
 
         onReload();
         onCancel();

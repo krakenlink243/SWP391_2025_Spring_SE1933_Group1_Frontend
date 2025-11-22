@@ -18,7 +18,7 @@ function FeedbackHub() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/feedback/user/${page}`);
+            const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/feedback/user/${page}`);
             setFeedbackItems(response.data.content);
             console.log(response.data.content)
             setTotalPages(response.data.totalPages);
@@ -39,7 +39,7 @@ function FeedbackHub() {
     const handleDeleteClick = async (feedbackId) => {
         if (window.confirm(t("Are you sure you want to delete this feedback?"))) {
             try {
-                await axios.delete(`${import.meta.env.VITE_API_URL}/request/feedback/user/${feedbackId}`);
+                await axios.delete(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/feedback/user/${feedbackId}`);
                 fetchData();
             } catch (error) {
                 console.error('Error deleting feedback:', error);

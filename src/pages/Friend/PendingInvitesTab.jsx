@@ -17,7 +17,7 @@ function PendingInvitesTab() {
     } = useFriendInvite(token);
     const {t} = useTranslation();
     const handleAccept = (friendId) => {
-        axios.patch(`${import.meta.env.VITE_API_URL}/user/acceptinvite/${friendId}`)
+        axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/acceptinvite/${friendId}`)
             .then((resp) => {
                 setReceivedInvites(prev => prev.filter(inv => inv.senderId !== friendId));
                 createNotification(friendId, "Comunity", `${CUR_USERNAME} has accepted your invites`)
@@ -26,7 +26,7 @@ function PendingInvitesTab() {
     };
 
     const handleBlock = (friendId) => {
-        axios.patch(`${import.meta.env.VITE_API_URL}/user/block/${friendId}`)
+        axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/block/${friendId}`)
             .then((resp) => {
                 setReceivedInvites(prev => prev.filter(inv => inv.senderId !== friendId));
             })
@@ -34,7 +34,7 @@ function PendingInvitesTab() {
     };
 
     const handleDecline = (friendId) => {
-        axios.delete(`${import.meta.env.VITE_API_URL}/user/declineinvite/${friendId}`)
+        axios.delete(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/declineinvite/${friendId}`)
             .then((resp) => {
                 setReceivedInvites(prev => prev.filter(inv => inv.senderId !== friendId));
             })
@@ -42,7 +42,7 @@ function PendingInvitesTab() {
     };
 
     const handleCancel = (friendId) => {
-        axios.delete(`${import.meta.env.VITE_API_URL}/user/cancelinvite/${friendId}`)
+        axios.delete(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/cancelinvite/${friendId}`)
             .then((resp) => {
                 setSentInvites(prev => prev.filter(inv => inv.receiverId !== friendId));
             })

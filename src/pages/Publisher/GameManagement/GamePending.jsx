@@ -18,7 +18,7 @@ function GamePending() {
 
   const fetchGames = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/game/publisher/pending`, {
+      const res = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/publisher/pending`, {
         params: { page, size, name: searchTerm.trim() }
       });
 
@@ -63,7 +63,7 @@ function GamePending() {
     const confirm = window.confirm("Are you sure you want to remove this game request?");
     if (!confirm) return;
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/request/game/delete/${requestId}`);
+      await axios.delete(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/game/delete/${requestId}`);
       setGames(games.filter(game => game.requestId !== requestId));
     } catch (err) {
       console.error("Failed to remove game", err);

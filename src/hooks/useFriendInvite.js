@@ -18,8 +18,8 @@ export function useFriendInvite(token) {
         const fetchInvites = async () => {
             try {
                 const [receivedRes, sentRes] = await Promise.all([
-                    axios.get(`${import.meta.env.VITE_API_URL}/user/pendinginvite/receive`),
-                    axios.get(`${import.meta.env.VITE_API_URL}/user/pendinginvite/init`)
+                    axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/pendinginvite/receive`),
+                    axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/pendinginvite/init`)
                 ]);
                 setReceivedInvites(receivedRes.data.data);
                 setSentInvites(sentRes.data.data);

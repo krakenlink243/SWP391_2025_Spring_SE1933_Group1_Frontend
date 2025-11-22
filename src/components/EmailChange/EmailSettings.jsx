@@ -26,7 +26,7 @@ const EmailSettings = ({ currentUser }) => {
     try {
       // SỬA LẠI: Thêm http:// và đường dẫn API đầy đủ
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/user/request-change`,
+        `swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/request-change`,
         { newEmail }
       );
       setMessage(response.data.message);
@@ -47,7 +47,7 @@ const EmailSettings = ({ currentUser }) => {
     try {
       // SỬA LẠI: Thêm http:// và đường dẫn API đầy đủ
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/user/confirm-change`,
+        `swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/confirm-change`,
         {
           newEmail,
           token: verificationCode,

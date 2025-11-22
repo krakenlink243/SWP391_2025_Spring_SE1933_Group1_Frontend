@@ -10,7 +10,7 @@ function CartPopup({ game, mediaUrlArr, onClose, onViewCart, onRemoveSuccess }) 
     const {t} = useTranslation();
     const handleRemove = async (gameId) => {
         try {
-            await axios.delete(`${import.meta.env.VITE_API_URL}/user/cart/remove?gameId=${gameId}`);
+            await axios.delete(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/cart/remove?gameId=${gameId}`);
             onRemoveSuccess();
             onClose(); // đóng popup
 

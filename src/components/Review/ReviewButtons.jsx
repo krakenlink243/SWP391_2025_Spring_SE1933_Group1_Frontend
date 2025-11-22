@@ -34,7 +34,7 @@ function ReviewButtons({ reivewHelpful, reivewNotHelpful, authorId, game }) {
 
     const checkUserOption = async () => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/review/${game.gameId}/${authorId}/check`);
+            const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/review/${game.gameId}/${authorId}/check`);
             const result = response.data;
             setUserOption(result === 1 ? 1 : result === -1 ? -1 : 0);
         } catch (error) {
@@ -49,9 +49,9 @@ function ReviewButtons({ reivewHelpful, reivewNotHelpful, authorId, game }) {
         }
 
         const PATHS = {
-            HELPFUL: `${import.meta.env.VITE_API_URL}/review/vote/helpful`,
-            NOT_HELPFUL: `${import.meta.env.VITE_API_URL}/review/vote/unhelpful`,
-            CLEAN: `${import.meta.env.VITE_API_URL}/review/vote/clean`
+            HELPFUL: `swp3912025springse1933group1backend-productionnewgen.up.railway.app/review/vote/helpful`,
+            NOT_HELPFUL: `swp3912025springse1933group1backend-productionnewgen.up.railway.app/review/vote/unhelpful`,
+            CLEAN: `swp3912025springse1933group1backend-productionnewgen.up.railway.app/review/vote/clean`
         };
 
 

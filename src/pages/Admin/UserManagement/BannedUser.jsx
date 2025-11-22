@@ -14,7 +14,7 @@ function BannedUser() {
     const size = 10;
     const fetchUsers = async () => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/user/banned`, {
+            const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/banned`, {
                 params: {
                     page,
                     size,
@@ -53,7 +53,7 @@ function BannedUser() {
       return;
     }
     try {
-      await axios.patch(`${import.meta.env.VITE_API_URL}/user/unban/${userId}`, {
+      await axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/unban/${userId}`, {
       });
       setUsers(prev => prev.filter(user => user.userId !== userId));
     } catch (error) {

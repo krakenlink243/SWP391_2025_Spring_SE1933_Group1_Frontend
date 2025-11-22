@@ -39,7 +39,7 @@ function Review({ game }) {
   // Init review list
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_API_URL}/review/list/${game.gameId}`)
+      .get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/review/list/${game.gameId}`)
       .then((response) => {
         setReviewList(response.data);
       })

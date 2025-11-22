@@ -20,31 +20,31 @@ function AdminDashboard({ tab }) {
   })
   const fetchData = async()=>{
     try{
-      let res = await axios.get(`${import.meta.env.VITE_API_URL}/dashboard/users/count`);
+      let res = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/dashboard/users/count`);
       console.log(res.data);
       setFormData(prev => ({
         ...prev,
         userCount: res.data.value
       }));
-      res = await axios.get(`${import.meta.env.VITE_API_URL}/dashboard/publishers/count`);
+      res = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/dashboard/publishers/count`);
       console.log(res.data);
       setFormData(prev => ({
         ...prev,
         publisherCount: res.data.value
       }));
-      res = await axios.get(`${import.meta.env.VITE_API_URL}/dashboard/requests/pending/count`);
+      res = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/dashboard/requests/pending/count`);
       console.log(res.data);
       setFormData(prev => ({
         ...prev,
         pendingCount: res.data.value
       }));
-      res = await axios.get(`${import.meta.env.VITE_API_URL}/dashboard/revenue`);
+      res = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/dashboard/revenue`);
       console.log(res.data);
       setFormData(prev => ({
         ...prev,
         revenue: res.data.value
       }));
-      res = await axios.get(`${import.meta.env.VITE_API_URL}/dashboard/transactions/refund/count`);
+      res = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/dashboard/transactions/refund/count`);
       console.log(res.data);
       setFormData(prev => ({
         ...prev,

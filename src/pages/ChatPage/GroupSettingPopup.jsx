@@ -25,14 +25,14 @@ export default function GroupSettingPopup({ groupSetting, setOpenPopup, setCurCh
     const { t } = useTranslation();
     const handleDeleteGroupChat = () => {
         if (!groupSetting.isAdmin) return;
-        axios.delete(`${import.meta.env.VITE_API_URL}/user/groupchat/delete/${groupSetting.groupId}`);
+        axios.delete(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/groupchat/delete/${groupSetting.groupId}`);
         setOpenPopup(null);
         setCurChat(null);
     }
 
     const handleLeaveGroupChat = () => {
         if (groupSetting.isAdmin) return;
-        axios.post(`${import.meta.env.VITE_API_URL}/user/groupchat/leave/${groupSetting.groupId}/${curUserId}`)
+        axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/groupchat/leave/${groupSetting.groupId}/${curUserId}`)
         setOpenPopup(null);
         setCurChat(null);
     }
@@ -40,7 +40,7 @@ export default function GroupSettingPopup({ groupSetting, setOpenPopup, setCurCh
     const handleKickMember = () => {
         if (!groupSetting.isAdmin || kickMembers.length === 0) return;
         const kickMemberIds = kickMembers.map(member => member.memberId);
-        axios.post(`${import.meta.env.VITE_API_URL}/user/groupchat/kick/${groupSetting.groupId}`, kickMemberIds)
+        axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/groupchat/kick/${groupSetting.groupId}`, kickMemberIds)
         setKickMembers([]);
     }
     const handleChangeGroupName = () => {

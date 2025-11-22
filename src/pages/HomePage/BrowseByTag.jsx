@@ -22,7 +22,7 @@ function BrowseByTag() {
 
     const getTagsList = async () => {
         try {
-            await axios.get(`${import.meta.env.VITE_API_URL}/tags`)
+            await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/tags`)
                 .then((response) => {
                     setData(response.data);
                     setCachedTags(response.data);

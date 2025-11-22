@@ -79,13 +79,13 @@ function GameApproveDetails() {
   useEffect(() => {
     const getGameDetails = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/game/details/${gameId}`);
+        const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/game/details/${gameId}`);
         console.log(response.data);
         setFormData(response.data);
         // Get download link after formData is updated
         if (response.data.gameUrl) {
           try {
-            const downloadResponse = await axios.get(`${import.meta.env.VITE_API_URL}/request/file/download/${response.data.gameUrl}`);
+            const downloadResponse = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/file/download/${response.data.gameUrl}`);
             console.log(downloadResponse.data);
             setDownloadLink(downloadResponse.data);
           } catch (error) {
@@ -111,7 +111,7 @@ function GameApproveDetails() {
       return;
     }
     try {
-      const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/game/approve/${gameId}`);
+      const response = await axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/game/approve/${gameId}`);
       console.log(response.data);
       alert(t('Game Approved'));
       navigate("/admin/request/game");
@@ -144,7 +144,7 @@ function GameApproveDetails() {
                     `Answer for ${formData.gameName}: ${answer}`
                   );
                   const response = await axios.patch(
-                    `${import.meta.env.VITE_API_URL}/request/game/reject/${gameId}`,
+                    `swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/game/reject/${gameId}`,
                     {
                       declineMessage:trimValue(answer)
                     }
@@ -169,7 +169,7 @@ function GameApproveDetails() {
 
   const handleGetLinkDownload = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/file/download/${formData.gameUrl}`);
+      const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/file/download/${formData.gameUrl}`);
       console.log(response.data);
       setDownloadLink(response.data);
     } catch (error) {

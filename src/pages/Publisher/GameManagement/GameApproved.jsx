@@ -19,7 +19,7 @@ export default function GameApproved() {
   // Fetch paginated game list
   const fetchGames = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/game/publisher/listed`, {
+      const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/publisher/listed`, {
         params: { page, size, name: searchTerm.trim() },
       });
 
@@ -73,7 +73,7 @@ export default function GameApproved() {
 
     const endpoint = isVisible ? "hide" : "unhide";
     try {
-      await axios.patch(`${import.meta.env.VITE_API_URL}/game/${endpoint}/${gameId}`);
+      await axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/${endpoint}/${gameId}`);
 
       // Update state instantly for UI sync
       setGames(prev =>

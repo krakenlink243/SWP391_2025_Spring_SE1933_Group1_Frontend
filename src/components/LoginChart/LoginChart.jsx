@@ -9,7 +9,7 @@ function LoginChart({ mode }) {
   const [chartInstance, setChartInstance] = useState(null);
   useEffect(() => {
     if (!token) return;
-    axios.get(`${import.meta.env.VITE_API_URL}/dashboard/chart`, { params: { mode } })
+    axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/dashboard/chart`, { params: { mode } })
       .then(res => {
         const labels = res.data.map(item => {
           const date = new Date(item.label);

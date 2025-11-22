@@ -27,7 +27,7 @@ export default function AddMemberPopup({ setOpenPopup, groupId, groupMembers }) 
     const handleAddMembers = () => {
         if (isGroupFull || newGMembers.length === 0 || isBanned)
             return;
-        axios.post(`${import.meta.env.VITE_API_URL}/user/groupchat/join/${groupId}`, newGMembers);
+        axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/groupchat/join/${groupId}`, newGMembers);
         setNewGMembers([]);
         setOpenPopup(false);
     }

@@ -39,7 +39,7 @@ function NotificationList() {
     if (notifications.length === 0) return;
     if (notifications.every(n => n.read)) return
     try {
-      await axios.patch(`${import.meta.env.VITE_API_URL}/notification/markreadall`);
+      await axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/notification/markreadall`);
       setNotifications((prev) => prev.map(n => ({ ...n, read: true })));
     } catch (error) {
       console.log("error mark read all: " + error);
@@ -50,7 +50,7 @@ function NotificationList() {
     if (notifications.length === 0) return;
     if (!window.confirm(t("Are you sure you want to delete all notifications?"))) return;
     try {
-      axios.delete(`${import.meta.env.VITE_API_URL}/notification/deleteall`)
+      axios.delete(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/notification/deleteall`)
         .then((resp) => {
           setNotifications([]);
         });

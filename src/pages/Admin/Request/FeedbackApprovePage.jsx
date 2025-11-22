@@ -21,7 +21,7 @@ function FeedbackApprovePage() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/request/feedback/${page}`);
+      const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/feedback/${page}`);
       setLoadedRequest(response.data.content);
       setTotalPages(response.data.totalPages);
       console.log(response.data.content);
@@ -61,7 +61,7 @@ function FeedbackApprovePage() {
                     `Answer for your feedback ${subject}: ${answer}`
                   )
                   const response = await axios.patch(
-                    `${import.meta.env.VITE_API_URL}/request/feedback/approve/${requestId}`,
+                    `swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/feedback/approve/${requestId}`,
                     { response: trimValue(answer) }
                   );
                   console.log("Approved request:", response.data);
@@ -87,7 +87,7 @@ function FeedbackApprovePage() {
       return;
     }
     try {
-      const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/feedback/reject/${requestId}`);
+      const response = await axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/feedback/reject/${requestId}`);
       console.log("Approved request:", response.data);
       createNotification(
         senderId,
@@ -125,7 +125,7 @@ function FeedbackApprovePage() {
     try {
       for (let i = 0; i < selectedRequests.length; i++) {
         const requestId = selectedRequests[i];
-        const response = await axios.patch(`${import.meta.env.VITE_API_URL}/request/feedback/reject/${requestId}`);
+        const response = await axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/request/feedback/reject/${requestId}`);
         console.log(`Processed approve for request ID:`, requestId);
       }
       alert(t('All selected feedback have been dissmiss'));

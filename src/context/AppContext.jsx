@@ -36,22 +36,22 @@ export function AppProvider({ children }) {
 
         SocketService.connect(CUR_TOKEN, () => {
             // Initial User wallet balance
-            axios.get(`${import.meta.env.VITE_API_URL}/user/wallet`)
+            axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/wallet`)
                 .then((response) => { setWalletBalance(response.data) })
                 .catch((error) => { console.log("Error fetching account balance: ", error) });
 
             // Initial Notifications 
-            axios.get(`${import.meta.env.VITE_API_URL}/notification/list`)
+            axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/notification/list`)
                 .then((response) => { setNotifications(response.data) })
                 .catch((err) => { console.log("Error initial Notifications: ", err) });
 
             // Initial Cart Total
-            axios.get(`${import.meta.env.VITE_API_URL}/user/cart/total`)
+            axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/cart/total`)
                 .then((response) => { setCartTotal(response.data.data) })
                 .catch((err) => { console.log("Error intial Cart total: ", err) });
 
             // Initial Library
-            axios.get(`${import.meta.env.VITE_API_URL}/user/library`)
+            axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/library`)
                 .then((response) => {
                     const mapped = (response.data.content || []).map((item) => ({
                         ...item.gameDetail,
@@ -65,19 +65,19 @@ export function AppProvider({ children }) {
                 })
 
             // Initial Friends
-            axios.get(`${import.meta.env.VITE_API_URL}/user/friends`)
+            axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/friends`)
                 .then(r => setFriendList(r.data))
                 .catch(console.error);
 
             // Initial Blocked list
-            axios.get(`${import.meta.env.VITE_API_URL}/user/blocked`)
+            axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/blocked`)
                 .then(r => {
                     setBlockedList(r.data);
                 })
                 .catch(console.error);
 
             // Initial GroupChats
-            axios.get(`${import.meta.env.VITE_API_URL}/user/groupchat`)
+            axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/groupchat`)
                 .then(r => setGroupChats(r.data.data))
                 .catch(console.error);
 

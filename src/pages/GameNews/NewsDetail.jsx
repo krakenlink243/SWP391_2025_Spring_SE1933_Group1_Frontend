@@ -11,7 +11,7 @@ function NewsDetail() {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/game/news/view/${newsId}`);
+        const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/news/view/${newsId}`);
         setNews(response.data);
       } catch (error) {
         console.error('Failed to fetch news:', error);

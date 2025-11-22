@@ -15,7 +15,7 @@ function NotificationBoxItem({ notification, markRead }) {
 
     const handleClick = () => {
         if (!read) {
-            axios.patch(`${import.meta.env.VITE_API_URL}/notification/markread/${notification.notifId}`)
+            axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/notification/markread/${notification.notifId}`)
                 .then(() => {
                     setRead(true);
                     markRead(notification.notifId);

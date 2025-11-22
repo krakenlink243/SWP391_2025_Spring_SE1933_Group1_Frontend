@@ -44,7 +44,7 @@ const TransactionDetail = () => {
     const fetchTransaction = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/user/transaction`
+          `swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/transaction`
         );
         if (response.data.success) {
           // Find the transaction with the matching transactionId
@@ -66,7 +66,7 @@ const TransactionDetail = () => {
 
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/user/library/${userId}/${
+        `swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/library/${userId}/${
           transaction.gameId
         }`
       );
@@ -114,7 +114,7 @@ const TransactionDetail = () => {
   const callRefundApi = async () => {
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/user/transaction/refund/${
+        `swp3912025springse1933group1backend-productionnewgen.up.railway.app/user/transaction/refund/${
           transaction.transactionId
         }`,
         {},

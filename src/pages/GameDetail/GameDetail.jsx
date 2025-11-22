@@ -43,7 +43,7 @@ const GameDetail = () => {
       try {
         setLoading(true);
         setError(null);
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/game/detail/${gameId}`);
+        const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/detail/${gameId}`);
         const data = response.data;
 
         setGame(data);

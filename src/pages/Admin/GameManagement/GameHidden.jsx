@@ -15,7 +15,7 @@ function GameHidden() {
     const size = 10;
     const fetchGames = async () => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/game/hidden`, {
+            const response = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/hidden`, {
                 params: {
                     page,
                     size,
@@ -54,7 +54,7 @@ function GameHidden() {
       return;
     }
     try {
-      await axios.patch(`${import.meta.env.VITE_API_URL}/game/unhide/${gameId}`, {
+      await axios.patch(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/game/unhide/${gameId}`, {
       });
       createNotification(publisherId,"Game Management",`Your Game ${gameName} has been re-listed from hide state.`)
       setGames(prev => prev.filter(game => game.id !== gameId));

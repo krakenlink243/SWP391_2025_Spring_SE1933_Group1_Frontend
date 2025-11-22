@@ -41,7 +41,7 @@ const RegisterDetails = () => {
 
       try {
 
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/check-username`, {
+        const res = await axios.get(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/api/auth/check-username`, {
           params: { username: value },
         });
         setUsernameAvailable(res.data.available);
@@ -104,7 +104,7 @@ const RegisterDetails = () => {
         country: formData.country,
       };
 
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, fullData);
+      const response = await axios.post(`swp3912025springse1933group1backend-productionnewgen.up.railway.app/api/auth/register`, fullData);
       setMessage('Registration successful!');
       console.log(response.data);
 
