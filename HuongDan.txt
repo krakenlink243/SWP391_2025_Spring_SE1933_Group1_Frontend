@@ -10,4 +10,4 @@
 
 !Không đụng file main.jsx, index.css, index.html, pakage.json, vite.config.js
 
-Ứng dụng chạy từ main.jsx -> App.jsx
+Ứng dụng chạy từ main.jsx -> App.jsx .
